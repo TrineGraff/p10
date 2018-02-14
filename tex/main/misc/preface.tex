@@ -1,0 +1,61 @@
+\chapter{Preface} \label{ch:preface}
+This report is written in the fall of 2017, by group 5.218 from the Department of Mathematical Sciences at Aalborg University. The group consists of three 9th semester mathematics-economics students. 
+We recommend reading the chapters in order, and the intended audience of this report are graduate students on a mathematical degree.
+
+This report is written in \LaTeX, and data is imported from \url{energinet.dk} while computations are mostly performed in \Rlang ~using the packages
+
+\begin{itemize}
+	\item \texttt{Rcpp}\fcite{Rcpp}, for interfacing with C++
+	\item \texttt{BH}\fcite{BH}, for Boost headers
+	\item \texttt{tidyverse}\fcite{tidyverse}, for data wrangling and plotting
+	\item \texttt{sandwich}\fcite{sandwich}, for covariance estimation
+	\item \texttt{lmtest}\fcite{lmtest}, for parameter testing
+	\item \texttt{rugarch}\fcite{rugarch}, for maximum likelihood estimation of GARCH and ARFIMA models
+	\item \texttt{MCS}\fcite{MCS}, for model confidence set bootstrapping
+\end{itemize}
+
+In the end of the report there is an appendix containing some extra definitions, and theory that we deem relevant, but is not our main focus.
+We also provide an overview of the main C++ and \Rlang ~source code used to obtain our results.
+
+The group would especially like to acknowledge Eduardo Vera-Valdés for his supervision and inputs throughout the project period. 
+
+
+%\clearpage
+%
+%
+\vfill
+%
+%\footnotesize
+%%\noindent Copyright \copyright{} MAOK7 G2-103, Aalborg University 2016\par
+%%\noindent
+%%\vspace{\baselineskip}
+%\hfill Aalborg University, December 21, 2016\\[1ex]
+%\normalsize 
+
+\begin{center}
+\begin{minipage}[b]{0.45\textwidth}
+ \centering
+ \rule{\textwidth}{0.5pt}\\
+  Louise N. Christensen\\
+ {\footnotesize\ttfamily \href{mailto:lnch13@student.aau.dk}{<lnch13@student.aau.dk>}}
+\end{minipage}\\[10mm]
+\begin{minipage}[b]{0.45\textwidth}
+ \centering
+ \rule{\textwidth}{0.5pt}\\
+  Trine Graff\\
+ {\footnotesize\ttfamily \href{mailto:tgraff13@student.aau.dk}{<tgraff13@student.aau.dk>}}
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.45\textwidth}
+ \centering
+ \rule{\textwidth}{0.5pt}\\
+  Janus S. Valberg-Madsen\\
+ {\footnotesize\ttfamily \href{mailto:jvalbe13@student.aau.dk}{<jvalbe13@student.aau.dk>}}
+\end{minipage}
+\end{center}
+
+%%% Local Variables:
+%%% mode: latex
+%%% LaTeX-command: "latex -shell-escape"
+%%% TeX-master: "../../p8master"
+%%% End:

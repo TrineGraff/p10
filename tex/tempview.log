@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.5.2)  14 FEB 2018 14:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.5.2)  14 FEB 2018 15:40
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -2051,7 +2051,43 @@ Package microtype Info: Loading generic settings for font family
 (./main/ch/ols.tex
 LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/futs/b/n' tried instead on input line 1.
-) [1
+LaTeX Font Info:    Try loading font information for FML+futmi on input line 3.
+
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/fourier/fmlfutmi.fd
+File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
+)
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 10.07397pt on input line 3.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 7.63599pt on input line 3.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 3.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 10.07397pt on input line 3.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 7.63599pt on input line 3.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 3.
+LaTeX Font Info:    Try loading font information for U+msa on input line 3.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/mt-msa.cfg
+File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 3.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/mt-msb.cfg
+File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+)
+LaTeX Font Info:    Try loading font information for OMS+rsfs on input line 3.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/calrsfs/OMSrsfs.fd)) [1
 
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
@@ -2070,24 +2106,29 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 16.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 16.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 16.
 Package rerunfilecheck Info: File `tempview.out' has not changed.
-(rerunfilecheck)             Checksum: 2A8ABFED10A5F774A8C2959E65F8F6DE;43.
+(rerunfilecheck)             Checksum: 4D300FAE49498BDE85A9A05C58D1E4AD;66.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 16.
  ) 
 Here is how much of TeX's memory you used:
- 36318 strings out of 493014
- 658057 string characters out of 6133352
- 804506 words of memory out of 5000000
- 39225 multiletter control sequences out of 15000+600000
- 23605 words of font info for 34 fonts, out of 8000000 for 9000
+ 36501 strings out of 493014
+ 661455 string characters out of 6133352
+ 812483 words of memory out of 5000000
+ 39310 multiletter control sequences out of 15000+600000
+ 67868 words of font info for 118 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,11n,94p,10428b,359s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,12n,94p,10428b,357s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2016/texmf-dist/fonts/type1/adobe/utopia/putb8a.pfb></usr/local/texlive/
-2016/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb>
-Output written on tempview.pdf (1 page, 23719 bytes).
+exlive/2016/texmf-dist/fonts/type1/public/fourier/fourier-bb.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/fourier/fourier-mex.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/fourier/fourier-mlit.pfb></usr/local/t
+exlive/2016/texmf-dist/fonts/type1/public/fourier/fourier-ms.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/adobe/utopia/putb8a.pfb></usr/local/texlive/2
+016/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></usr/local/texlive/2016/tex
+mf-dist/fonts/type1/adobe/utopia/putri8a.pfb>
+Output written on tempview.pdf (1 page, 60957 bytes).
 PDF statistics:
- 30 PDF objects out of 1000 (max. 8388607)
- 24 compressed objects within 1 object stream
- 3 named destinations out of 1000 (max. 500000)
- 9237 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 57 PDF objects out of 1000 (max. 8388607)
+ 46 compressed objects within 1 object stream
+ 5 named destinations out of 1000 (max. 500000)
+ 15893 words of extra memory for PDF output out of 17280 (max. 10000000)
 

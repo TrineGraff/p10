@@ -1,0 +1,153 @@
+\usepackage{emptypage}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{rotating}
+\usepackage[labelfont=bf,font=it]{caption}
+\usepackage[normalem]{ulem}
+
+%%% CODE %%%
+\usepackage{listings}
+\usepackage{minted}
+\usemintedstyle{tango}
+%\usemintedstyle{monokai}
+
+\renewcommand\theFancyVerbLine{\color{MidnightBlue}\ttfamily\scriptsize\arabic{FancyVerbLine}}
+
+% R file input
+\newmintedfile[rfile]{r}{
+  %bgcolor=MonokaiGrey,
+  %formatcom=\color{white},
+  fontfamily=tt,
+  fontsize=\footnotesize,
+  linenos=false,
+  numberblanklines=true,
+  numbersep=5pt,
+  gobble=0,
+  funcnamehighlighting=true,
+  tabsize=2,
+  obeytabs=false,
+  mathescape=false
+  samepage=true, 
+  showspaces=false,
+  showtabs=false,
+  texcl=false,
+  linenos=true
+}
+
+\newmintedfile[cppfile]{cpp}{
+  %bgcolor=MonokaiGrey,
+  %formatcom=\color{white},
+  fontfamily=tt,
+  fontsize=\footnotesize,
+  linenos=false,
+  numberblanklines=true,
+  numbersep=5pt,
+  gobble=0,
+  funcnamehighlighting=true,
+  tabsize=2,
+  obeytabs=false,
+  mathescape=false
+  samepage=true, 
+  showspaces=false,
+  showtabs=false,
+  texcl=false,
+  linenos=true
+}
+
+\newcommand{\rinput}[2][]{
+  \begin{center}
+    \begin{minipage}[h]{0.7\linewidth}
+      \rfile[#1]{../R/#2}
+    \end{minipage}
+  \end{center}
+}
+
+\newcommand{\cppinput}[2][]{
+  \begin{center}
+    \begin{minipage}[h]{\linewidth}
+      \cppfile[#1]{../R/#2}
+    \end{minipage}
+  \end{center}
+}
+
+% Inline code
+\usepackage{newverbs}
+\newverbcommand{\rcode}{\begin{lrbox}{\verbbox}}{\end{lrbox}\colorbox{llgrey}{\box\verbbox}}
+
+\newcommand{\Rlang}{{\textbf{\textsf{R}}}}
+\newcommand{\Clang}{\textbf{\textsf{C++}}}
+
+
+%%% PAGE STYLE %%%
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  inner=30mm,
+  outer=35mm,
+  top=40mm,
+  headsep=10mm,
+  bottom=40mm,
+  footskip=10mm,	
+}
+
+% Title formatting
+\usepackage{titlesec}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+
+\makeatother
+\titleformat{\chapter}[display]
+{\color{busblue3}\Huge\bfseries}
+{\flushright
+  \begin{tikzpicture}
+    \draw[fill,color=busblue2] (0,0) rectangle (2cm,2cm);
+    \draw[color=white] (1cm,1cm) node { \thechapter };
+  \end{tikzpicture}}
+{-1ex}
+{\flushright\huge\textls[50]}
+\titlespacing*{\chapter}%
+{0ex}% indent
+{0ex}% topskip
+{5ex}% skip før text
+[0ex]
+
+% \newcommand{\SecTitle}[1]{%
+%   \begin{tikzpicture}
+%     \draw[fill,color=busblue2] (0,0) rectangle (0.75cm,0.75cm);
+%     \draw[color=white] (0.375cm,0.375cm) node { \large\bfseries\thesection };
+%     \draw[color=busblue3] (2.5cm,0.375cm) node { \LARGE\sc\bfseries{#1} };
+%   \end{tikzpicture}
+% }		
+% \titleformat{\section}[hang]
+% {\normalfont}
+% {}
+% {0ex}
+% {\SecTitle}
+% \titlespacing*{\section}{0ex}{5ex}{1ex}
+
+% Headers and footers
+\usepackage{fancyhdr}
+	\renewcommand{\headrulewidth}{0pt}
+	%\renewcommand{\footrulewidth}{0.8pt}
+	\fancyhead{}
+	\fancyhead[LO]{\color{lgrey}\textit{\leftmark}}
+	\fancyhead[RE]{\color{lgrey}\textit{\leftmark}}
+	\fancyfoot{}
+	\fancyfoot[CO]{\thepage}
+	\fancyfoot[CE]{\thepage}
+	\fancyfoot[RO]{MAOK9 5.218}
+	\fancyfoot[LE]{MAOK9 5.218}
+	\pagestyle{fancy}
+	\setlength{\headheight}{14pt}
+
+\usepackage{pdfpages}
+\usepackage{xifthen}
+
+\renewcommand\thefootnote{\textcolor{busorange}{\arabic{footnote}}}
+\newcommand{\fcite}[2][]{%
+	\ifthenelse{\isempty{#1}}{\footnote{\citet{#2}}\!}{\footnote{\citet[#1]{#2}}\!}
+}
+%\newcommand{\emphref}[2]{\emph{#1}\textsuperscript{[\ref{app:#2}]}}
+\newcommand{\emphref}[2]{\emph{#1}~(Definition \ref{def:#2})}

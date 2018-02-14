@@ -1,0 +1,84 @@
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{bm}
+\usepackage{commath}
+\usepackage{calrsfs}
+\usepackage{eurosym}
+\DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
+
+
+%%% SETS %%%
+\newcommand{\R}{\mathbb{R}}  % real numbers
+\newcommand{\Z}{\mathbb{Z}}  % integers
+\newcommand{\C}{\mathbb{C}}  % complex numbers
+\newcommand{\T}{\pazocal{T}}  % arbitrary time index set
+\newcommand{\F}{\pazocal{F}}  % filtration set
+ 
+
+%%% OPERATORS %%%
+\DeclareMathOperator{\e}{e}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\inner{\langle}{\rangle}
+
+\newcommand{\of}[2][-1]{\!\del[#1]{#2}}
+\newcommand{\1}{\mathbbm{1}}  % Indicator function (operator style)
+\newcommand{\ind}[1]{\1\!\sbr{#1}}  % indicator function (function style)
+\newcommand{\E}[2][]{\mathbb{E}_{#1}\!\sbr{#2}}  % expected value with optional measure
+\newcommand{\Var}[1]{\mathrm{Var}\!\sbr{#1}}  % variance
+\newcommand{\Cov}[2]{\mathrm{Cov}\!\del{#1, #2}}  % covariance
+\newcommand{\Cor}[2]{\mathrm{Cor}\!\del{#1, #2}}  % correlation
+\newcommand{\est}[1]{\widehat{#1}}  % hat for estimates
+\newcommand{\given}{\,\big\vert\,}  % taller vertical bar
+\newcommand{\widesim}[2][1.5]{\mathrel{\overset{#2}{\scalebox{#1}[1]{$\sim$}}}}
+\newcommand{\med}{\mathrm{med}}
+
+%%% FINANCE %%%
+\newcommand{\claim}{\pazocal{X}}
+\newcommand{\Call}{\pazocal{C}}
+\newcommand{\Put}{\pazocal{P}}
+\newcommand{\Capl}{\mathbf{Capl}}
+\renewcommand{\Cap}{\mathbf{Cap}}
+\renewcommand{\mathcal}{\pazocal}
+
+
+%%% MISC %%%
+\newcommand{\en}[1]{\mbox{\,\sc{e}-}#1}
+\newcommand{\ep}[1]{\mbox{\,\sc{e}}#1}
+\newcommand{\RV}{\ensuremath{\mathrm{RV}}}
+\newcommand{\CV}{\ensuremath{\mathrm{CV}}}
+\newcommand{\JV}{\ensuremath{\mathrm{JV}}}
+\newcommand{\IV}{\ensuremath{\mathrm{IV}}}
+\newcommand{\QV}{\ensuremath{\mathrm{QV}}}
+\newcommand{\BV}{\ensuremath{\mathrm{BV}}}
+\newcommand{\TQ}{\ensuremath{\mathrm{TQ}}}
+\newcommand{\CTBPV}{\ensuremath{\mathrm{CTBPV}}}
+\newcommand{\CTTPV}{\ensuremath{\mathrm{CTTPV}}}
+\newcommand{\MedRV}{\ensuremath{\mathrm{MedRV}}}
+\newcommand{\MinRV}{\ensuremath{\mathrm{MinRV}}}
+\newcommand{\MedRQ}{\ensuremath{\mathrm{MedRQ}}}
+\newcommand{\MinRQ}{\ensuremath{\mathrm{MinRQ}}}
+\newcommand{\MAE}{\ensuremath{\mathrm{MAE}}}
+\newcommand{\RMSE}{\ensuremath{\mathrm{RMSE}}}
+\newcommand{\mcs}{\pazocal{M}}
+\newcommand{\hyp}{\pazocal{H}}
+
+% Redefine epsilon and phi
+\let\temp\epsilon
+\let\epsilon\varepsilon
+\let\varepsilon\temp
+
+\let\temp\phi
+\let\phi\varphi
+\let\varphi\temp
+
+% Right-aligned cases env
+\makeatletter
+\newcases{rightcases}{\quad}{%
+  \hfil$\m@th\displaystyle{##}$}{$\m@th\displaystyle{##}$\hfil}{\lbrace}{.}
+\makeatother

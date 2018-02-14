@@ -1,0 +1,75 @@
+\usepackage[dvipsnames,table]{xcolor}
+	\definecolor{dgrey}{HTML}{666666}
+	\definecolor{lgrey}{HTML}{A9A9A9}
+	\definecolor{llgrey}{HTML}{D9D9D9}
+        \definecolor{MonokaiGrey}{HTML}{272822}
+	\definecolor{busbrown}{HTML}{594C43}
+	\definecolor{busorange}{HTML}{EA7525}
+	\definecolor{busblue1}{HTML}{DCEBF0}
+	\definecolor{busblue2}{HTML}{4A748C}
+	\definecolor{busblue3}{HTML}{0D1B24}
+
+	\newcommand{\rl}[1]{\texttt{\color{Bittersweet} #1}}
+	\newcommand{\rk}[1]{\texttt{\color{MidnightBlue} #1}}
+	\newcommand{\FormatDigit}[1]{\textcolor{DarkOrchid}{#1}}
+
+\usepackage{graphicx}
+\usepackage{pgf}
+\usepackage{tikz}
+	\usetikzlibrary{positioning}
+\usepackage{pdfpages}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabu}
+\usepackage[figuresleft]{rotating}
+\usepackage[section]{placeins}
+
+
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+%% IMAGE INPUT COMMANDS
+
+% SINGLE IMAGES (4 arguments)
+% Usage: \imgfig{filename}{resize factor}{caption}{label (without prefix)} 
+% Example: \imgfig{acf.png}{0.75}{Autokorrelation for residualer}{res_acf}
+\newcommand{\imgfig}[4]{
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=#2\textwidth]{./fig/img/#1}
+		\caption{#3}
+		\label{fig:#4}
+	\end{figure}
+}
+
+\newcommand{\imgfigh}[4]{
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=#2\textwidth]{./fig/img/#1}
+		\caption{#3}
+		\label{fig:#4}
+	\end{figure}
+}
+
+% DOUBLE IMAGES (6 arguments)
+% Usage: \dimgfig{filename 1}{caption 1}{label 1}{filename 2}{caption 2}{label 2}
+% Don't use prefixes in labels, e.g. write `resid`, not `fig:resid`
+\newcommand{\dimgfig}[6]{
+	\begin{figure}[htbp]
+	\centering
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./fig/img/#1}
+		\caption{#2}
+		\label{fig:#3}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./fig/img/#4}
+		\caption{#5}
+		\label{fig:#6}
+	\end{minipage}
+	\end{figure}
+}

@@ -1,13 +1,13 @@
 \section{Lasso}
 Lasso finder løsningen til optimerings problemet
 \begin{align}
-\min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}, \quad ubb \sum_{j=1}^p \vert \beta_j \vert \leq t \label{eq:2.3}
+\min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t \label{eq:2.3}
 \end{align}
 Betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt ved $\Vert \beta \Vert_1 \leq t$.
 Dette kan udtrykkes på matrix-vektor notation.
 Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og \(\X\) være en $n \times p$ matrix med $x_i \in \R^p$ som den i'te række, da kan \eqref{eq:2.3} omskrives til
 \begin{align*}
-\min_{\beta_0, \beta} \cbr{\frac{1}{2n} \Vert \y - \beta_0 \mathbf{1} - \X \beta \Vert_2^2}, \quad s.t. \Vert \beta \Vert_1 \leq t,
+\min_{\beta_0, \beta} \cbr{\frac{1}{2n} \Vert \y - \beta_0 \mathbf{1} - \X \beta \Vert_2^2}, \ \text{underlagt at } \Vert \beta \Vert_1 \leq t,
 \end{align*}
 hvor \(\mathbf{1}\) er en \(n\) dimensionel vektor bestående af 1 og \(\Vert \cdot \Vert_2\) betegner den Euklidiske norm af vektorer.
 

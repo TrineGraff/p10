@@ -1,0 +1,22 @@
+\section{Generaliseret lineære modeller}
+\textit{Generaliseret lineære modeller} er en generalisering af den sædvanlige \textit{lineære model} som tillader at responsvariablen kan have andre fordelingen end normalfordelingen.
+
+Der er tre hovedkomponenter i GLM:
+\begin{description}
+\item[Stokastisk komponent] 
+
+\item[Systematisk komponent] 
+Den specificerer den lineære kombination af de forklarende variable
+\begin{align*}
+\eta_i = x_i^T \beta
+\end{align*}
+\item[Link funktion]
+Denne forbinder den stokastiske og systematiske komponent. Den viser hvordan den forventede værdi af responsvariablen er forbundet med den lineære prediktor af forklarende variable
+\begin{align*}
+\eta_i=g(\mu_i),
+\end{align*} 
+hvor $\mu$ er den forventede værdi for $Y$ og $g$ er en streng monoton link funktion.
+\end{description}
+
+\subsection{Logistisk regressions model}
+

@@ -1,6 +1,6 @@
 \chapter{Lasso i lineære modeller}
 
-Betragt \(n\) observationer \(\{x_i, y_i\}_{i=1}^n \), hvor $x_i=(x_{i1}, \ldots, x_{ip})$ er en $p$ dimension vektor af forklarende variable eller prediktorer og $y_i \in \R$ er den tilhørende respons variabel.
+Betragt \(n\) observationer \(\{x_i, y_i\}_{i=1}^n \), hvor $x_i=(x_{i1}, \ldots, x_{ip})$ er en $p$ dimensionel vektor af forklarende variable eller prediktorer og $y_i \in \R$ er den tilhørende respons variabel.
 
 
 
@@ -12,6 +12,9 @@ Løsningen hertil er givet ved
 \begin{align*}
 \hat{\beta}^{\text{OLS}} = (\X^T \X)^{-1} \X^T \y.
 \end{align*}
+
+
+
 Som bekendt er estimatoren unbiased, men ofte har den en høj varians.
 
 
@@ -22,6 +25,8 @@ Det betyder, at $\X^T \X$ er singulær og der findes derfor en ikke entydig esti
 GRUNDE TIL AT PRØVE ANDET END OLS
 
 
-\input{main/ch/sub/ridge}
+Derfor introduceres i dette kapitel nogle metoder der mindsker koefficienterne, hvilket introducerer bias med reducerer variansen, og dermed opnås en lavere gennemsnitlig kvadreret fejl.
+
+Nedenfor introduceres lasso som kombinerer objektfunktionen for mindste kvadraters metode med en $\ell_1$ betingelse. Denne betingelse mindsker koefficienterne og sætter endda nogle lig 0. Dermed udfører lasso model udvælgelse.
 \input{main/ch/sub/lasso}
 \input{main/ch/sub/generalizations_lasso}

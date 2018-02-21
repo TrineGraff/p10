@@ -1,4 +1,9 @@
-\section{Lasso}
+\section{Lasso estimatoren}
+The least absolute shrinkage selection operator (Lasso) blev introduceret af ---. 
+Effektiv for at håndtere flere prediktorer end variable.
+Derudover producere den parsimonious modeller som er nemme at fortolke.
+Vi anvender lasso estimatoren for udvælgelse af modeller for tidsrække data.
+
 Lasso finder løsningen til optimerings problemet
 \begin{align}
 \min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t \label{eq:2.3}
@@ -33,6 +38,26 @@ for $\lambda \geq 0$.
 Af Lagrange dualiteten er der en bijektion mellem \eqref{eq:2.3} og \eqref{eq:2.5}: for hver værdi af \(t\) hvor \(\Vert \beta \Vert_1 \leq t\) er opfyldt, da findes en tilhørende værdi af $\lambda$ som giver den samme løsning for \eqref{eq:2.5}.
 Mens løsningen $\hat{\beta}_\lambda$ til \eqref{eq:2.5} løser grænse problemet med $t=\Vert \hat{\beta}_\lambda \Vert_1$
 
+
+\textit{Ridge regression} estimatoren findes udfra
+\begin{align}
+\min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7}
+\end{align}
+som kan omskrives til et Lagrange problem
+\begin{align}
+\min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2 + \lambda \sum_{j=1}^p \beta_j^2},
+\end{align} \label{eq:2.8}
+hvor $\lambda \geq 0$ er en såkaldt strafparameter, som bestemmes separat.
+Der er en en-til-en korrespondance mellem det betingede problem \eqref{eq:2.7} og Lagrange problemet \eqref{eq:2.8}.
+Første led i \eqref{eq:2.8} svarer til OLS, som finder de estimerede koefficienter ved at minimere SSR, mens sidste led mindsker de estimerede koefficienter .
+På matrix-vektor form er løsningen af ridge regression givet ved
+\begin{align*}
+\hat{\beta}^R = (\X^T \X + \lambda I_p)^{-1} \X^T \y.
+\end{align*} 
+Ift til mindste kvadraters regression tilføjer ridge regression en positiv konstant $\lambda$ på diagonalen af $\X^T \X$, hvilket medfører, at \(\X^T \X\) er invertibel, selvom $\X$ ikke har fuld rang.
+Dermed er en entydig løsning altid garanteret.
+
+
 Variabel udvægelsen for ridge regression og lasso illustreres på figur \ref{fig:LassoRig}.
 \begin{figure}[H]
 \begin{minipage}{0.5\linewidth}
@@ -54,16 +79,56 @@ Hvis $t$ er tilstrækkelig stor, da vil betingelsesområderne indeholde $\hat{\b
 
 På figur \ref{fig:LassoRig} har vi blot betragtet det simple tilfælde hvor $p=2$. Når $p=3$ vil betingelsesområdet for ridge regression være en kugle, mens betingelsesområdet for lasso vil være en polydron. 
 
+\subsubsection{Udregning af lasso}
 Da lasso penalty ikke er differentialbel, findes der ikke en eksplicit løsning til lasso problemet.
 Vi antager at responsvariablerne $y_i$ og prediktorerne $x_{ij}$ er standardiseret således at \(\frac{1}{n} \sum_{i=1}^n y_{i} = 0\), \(\frac{1}{n} \sum_{i=1}^n x_{ij} = 0\) og \(\frac{1}{n} \sum_{i=1}^n x_{ij}^2=1\).
 Da kan vi ser bort fra skæringen $\beta_0$.
-Lagrange formen er nyttig for numerisk udregning af løsningen som findes vha en simpel procedure kaldet \textit{coordinate descent}.
-
+Lagrange formen er nyttig for numerisk udregning af løsningen som findes vha en simpel procedure kaldet \textit{coordinate descent}. \\
+%
+\textbf{Single prediktor: soft tresholding} \\
+Vi betragter blot en enkelt prediktor baseret på samples $\cbr{\del{z_i, y_i}}_{1=1}^n$, hvor vi omdøber $z_i$ til blot at være én $x_{ij}$.
+Problemet som vi skal løse er da
+\begin{align*}
+\min_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}.
+\end{align*}
+Standard proceduren er at finde den første ordens afledede mht $\beta$, sætte denne lig 0 og isolere for $\beta$. Men vi bemærker, at \(\vert \beta \vert \) ikke har en afledt i $\beta=0$.
+Vi finder, at
+\begin{align*}
+\frac{\partial}{\partial \beta} \del{\frac{1}{2n} \sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}
+&= -\frac{1}{n} \sum_{i=1}^n \del{y_i - z_{i} \beta} z_i + \begin{cases}
+-\lambda \quad &\beta < 0 \\
+[-\lambda, \lambda] & \beta = 0 \\
+\lambda & \beta >0 
+\end{cases}  \\
+&= -\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle + \beta + \begin{cases}
+-\lambda \quad &\beta < 0 \\
+[-\lambda, \lambda] & \beta = 0 \\
+\lambda & \beta >0 
+\end{cases},
+\end{align*}
+da $\frac{1}{n} \sum_{i=1}^n z_i^2=1$. Herefter sættes disse lig 0 og $\beta$ isoleres, hvoraf vi finder, at
+\begin{align*}
+\hat{\beta} = \begin{cases}
+\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle - \lambda, \quad &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle > \lambda, \\
+0 &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle \leq \lambda, \\
+\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle + \lambda, &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle < \lambda.
+\end{cases}
+\end{align*}
+Definer \textit{soft-threshold operatoren} $S_\lambda\del{x}=\text{sign}\del{x} \del{\vert x \vert - \lambda}_+$, som mindsker dens argument $x$ mod 0 ved $\lambda$, og sætter den lig med 0 hvis $\vert x \vert \leq \lambda$. Da kan vi omskrive opdateringen til
+\begin{align*}
+\hat{\beta} = S_\lambda \del{\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle}.
+\end{align*}
+%
+\textbf{Multiple prediktorer: cyclic coordinate descent} \\
+Herefter kan vi betragte multivariat prediktorer. 
+Gentagne cycle gennem prediktorerne i en fast vilkårlig orden $j=1, 2, \ldots, p$, hvor koefficienten $\beta_j$ opdateres i det $j$'te step, ved at minimere objektfunktionen i denne koordinat, mens de resterende koefficienter $\cbr{\hat{\beta}_k, k \neq j}$ fastholdes deres nuværende værdier. 
 Vi kan opskrive objektfunktionen i \eqref{eq:2.5} som
 \begin{align*}
-\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \beta_k - x_{ij} \beta_j}^2 + \lambda \sum_{k \neq j} \vert \beta_k \vert + \lambda \vert \beta_j \vert
+\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \beta_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert
 \end{align*}
-Vi kan se at løsningen for hver $\beta_j$ kan udtrykkes ved den partial residual $r_i^{(j)}=y_i - \sum_{k \neq j} x_{ik} \hat{\beta}_k$, som fjerner ...
+Definer den partialle residual $r_i^{(j)}=y_i - \sum_{k \neq j} x_{ik} \hat{\beta}_k$, som fjerner nuværende fit fra den $j$'te prediktor.
+
+
 Da er den j'te koefficient opdateret ved
 \begin{align}
 \hat{\beta}_j = S_\lambda \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{r}^{(j)} \right\rangle}, \label{eq:2.14}
@@ -80,3 +145,14 @@ Coordinate descent er særlig hurtig til at løse lasso problemet da ...
 Denne sti er faktisk piecewise lineær.
 Algoritmen kaldet \textit{least angle regression} (LARS) er en homotopy metode som effektivt konstruerer piecewise lineære stier.
 En mere teoretisk gennemgang af coordinate descent og LARS algoritmen er givet i kapitel --. 
+
+
+Hvis prediktorerne er ortogonale, dvs $\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{x}_k \right\rangle = 0$ for alle $j \neq k$.
+Da reduceres opdateringen \eqref{eq:2.14} til
+\begin{align*}
+\hat{\beta}_j = S_\lambda \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle},
+\end{align*}
+dermed er $\hat{\beta}_j$ blot soft-thresholded version af det univariate mindste kvadraters estimat af $\mathbf{y}$ regresseret imod $\mathbf{x}_j$. Således har vi en lukket løsning og ingen iterationer er påkrævet.
+
+\subsection{Frihedsgrader}
+ 

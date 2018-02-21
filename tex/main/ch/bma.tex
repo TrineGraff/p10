@@ -1,0 +1,28 @@
+\chapter{Baysian model averaging}
+
+Lad os betragte $R$ modeller, $M_1, \ldots, M_R$.
+Vi vil forecaste $y_{t+h}$.
+Hver model har en parameter vektor $\theta_r$ som afhænger af dens prior, likelihood og posterior.
+Hvis $\kappa$ betegne en parameter vektor som er fælles for alle mulige modeller, da er $\kappa$ en funktion af $\theta_r$ for alle $r$.
+Vi definere sandsynligheden
+\begin{align*}
+p \del{\kappa \given \text{Data}} = \sum_{r=1}^R p \del{\kappa \given \text{Data}, M_r} p \del{M_r \given \text{Data}}.
+\end{align*}
+Hvis $g \del{\kappa}$ er en funktion af $\kappa$, da er den betingede middelværdi givet ved
+\begin{align*}
+\E{g\del{\kappa} \given \text{Data}} = \sum_{r=1}^R \E{g \del{\kappa} \given \text{Data}, M_r} p \del{M_r, \text{Data}}
+\end{align*}
+Da har vi, at
+\begin{align*}
+\E{y_{T+h} \given \text{Data}} = \sum_{r=1}^R p \del{M_r, \text{Data}} \E{y_{T+h} \given \text{Data}, M_r}
+\end{align*}
+Af Baysiansk inferens kan vi vi disse resultater for enhver model og tage gennemsnittet af disse, hvor vægtene anvendt er posterier fordelinger.
+Implementeringen af BMA kan være besværlig da antallet af modeller kan være højt.
+Hvis vi har 15 potentielle  variable, da har vi $2^{15}$ mulige modeller.
+
+
+Likelihood funktionen for hver model er baseret på normal lineær regression
+\begin{align*}
+p \del{y \given \beta_r, \sigma_r^2} = \frac{1}{\del{2 \pi}^{n/2}} \cbr{\sigma \exp \sbr{- \frac{\sigma_r^2}{2} \del{\beta_r - \hat{\beta}_r}^T X_r X_r^T \del{\beta_r - \hat{\beta_r}}}} \cbr{\sigma_r^\nu} \exp \sbr{- \frac{\sigma_r^2 \nu_r}{2 s_r^{-2}}},
+\end{align*}
+hvor $\nu_r = T-K_r$, $\hat{\beta}_r = \del{X_r^T X_r}^{-1}X_r y$, $s_r^2 = \frac{\del{y-X_r \beta_r}^T\del{y-X_r \beta_r}}{\nu_r}$ og $X_r$ er en $T \times K_r$ matrix med nogle eller alle kolonner af $X$.

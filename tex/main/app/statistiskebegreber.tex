@@ -1,0 +1,30 @@
+\chapter{Generelle statistiske begreber}
+I dette appendiks defineres generelle statistiske begreber, som anvendes igennem rapporten.
+
+Løst sagt, siges en estimator at være konsistent, hvis følgen $\boldsymbol{\theta}_n(\mathbf{Y})$ af estimatorer for parameteren $\boldsymbol{\theta}$ konvergerer i sandsynlighed mod den sande værdi $\boldsymbol{\theta}$. Ellers siges estimatoren at være inkonsistent.
+Konsistens er altså en asymptopisk egenskab. 
+\begin{defn}[Svag konsistens] \label{def:konsistent}
+Lad $\{ \boldsymbol{\hat{\theta}}_n \}$ være en følge af estimatorer. Da siges $ \{ \boldsymbol {\hat{\theta}}_n \}$ at være konsistens for $\boldsymbol{\theta}$ hvis
+\begin{align*}
+\boldsymbol{\hat{\theta}} \overset{p}{\rightarrow} \boldsymbol{\theta}.
+%\underset{n \rightarrow \infty}{\lim} P \left( \vert \boldsymbol{\hat{\theta}}_n - \boldsymbol{\theta} \vert \leq \epsilon \right) =1
+\end{align*}
+\end{defn}
+
+\begin{defn}[Rod-n-konsistent estimator] \label{def:rodn}
+En estimator $  \boldsymbol {\hat{\theta}}_n $ for $\boldsymbol{\theta}$ er rod-n-konsistent hvis
+\begin{align*}
+\boldsymbol {\hat{\theta}}_n  - \boldsymbol{\theta} = O \left( \frac{1}{\sqrt{n}} \right).
+\end{align*}
+\end{defn}
+
+\begin{thm}[Slutsky's Theorem] \label{thm:sluktsky}
+Hvis $X_n \overset{d}{\rightarrow} X$ og $Y_n \overset{p}{\rightarrow} c$, hvor $X$ er en stokastisk variabel og $c$ er en konstant, da gælder, at
+\begin{align*}
+& X_n + Y_n \overset{d}{\rightarrow} X+c \\
+& X_n Y_n \overset{d}{\rightarrow} cX \\
+& \frac{X_n}{Y_n} \overset{d}{\rightarrow} \frac{X}{c}, \quad \text{forudsat at } P(c=0)=0.
+\end{align*}
+\end{thm}
+Sætning \ref{thm:sluktsky} tillader at finde grænsefordelingen af $X_n$ og sandsynlighedsgrænsen af $Y_n$ separat.
+

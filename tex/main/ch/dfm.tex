@@ -1,0 +1,89 @@
+\chapter{Dynamisk faktor modeller}
+
+Den dynamiske faktor model er givet ved
+\begin{align}
+X_t &= \lambda(L) f_t + e_t \label{eq:dfm1}\\
+f_t &= \Psi(L) f_{t-1} + \eta_t, \label{eq:dfm2}
+\end{align} 
+hvor $X_t$ og $e_t$ er \(n\) dimensionale vektorer og $f_t$ og $\eta_t$ er \(q\) dimensionelle vektorer og lag polynomierne $\lambda(L)$ og $\Psi(L)$ er henholdsvis $n \times q$ og $q \times q$ matricer.
+Det $i$'te lag polynomie $\lambda_i(L)$ kaldes den dynamiske faktor loading for $i$'te tidsrække $X_{it}$ og $\lambda_i(L) f_t$ kaldes den fælles komponent af den $i$'te tidsrække.
+Vi antager, at processerne i -- og -- er stationære.
+Yderligere antages at $\E{e_t \eta_{t-k}^T}=0$ for alle $k$ og at
+
+For den eksakte dynamiske faktor model antages idiosyncratic disturbances at være mutually uafhængige for alle leads og lags, dvs $\E{e_{it} e_{js}}=0$ for alle $s$ hvis $i \neq j$.
+
+Den optimale one-step ahead forecast af den $i$'te variabel er
+\begin{align*}
+\E{X_{it+1}} &= \E{\lambda_i(L)f_{t+1} + e_{it+1} \given X_t,f_t,X_{t-1},f_{t-1},\ldots} \\
+&= \E{\lambda_i(L)f_{t+1} \given X_t,f_t,X_{t-1},f_{t-1},\ldots} + \E{e_{it+1} \given X_t,f_t,X_{t-1},f_{t-1},\ldots} \\
+&= \E{\lambda_i(L)f_{t+1} \given f_t, f_{t-1}, \ldots} + \E{e_{it+1} \given e_{it}, e_{it-1}, \ldots} \\
+&= \alpha(L) f_t + \delta(L) X_{it},
+\end{align*}
+hvor anden sidste lighed kommer af \eqref{eq:dfm2} og sidste lighed følger af \eqref{eq:dfm1} samt den eksakte dfm antagelse.
+Dermed stiger dimensionen af regression ikke hvis vi tilføjer variabler.
+
+Inden prædiktion, skal vi estimerer faktorerne og bestemme antallet af faktorer.
+Nedenfor introduceres nogle metoder til at estimerer faktorerne.
+
+\section{Estimation af faktorer}
+Først opskrives DFM som en lineær state space model.
+Lad $p$ være ordenen af lag polynomiet $\lambda(L)$, lad $F_t=(f_t^T,f_{t-1}^T,\ldots,f_{t-p}^T)^T$ betegne en $r \times 1$ vektor og lad $\Lambda=(\lambda_0,\lambda_1,\ldots,\lambda_p)$, hvor $\lambda_i$ er en $n \times q$ matrix af koefficienter af det $i$'te lag i $\lambda(L)$.
+Tilsvarende, lader vi $\Phi(L)$ være en matrix bestående af 0 og 1, og elementerne af $\Psi(L)$ således at vektor autoregressionen i \eqref{eq:dfm2} er skrevet ift $F_t$.
+Med denne notation kan DFM omsrives til
+\begin{align}
+X_t &= \Lambda F_t + e_t \label{eq:dfm4}\\
+\Phi(L) F_t &= G \eta_t, \label{eq:dfm5}
+\end{align}
+hvor $G$ er en matrix bestående af 0 og 1 som vælges således at \eqref{eq:dfm5} og \eqref{eq:dfm2} er ækvivalente.
+
+Principal komponent estimatoren kan udledes udfra 
+\begin{align}
+\min_{F_1,\ldots,F_T, \Lambda} V_r(\Lambda, F), \text{ hvor } V_r(\Lambda, F)=\frac{1}{nT} \sum_{t=1}^T(X_t-\Lambda F_t)^T(X_t - \Lambda F_t), \label{eq:dfm11}
+\end{align}
+underlagt at $n^{-1} \Lambda^T \Lambda = I_r$.
+For at løse \eqref{eq:dfm11} minimeres $V_r\del{\Lambda,F}$ mht $F_t$ givet $\Lambda$, hvor vi får
+\begin{align}
+\hat{F}_t \del{\Lambda \del{\Lambda^T \Lambda}^{-1}}=\del{\Lambda^T \Lambda}^{-1} \Lambda^T X_t. \label{eq:dfm12}
+\end{align}
+Hvis vi indsætter \eqref{eq:dfm12} i \eqref{eq:dfm11} fås concentrared objekt funktion
+\begin{align*}
+\min_\Lambda \frac{1}{T} \sum_{t=1}^T X_t^T \sbr{I- \Lambda \del{\Lambda^T \Lambda}^{-1} \Lambda} X_t.
+\end{align*}
+Dette minimerings problem er ækvivalent til følgende maksimerings problem
+\begin{align*}
+\max_\Lambda \text{tr} \{\del{\del{\Lambda^T \Lambda}^{-1/2}}^T \Lambda^T \del{T^{-1} \sum_{t=1}^T X_t X_t^T} \Lambda \del{\Lambda^T \Lambda}^{-1/2}\},
+\end{align*}
+som er ækvivalent med $\max_\Lambda^T \hat{\Sigma}_{XX} \Lambda$ underlagt at $n^{-1} \Lambda^T \Lambda=I_r$, hvor $\hat{\Sigma}_{XX}=T^{-1} \sum_{t=1}^T X_t X_t^T$
+
+Da $\hat{\Lambda}^T \hat{\Lambda}=nI_r$ følger det af mindste kvadraters metode estimatoren af $F_t$ er $\hat{F}_t=\hat{F}_t \del{n^{-1}\hat{\Lambda}}=n^{-1}\hat{\Lambda}^TX_t$, som er de skaleret første $r$ principal komponenter af $X_t$.
+
+De principale komponenter udregnes ved at første komponent beskriver så meget af variation i data som muligt, dvs at den har den største varians, anden komponent er da en lin kombination af variablerne som er ukorreleret med den første principal komponent og den har den største varians underlagt denne betingelse.
+Dvs hver komponent har den største muligt varians under betingelsen af den er ortgonal til de foregående komponenter.
+Dvs den nye tidsrækker er ukorreleret og den første principal komponenter i tidsrækkerne har det største variantion i den originale tidsrækker.
+
+
+udvælgelse af faktorer
+to tilgange til at vælge faktorer
+- financial økonomisk teori (makroøkonomiske variable)
+- statistisk tilgang: 
+- faktor analyse
+- principal komponent analyse (PCA)
+
+PCA
+statistisk procedure der anvender en ortogonal transformation til at konverterer en mængde observationer af korrelerede variable til en mængde af værdier af ukorreleret variable, som kaldes principale komponenter (PC)
+Denne transformation defineres således at første PC har den størst mulige varians, og hver efterfølgende PC har igen den størst mulige varians givet de foregående PC er ortogonale.
+
+
+\section{Valg af antal faktorer}
+Der findes flere metoder til at estimere antallet af static faktorer $r$ og antallet af dynamiske faktorer $q$.
+
+
+\section{Faktor-Augmented vektor autoregression (FAVAR)}
+Dette problem kan løses ved at give restriktioner udledt fra DFM.
+Vi omskriver dfm \eqref{eq:dfm4} på VAR form.
+Resultatet er 
+\begin{align*}
+\begin{vmatrix}
+F_t \\ X_t
+\end{vmatrix} = 
+\end{align*}

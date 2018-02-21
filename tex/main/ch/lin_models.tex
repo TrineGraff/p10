@@ -2,7 +2,26 @@
 
 Betragt \(n\) observationer \(\{x_i, y_i\}_{i=1}^n \), hvor $x_i=(x_{i1}, \ldots, x_{ip})$ er en $p$ dimension vektor af forklarende variable eller prediktorer og $y_i \in \R$ er den tilhørende respons variabel.
 
-\input{main/ch/sub/ols}
+
+
+Den velkendte estimator for mindste kvadraters metode for $(\beta_0, \beta)$ findes udfra
+\begin{align*}
+\min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}
+\end{align*}
+Løsningen hertil er givet ved
+\begin{align*}
+\hat{\beta}^{\text{OLS}} = (\X^T \X)^{-1} \X^T \y.
+\end{align*}
+Som bekendt er estimatoren unbiased, men ofte har den en høj varians.
+
+
+Hvis \(p \gg n\) da vil prediktorerne være kollineære og dermed har \(\X\) ikke fuld rang.
+Det betyder, at $\X^T \X$ er singulær og der findes derfor en ikke entydig estimator for mindste kvadraters metode.
+
+
+GRUNDE TIL AT PRØVE ANDET END OLS
+
+
 \input{main/ch/sub/ridge}
 \input{main/ch/sub/lasso}
 \input{main/ch/sub/generalizations_lasso}

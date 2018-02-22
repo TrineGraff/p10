@@ -26,3 +26,9 @@ Likelihood funktionen for hver model er baseret på normal lineær regression
 p \del{y \given \beta_r, \sigma_r^2} = \frac{1}{\del{2 \pi}^{n/2}} \cbr{\sigma \exp \sbr{- \frac{\sigma_r^2}{2} \del{\beta_r - \hat{\beta}_r}^T X_r X_r^T \del{\beta_r - \hat{\beta_r}}}} \cbr{\sigma_r^\nu} \exp \sbr{- \frac{\sigma_r^2 \nu_r}{2 s_r^{-2}}},
 \end{align*}
 hvor $\nu_r = T-K_r$, $\hat{\beta}_r = \del{X_r^T X_r}^{-1}X_r y$, $s_r^2 = \frac{\del{y-X_r \beta_r}^T\del{y-X_r \beta_r}}{\nu_r}$ og $X_r$ er en $T \times K_r$ matrix med nogle eller alle kolonner af $X$.
+
+\section{Valg af prior}
+Valget af prior er afgørende for BMA.
+\begin{align*}
+\beta_r \given \sigma^2 \sim N\del{0,\sigma^{-2}\sbr{g_r X_r^T X_r}^{-1}}
+\end{align*}

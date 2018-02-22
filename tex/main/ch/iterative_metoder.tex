@@ -1,0 +1,20 @@
+\chapter{Iterative metoder}
+I dette kapitel fokuserer vi på iterative metoder, som er anvendt for estimerer ukendte parameter for en givet funktion $f \del{\beta}$
+--- psudokoder? 
+
+\section{Bootstrap}
+Siden at ikke alle penaliseds regressioner har en lukket løsning, anvender vi bootstrap. 
+Bootstrap er en teknik, som bruger observeret data for at lave inference for parametrene af en model. Den er meget nem at implementerer og meget anvendt for big data. 
+Hvis vi har data matrix, som indeholder $N$ rækker. Så et bootstrap sample er konstruerede ved at lave en anden matrix af samme størrelse. Det gøres ved at sample rækker med udskiftning fra vores start matrix. 
+Så vi laver $B$ antal bootstrap samples fra vores datasæt og udregner ønsket statistik $s$ for hvert bootstrap sample. Til sidst finder vi middelværdien af vores bootstraps og estimerer vores statistik $s$.
+
+\section{Kryds validering}
+Kryds validering er en måde for at estimerer fejlene i en fittede model. Fejlene i en fittede model er givet ved $\E{y - \hat{y}},$ hvor $y$ er den observerede respons og  $\hat{y} $ er den fittede respons. Denne fejl kaldes prædiktions fejl. Så derfor fortrækker vi så lav mulige fejl. 
+
+Ideen bag at udregne prædiktion fejl af en model er at have et ekstra data sæt, som anvendes til at udregne det fittede respons. Udfra det kan vi se hvordan vores fittede model anvendes på et nyt datasæt. %fa
+Hvilket ligger til grund for kryds validering. Kryds validering deler vores data i $K$ lige store  grupper, og anvender det $i$'te gruppe, som test sættet og de andre $K-1$ grupper bruges, som trænings sæt. Vi udregner præditktions fejlene, hvor vi gentager denne proces $K$ gange. Vi finder så en middelværdi af de prædiktions fejlene. 
+For et $K$ kryds validering, får vi følgende prædiktions fejl
+\begin{align*}
+CV = \frac{1}{K} \sum_{i =1}^k \del{y_i - y_u^{-k(i)}},
+\end{align*}
+hvor $y_i^{-k(i)}$ er det fittede respons af en model når $k(i)$ delen er fjernet. 

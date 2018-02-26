@@ -17,7 +17,7 @@ library(Quandl)
   IPS43 = Quandl("FRED/IPB00004SQ")
   IPS307 = Quandl("FRED/IPB51222SQ")
   IPS306 =Quandl("FRED/IPB51221SQ")
-  PMP =
+  #PMP = 
   UTL11 = Quandl("FRED/CAPB00004SQ")
 
 ## Hourly Earnings
@@ -28,23 +28,23 @@ library(Quandl)
   CES003 = Quandl("FRED/CEU0600000001") #NSA
   CES006 = Quandl("FRED/CES1021000001") #SA
   CES011 = Quandl("FRED/USCONS") #SA
-  CES015 = 
+  #CES015 = 
   CES017 = Quandl("FRED/DMANEMP") #SA
   CES033 = Quandl("FRED/NDMANEMP") #SA
-  CES046 =
+  #CES046 =
   CESO48 = Quandl("FRED/USTPU") #SA
   CES049 = Quandl("FRED/USWTRADE") #SA
   CES053 = Quandl("FRED/USTRADE") #SA
   CES088 = Quandl("FRED/USFIRE") #SA
   CES140 = Quandl("FRED/USGOVT") #SA
-  LHEL = 
-  LHELX = 
+  #LHEL = 
+  #LHELX = 
   LHEM = Quandl("FRED/CLF16OV")
-  LHNAG = 
+  #LHNAG = 
     
   
 ## Unenployment (MONTLY)
-  LHUR = 
+  #LHUR = 
   LHU680 = Quandl("FRED/UEMPMEAN") #SA #Weeks
   LHU5 =  Quandl("FRED/LNS13008397") #SA
   LHU14 = Quandl("FRED/LNS13025701") #SA
@@ -53,12 +53,12 @@ library(Quandl)
   LHU27 = Quandl("FRED/LNS13025703") #SA
   
 ##Hours 
-  CES151 = 
-  CES155 = 
+  #CES151 = 
+  #CES155 = 
     
 ## Hours Starts and Sales (MONTLY) (Thousind of units)
   HSBR = Quandl("FRED/HOUST") #Unit SA
-  HSFR =
+  #HSFR =
   HSNE =  Quandl("FRED/HOUSTNE") #SA
   HSMW = Quandl("FRED/HOUSTMW") #SA
   HSSOU = Quandl("FRED/HOUSTS") #SA
@@ -71,45 +71,45 @@ FYFF = Quandl("FRED/FEDFUNDS") #NSA
   FYGT1 = Quandl("FRED/GS1") #NSA
   FYGT5 = Quandl("FRED/GS5") #NSA
   FYG10 = Quandl("FRED/GS10") #NSA
-  FYAAAC = 
-  FYBAAC = 
+  #FYAAAC = 
+  #FYBAAC = 
 
 ## Interest Rates Differences 
-SFYGM6 = 
-  SFYGT1 =
-  SFYGT10 =
-  SFYAAAC
-  SFYBAAC
+#SFYGM6 = 
+  #SFYGT1 =
+  #SFYGT10 =
+  #SFYAAAC
+  #SFYBAAC
     
 ## Money and Credit Quantoty Aggregates
   FM1 = Quandl("FRED/M1SL") #SA
   MZMSL = Quandl("FRED/MZM") #SA
   FM2 = Quandl("FRED/M2SL") #SA
-  FMFBA = 
+  #FMFBA = 
   FMRRA = Quandl("FRED/TOTRESNS") #NSA
   BUSLOANS = Quandl("FRED/BUSLOANS") #SA
-  CCINRV = 
+  #CCINRV = 
     
 ## Consumptions 
-  PI071 =
+  #PI071 =
   PI072 = Quandl("FRED/PCEDG") #SA
   PI073 = Quandl("FRED/PCEND") #SA
   PI074 = Quandl("FRED/PCES") #SA
       
 ## Price Indices
-  CPIAUCSL = 
-  CPILFESL =
-  PCEPILFE = 
-  PWFSA = 
-  PWFCSA = 
-  PWIMSA = 
-  PWCMSA = 
-  PWCMSAR =
-  PSCCOM =
-  PSCOOMR = 
-  PW561 =
-  PW561R =
-  PMCP =
+  #CPIAUCSL = 
+  #CPILFESL =
+  #PCEPILFE = 
+  #PWFSA = 
+  #PWFCSA = 
+  #PWIMSA = 
+  #PWCMSA = 
+  #PWCMSAR =
+  #PSCCOM =
+  #PSCOOMR = 
+  #PW561 =
+  #PW561R =
+  #PMCP =
         
         
 ## Exchange Rates
@@ -120,17 +120,17 @@ SFYGM6 =
   EXRCAN = Quandl("FRED/EXCAUS") #NSA
         
 ## Stock Prices and Miscellaneous
-  FSPCOM = 
-  FSPIN = 
-  FSDXP = 
-  FDPXE = 
-  FSDJ = 
-  HHSNTN =
+  #FSPCOM = 
+  #FSPIN = 
+  #FSDXP = 
+  #FDPXE = 
+  #FSDJ = 
+  #HHSNTN =
 
 ## Inventories and Orders
-  PMI = 
-  PMNO = 
-  PMDEL = 
-  PMNV =
-  MOCMQ = 
-  MSONDQ = 
+  #PMI = 
+  #PMNO = 
+  #PMDEL = 
+  #PMNV =
+  #MOCMQ = 
+  #MSONDQ = 

@@ -28,3 +28,20 @@ Hvis $X_n \overset{d}{\rightarrow} X$ og $Y_n \overset{p}{\rightarrow} c$, hvor 
 \end{thm}
 Sætning \ref{thm:sluktsky} tillader at finde grænsefordelingen af $X_n$ og sandsynlighedsgrænsen af $Y_n$ separat.
 
+
+\section{Diebold Mariano test}
+Diebold Mariano testen kan anvendes til at vurdere to konkurrerende prædiktioner i forhold til hinanden.
+
+
+Diebold-Mariano testen er baseret på differensen af tabsfunktionerne
+\begin{align*}
+d_t = L \del{\epsilon_{t+h \given t}^1} - L \del{\epsilon_{t+h \given t}^2}
+\end{align*}
+%
+\begin{defn}[Diebold-Mariano test (DM)]
+Betragt $\mathcal{H}_0: \ \E{d_t}=0$.
+Diebold-Mariano testen er defineret som følgende
+\begin{align*}
+\text{DM}=\frac{1}{1}
+\end{align*}
+\end{defn}

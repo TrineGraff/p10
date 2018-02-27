@@ -1,15 +1,16 @@
 \section{Generaliseringer af lasso}
-I denne sektion introduceres generaliseringen af lasso. Afsnittet er baseret på \citep{hastie}.
-Alle har de to essentielle egenskaber af standard lasso, nemlig shrinkage og udvælgelse af variable.
+%I denne sektion introduceres generaliseringen af lasso. Afsnittet er baseret på \citep{hastie}.
+%Alle har de to essentielle egenskaber af standard lasso, nemlig shrinkage og udvælgelse af variable.
 
-Empirisk studier viser at lasso ikke er godt til højt korreleret variabler
-
+Selvom lasso har vist succes i mange tilfælde, har den også nogle begrænsninger. Dette beskrives i tre scenarier i \citep{hui_hastie} . 
+\begin{itemize}
+\item Hvis $p>n$, så udvælger lasso højst $n$ variabler siden lasso er et konvekst problem. Derudover er lasso ikke veldefineret medmindre $L_1$-normen af koefficienterne er mindre end en bestemt værdi. 
+\item Hvis der er en gruppe af variabler, som har høj parvis korrelation, så har lasso en tildens til at udvælge kun en variable fra gruppen og er ligeglad med hvilken én den udvælger. 
+\item Hvis $n>p$ og der er høj korrelerede variabler, er det empirisk bevidst at prædiktions performance af lasso er outperformede af ridge regression. 
+\end{itemize}
+Derfor introduceret elastic net, som er beskrevet udfra  \citep{hastie}.
 \subsection{Elastic net}
-Som nævnt er lasso ikke god til at håndtere højt korreleret variable. Dette ses ved at koefficienter stierne er uregelmæssige.
-
-
 Med ved at kombinere et kvadreret $\ell_2$ strafled med $\ell_1$ strafled fås en metode kaldet elastiske net, som er bedre til korreleret grupper og vælger de korreleret variater (eller ikke) sammen.
-
 Det elastiske net løser det konvekse problem
 \begin{align}
 \min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - x_{i}^T \beta}^2 + \lambda \sbr{\frac{1}{2} (1- \alpha) \Vert \beta \Vert_2^2 + \alpha \Vert \beta \Vert_1}}, \label{eq:4.2}

@@ -1,31 +1,58 @@
 \chapter{Lasso i lineære modeller}
-
-Betragt \(n\) observationer \(\{x_i, y_i\}_{i=1}^n \), hvor $x_i=(x_{i1}, \ldots, x_{ip})$ er en $p$ dimensionel vektor af forklarende variable eller prediktorer og $y_i \in \R$ er den tilhørende respons variabel.
-
-
-
-Den velkendte estimator for mindste kvadraters metode for $(\beta_0, \beta)$ findes udfra
+Vi betragter et sædvanligt lineær regression set-up. Lad $\textbf{y} = \del{y_1, \dots, y_n}^T$ være respons variablen og lad $\textbf{X} = \del{\textbf{x}_1, \dots, \textbf{x}_n}$ være en $n \times p$ matrix af prædiktorer, hvor $\textbf{x}_j = \del{x_{1,j}, \dots, x_{n,j}}^T$, $j = 1, \dots, p$ er vektorer af prædiktorer. 
+Vi antager en lineær funktion af prædiktorer, som har normal fordelte fejl. 
 \begin{align*}
-\min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}
+\textbf{y} = \textbf{X} \mathcal{\beta} + \epsilon, \quad \epsilon \sim N \del{0, \sigma^2 \text{\textbf{I}}_n},
 \end{align*}
-Løsningen hertil er givet ved
+hvor $\mathcal{\beta} = \del{\beta_1, \dots, \beta_p}^T$ er en vektor af ukendte parameter og $\text{\textbf{I}}_n$ er $n \times n$ identitetsmatricen. 
+For nu antager vi, at $p<n$ og at første kolonne i $\X$ er alle elementer 1'taller. 
+Vi angiver $\widehat{\boldsymbol{\beta}}^{OLS}$ til at være den mindste kvadraters estimat;
 \begin{align*}
-\hat{\beta}^{\text{OLS}} = (\X^T \X)^{-1} \X^T \y.
+\widehat{\boldsymbol{\beta}}^{OLS} = \underset{\boldsymbol\beta \in \R^p}{\argmin} \norm{ \textbf{y} - \textbf{X}\boldsymbol\beta}^2_2
 \end{align*}
-
-
-
-Som bekendt er estimatoren unbiased, men ofte har den en høj varians.
-
-
-Hvis \(p \gg n\) da vil prediktorerne være kollineære og dermed har \(\X\) ikke fuld rang.
+Den velkendte løsning er givet ved 
+\begin{align*}
+\widehat{\boldsymbol\beta}^{\text{OLS}} = \del{\X^T \X}^{-1} \X^T \y.
+\end{align*}
+For at inverterer $\X^T \X$ skal $\X$ have fuld rang ellers er $\widehat{\boldsymbol\beta}^{\text{OLS}}$ ikke unik. 
+Men når  \(p \gg n\) vil prædiktorerne være kollineære og dermed har \(\X\) ikke fuld rang.
 Det betyder, at $\X^T \X$ er singulær og der findes derfor en ikke entydig estimator for mindste kvadraters metode.
+En løsning til dette kan være at tilføje et positiv værdi til diagonalen af $\X^T \X$, som vil medfører en entydig løsning . 
+Estimatet vil derfor have formen
+\begin{align*}
+ \del{\X^T \X + \lambda \text{\textbf{I}}_p}^{-1} \X^T \y,
+\end{align*}
+hvor $\lambda > 0$ og kaldes strafparameteren. Den overstående formel er løsning til \textit{ridge regression problemet}:
+\begin{align}
+ \widehat{\boldsymbol\beta}^{\text{R}} = \underset{\boldsymbol\beta \in \R^p}{\argmin}  \norm{\y - \X\beta}^2_2 + \lambda \norm{\boldsymbol\beta}_2^2,
+\end{align} \label{eq:2.8}
+som er beskrevet, som et lagrange problem. 
+Det kan også kan skrives til et betingede problem 
+\begin{align}
+ \widehat{\boldsymbol\beta}^{\text{R}} = \underset{\boldsymbol{\beta} \in \R^p}{\argmin} \norm{\y - \X\boldsymbol\beta}^2_2 \quad \text{underlagt at } \quad \norm{\boldsymbol\beta}_2^2 < t \label{eq:2.7}.
+\end{align}
+Der er en en-til-en korrespondance mellem det betingede problem \eqref{eq:2.7} og Lagrange problemet \eqref{eq:2.8}.
+Første led i \eqref{eq:2.8} svarer til OLS, som finder de estimerede koefficienter ved at minimere SSR, mens sidste led mindsker de estimerede koefficienter .
 
 
-GRUNDE TIL AT PRØVE ANDET END OLS
+
+%Betragt \(n\) observationer \(\{x_i, y_i\}_{i=1}^n \), hvor $x_i=(x_{i1}, \ldots, x_{ip})$ er en $p$ dimensional vektor af forklarende variable eller prædiktorer og $y_i \in \R$ er den tilhørende respons variabel.
+%
+%Den velkendte estimator for mindste kvadraters metode for $(\beta_0, \beta)$ findes udfra
+%\begin{align*}
+%\min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}
+%\end{align*}
+%Løsningen hertil er givet ved
+%\begin{align*}
+%\hat{\beta}^{\text{OLS}} = (\X^T \X)^{-1} \X^T \y.
+%\end{align*}
+
+%Som bekendt er estimatoren unbiased, men ofte har den en høj varians.
 
 
-Derfor introduceres i dette kapitel nogle metoder der mindsker koefficienterne, hvilket introducerer bias med reducerer variansen, og dermed opnås en lavere gennemsnitlig kvadreret fejl.
+%Hvis \(p \gg n\) da vil prediktorerne være kollineære og dermed har \(\X\) ikke fuld rang.
+%Det betyder, at $\X^T \X$ er singulær og der findes derfor en ikke entydig estimator for mindste kvadraters metode.
+
 
 Nedenfor introduceres lasso som kombinerer objektfunktionen for mindste kvadraters metode med en $\ell_1$ betingelse. Denne betingelse mindsker koefficienterne og sætter endda nogle lig 0. Dermed udfører lasso model udvælgelse.
 \input{main/ch/sub/lasso}

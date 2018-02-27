@@ -4,14 +4,14 @@ Der er flere forskellige måder, at løse et lasso problem, hvis problemet er ko
 Vi introducerer to efficiente algoritmer for at løse lasso problemet, de er henholdsvis \textit{ LARS  (Least Angle Regression) algoritmen} og \textit{coordinate descent algoritmen}.
 
 \section{LARS metode}
-LARS algoritmen var først introduceret i \citep{efron}. 
+LARS algoritmen var først introduceret i \citep{efron}.  
 Vi introducerer først den originale version af LARS algoritmen, hvor efter vi laver en simple modifikation af LARS algoritmen for at løse lasso. 
 
-Ideen bag algoritmen er, at vi først sætter alle koefficienter lig nul, hvor vi herefter finder den prædiktor, $x_{1j}$, som er mest kollerede med respons variablen, $y$.  Vi tager hernæst den størst mulige step i retningen af vores prædiktor, hvor vi anvender en simple lineær regression af $y$ på $x_{1j}$. Vi får en residual vektor, som er ortogonal på $x_{j1}$ og bliver vores nye respons. 
-Vi fortsætter indtil $x_{2j}$ er lige så kollerede med residualerne, som $x_{j1}$. 
-LARS algoritmen anvender herefter den ensvinklet retning mellem $x_{1j}$ og $x_{2j}$, som den nye retning indtil den rammer den tredje variable, som er den mest kollerede, hvorefter den nye retning er ensvinklet mellem de de tre variable $x_{1j}$, $x_{2j}$ og $x_{3j}$. Dette fortsættes. 
+Ideen bag algoritmen er, at vi først sætter alle koefficienter lig nul, hvor vi herefter finder den prædiktor, $x_{1j}$, som er mest korrelerede med respons variablen, $\textbf{y}$.  Vi tager hernæst den størst mulige trin i retningen af vores prædiktor, hvor vi anvender en simple lineær regression af $\textbf{y}$ på $x_{1j}$. Vi får en residual vektor, som er ortogonal på $x_{j1}$ og bliver vores nye respons. 
+Vi fortsætter indtil $x_{2j}$ er lige så korrelerede  med residualerne, som $x_{j1}$. 
+LARS algoritmen anvender herefter den ensvinklet retning mellem $x_{1j}$ og $x_{2j}$, som den nye retning indtil den rammer den tredje variable, som er den mest korrelerede, hvorefter den nye retning er ensvinklet mellem de de tre variable $x_{1j}$, $x_{2j}$ og $x_{3j}$. Dette fortsættes. 
 
-I hvert trin bliver der tilføjet en kovariat til vores model $\widehat{\boldsymbol{\mu}} = \textbf{X} \widehat{\boldsymbol{ \beta}}$, så efter $k$ iterationer er der k ikke-nul $3\widehat{\beta}_j$ 
+I hvert trin bliver der tilføjet en kovariat til vores model $\widehat{\boldsymbol{\mu}} = \textbf{X} \widehat{\boldsymbol{ \beta}}$, så efter $k$ iterationer er der k elementer i  $\widehat{\beta}_j$, som er forskellige fra nul.  
 
 Figur \ref{fig:lars} illustrerer algoritmen, hvor $p = 2$ og $X = \del{\textbf{x}_1, \textbf{x}_2}$. Vi lader kovariaterne være standardiseret med middelværdi 0 og unit varians og lader respons have en middelværdi 0. Den nuværende korrelation er givet ved 
 \begin{align*}
@@ -134,6 +134,9 @@ For at tage den her modifikation i betragtning tilføjer vi følgende i tredje t
 udregnes i stedet for \eqref{eq:u}.
 \end{itemize}
 
+Flere beskrivelser af algoritmen kan findes i \citep{efron}. 
+LARS har følgende fordele. Første den giver en ranking af prædiktorer når der bliver tilføjet andre prædiktorer, som ikke er tilfældet med hard treshold. Det anden fordele er at algoritmen undgår streng korrelerede prædiktorer, hvis en af de korrelerede prædiktorer allerede er inkluderet. Da den nye residual vil have lav korrelation med variabler, som er streng korrelerede variabler, som allerede er inkluderet. 
+Det tredje er at LARS algoritmen ikke er 'greedy', som forward regression, fordi den udnytter hvis en god retning er fundet til dens maksimum . Den fjerede fordel er, at den er hurtig siden den har samme beregnings omkonstninger, som en velkendt OLS \citep{hui_hastie}. 
 
 \section{Coordinate Descent}
 For at løse optimeringsproblemer kan Coordinate Descent anvendes. 

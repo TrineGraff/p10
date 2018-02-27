@@ -116,6 +116,7 @@ grid.arrange(rpi_nons, unrate_nons, m1sl_nons, m2sl_nons, fedfunds_nons,
 
 # stationær
 data_s <- data.frame(dato, transformed_data)
+write.csv(data_s, file = "transformed_data.csv")
 
 rpi_s <- ggplot(data_s, aes(dato, RPI)) + geom_line() +
   labs(x = " ", y = "?") + ggtitle("RPI")

@@ -24,12 +24,12 @@ Estimatet vil derfor have formen
 \end{align*}
 hvor $\lambda > 0$ og kaldes strafparameteren. Den overstående formel er løsning til \textit{ridge regression problemet}:
 \begin{align}
- \widehat{\boldsymbol\beta}^{\text{R}} = \underset{\boldsymbol\beta \in \R^p}{\argmin}  \norm{\y - \X\beta}^2_2 + \lambda \norm{\boldsymbol\beta}_2^2,
+ \widehat{\boldsymbol\beta}^{\text{R}} = \underset{\boldsymbol\beta \in \R^p}{\argmin}  \cbr{\norm{\y - \X\beta}^2_2 + \lambda \norm{\boldsymbol\beta}_2^2},
 \end{align} \label{eq:2.8}
 som er beskrevet, som et lagrange problem. 
 Det kan også kan skrives til et betingede problem 
 \begin{align}
- \widehat{\boldsymbol\beta}^{\text{R}} = \underset{\boldsymbol{\beta} \in \R^p}{\argmin} \norm{\y - \X\boldsymbol\beta}^2_2 \quad \text{underlagt at } \quad \norm{\boldsymbol\beta}_2^2 < t \label{eq:2.7}.
+ \widehat{\boldsymbol\beta}^{\text{R}} = \underset{\boldsymbol{\beta} \in \R^p}{\argmin} \cbr{\norm{\y - \X\boldsymbol\beta}^2_2} \quad \text{underlagt at } \quad \norm{\boldsymbol\beta}_2^2 < t \label{eq:2.7}.
 \end{align}
 Der er en en-til-en korrespondance mellem det betingede problem \eqref{eq:2.7} og Lagrange problemet \eqref{eq:2.8}.
 Første led i \eqref{eq:2.8} svarer til OLS, som finder de estimerede koefficienter ved at minimere SSR, mens sidste led mindsker de estimerede koefficienter .

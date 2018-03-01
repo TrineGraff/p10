@@ -1,0 +1,11 @@
+\subsection{Mallow's $C_p$}
+Mallows's $C_p$ er eqivivalent med Akiake Information Citeriet i det specielle tilfælde af Gaussian lineære regression. 
+Hvis lader $p$ være antallet af regressorer der er blevet tilvalgt fra en mænge af $K > P$, er $C_p$ statistic for den mængde af regressorer givet ved 
+\begin{align*}
+C_p = \frac{SSE_p}{S^2} - N + 2P
+\end{align*}
+hvor $SSE_p = \sum_{i = 1}^N \del{Y_i - Y_{pi}}^2$ er RSS, $Y_{pi}$ er den prædikterede værdi af i'te observartion af $Y$ fra de $p$ prædiktorer, $S^2$ er "residual mean square" efter regression af det komplette set af $K$ regressorer, og kan blive estimerede udfra MSE og $N$ er sample størrelsen. 
+En lille værdi af $C_p$ betyder at den er relativ præcis. 
+*(WIKI)
+ 
+

@@ -2,7 +2,6 @@
 library(tidyverse)
 library(DataCombine)
 
-
 data = read.csv("transformed_data.csv") %>% as.data.frame()
 data = slide(data, Var = 'RPI', NewVar = 'lag_RPI', slideBy = -1)  #lag værdi af responsen
 data = na.omit(data)

@@ -3,15 +3,15 @@
 I dette appendiks præsenteres data. 
 Variablerne er opdelt i henholdsvis otte grupper.
 
-Kolonnen id betegner
-tcode betegner følgende transformation for en tidsrække $x$:
+Kolonnen id betegner variablens nummer, mens tcode indikerer en transformation således at tidsrækken bliver stationær. For en tidsrække $x$ betragtes følgende transformationer:
 
 (1) ingen transformation; (2) \(\Delta x_t\); (3) \(\Delta^2 x_t\); (4) \(\log \del{x_t}\); (5) \(\Delta \log \del{x_t}\); (6) \(\Delta^2 \log \del{x_t}\); (7) \(\Delta \del{\frac{x_t}{x_{t-1}}-1}\)
 
-Kolonnen fred giver navnene på variablerne, som vi anvender i R, efterfulgt af en kort beskrivelse.
+Kolonnen fred giver navnene på variablerne som efterfølges af en kort beskrivelse.
 
 Nogle tidsrækker kræver ændringer i forhold til de rå data som er tilgængeligt på FRED.
-Disse variable er markeret med en stjerne for at indikere at disse er justeret fra tidsrækkerne fra source.
+Disse variable er markeret med en stjerne for at indikere at disse er justeret fra tidsrækkerne fra FRED.
+Variablerne markeret med grå er ikke inkluderet i datasættet, mens variable med rød er fjernet, da disse variable har flere ikke-observeret værdier.
 
 \input{fig/tab/group1}
 \input{fig/tab/group2}

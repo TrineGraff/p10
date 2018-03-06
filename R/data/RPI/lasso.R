@@ -65,13 +65,8 @@ data.frame(
   #fraction fordi vi har L1 norm af vektoren (se plot)
 )
 
+X_test = scale(as.matrix(X_test))
 
-
-prediction <- as.vector(predict(fit, X, lambda_1se, type = "class"))
 prediction$fit
 
-mean(prediction$fit - y)^2
-
-
-
-prediction <- as.vector(predict(fit, X, s = l1_1sd, mode = "fraction"))
+## 

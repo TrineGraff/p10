@@ -1,0 +1,13 @@
+I dette kapitel vil vi introducerer den basale statistiks faktor model, hvorefter den dynamiks faktor model vil blive beskrevet. 
+
+\subsection{Den basale model}
+Hoved antagelsen af faktor analyse er at følgende gælder
+\begin{align}
+y_i = \sum_{k=1}^r \lambda_{ik} f_k + e_i, \label{eq:bas}
+\end{align}
+hvor $i = 1, \dots, N$ . Fejl-udtrykket $e_i$ antages at være mutually ukorrelerede når $\E{e_i} = 0$ og $\E{e_i, e_i} = \sigma_i^2$. Der antages også at $\E{f_k} = 0$ og uden tab af genrealitet  $\E{f_k, f_k} = 1$. 
+Yderligere antages at $\E{f_k, e_i} = 0 \forall i, k$, hvor $\lambda_{ik} $ og $\sigma_i^2$ er estimerede. 
+
+\subsubsection{Faktor loadings estimation}
+Vi er interesseret i at estimerer faktor loadings i ligningen \eqref{eq:bas}. Der er flere metoder til at estimerer disse loadings f.eks the ordinary least square, vægted least square og maximum likelihood.
+Vi ser på maximum likelihood metoden  

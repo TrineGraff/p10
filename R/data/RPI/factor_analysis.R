@@ -1,18 +1,28 @@
 source("setup_data.R")
+library(pls)
+library(plsdof)
+data_train = data_train[, -c(1,2)]
+data = data[, -c(1,2)]
+#model selektion for PC regression baseret på cross-validering
 
-data = data_train[, -c(1,2)]
-lapply(data, as.numeric)
-corrplot(cor(data), order = "hclust", tl.col='black', tl.cex=.5) #kan intet se
+pcr = pcr(RPI ~.,data = data, validation = "CV")
+summary(pcr)
+validationplot(pcr)
+pcr$loadings
+predplot(pcr)
+coefplot(pcr)
 
-nfact_carcass_fa = psych::nfactors(data, rotate = "none", fm = "mle")
+data_train_1 = data_train[, -c(1, 2,3)]
+data_train_1 = as.matrix(data_train_1)
+pcr_cv = pcr.cv(data_train_1, y, k = 10, plot.it = TRUE)
 
+#optimal antal af komponenter baseret på mean squared error
+set.seed(1)
+pcr_cv$m.opt
+pcr_cv$intercept
+pcr_cv$coefficients
+pcr_beta_cv = c(pcr_cv$intercept, pcr_cv$coefficients)
 
-plot(nscree_self <- nFactors::nScree(data))
-nFactors::nScree(data)
+min(pcr_cv$cv.error)
+pcr_cv$m.opt #miniumum fejl
 
-Fa_regr <- factanal(data, factors = 3, rotation = "none", na.action = na.omit, scores = "regression", lower = 0.01)
-
-
-
-FA_bart <- factanal(data, factors = 4, rotation = "none", start = NULL)
-?factanal

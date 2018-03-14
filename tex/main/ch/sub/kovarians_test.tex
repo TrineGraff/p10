@@ -1,0 +1,36 @@
+\section{Post-selection inferens}
+Klassisk statistisk inferens kan ikke anvendes for adaptive procedurer.
+I dette afsnit beskrives en test til inferens efter variabeludvælgelse med en adaptiv metode.
+
+
+\subsection{Kovarians test}
+Testen er baseret på LARS algoritmen og introduceres af.
+
+
+Betragt det velkendte lineær regression setup med en responsvariable \(\y \in \mathbb{R}^n\) og en matrix af prediktorer \(\X \in \mathbb{R}^{n \times p}\)
+\begin{align*}
+\y = \X \beta + \boldsymbol{\epsilon}, \quad \boldsymbol{\epsilon} \sim N\del{\mathbf{0}, \sigma^2 \mathbf{I}_{n \times n}},
+\end{align*}
+hvor \(\beta \in \mathbb{R}^p\) er ukendte koefficienter.
+
+Lad $\lambda_1 > \lambda_2 > \ldots > \lambda_K$ være knuderne returneret af LARS algoritmen.
+Disse er værdierne af regularitets parameteren $\lambda$ hvor der er en ændring i mængden af aktive prediktorer.
+
+Lad \(\mathcal{A}_{k-1}\) være den aktive mængde, som består af prediktorerne med ikke-nul koefficienter, inden denne prediktor er tilføjet og lad estimatet til slut af dette trin være \(\hat{\beta} \del{\lambda_{k+1}}\).
+Vi refitter lasso ved at lade \(\lambda=\lambda_{k+1}\) og blot at anvende variablerne i \(\mathcal{A}_{k-1}\).
+Dette giver estimatet \( \hat{\beta}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}}\).
+Kovarians test størrelsen er defineret ved
+\begin{align}
+T_k = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \hat{\beta} \del{\lambda_{k+1}} \right\rangle - \left\langle  \y, \X \hat{\beta}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}. \label{eq:6.5}
+\end{align}
+Test størrelsen måler andelen af kovariansen mellem outcome og den fittede model som kan tilskrives prediktoren som netop er tilføjet til modellen, dvs forbedringen over intervallet \(\del{\lambda_k, \lambda_{k+1}}\).
+
+Under nulhypotesen at alle $k-1$ variable er i modellen, og under generelle betingelser for modelmatricen $\X$, gælder der for prediktoren i næste trin at
+\begin{align*}
+T_k \overset{d}{\rightarrow} \text{Exp}\del{1}
+\end{align*}
+når \(n, p \rightarrow \infty\).
+Når \(\sigma^2\) er ukendt, kan den estimeres under den fulde model \(\hat{\sigma}^2 = \frac{1}{n-p} \text{RSS}_p\). 
+Dette indsættes i \eqref{eq:6.5}, og eksponential testen bliver en eksakt \(F_{2,n-p}\) test.
+
+\subsubsection{Group lasso}

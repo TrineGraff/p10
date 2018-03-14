@@ -1,0 +1,86 @@
+\section{Post-selection inferens}
+Klassisk statistisk inferens kan ikke anvendes for adaptive procedurer.
+I dette afsnit beskrives en test til inferens efter variabeludvælgelse med en adaptiv metode.
+
+
+\subsection{Kovarians test}
+Testen er baseret på LARS algoritmen og introduceres af \citep{lockhart}.
+
+
+Betragt det velkendte lineær regression setup med en responsvariable \(\y \in \mathbb{R}^n\) og en matrix af prediktorer \(\X \in \mathbb{R}^{n \times p}\)
+\begin{align*}
+\y = \X \beta + \boldsymbol{\epsilon}, \quad \boldsymbol{\epsilon} \sim N\del{\mathbf{0}, \sigma^2 \mathbf{I}_{n \times n}},
+\end{align*}
+hvor \(\beta \in \mathbb{R}^p\) er ukendte koefficienter.
+
+Lad $\lambda_1 > \lambda_2 > \ldots > \lambda_K$ være knuderne returneret af LARS algoritmen.
+Disse er værdierne af regularitets parameteren $\lambda$ hvor der er en ændring i mængden af aktive prediktorer.
+
+Lad \(\mathcal{A}_{k-1}\) være den aktive mængde, som består af prediktorerne med ikke-nul koefficienter, inden denne prediktor er tilføjet og lad estimatet til slut af dette trin være \(\hat{\beta} \del{\lambda_{k+1}}\).
+Vi refitter lasso ved at lade \(\lambda=\lambda_{k+1}\) og blot at anvende variablerne i \(\mathcal{A}_{k-1}\).
+Dette giver estimatet \( \hat{\beta}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}}\).
+Kovarians test størrelsen er defineret ved
+\begin{align}
+T_k = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \hat{\beta} \del{\lambda_{k+1}} \right\rangle - \left\langle  \y, \X \hat{\beta}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}. \label{eq:6.5}
+\end{align}
+Test størrelsen måler andelen af kovariansen mellem outcome og den fittede model som kan tilskrives prediktoren som netop er tilføjet til modellen, dvs forbedringen over intervallet \(\del{\lambda_k, \lambda_{k+1}}\).
+
+Under nulhypotesen at alle $k-1$ variable er i modellen, og under generelle betingelser for modelmatricen $\X$, gælder der for prediktoren i næste trin at
+\begin{align*}
+T_k \overset{d}{\rightarrow} \text{Exp}\del{1}
+\end{align*}
+når \(n, p \rightarrow \infty\).
+Når \(\sigma^2\) er ukendt, kan den estimeres under den fulde model \(\hat{\sigma}^2 = \frac{1}{n-p} \text{RSS}_p\). 
+Dette indsættes i \eqref{eq:6.5}, og eksponential testen bliver en eksakt \(F_{2,n-p}\) test.
+
+\subsection{Teste baseret på polyhedral lemmaet}
+\begin{lem}[Polyhedral lemma]
+Lad \(\alpha=\frac{\mathbb{A} \boldsymbol{\eta}}{\Vert  \boldsymbol{\eta} \Vert_2^2}\)
+Da kan mængden \(\cbr{\mathbf{A} \y \leq b}\) skrives som \(\cbr{\mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}, \mathcal{V}^0 \del{\y} \geq 0} \), hvor
+\begin{align*}
+\mathcal{V}^- \del{\y} &= \max_{j: \alpha_j <0} \frac{b_j - \del{\mathbf{A} \y}_j + \alpha_j \boldsymbol{\eta}^T \y}{\alpha_j} \\
+\mathcal{V}^+ \del{\y} &= \min_{j: \alpha_j >0} \frac{b_j - \del{\mathbf{A} \y}_j + \alpha_j \boldsymbol{\eta}^T \y}{\alpha_j} \\
+\mathcal{V}^0 \del{\y} &= \min_{j: \alpha_j =0} \del{b_j - \del{\mathbf{A} \y}_j}.
+\end{align*}
+Yderligere hvis \(\y\) er normalfordelt, da er \(\mathcal{V}^-\),  \(\mathcal{V}^+\) og  \(\mathcal{V}^0\) uafhængige af \(\boldsymbol{\eta}^T \y\). 
+\end{lem}
+\begin{proof}
+??
+\end{proof}
+
+Vi definerer fordelingsfunktionen af en truncated normal fordeling med støtte begrænset af \(\sbr{c,d}\):
+\begin{align*}
+F_{\mu, \sigma^2}^{c,d} \del{x} = \frac{\Phi\del{\frac{x-\mu}{\sigma}} - \Phi\del{\frac{c-\mu}{\sigma}}}{\Phi\del{\frac{d-\mu}{\sigma}} - \Phi\del{\frac{c-\mu}{\sigma}}},
+\end{align*}
+hvor \(\Phi\) er fordelingsfunktionen af en standard normalfordeling.
+Der gælder, at fordelingsfunktionen af en stokastisk variabel evalueret i værdien af denne variabel har en uniform fordeling. 
+Derfor kan vi skrive, at
+\begin{align}
+F_{\boldsymbol{\eta}^T \boldsymbol{\mu}, \sigma^2 \Vert \boldsymbol{\eta} \Vert_2^2}^{\mathcal{V}^-, \mathcal{V}^+} \del{\boldsymbol{\eta}^T \y} \given \cbr{\mathbf{A} \y \leq b} \sim U \del{0,1}. \label{eq:m3.10}
+\end{align}
+Heraf kan vi udlede testen. 
+Lad os antage nulhypotesen
+\begin{align*}
+H_0: \boldsymbol{\eta}^T \boldsymbol{\mu}=0.
+\end{align*}
+Definer teststørrelsen
+\begin{align}
+T=2 \min\cbr{F_{0, \sigma^2 \Vert \boldsymbol{\eta} \Vert_2^2}^{\mathcal{V}^-, \mathcal{V}^+} \del{\boldsymbol{\eta}^T \y}, 1 - F_{0, \sigma^2 \Vert \boldsymbol{\eta} \Vert_2^2}^{\mathcal{V}^-, \mathcal{V}^+} \del{\boldsymbol{\eta}^T \y}}. \label{eq:m3.11}
+\end{align}
+Polyhedral lemmaet og teststørrelsen \eqref{eq:m3.11} kan anvendes som \(p\)-værdi for nulhypotensen $\boldsymbol{\eta}^T \boldsymbol{\mu}=0$ betinget \(\cbr{\mathbf{A} \y \leq 0}\).
+For et signifikant niveau \(\alpha\) afvises nulhypotesen, hvis $T \leq \alpha$.
+
+\subsubsection{TG test}
+Herefter kan vi beskrive en test for lasso estimater som kan anvendes for ethvert \(\lambda\).
+
+Vi definerer følgende teststørrelse
+\begin{align*}
+T^{\text{tg}}=1- F_{0, \sigma^2 \Vert \boldsymbol{\eta} \Vert_2^2}^{\mathcal{V}^-, \mathcal{V}^+} = \frac{\Phi \del{\frac{\mathcal{V}^+}{\sigma  \boldsymbol{\eta}^T  \boldsymbol{\eta}}}-\Phi \del{\frac{\boldsymbol{\eta}^T \y}{\sigma  \boldsymbol{\eta}^T  \boldsymbol{\eta}}}}{\Phi \del{\frac{\mathcal{V}^+}{\sigma  \boldsymbol{\eta}^T  \boldsymbol{\eta}}}-\Phi \del{\frac{\mathcal{V}^-}{\sigma  \boldsymbol{\eta}^T  \boldsymbol{\eta}}}}.
+\end{align*}
+Ifølge \eqref{eq:m3.10} kan denne teststørrelse også anvendes som en \(p\)-værdi for \(H_0\) betinget \(\cbr{\mathbf{A} \y \leq 0}\).
+For at teste \(H_0: \boldsymbol{\eta}^T \boldsymbol{\mu}=0\), er teststørrelsen
+\begin{align*}
+T^{\text{TG}}= 2 \min \cbr{T^{\text{tg}}, 1-T^{\text{tg}}}
+\end{align*}
+
+\subsubsection{Spacing test}

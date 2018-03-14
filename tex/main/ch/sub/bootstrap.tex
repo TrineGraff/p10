@@ -1,0 +1,15 @@
+\section{Bootstrap}
+Bootstrap anvendes ofte til at undersøge statistiske egenskaber af komplekse estimatorer.
+For at motivere dets anvendelses, antages at vi har fået et estimat \(\hat{\beta} \del{\hat{\lambda}_{\text{CV}}}\) for et lasso problem udfra følgende procedure, kaldet krydsvalidering:
+%
+\begin{enumerate}
+\item Fit en lasso sti til \(\del{\X, \y}\) over et dense gitter med værdier \(\Lambda = \cbr{\lambda_\ell}_{\ell=1}^L\)
+\item Opdel træningsmængden ligeligt i \(K\) dele
+\item Udeluk én af de \(K\) dele, og fit en lasso sti på de resterende \(K-1\) dele med samme gitter \(\Lambda\)
+\item For hver \(\lambda \in \Lambda\) udregnes den gennemsnitlige kvadrerede prediktions fejl for den udelukket del
+\item Tag gennemsnittet af disse fejl hvoraf vi får en prediktions fejl kurve over gitteret \(\Lambda\)
+\item Find værdien \(\hat{\lambda}_{\text{CV}}\) som minimerer denne kurve, og returnerer da koefficientvektoren fra det originale fit i trin (1) for denne værdi af $\lambda$
+\end{enumerate}
+For \(K=10\) betegnes proceduren som en 10-fold krydsvalidering.
+
+Bootstrap anvendes da til at vurdere fordelingen af \(\hat{\beta} \del{\hat{\lambda}_{\text{CV}}}\) -- ikke-parametrisk og parametrisk??

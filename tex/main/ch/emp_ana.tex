@@ -1,0 +1,79 @@
+\chapter{Empirisk analyse}
+I dette kapitel anvender vi data fra FRED, som er hentet fra Federal Reserve Bank of St. Louis \url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}.
+Der anvendes nogle transformationer for at gøre tidsrækkerne stationære, som er noteret mere detaljeret i appendiks ... 
+Disse transformationer er forslået af Michael McCracken fra Federal Reserve Bank of St. Louis.  
+Der observeres at 5 af disse variabler har mere end 43 NA's inkluderet og derfor bliver de fjernet fra datasættet. 
+Derudover ser vi at de resterende NA's opstår kun i de første eller/og sidste observationer, vi fjerner derfor 17 observationer i hver variable for at undgå NA's. 
+Så vores datasæt inkluderer altså 123 tidsrækker, som indeholder $691$ månedlige observationer og går fra 1. januar 1960 til 1. juli 2017. 
+Hernæst har vi standardiseret vores data, således at variablerne er centreret omkring 0 og har en varians 1. 
+
+Datasættet repræsenterer en stor brede af makroøkonomiske variabler, som Michael McCracken har inddelt i 8 kategorier. 
+\begin{itemize}
+\item \textbf{Output og indkomst:} Indeholder 16 tidsrækker
+\item \textbf{Arbejdsmarked:}  Indeholder 31 tidsrækker
+\item \textbf{Boliger:} Indeholder 10 tidsrækker
+\item \textbf{Forbrug, ordrer og varebeholdninger:} Indeholder 7 tidsrækker
+\item \textbf{Penge og kredit:} Indeholder 14 tidsrækker
+\item\textbf{ Rente og valutakurs:} Indeholder 21 tidsrækker
+\item \textbf{Priser:} Indeholder 20 tidsrækker
+\item \textbf{Aktiemarked:} Indeholder 4 tidsrækker
+\end{itemize}
+
+Når vi konstruerer vores model anvender vi 122 forklarende variabler og 1 respons variable og for at validerer vores model deler vi vores fulde datasæt i et træningssæt, som består af 552 observationer fra 1. januar 1960 til 1. december 2005 og et testsæt, som består af 139 observationer fra 1. januar 2006 til 1. Juli 2017. 
+En betydningsfuld makroøkonomisk variable er arbejdsløshed, som blandt andet vil være vores responsvariable.  Arbejdsløshed er inkluderet i gruppen arbejdsmarked. 
+\section{Benchmark}
+Faktormodellen
+
+\newpage
+
+\section{Shrinkage metoder}
+I denne sektion vil vi beskrive vores resultater af de forskellige shrinkage metoder. 
+Disse metoder er anvendt af en følge af forskellige $\lambda$ værdier.
+Vi anvender en 10-gange krydsvalidering for at estimerer den optimale $\lambda$ og derudfra estimerer den bedste mulige model. 
+Krydsvalidering bliver målt i gennemsnitlig kvadraters fejl for modellen, som findes for hver værdi af $\lambda$. 
+Vi er interesseret i den model med mindst gennemsnitlige kvadraters fejl, men hvor kompleksiteten også spiller en rolle.
+
+\subsection{Lasso}
+Figur \ref{fig:cv_lasso_img} viser forholdet mellem værdien af log af lambda, samt krydsvaliderings fejlene. 
+Der ses, at det er først når log lambda er større end -6, der sker nogle signifikante ændringer i krydsvalideringfejlene.
+
+\imgfigh{lasso_cv.pdf}{0.7}{Viser krydsvalidering stien, hvor forholdet mellem den gennemsnitlige kvadraters fejl og $\lambda$ værdierne. De lodrette stiplede streger viser logaritmen af $\lambda_min$  og $\lambda_1se$}{cv_lasso_img}
+ 
+Tabel \ref{tab:cv_lasso} viser værdien af $\lambda_{min}$, som giver den mindste krydsvaliderings fejl samt værdien af $\lambda_{1se}$ som er den største værdi af lambda, hvor fejlene er under én standard afvigelse  af minimum værdien.  Værdien af $p$ betegner kompleksiteten, og error er krydsvalideringsfejlen. 
+\input{fig/tab/lasso_cv}
+Udfra dette kan vi se, at der ikke er stor forskel på krydsvaliderings fejlene, men en betydelig reducering af antal parameter. 
+Derfor lader vi den optimale lambda være med én standard afvigelse i fejlene, dvs $\lambda_{1se}$. 
+Tabel \ref{tab: lasso_ud} viser hvilken variabler lasso udvælger. Vi kan se, at lasso vælger 9 variabler ud af de 15, som tilhører gruppen arbejdsmarked. 
+
+\input{fig/tab/lasso_ud}
+
+\newpage
+
+\subsection{Ridge}
+Vi ved at ridge regression ikke mindsker antallet af forklarende variable, men derimod bare mindsker estimaterne. Derfor lader vi den optimale $\lambda$-værdi være den med mindst krydsvalideringsfejl, siden at $\lambda$ med en standard afvigelse i fejlene vil ikke ændre på kompleksiteten. Dette ses også i tabellen \ref{tab:cv_ridge}. 
+
+\input{fig/tab/ridge_cv}
+På plottet ses også, at log $\lambda$ ikke skal være meget større end -4 før vi får en høj fejl.
+\imgfigh{ridge_cv.pdf}{0.7}{Viser krydsvalidering stien, hvor forholdet mellem den gennemsnitlige kvadraters fejl og $\lambda$ værdierne. De lodrette stiplede streger viser logaritmen af $\lambda_{min}$  og $\lambda_{1se}$ }{cv_ridge_img}
+
+
+\newpage
+
+\subsection{Elastic Net}
+For elastik net ses i ligning ... , at vi har endnu en ubekendt variable andet end lambda nemlig $\alpha$, hvor $\alpha \in [0,1]$. Derfor tester vi en følge med længde 10 af $\alpha$-værdier og ud fra hvert værdi af $\alpha$ finder vi $\lambda_{min}$ og $\lambda_{1se}$ og deres krydsvaliderings fejl. Disse værdier ses i tabel \ref{tab:cv_el}. 
+
+\input{fig/tab/el_cv}
+For at få et bedre overblik viser tabel  \ref{tab:cv_el1}  den $\lambda_min$ samt den $\lambda_{1se}$ med mindst gennemsnitlige krydsvalideringsfejl, samt antallet af parameter. 
+Igen ser vi, at krydsvaliderings fejl for $\lambda_{1se}$ ikke er signifikant forskellige fra $\lambda_{\min}$ men der sker en mindskning i kompleksiteten. Derfor vil vores optimale model være modellen med $\lambda_{1se}$. 
+\input{fig/tab/el_cv1}
+Tabel viser hvilken variabler Elastic udvælger, som de forklarende variabler. 
+\input{fig/tab/el_ud}
+
+
+
+
+
+
+
+
+

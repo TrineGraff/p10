@@ -1,5 +1,8 @@
 source("setup_data.R")
 library(tidyverse)
+library(glmnet)
+library(gglasso)
+library(ggplot2)
 
 drops = c("UNRATE")
 x = data_train[ , !(colnames(data_train) %in% drops)] 
@@ -16,8 +19,6 @@ lasso_cv = cv.glmnet(x, y, intercept = FALSE, family = "gaussian", alpha = 1)
 
 idmin = match(lasso_cv$lambda.min, lasso_cv$lambda)
 lambda_1se = max(lasso_cv$lambda[idmin], na.rm = TRUE)
-
-plot(lasso_cv)
 
 data.frame(
   lambda = c("min", "1se"), 
@@ -65,4 +66,35 @@ fit_sd = glmnet(x, y, family = "gaussian", lambda = cv_sd$lambda.1se, alpha = cv
 
 # Group Lasso -------------------------------------------------------------------
 
+grp <- c(1, 1, rep(4, 3), rep(1, 14), rep(2, 27), rep(3, 10), rep(4, 4),
+         rep(5, 10), rep(8, 4), rep(6, 21), rep(7, 20), rep(2, 3), rep(5, 4)) 
+
+gglasso_cv <- cv.gglasso(x, y, group = grp, nfold = 10, intercept = FALSE)
+gglasso_fit = gglasso(x, y, group = grp, intercept = FALSE)
+
+parm(coef(gglasso_cv$gglasso.fit, s = gglasso_cv$lambda.1se))
+
+gglasso_cv_p = cv.grpreg(x, y, group = grp, nfold = 10, intercept = FALSE, penalty = "grLasso")
+gglasso_fit_p = grpreg(x, y, group = grp, intercept = FALSE)
+
+
+
+# plot --------------------------------------------------------------------
+getAnywhere(plot.cv.glmnet) #se plot kode
+length(lasso_cv$lambda)
+length(lasso_cv$cvm)
+
+qplot(log(lasso_cv$lambda), lasso_cv$cvm, col = "red", main = "Lasso") + 
+  labs(x = expression(log(lambda)), y = "MSE" ) +
+  geom_errorbar(aes(ymin=lasso_cv$cvm + lasso_cv$cvsd, ymax= lasso_cv$cvm - lasso_cv$cvsd ), width=.1, color = "grey") + 
+  geom_point(aes(log(lasso_cv$lambda), lasso_cv$cvm)) +
+ # theme(legend.position="none") +
+  geom_vline(aes(xintercept= log(lasso_cv$lambda.min), col = "blue"), linetype="dotted") +
+  geom_vline(aes(xintercept= log(lasso_cv$lambda.1se), col = "brown"), linetype="dotted") 
+
+
+
+df = data.frame(lasso_cv$lambda, lasso_cv$cvm, lasso_cv$cvsd, min = df$lasso_cv.cvm + df$lasso_cv.cvsd, max = df$lasso_cv.cvm - df$lasso_cv.cvsd)
+ggplot(df, aes(df$lasso_cv.lambda,df$lasso_cv.cvm )) + 
+  geom_errorbar(aes(ymin = df$lasso_cv.cvm + df$lasso_cv.cvsd, ymax = df$lasso_cv.cvm - df$lasso_cv.cvsd, width = .1))
 

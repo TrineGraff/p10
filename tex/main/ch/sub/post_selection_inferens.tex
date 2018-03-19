@@ -3,7 +3,7 @@ Klassisk statistisk inferens kan ikke anvendes for adaptive procedurer.
 I dette afsnit beskrives en test til inferens efter variabeludvælgelse med en adaptiv metode.
 
 
-\subsection{Kovarians test}
+\subsection{Kovarians test} \label{subsec:kovarians_test}
 I dette afsnit introduceres en test der tildeler \(p\)-værdier til prediktorerne valgt af adaptive metoder.
 Testen er baseret på LARS algoritmen og blev introduceret af \citep{lockhart}.
 
@@ -98,6 +98,49 @@ Det gule område er udvælgenses hændelsen \(\cbr{\mathbf{A} \y \leq b}\)}
 \end{figure}
 
 
+\begin{lem}  \label{lem:lem2}
+Lad \(\Phi \del{x}\) betegne fordelingsfunktionen af en standard normalfordeling, da er fordelingsfunktionen for en normalfordeling med middelværdi \(\mu\) og varians \(\sigma^2\) af en stokastisk variable indenfor intervallet \(\sbr{c,d}\) givet ved
+\begin{align*}
+F_{\mu, \sigma^2}^{c,d} \del{x} = \frac{\Phi\del{\frac{x-\mu}{\sigma}} - \Phi\del{\frac{c-\mu}{\sigma}}}{\Phi\del{\frac{d-\mu}{\sigma}} - \Phi\del{\frac{c-\mu}{\sigma}}}.
+\end{align*}
+For \(\boldsymbol{\eta}^T \boldsymbol{\eta} \neq 0\)
+\begin{align*}
+\mathbb{P} \del{F_{\boldsymbol{\eta}^T \boldsymbol{\mu}, \sigma^2 \Vert \boldsymbol{\eta} \Vert_2^2}^{\mathcal{V}^-, \mathcal{V}^+} \del{\boldsymbol{\eta}^T \y} \leq \alpha \given \mathbf{A} \y \leq b} = \alpha, 
+\end{align*}
+for ethvert \(0 \leq \alpha \leq 1\), hvor \(\mathcal{V}^-\) og \(\mathcal{V}^+\) er defineret i \eqref{eq:V-} samt \eqref{eq:V+}. 
+\end{lem}
+%
+Lemmaet fører til gyldige betinget \(p\)-værdier for at teste nulhypotesen \(H_0: \boldsymbol{\eta}^T \boldsymbol{\mu}=0\) og tilhørende betinget konfidensintervaller for \(\boldsymbol{\eta}^T \boldsymbol{\mu}\).
+
+\begin{lem} \label{lem:lem3}
+Givet ---, antag at vi vil teste
+\begin{align*}
+H_0: \boldsymbol{\eta}^T \boldsymbol{\mu}=0 \quad \text{imod} \quad H_1: \boldsymbol{\eta}^T \boldsymbol{\mu} \neq 0.
+\end{align*}
+Definer teststørrelsen
+\begin{align}
+T=2 \cdot \min\cbr{F_{0, \sigma^2 \Vert \boldsymbol{\eta} \Vert_2^2}^{\mathcal{V}^-, \mathcal{V}^+} \del{\boldsymbol{\eta}^T \y}, 1 - F_{0, \sigma^2 \Vert \boldsymbol{\eta} \Vert_2^2}^{\mathcal{V}^-, \mathcal{V}^+} \del{\boldsymbol{\eta}^T \y}}, \label{eq:post_1.18}
+\end{align}
+hvor -- er givet i lemma \ref{lem:lem2}.
+Da er \(T\) en gyldig \(p\)-værdi for \(H_0\) betinget \(\mathbf{A} \y \leq b\)
+\begin{align*}
+\mathbb{P}_{\boldsymbol{\eta}^T \boldsymbol{\mu}=0} \del{T \leq \alpha \given \mathbf{A} \y \leq b} = \alpha,
+\end{align*}
+for ethvert \(0 \leq \alpha \leq 1\). 
+Definer \(u_{\frac{\alpha}{2}}, u_{1-\frac{\alpha}{2}}\) som opfylder, at
+\begin{align*}
+1-F_{u_{\frac{\alpha}{2}}, \sigma^2 \boldsymbol{\eta}^T  \boldsymbol{\eta} }^{\mathcal{V}^- \mathcal{V}^+} \del{\boldsymbol{\eta}^T \y} &= \frac{\alpha}{2} \\
+1-F_{u_{1-\frac{\alpha}{2}}, \sigma^2 \boldsymbol{\eta}^T  \boldsymbol{\eta} }^{\mathcal{V}^- \mathcal{V}^+} \del{\boldsymbol{\eta}^T \y} &= 1-\frac{\alpha}{2}.
+\end{align*}
+Da gælder, at
+\begin{align*}
+\mathbb{P} \del{u_{\frac{\alpha}{2}} \leq  \boldsymbol{\eta}^T \boldsymbol{\mu} \leq  u_{1-\frac{\alpha}{2}} \given \mathbf{A} \y \leq b} = 1- \alpha.
+\end{align*}
+\end{lem}
+
+
+
+
 Vi definerer fordelingsfunktionen af en truncated normal fordeling med støtte begrænset af \(\sbr{c,d}\):
 \begin{align*}
 F_{\mu, \sigma^2}^{c,d} \del{x} = \frac{\Phi\del{\frac{x-\mu}{\sigma}} - \Phi\del{\frac{c-\mu}{\sigma}}}{\Phi\del{\frac{d-\mu}{\sigma}} - \Phi\del{\frac{c-\mu}{\sigma}}},
@@ -164,9 +207,29 @@ Yderligere er \(s_k\) og \(s_{\mathcal{A}_{k-1}}\) fortegnene for koefficientern
 Matricen \(\mathbf{A}\) i knude \(\lambda_k\) har flere rækker end i det faste \(\lambda\) tilfælde, da vi betinger på hele følgen \(\cbr{\lambda_\ell}_1^k\).
 Alligevel er udregningerne håndterbare og vi kan udregne eksakte \(p\)-værdier og konfidens intervaller for de valgte variable, som i det faste \(\lambda\) tilfælde.
 
-At teste nulhypotesen \(H_0: \boldsymbol{\eta}^T \boldsymbol{\mu} =0\) er hermed ækvivalent med at teste \(H_0: \mathbf{e}_j^T \X_\mathcal{A}^+ \boldsymbol{\mu}=\beta_{j \ell}=0\).
+
+
+At teste nulhypotesen \(H_0: \boldsymbol{\eta}^T \boldsymbol{\mu} =0\) er hermed ækvivalent med at teste \(H_0: \mathbf{e}_k^T \X_{\mathcal{A}_k}^+ \boldsymbol{\mu}=\beta_{j \ell}=0\).
 Spacing testen tester altså om den tilføjede variable i \(k\)'te trin af LARS algoritmen er signifikant.
 Vi definerer teststørrelsen
 \begin{align*}
 T_k^{\text{SP}}= \frac{\Phi \del{\lambda_{k-1} \frac{F \del{\mathcal{A}_{k-1}, s_{\mathcal{A}_{k-1}}, j}}{\sigma}} - \Phi \del{\lambda_{k} \frac{F \del{\mathcal{A}_{k-1}, s_{\mathcal{A}_{k-1}}, j}}{\sigma}}}{\Phi \del{\lambda_{k-1} \frac{F \del{\mathcal{A}_{k-1}, s_{\mathcal{A}_{k-1}}, j}}{\sigma}} - \Phi \del{M_{k}^+ \frac{F \del{\mathcal{A}_{k-1}, s_{\mathcal{A}_{k-1}}, j}}{\sigma}}}
 \end{align*}
+
+
+Lad
+\begin{align*}
+\omega_k = \Vert \del{\X_{\mathcal{A}_k}^+}^T s_{\mathcal{A}_k} -   \del{\X_{\mathcal{A}_{k-1}}^+}^T s_{\mathcal{A}_{k-1}} \Vert_2,
+\end{align*}
+da er teststørrelsen af spacing testen givet ved
+\begin{align}
+T_k^{\text{SP}}= \frac{\Phi \del{\lambda_{k-1} \frac{\omega_k}{\sigma}} - \Phi \del{\lambda_{k} \frac{\omega_k}{\sigma}}}{\Phi \del{\lambda_{k-1} \frac{\omega_k}{\sigma}} - \Phi \del{M_{k}^+ \frac{\omega_k}{\sigma}}} \label{eq:post_42}.
+\end{align}
+Teststørrelsen \eqref{eq:post_42} er one-sided, hvor \(H_1: \)
+
+
+
+\begin{thm}[Spacing test]
+Antag vi har gennemgået \(k\) trin af LARS algoritmen.
+
+\end{thm}

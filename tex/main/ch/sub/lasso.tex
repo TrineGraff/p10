@@ -72,17 +72,51 @@ Heraf kan ridge regression estimatoren findes ved at differentiere \(\del{\y - \
 \end{align*}  
 Ift til mindste kvadraters regression tilføjer ridge regression en positiv konstant $\lambda$ på diagonalen af $\X^T \X$, hvilket medfører, at \(\X^T \X\) er invertibel, selvom $\X$ ikke har fuld rang. 
 Dermed er en entydig løsning altid garanteret. 
- 
-
+%
+\begin{exmp}
+Vis at responsvariable \(\y\) og designmatricen \(\X\) kan omskrives på passende vis således at vi kan udlede estimatoren for ridge regression udfra mindste kvadraters metode, \(\del{\tilde{\X}^T \tilde{\X}}^{-1} \tilde{\X}^T \tilde{\y}\), hvor \(\tilde{\y}\) og \(\tilde{\X}\) er de omskrevne responsvariable og designmatrix.
+\end{exmp} 
+%
+\begin{sol}
+Vi omskriver \eqref{eq:2.8}
+\begin{align*}
+\arg\min_{\beta_0, \beta} \left\lbrace \frac{1}{2n} \sum_{i=1}^n \left(y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j \right)^2 + \sum_{j=1}^p \left( 0 - \sqrt{\lambda} \beta_j \right)^2 \right\rbrace
+\end{align*}
+Hermed har vi omskrevet $\ell_2$ kriteriet, dvs $\sum_{j=1}^p \beta_j^2 \leq t^2$, til et andet OLS problem for et andet datasæt.
+Lad $\tilde{\mathbf{y}} = \begin{bmatrix}
+\mathbf{y} \\ 0_p
+\end{bmatrix}$ og $\tilde{\mathbf{X}} = \begin{bmatrix}
+\mathbf{X} \\ \sqrt{\lambda} I_p
+\end{bmatrix}$
+så
+\begin{align*}
+(\tilde{\mathbf{X}}^T \tilde{\mathbf{X}})^{-1} \tilde{\mathbf{X}}^T \tilde{\mathbf{y}} 
+&= \left( \begin{bmatrix}
+\mathbf{X} & \sqrt{\lambda} I_p
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{X} \\ \sqrt{\lambda} I_p
+\end{bmatrix} \right)^{-1}
+\begin{bmatrix}
+\mathbf{X} & \sqrt{\lambda} I_p
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{y} \\ 0
+\end{bmatrix} \\
+&= \left( \mathbf{X}^T \mathbf{X} + \lambda I_p \right)^{-1} \mathbf{X}^T \mathbf{y},
+\end{align*}
+som netop er ridge regression estimatoren.
+\end{sol}
 
 Variabel udvægelsen for ridge regression og lasso illustreres på figur \ref{fig:LassoRig}.
 \begin{figure}[H]
-\begin{minipage}{0.5\linewidth}
-\scalebox{0.8}{\input{fig/Ridge.tikz}}
+\centering
+\begin{minipage}{0.4\linewidth}
+\scalebox{0.7}{\input{fig/Ridge.tikz}}
 \end{minipage}
-\hspace{0.3cm}
-\begin{minipage}{0.5\linewidth}
-\scalebox{0.8}{\input{fig/Lasso.tikz}}
+\hspace{0.2cm}
+\begin{minipage}{0.4\linewidth}
+\scalebox{0.7}{\input{fig/Lasso.tikz}}
 \end{minipage}
 \caption{Konturer for SSR og betingelsesområderne for ridge regression (venstre) og lasso (højre). De blå arealer er betingelsesområderne $\vert \beta_1 \vert+\vert \beta_2 \vert \leq t$ og $\beta_1^2+\beta_2^2 \leq t^2$, mens de røde ellipser er konturkurver for SSR. Konturkurverne har centrum i OLS estimatoren, $\hat{\beta}^\text{OLS}$.} \label{fig:LassoRig}
 \end{figure}
@@ -217,4 +251,19 @@ Men i det ortogonale tilfælde ...
 
 Ideen tages et skridt videre i sektion \ref{subsec:kovarians_test} hvor vi beskriver \textit{kovarians testen} til at teste significancen af prediktorerne ift lasso.
 
+
+\subsubsection{Ikke-negative garrote}
+\textit{Ikke-negative garrote}, introduceret af \citep{nonnegative_garrote}, er en two-stage procedure. 
+Givet et initial estimat af regression koefficienterne \(\tilde{\beta} \in \mathbb{R}^p\), kan vi løse optimeringsproblemet
+\begin{align}
+\arg \min_{c \in \mathbb{R}^p}  \cbr{ \sum_{i=1}^n \del{y_i - \sum_{j=1}^p c_j x_{ij} \tilde{\beta}_j}^2}, \ \text{underlagt at } c_j \geq 0 \text{ og } \Vert c \Vert_1 \leq t. \label{eq:2.19}
+\end{align}
+Lad \(\hat{\beta}_j = \hat{c}_j \cdot \tilde{\beta}_j\), \(j = 1, \ldots, p\). \( \hat{\beta}_j^\text{garotte} = \hat{c}_j \cdot \hat{\beta}_j^\text{OLS}\)
+På Lagrange form
+\begin{align*}
+\arg \min_{c \in \mathbb{R}^p}  \cbr{\Vert \y - \X \beta \Vert_2^2 + \lambda \Vert c \Vert_1}
+\end{align*}
+Der er en ækvivalent Lagrange form for denne procedure, ..
+
+\newpage
  

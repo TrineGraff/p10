@@ -22,6 +22,15 @@ Hvis $\alpha=1$, da reduceres strafleddet til $\ell_1$-normen svarende til straf
 
 For ethvert $\alpha<1$ og $\lambda>0$, da er det elastiske net problem \eqref{eq:4.2} streng konveks, dvs der eksisterer en entydig løsning uanset korrelations strukturen af $X_j$.
 
+\begin{figure}[H]
+\centering
+\scalebox{0.8}{\input{fig/elastisk_net.tikz}}
+\caption{-.} \label{fig:elastisk}
+\end{figure}
+
+
+
+
 Figur \ref{fig:elastisk_net} viser betingelsesområderne for henholdsvis det elastiske net og standard lasso for tre variable.
 Heraf ses at det elastiske net har egenskaberne af $\ell_1$ kuglen og $\ell_2$ kuglen: de skarpe hjørner og kanter opfordrer til variable udvælgelse, mens de kurvede konturer opfordrer stærk korreleret variable at dele koefficienterne.
 %
@@ -130,18 +139,28 @@ For \(q<1\) er betingelsesområderne ikke-konvekse. Lavere \(q\) svarer til fær
 %
 
 \subsubsection{Adaptive lasso}
-\citep{adaptive_lasso}
-tilpasse modeller som er mere sparse end lasso
-Den vægtede lasso løser
+\citep{adaptive_lasso} introducerede adaptive lasso som er endnu en udvidelse af standard lasso.
+Ideen bag adaptive lasso er at tildele koefficienterne individuelle strafvægte istedet for at staffe koefficienterne ligeligt som i standard lasso.
+Den vægtede lasso er givet ved
 \begin{align*}
 \arg \min_{\beta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p w_j \vert \beta_j \vert},
 \end{align*}
-hvor $w_j = \frac{1}{\vert \tilde{\beta}_j \vert^\nu}$.
-Strafleddet for den vægtede lasso kan ses som en approksimation til $\ell_q$ strafleddene med $q=1-\nu$.
+hvor \(\mathbf{w} \in \mathbb{R}^p\) er en kendt vektor og \(w_j \geq 0\).
 
-\citep{adaptive}
+Adaptive lasso er blot en vægtet lasso, hvor vægtene \(\mathbf{w}\) er bestemt således at metoden opfylder orakelegenskaberne.
+Lad \(\tilde{\beta}\) være et pilot estimat og definer $w_j = \frac{1}{\vert \tilde{\beta}_j \vert^\gamma}$ hvor \(\gamma>0\), da er adaptive lasso givet ved
+\begin{align}
+\arg \min_{\beta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{1}{\vert \tilde{\beta}_j \vert^\gamma} \vert \beta_j \vert}, \label{eq:4.76}
+\end{align}
+Strafleddet for adaptive lasso kan ses som en approksimation til $\ell_q$ strafleddene med $q=1-\gamma$.
+Givet pilot estimaterne da er \eqref{eq:4.76} konveks.
+Hvis pilot estimaterne er \(\sqrt{n}\) konsitent, da opfylder ..
+Hvis \(p <n\) da kan estimaterne for mindste kvadraters metode anvendes som pilot estimater. Hvis \(p \geq n\) da er estimaterne for mindste kvadraters metode ikke defineret, men de univariate regressions koefficienter kan anvendes som pilot estimater og ...
+
+Den aktive mængde for adaptive lasso estimatet betegnes \(\mathcal{A}_n^\text{AL} = \cbr{j \ : \hat{\beta}^{\text{AL}} \neq 0 }\)
+
 \begin{thm}\label{thm:ALoracle}
-Antag $\frac{\lambda_n}{\sqrt{n}} \rightarrow 0$ og $\lambda_n n^\frac{\gamma-1}{2} \rightarrow \infty$. Da må adaptive lasso estimaterne opfylde følgende:
+Antag $\frac{\lambda_n}{\sqrt{n}} \rightarrow 0$ og $\lambda_n n^\frac{\gamma-1}{2} \rightarrow \infty$. Da opfylder adaptive lasso estimaterne følgende:
 \begin{itemize}
 \item Udvælgelsen af variabler er konsistent: $\lim_{n \rightarrow \infty} P(\mathcal{A}_n^\text{AL}=\mathcal{A})=1$
 \item Asymptotisk normalitet: $\sqrt{n}\left( \hat{\boldsymbol{\beta}}_\mathcal{A}^{\text{AL}}-\boldsymbol{\beta}_\mathcal{A}^* \right) \overset{d}{\rightarrow} N(\textbf{0},\sigma^2 \boldsymbol{Q}_{11}^{-1}).$
@@ -158,9 +177,10 @@ Lad $V(\mathbf{u})^{(n)}=\Psi_n(\textbf{u}) - \Psi_n(\textbf{0})$, da gælder, a
 V(\mathbf{u})^{(n)}= \left\Vert \textbf{y} - \sum_{j=1}^p \textbf{x}_j \left( \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right) \right\Vert^2 +
 \lambda_n \sum_{j=1}^p \hat{w_j} \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert 
 -
-\left\Vert \textbf{y} - \sum_{j=1}^p \textbf{x}_j \beta_j^{*} \right\Vert^2 - \lambda_n \sum_{j=1}^p \hat{w_j} \left\vert \beta_j^{*} \right\vert. 
+\left\Vert \textbf{y} - \sum_{j=1}^p \textbf{x}_j \beta_j^{*} \right\Vert^2 - \lambda_n \sum_{j=1}^p \hat{w_j} \left\vert \beta_j^{*} \right\vert.
 \end{align*}
-Vi opdeler ligningen og ser først på leddene hvori strafparametrene indgår
+Ovenstående ligning opdeles.
+Vi betragter først leddene hvori strafparametrene indgår
 \begin{align*}
 \lambda_n \sum_{j=1}^p \hat{w_j} \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert- \lambda_n \sum_{j=1}^p \hat{w_j} \left\vert \beta_j^{*} \right\vert 
 = \lambda_n \sum_{j=1}^p \hat{w_j} \left( \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert
@@ -172,9 +192,9 @@ Vi ser herefter på de to resterende led
 \end{align*}
 som kan skrives på matrix-vektor form
 \begin{align*}
-\left(
-\textbf{y}-\textbf{X}\boldsymbol{\beta}^{*} -\frac{\textbf{X}\textbf{u}}{\sqrt{n}}
-\right)^2 - \left( \textbf{y} - \textbf{X} \boldsymbol{\beta}^{*} \right)^2  & = \left( \textbf{y} - \textbf{X} \boldsymbol{\beta}^{*} \right)^2 + \left( \frac{\mathbf{X}\mathbf{u}}{\sqrt{n}} \right)^2- 2 \left( \textbf{y} - \textbf{X} \boldsymbol{\beta}^{*} \right)^T \left( \frac{\mathbf{X}\mathbf{u}}{\sqrt{n}} \right) - \left( \textbf{y} - \textbf{X} \boldsymbol{\beta}^{*} \right)^2 \\
+\left\Vert \textbf{y}-\textbf{X}\boldsymbol{\beta}^{*} -\frac{\textbf{X}\textbf{u}}{\sqrt{n}} \right\Vert^2 - \left\Vert \textbf{y} - \textbf{X} \boldsymbol{\beta}^{*} \right\Vert^2  & =
+\left\Vert \boldsymbol{\epsilon} - \frac{\textbf{X}\textbf{u}}{\sqrt{n}} \right\Vert^2 - \left\Vert \boldsymbol{\epsilon} \right\Vert^2  \\
+&= \del{\boldsymbol{\epsilon} - \frac{\textbf{X}\textbf{u}}{\sqrt{n}}}^T \del{\boldsymbol{\epsilon} - \frac{\textbf{X}\textbf{u}}{\sqrt{n}}} - \boldsymbol{\epsilon}^T \boldsymbol{\epsilon} \\
 & = \frac{\textbf{u}^T (\textbf{X}^T\textbf{X})  \textbf{u}}{n} - 2 \boldsymbol{\epsilon}^T \left( \frac{\mathbf{X}\mathbf{u}}{\sqrt{n}} \right) \\ 
 &= \textbf{u}^T \left(\frac{1}{n}\textbf{X}^T\textbf{X}\right)  \textbf{u}- 2 \frac{\boldsymbol{\epsilon}^T \textbf{X}}{\sqrt{n}}\textbf{u}.
 \end{align*}
@@ -198,11 +218,11 @@ Af Slutskys sætning \ref{thm:sluktsky} har vi, at
 \frac{ \lambda_n}{\sqrt{n}} \hat{w}_j \sqrt{n} \left(\left\vert \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert \right) \overset{p}{\rightarrow} 0.
 \end{align*}
 Hvis $\beta_j^{*} = 0$, da har vi $\sqrt{n} \left( \left\vert \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert \right) = \left\vert u_j \right\vert$.
-Da $\gamma >0$ kan vægtene omskrives til 
+Vægtene omskrives til
 \begin{align*}
 \hat{w}_j= \left( \frac{1}{\left\vert \hat{\beta}_j \right\vert} \right)^\gamma=\left( \frac{\sqrt{n}}{\sqrt{n} \left\vert \hat{\beta}_j \right\vert} \right)^\gamma = \frac{n^{\gamma/2}}{ \left( \sqrt{n} \left\vert \hat{\beta}_j \right\vert \right)^\gamma},
 \end{align*} 
-hvor $\hat{\beta}_j$ er rod-$n$-konsistent. Heraf har vi, at $\frac{\lambda_n}{\sqrt{n}} \hat{w}_j = \frac{\lambda_n}{\sqrt{n}} \frac{n^{\gamma/2}}{\vert \sqrt{n} \hat{\beta}_j \vert^\gamma} = \lambda_n n^{\frac{\gamma -1}{2}} \frac{1}{\vert \sqrt{n} \hat{\beta}_j \vert^\gamma} $, hvor $\sqrt{n} \hat{\beta}_j = O_p(1)$ og vi ved at  $\lambda_n n^\frac{\gamma-1}{2} \rightarrow \infty$, da har vi, at $\frac{\lambda_n}{\sqrt{n}} \hat{w}_j  \vert u_j \vert \rightarrow \infty$.
+hvor $\gamma >0$ og $\hat{\beta}_j$ er rod-$n$-konsistent. Heraf har vi, at $\frac{\lambda_n}{\sqrt{n}} \hat{w}_j = \frac{\lambda_n}{\sqrt{n}} \frac{n^{\gamma/2}}{\vert \sqrt{n} \hat{\beta}_j \vert^\gamma} = \lambda_n n^{\frac{\gamma -1}{2}} \frac{1}{\vert \sqrt{n} \hat{\beta}_j \vert^\gamma} $, hvor $\sqrt{n} \hat{\beta}_j = O_p(1)$ og vi ved at  $\lambda_n n^\frac{\gamma-1}{2} \rightarrow \infty$, da har vi, at $\frac{\lambda_n}{\sqrt{n}} \hat{w}_j  \vert u_j \vert \rightarrow \infty$.
 Af Slutsky sætning ser vi, at $V^{(n)} (\mathbf{u}) \overset{d}{\rightarrow} V(\textbf{u})$ for alle $\mathbf{u}$, hvor
 \begin{align*}
 V(\textbf{u}) = \begin{cases}
@@ -210,7 +230,7 @@ V(\textbf{u}) = \begin{cases}
     \infty & \text{hvis } \exists u_j \neq 0, \ j \notin \mathcal{A} .
   \end{cases}
 \end{align*}
-Da funktionen $V^{(n)}$ er konveks, og $(\mathbf{Q}_{11}^{-1} \mathbf{W_\mathcal{A}},0)^T$ er et entydig minimum af $V$, følger det af \cite{Zou} at 
+Da funktionen $V^{(n)}$ er konveks, og $(\mathbf{Q}_{11}^{-1} \mathbf{W_\mathcal{A}},0)^T$ er et entydig minimum af $V$, følger det af \citep{adaptive_lasso} at 
 $\arg\min V^{(n)} \rightarrow \arg\min V$.
 Derfor får vi
 \begin{align}
@@ -218,7 +238,7 @@ Derfor får vi
 \end{align}
 Vi observerer, at $\mathbf{W}_\mathcal{A}=N(\mathbf{0}, \sigma^2 \mathbf{Q}_{11})$. \\
 
-Herefter vil vi bevise at udvælgelsen af variabler er konsistent. For alle $j \in \mathcal{A}$, giver den asymptotiske normalitet at $\hat{\beta}_j^{\text{AL}} \overset{p}{\rightarrow}\beta_j^{*}$, dvs. $P(j \in \mathcal{A}_n^{\text{AL}}) \rightarrow 1$. Derfor vil vi vise at $\forall j' \notin \mathcal{A}$, da vil $P(j' \in \mathcal{A}_n^{\text{AL}}) \rightarrow 0$. \\
+Herefter vil vi bevise at udvælgelsen af variabler er konsistent. For alle $j \in \mathcal{A}$, giver den asymptotiske normalitet at $\hat{\beta}_j^{\text{AL}} \overset{p}{\rightarrow}\beta_j^{*}$, dvs. $P(j \in \mathcal{A}_n^{\text{AL}}) \rightarrow 1$. Derfor er det tilstrækkeligt at vise at $\forall j' \notin \mathcal{A}$, da vil $P(j' \in \mathcal{A}_n^{\text{AL}}) \rightarrow 0$. \\
 Vi betragter $j' \in \mathcal{A}_n^{\text{AL}}$ således at $\hat{\beta}_{j'}^{\text{AL}} \neq 0$. Af første ordens betingelser har vi, at 
 \begin{align*}
 2 \mathbf{x}_{j'}^T  \left( \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}}^{\text{AL}} \right)=\lambda_n \hat{w}_{j'} \left\vert \text{sign}(\hat{\beta}_{j'}^\text{AL}) \right\vert,
@@ -239,6 +259,18 @@ Af \eqref{eq:minUA} og Slutskys sætning \ref{thm:sluktsky}, ved vi at $ 2 \frac
 P\left(j' \in \mathcal{A}_n^{\text{AL}}\right) \leq P\left(2 \mathbf{x}_{j'}^T \left(\mathbf{y}-\mathbf{X} \hat{\boldsymbol{\beta}}^{\text{AL}}\right)=\lambda_n \hat{w}_{j'} \right) \rightarrow 0.
 \end{align*}
 \end{proof}
+%
+Den ikke-negative Garotte er et special tilfælde af adaptive lasso.
+Antag \(\gamma=1\) og vælg \(\hat{w}=\frac{1}{\vert \hat{\beta}^{\text{OLS}} \vert}\), da løser adaptive lasso følgende optimerinsproblem
+\begin{align*}
+\arg \min_{\beta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{\vert \beta_j \vert}{\vert \hat{\beta}_j^\text{OLS} \vert}}
+\end{align*}
+Da \(c_j = \frac{\hat{\beta}_j^\text{garotte}}{\hat{\beta}_j^\text{OLS}}\), kan \eqref{eq:2.19} omskrives til
+\begin{align*}
+\arg \min_{c \in \mathbb{R}^p}  \cbr{\Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p  \frac{\hat{\beta}_j^\text{garotte}}{\hat{\beta}_j^\text{OLS}}}
+\end{align*}
+Dermed kan ikke-negative garotte betragtes som adaptive lasso, hvor \(\gamma=1\) og med en ekstra betingelse.
+Beviset ovenfor medfører konsistent af ikke-negativ garotte.
 
-
-Adaptive elastic net
+%\begin{col}
+%\end{col}

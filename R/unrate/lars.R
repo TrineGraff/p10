@@ -13,13 +13,33 @@ set.seed(109)
 
 # lasso -------------------------------------------------------------------
 lars_cv = cv.lars(x, y, type = "lasso", intercept = FALSE, normalize = FALSE, trace = TRUE)
-lars = lars(x, y, type = "lasso")
+lars_ = lars(x, y, type = "lasso")
+
+min <- min(lars_cv$cv)
+idmin = match(min, lars_cv$cv)
+l1_min = lars_cv$index[idmin]
+
+se = (lars_cv$cv + lars_cv$cv.error)[idmin]
+idse = lars_cv$cv <= se #større eller lig med en standard afvigelse
+l1.1se = max(lars_cv$index[idse], na.rm = TRUE)
+length(train_dato)
+length(lars_cv$index)
+
+# Elastic net -------------------------------------------------------------
+
+# plot --------------------------------------------------------------------
+
+df_la = data.frame(lars_cv$index, lars_cv$cv, lars_cv$cv.error)
+
+ggplot(df_la, aes(df_la$lars_cv.index,df_la$lars_cv.cv)) + 
+  geom_errorbar(aes(ymin = df_la$lars_cv.cv + df_la$lars_cv.cv.error, 
+                    ymax = df_la$lars_cv.cv - df_la$lars_cv.cv.error, width = .1)) +
+  geom_point(col = "red") +
+  labs(x = "Fraktion af sidste L1 norm", y = "MSE", color = "") + 
+  geom_vline(aes(xintercept= l1_min, col = "blue"), linetype="dotted") +
+  geom_vline(aes(xintercept= l1.1se, col = "brown"), linetype="dotted") +
+  ggtitle("Lasso") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
 
 
 
-ideal_l1_ratio <- lasso_cv$index[which.max(lasso_cv$cv - lasso_cv$cv.error <= min(lasso_cv$cv))]
-obj <- lars(x, y)
-scaled_coefs <- scale(obj$beta, FALSE, 1 / obj$normx)
-l1 <- apply(X = scaled_coefs, MARGIN = 1, FUN = function(x) sum(abs(x)))
-coef(obj)[which.max(l1 / tail(l1, 1) > ideal_l1_ratio),]
 

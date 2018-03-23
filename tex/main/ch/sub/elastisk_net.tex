@@ -6,7 +6,7 @@ Selvom lasso har vist succes i mange tilfælde, har den også nogle begrænsning
 %
 \begin{enumerate}[label=\textnormal{(\arabic*)}]
     \item Hvis $p>n$, da udvælger lasso højst $n$ variable, eftersom lasso er et konvekst optimeringsproblem. Derudover er lasso ikke veldefineret medmindre \(\Vert \beta \Vert_1 \leq t\). \label{itm:1}
-    \item Hvis der eksisterer en gruppe af variable, som har høj parvis korrelation, da har lasso en tendens til blot at udvælge  én variabel fra denne gruppe og denne variabel udvælges tilfældigt. \label{itm:2}
+    \item Hvis der eksisterer en gruppe af variable, som har høj parvis korrelation, da har lasso en tendens til blot at udvælge  én variabel fra denne gruppe og denne variabel udvælges tilfældigt (MÅSKE EKS PÅ DET). \label{itm:2}
     \item Hvis $n>p$ og variablerne er korrelerede, da er det empirisk bevist at prædiktions performance af lasso er domineret af ridge regression \citep{lasso}.  \label{itm:3}
 \end{enumerate}
 %
@@ -53,11 +53,11 @@ Det viser sig, at optimeringsproblemet for naive elastisk net kan transformeres 
 \begin{lem} \label{lem:elastisk_net}
 Givet data\(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), defines et augmented datasæt 
 \begin{align*}
-\X^* = \del{1 + \lambda_1}^{-1/2} \begin{pmatrix}
+\X^* = \del{1 + \lambda_1}^{-1/2} \begin{bmatrix}
 \X \\ \sqrt{\lambda_1 \mathbf{I}}
-\end{pmatrix}, \quad \y^* = \begin{pmatrix}
+\end{bmatrix}, \quad \y^* = \begin{bmatrix}
 \y \\ \mathbf{0}
-\end{pmatrix},
+\end{bmatrix},
 \end{align*}
 hvor \(\X^* \in \mathbb{R}^{\del{n+p} \times p}\) og \(\y^* \in \mathbb{R}^{n+p}\).
 Lad \(\gamma = \frac{\lambda_2}{\sqrt{1+\lambda_1}}\) og \(\beta^* = \sqrt{1+\lambda_1} \beta\), da kan \eqref{eq:4.2} omskrives til
@@ -244,6 +244,20 @@ Af lemma \ref{lem:elastisk_net}, ved vi at for ethvert fast \(\lambda_1\) er ela
 Derfor kan LARS algoritmen anvendes direkte til at finde en elastisk net løsningssti.
 Bemærk at for \(p \gg n\), har augmented data \(p+n\) observationer og \(p\) variable, hvilket kan forsinket udregningerne.
 
+
+%
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.4\linewidth}
+\scalebox{0.3}{\includegraphics{fig/crime_lasso.png}}
+\end{minipage}
+\hspace{0.2cm}
+\begin{minipage}{0.4\linewidth}
+\scalebox{0.3}{\includegraphics{fig/crime_EN.png}}
+\end{minipage}
+\caption{Koefficientstierne for henholdsvis lasso (ventre) og elastisk net med \(\alpha=0.3\) (højre) plottet imod \(\ell_1\)-normen.} \label{fig:crime_koef_EN}
+\end{figure}
+%
 
 
 \newpage

@@ -1,36 +1,29 @@
 \section{Lasso estimatoren} \label{sec:lasso_estimatoren}
-\textit{Dette afsnit er skrevet udfra kapitel 2 i \citep{hastie}}
+\textit{Dette afsnit er skrevet udfra kapitel 2 i \citep{hastie}.}
 
-
-\textit{The Least Absolute Shrinkage Selection Operator} som forkortes lasso blev introduceret af \citep{lasso}. 
-
-%Effektiv for at håndtere flere prediktorer end variable.
-%Derudover producere den parsimonious modeller som er nemme at fortolke.
-%Vi anvender LASSO estimatoren for udvælgelse af modeller for tidsrække data.
-
-Lasso finder løsningen til optimerings problemet
+\textit{The Least Absolute Shrinkage Selection Operator}, som forkortes lasso, blev introduceret af \citep{lasso}. 
+Lasso finder løsningen til optimeringsproblemet
 \begin{align}
 \arg \min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t. \label{eq:2.3}
-\end{align}
-Første led i \eqref{eq:2.3} svarer til OLS, som finder de estimerede koefficienter ved at minimere summen af kvadrerede residualer, mens sidste led mindsker de estimerede koefficienter. 
+\end{align} 
 Betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt som en \(\ell_1\)-norm betingelse $\Vert \beta \Vert_1 \leq t$.
-Ofte skrives lasso estimatoren på matrix-vektor form.
-Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og lad \(\X\) være en $n \times p$ matrix med $x_i \in \R^p$ som den i'te række, da kan \eqref{eq:2.3} omskrives til
+
+Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og lad \(\X\) være en $n \times p$ matrix med $x_i \in \R^p$ som den i'te række, da kan \eqref{eq:2.3} omskrives til matrix-vektor form
 \begin{align*}
 \arg \min_{\beta_0, \beta} \cbr{\frac{1}{2n} \Vert \y - \beta_0 \mathbf{1} - \X \beta \Vert_2^2}, \ \text{underlagt at } \Vert \beta \Vert_1 \leq t,
 \end{align*}
-hvor \(\mathbf{1}\) er en \(n\) dimensional vektor bestående af 1 taller og \(\Vert \cdot \Vert_2\) betegner den Euklidiske norm af vektorer.
+hvor \(\mathbf{1}\) er en \(n\) dimensional vektor bestående af 1 taller og \(\Vert \cdot \Vert_2\) betegner den Euklidiske norm.
 Værdi af \(t\) begrænser summen af de absolutte værdier af parameter estimaterne.
 Den kontrollerer kompleksiteten af modellen. 
-Større værdi af \(t\) betyder flere parametre og tillader dermed at modellen tilpasser data.
-Mindre værdi af \(t\) vil begrænse antallet af parametre hvilket fører til mere sparse modeller, som tilpasser data mindre præcis.
+Større værdi af \(t\) betyder flere parametre og tillader dermed at modellen tilpasser data meget præcis.
+Mindre værdi af \(t\) vil begrænse antallet af parametre, hvilket fører til mere sparse modeller, som tilpasser data mindre præcis.
 Denne skal specificeres ved en ekstern procedure kaldet \textit{krydsvalidering}, som vil blive diskuteret i kapitel \ref{kap:statistisk_inferens}.
 
 Ofte standardiseres prediktorerne \(\X\) således at kolonnerne er centeret og har varians 1. Dvs \(\frac{1}{n} \sum_{i=1}^n x_{ij} = 0\) og \(\frac{1}{n} \sum_{i=1}^n x_{ij}^2=1\). Hvis ikke prediktorerne standardiseres da vil lasso estimaterne være afhængige af enhederne, som prediktorerne er målt i.
 Hvis prediktorerne er målt i samme enhed, da vil vi typisk ikke standardisere.
 For fuldstændighed centreres responsvariablen $y_i$ også, dvs \(\frac{1}{n} \sum_{i=1}^n y_{i} = 0\).
 Hermed kan vi se bort fra skæringen $\beta_0$ i lasso optimeringen.
-Given en optimal lasso løsning \(\hat{\beta}\) på det centreret data, kan vi finde løsningen for det ikke-centreret data. Der gælder, at
+Givet en optimal lasso løsning \(\hat{\beta}\) på det centreret data, kan vi finde løsningen for det ikke-centreret data udfra
 \begin{align*}
 \hat{\beta}^{\text{ikke-centreret}} = \hat{\beta}^{\text{centreret}}, \\
 \hat{\beta}_0^{\text{ikke-centreret}} = \bar{y} - \sum_{j=1}^p \bar{x}_j \hat{\beta}_j,
@@ -72,6 +65,10 @@ Heraf kan ridge regression estimatoren findes ved at differentiere \(\del{\y - \
 \end{align*}  
 Ift til mindste kvadraters regression tilføjer ridge regression en positiv konstant $\lambda$ på diagonalen af $\X^T \X$, hvilket medfører, at \(\X^T \X\) er invertibel, selvom $\X$ ikke har fuld rang. 
 Dermed er en entydig løsning altid garanteret. 
+%
+\begin{exmp}
+hej
+\end{exmp}
 %
 \begin{exmp}
 Vis at responsvariable \(\y\) og designmatricen \(\X\) kan omskrives på passende vis således at vi kan udlede estimatoren for ridge regression udfra mindste kvadraters metode, \(\del{\tilde{\X}^T \tilde{\X}}^{-1} \tilde{\X}^T \tilde{\y}\), hvor \(\tilde{\y}\) og \(\tilde{\X}\) er de omskrevne responsvariable og designmatrix.

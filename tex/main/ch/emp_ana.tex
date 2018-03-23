@@ -8,7 +8,7 @@ Så vores datasæt inkluderer altså 123 tidsrækker, som indeholder $691$ måne
 Hernæst har vi standardiseret vores data, således at variablerne er centreret omkring 0 og har en varians 1, således vi undgår skæringen i vores regression. 
 
 Datasættet repræsenterer en stor brede af makroøkonomiske variabler, som Michael McCracken har inddelt i 8 kategorier. 
-\begin{itemize}
+\begin{enumerate}
 \item \textbf{Output og indkomst:} Indeholder 16 tidsrækker
 \item \textbf{Arbejdsmarked:}  Indeholder 31 tidsrækker
 \item \textbf{Boliger:} Indeholder 10 tidsrækker
@@ -17,7 +17,7 @@ Datasættet repræsenterer en stor brede af makroøkonomiske variabler, som Mich
 \item\textbf{ Rente og valutakurs:} Indeholder 21 tidsrækker
 \item \textbf{Priser:} Indeholder 20 tidsrækker
 \item \textbf{Aktiemarked:} Indeholder 4 tidsrækker
-\end{itemize}
+\end{enumerate}
 
 Når vi konstruerer vores model anvender vi 122 forklarende variabler og 1 respons variable og for at validerer vores model deler vi vores fulde datasæt i et træningssæt, som består af 552 observationer fra 1. januar 1960 til 1. december 2005 og et testsæt, som består af 139 observationer fra 1. januar 2006 til 1. Juli 2017. 
 En betydningsfuld makroøkonomisk variable er arbejdsløshed, som blandt andet vil være vores responsvariable.  Arbejdsløshed er inkluderet i gruppen arbejdsmarked. 
@@ -36,9 +36,13 @@ Vi er interesseret i den model med mindst gennemsnitlige kvadrerede fejl, men ko
 Derfor ser vi ikke kun på den $\lambda$ der giver mindst mulige krydvaliderings fejl (der betegnes $\lambda_{\min}$), men også den største værdi således at fejlen er inde for en standard afvigelses af minimum, som vi betegner $\lambda_{\text{1sd}}$.  
 
 \subsection{Coordinate descent}
-Den her sektion er baseret på  \citep{glmnet} og  \citep{gglasso}.
-Figur \ref{tab:cv_plot} viser krydsvaliderings fejl, som er målt i MSE mod $\log \lambda$. 
-Det skal lige bemærkes, at for Elastic net har vi anvendt en 10-gange krydsvalidering for hele 10-værdier af $\alpha$, hvor $\alpha \in (0,1)$. 
+Den her sektion er baseret på pakkerne \textit{glmnet}, \citep{glmnet} og \textit{gglasso}, \citep{gglasso}.
+
+Figur \ref{tab:cv_plot} viser den gennemsnitlige krydsvaliderings fejl for hver værdi af $\log \lambda$.
+Fejlene er målt i MSE.
+
+Det skal lige bemærkes, at for Elastic net har vi to turning parameter $\alpha$ og $\lambda$. 
+Så vi har anvendt en 10-gange krydsvalidering for hele 10 værdier af $\alpha$, hvor $\alpha \in (0,1)$. 
 For hvert $\alpha$ har vi fundet $\lambda_{\min}$ og $\lambda_{1\text{sd}}$ og deres krydsvalideringsfejl. Vi finder hernæst den $\alpha$, som giver den mindste krydsvaliderings fejl for $\lambda_{\min}$, samt $\lambda_{1\text{sd}}$. 
 Den mindste krydsvalideringsfejl er så når  $\alpha = 0.9$ både for $\lambda_{\min}$ og $\lambda_{1\text{sd}}$. 
 Derudover skal der bemærket at for group lasso, skal vi indelle vores forklarende variabler i nogle grupper. Disse grupper er forslået af Michael McCracken og ses i appendiks.
@@ -46,84 +50,23 @@ Derudover skal der bemærket at for group lasso, skal vi indelle vores forklaren
 \imgfigh{cv_plot.pdf}{1}{10-gange krudsvaliderings fejl plottede som en function af $ \log(\lambda)$. De stiplede indikerer minimum fejl, samt fejlen med en standard afvigelse af minimum for hver metode}{cv_plot}
 
 For at få et bedre overblik viser tabel  \ref{tab:cv_tab} værdierne af vores $\lambda$ samt antallet af koefficienter. 
-Vi ser for lasso og elastic net der sker en reducering af antallet af parameter for $\lambda_{1\text{sd}}$, men hvor MSE ikke er signifikant forskellig. Ud fra dette lader vi den optimale lambda for lasso og elastic net være $\lambda_{1\text{sd}}$ for lasso og Elastic net. 
+Vi ser for lasso og elastic net der sker en reducering af antallet af parameter for $\lambda_{1\text{sd}}$, men hvor MSE ikke er signifikant forskellig. 
+Ud fra dette lader vi den optimale lambda for lasso og elastic net være $\lambda_{1\text{sd}}$ for lasso og Elastic net. 
 
-For Ridge regression ved vi at der ingen reducering vil være for antallet af parameter og derfor lader vi den optimale lambda være den med mindst krydvalideringsfejl og anvender $\lambda_{\min}$, som vores optimale værdi. 
+For Ridge regression ved vi at der ingen reducering vil være for antallet af parameter, men en reducering af de estimerede koefficients værdier og derfor lader vi den optimale lambda være den med mindst krydvalideringsfejl og anvender $\lambda_{\min}$, som vores optimale værdi. 
 
-Group lasso opfører sig anderledes end hvad vi ville have forventet. Den vælger simpelthen alle koefficienter ligesom Ridge. Det indikerer lidt på, at Group lasso ikke er en god model for vores data. Men vi  lader den optimale lambda være $\lambda_{\min}$, da den har mindst krydsvalideringsfejl. 
+Group lasso opfører sig anderledes end hvad vi ville have forventet. 
+Den fejler i reducering af parameter. 
+Det indikerer lidt på, at Group lasso ikke er en god model for vores data. 
+Men vi  lader den optimale lambda være $\lambda_{\min}$, da den har mindst krydsvalideringsfejl. 
 
 \input{fig/tab/cv_tab}
 
-Vi
+Tabel \ref{tab: lasso_ud} viser hvilken koefficienter elastic net og lasso udvælger, og de fleste variabler de to variabler udvælger tilhører samme gruppe, som vores respons variable altså arbejdsmarked. 
+\input{fig/tab/lasso_ud}
 
-
-
-
-%\begin{figure}[t]
-%\centering
-%
-%\includegraphics[width=.225\textwidth]{fig/img/lasso_cv.pdf}
-%
-%
-%\includegraphics[width=.225\textwidth]{fig/img/ridge_cv.pdf}
-%
-%\caption{blablabla}
-%\label{fig:whatever}
-%\end{figure}
-%
-%
-%
-%
-%Tabellen viser  $\lambda_{min}$ og $\lambda_{\text{1sd}}$ for Ridge regression, lasso og group lasso. 
-%
-%
-%
-%
-%
-%Tabel \ref{tab:cv_lasso} viser værdien af $\lambda_{min}$ og $\lambda_{\text{1sd}}$ samt værdien af $p$, som betegner antallet af parameter og den gennemsnitlige krydsvalideringsfejl. 
-%\input{fig/tab/lasso_cv}. 
-%Figur \ref{fig:cv_lasso_img} viser forholdet mellem værdierne af logaritmen af $\lambda$, samt krydsvaliderings fejlene. 
-%Der ses, at det er først når log lambda er større end -6, der sker nogle signifikante ændringer i krydsvalideringfejlene.
-%
-%Tabel \ref{tab: lasso_ud} viser hvilken variabler lasso udvælger. Vi kan se, at lasso vælger 9 variabler ud af de 15, som tilhører gruppen arbejdsmarked. 
-%
-%Figur \ref{fig:cv_lasso_img} viser forholdet mellem værdien af log af lambda, samt krydsvaliderings fejlene. 
-%
-%\imgfigh{lasso_cv.pdf}{0.7}{Viser krydsvalidering stien, hvor forholdet mellem den gennemsnitlige kvadraters fejl og $\lambda$ værdierne. De lodrette stiplede streger viser logaritmen af $\lambda_min$  og $\lambda_1se$}{cv_lasso_img}
-% 
-%
-%
-%\input{fig/tab/lasso_ud}
-%
-%
-%\subsection{Ridge}
-%Vi ved at ridge regression ikke mindsker antallet af forklarende variable, men derimod bare mindsker estimaterne. Derfor lader vi den optimale $\lambda$-værdi være den med mindst krydsvalideringsfejl, siden at $\lambda$ med en standard afvigelse i fejlene vil ikke ændre på kompleksiteten. Dette ses også i tabellen \ref{tab:cv_ridge}. 
-%
-%\input{fig/tab/ridge_cv}
-%På plottet ses også, at log $\lambda$ ikke skal være meget større end -4 før vi får en høj fejl.
-%\imgfigh{ridge_cv.pdf}{0.7}{Viser krydsvalidering stien, hvor forholdet mellem den gennemsnitlige kvadraters fejl og $\lambda$ værdierne. De lodrette stiplede streger viser logaritmen af $\lambda_{min}$  og $\lambda_{1se}$ }{cv_ridge_img}
-%
-%
-%
-%\subsection{Elastic Net}
-%For elastik net ses i ligning ... , at vi har to ubekendte variable nemlig $\alpha$ og $\lambda$, hvor $\alpha \in [0,1]$. 
-%Vi tester derfor en følge med længde 10 af $\alpha$-værdier og ud fra hver værdi af $\alpha$ finder vi $\lambda_{min}$ og $\lambda_{1se}$ og deres gennemsnitlige krydsvaliderings fejl. Disse værdier ses i tabel \ref{tab:cv_el}. 
-%
-%\input{fig/tab/el_cv}
-%For at få et bedre overblik viser tabel  \ref{tab:cv_el1}  den $\lambda_min$ samt den $\lambda_{1se}$ med mindst gennemsnitlige krydsvalideringsfejl, samt antallet af parameter. 
-%Igen ser vi, at krydsvaliderings fejl for $\lambda_{1se}$ ikke er signifikant forskellige fra $\lambda_{\min}$, men der sker en mindskning i kompleksiteten. Derfor vil vores optimale model være modellen med $\lambda_{1se}$. 
-%\input{fig/tab/el_cv1}
-%Tabel \ref{tab: el_ud} viser hvilken variabler elastic net udvælger, som de forklarende variabler. Her kan vi igen se, at de fleste af de udvalgte variabler er i samme gruppe, som vores responsvariable nemlig arbejdsmarked.  
-%\input{fig/tab/el_ud}
-%
-%
-%\subsection{Group Lasso}
-%I denne metode anvender vi de inddelte grupper, som tidligere nævnt. 
-%Vi får at alle estimaterne bliver valgt, som selvfølgelig indikerer på at metoden ikke passer til vores data. 
-%
-%\imgfigh{group_cv.pdf}{0.7}{Viser krydsvalidering stien, hvor forholdet mellem den gennemsnitlige kvadraters fejl og $\lambda$ værdierne. De lodrette stiplede streger viser logaritmen af $\lambda_{min}$  og $\lambda_{1se}$ }{group_cv}
-%
-%
-%
-%
-%
+\subsection{Lars}
+Vi vil gerne se om en anden iterativ metode til at løse vores problem kan ændre vores resultater. 
+I den her sektion anvender vi lars algoritmen 
+Vi anvender pakken ... til at udfører variable selektion med lasso. 
+\imgfigh{lars_lasso.pdf}{0.7}{}{lars_lasso}

@@ -5,7 +5,7 @@ Metoden blev først præsenteret af \citep{zou_hastie}.
 Selvom lasso har vist succes i mange tilfælde, har den også nogle begrænsninger:
 %
 \begin{enumerate}[label=\textnormal{(\arabic*)}]
-    \item Hvis $p>n$, da udvælger lasso højst $n$ variable, eftersom lasso er et konvekst optimeringsproblem. Derudover er lasso ikke veldefineret medmindre \(\Vert \beta \Vert_1 \leq t\). \label{itm:1}
+    \item Hvis $p>n$, da udvælger lasso højst $n$ variable, eftersom lasso er et konvekst optimeringsproblem (KAN DET BEVISES). Derudover er lasso ikke veldefineret medmindre \(\Vert \beta \Vert_1 \leq t\). \label{itm:1}
     \item Hvis der eksisterer en gruppe af variable, som har høj parvis korrelation, da har lasso en tendens til blot at udvælge  én variabel fra denne gruppe og denne variabel udvælges tilfældigt (MÅSKE EKS PÅ DET). \label{itm:2}
     \item Hvis $n>p$ og variablerne er korrelerede, da er det empirisk bevist at prædiktions performance af lasso er domineret af ridge regression \citep{lasso}.  \label{itm:3}
 \end{enumerate}
@@ -28,7 +28,7 @@ som på Lagrange form er givet ved
 \arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \sbr{(1- \alpha) \Vert \beta \Vert_2^2 + \alpha \Vert \beta \Vert_1}}. \label{eq:4.2}
 \end{align}
 Hvis $\alpha=1$, da reduceres strafleddet til $\ell_1$-normen svarende til strafleddet for lasso, og hvis $\alpha=0$ reduceres det til den kvadrerede $\ell_2$-norm svarende til strafleddet for ridge regression.
-Optimeringsproblemet  \eqref{eq:4.2} er streng konveks for \(\alpha \in [0,1)\), hvilket betyder, at der eksisterer en entydig løsning uanset korrelations strukturen af $\X$.
+Optimeringsproblemet  \eqref{eq:4.2} er streng konveks for \(\alpha \in [0,1)\), hvilket betyder, at der eksisterer en entydig løsning uafhængigt af korrelationsstrukturen af $\X$.
 For  \(\alpha=1\) er problemet konveks, men ikke streng konveks.
 Dette ses tydeligt på figur \ref{fig:elastisk}.
 %
@@ -38,7 +38,7 @@ Dette ses tydeligt på figur \ref{fig:elastisk}.
 \caption[optional short text]{To dimensional illustration af betingelsesområderne for shrinkage metoderne: \tikz[baseline]{\draw[dashed] (0,.5ex)--++(.5,0) ;} ridge regression,  \tikz[baseline]{\draw[dotted] (0,.5ex)--++(.5,0) ;} lasso og \tikz[baseline]{\draw (0,.5ex)--++(.5,0) ;} elastisk net med \(\alpha = 0.5\). Vi observerer at singulariteten i hjørnerne og kanterne er streng konveks. Styrken af konveksitet varierer med \(\alpha\).} \label{fig:elastisk}
 \end{figure}
 %
-En tre dimensionel illustration af betingelsesområder for det elastiske net og standard lasso er givet på figur \ref{fig:elastisk_net}.
+En tre dimensionel illustration af betingelsesområderne for det elastiske net og standard lasso er givet på figur \ref{fig:elastisk_net}.
 Heraf ses at det elastiske net har egenskaberne af både $\ell_1$ kuglen og $\ell_2$ kuglen: de skarpe hjørner og kanter opfordrer til variable udvælgelse, mens de kurvede konturer opfordrer stærk korreleret variable til at dele koefficienter.
 %
 \begin{figure}[H]
@@ -51,28 +51,28 @@ Heraf ses at det elastiske net har egenskaberne af både $\ell_1$ kuglen og $\el
 Det viser sig, at optimeringsproblemet for naive elastisk net kan transformeres til et ækvivalent lasso problem på augmented data.
 %
 \begin{lem} \label{lem:elastisk_net}
-Givet data\(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), defines et augmented datasæt 
+Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), defineres et augmented datasæt 
 \begin{align*}
 \X^* = \del{1 + \lambda_1}^{-1/2} \begin{bmatrix}
-\X \\ \sqrt{\lambda_1 \mathbf{I}}
+\X \\ \sqrt{\lambda_1} \mathbf{I}
 \end{bmatrix}, \quad \y^* = \begin{bmatrix}
 \y \\ \mathbf{0}
 \end{bmatrix},
 \end{align*}
 hvor \(\X^* \in \mathbb{R}^{\del{n+p} \times p}\) og \(\y^* \in \mathbb{R}^{n+p}\).
-Lad \(\gamma = \frac{\lambda_2}{\sqrt{1+\lambda_1}}\) og \(\beta^* = \sqrt{1+\lambda_1} \beta\), da kan \eqref{eq:4.2} omskrives til
+Lad \(\gamma = \frac{\lambda_2}{\sqrt{1+\lambda_1}}\) og \(\beta^* = \sqrt{1+\lambda_1} \beta\), da kan \eqref{eq:EN1} omskrives til
 \begin{align*}
 \hat{\beta}^* = \arg \min_{\beta^*} \cbr{\frac{1}{2n} \Vert \y^* - \X^* \beta^* \Vert_2^2 +\gamma \Vert \beta^* \Vert_1},
 \end{align*}
-hvor
+og
 \begin{align*}
 \hat{\beta}^\text{naivEN} = \frac{1}{\sqrt{1+\lambda_1}} \hat{\beta}^*.
 \end{align*}
 \end{lem}
 %
 Da \(\X^*\) har rang \(p\), kan metoden i princippet altid vælge alle \(p\) prediktorer.
-Dermed er elastisk net ikke begrænset til blot at vælge \(n\) prediktorer hvis \(p > n\), som er tilfældet for lasso som beskrevet i \ref{itm:1}.
-Lemma \ref{lem:elastisk_net} viser også, at elastisk net udfører variabel udvægelse svarende til lasso.
+Dermed er naiv elastisk net ikke begrænset til blot at vælge \(n\) prediktorer hvis \(p > n\), som er tilfældet for lasso som beskrevet i \ref{itm:1}.
+Lemma \ref{lem:elastisk_net} viser også, at naiv  elastisk net udfører variabel udvælgelse svarende til lasso.
 %
 \begin{exmp}
 Hvis \(\X\) er ortogonal, da er \(\hat{\beta}^\text{OLS} = \X^T \y\) og der gælder, at
@@ -97,7 +97,7 @@ En regression metode udviser denne evne, hvis regressions koeffcienterne af en g
 
 \begin{thm} \label{thm:elastisk_net}
 Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), hvor responsvariablen er centreret og prediktorerne er standardiseret.
-Lad \(\hat{\beta} \del{\lambda_1, \lambda_2}\) være estimatet for naive elastisk net.
+Lad \(\hat{\beta} \del{\lambda_1, \lambda_2}\) være estimatet for naiv elastisk net.
 Antag \(\hat{\beta}_i \del{\lambda_1, \lambda_2} \hat{\beta}_j \del{\lambda_1, \lambda_2} > 0\).
 Definer
 \begin{align*}
@@ -111,7 +111,8 @@ hvor \(\rho = \mathbf{x}_i^T \mathbf{x}_j\) er den empiriske korrelation.
 \end{thm}
 \begin{proof}
 Hvis \(\hat{\beta}_i \del{\lambda_1, \lambda_2} \hat{\beta}_j \del{\lambda_1, \lambda_2} > 0\), da er både \(\hat{\beta}_i \del{\lambda_1, \lambda_2}\) og \(\hat{\beta}_j \del{\lambda_1, \lambda_2}\) ikke-nul og der må gælder, at \(\text{sign} \cbr{\hat{\beta}_i \del{\lambda_1, \lambda_2}} = \text{sign} \cbr{\hat{\beta}_j \del{\lambda_1, \lambda_2}}\).
-Lad \(L \del{\lambda_1,\lambda_2, \beta} = \frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda_1 \Vert \beta \Vert_2^2 + \lambda_2 \Vert \beta \Vert_1\), da har vi af  \(\arg \min_{\beta} \cbr{L \del{\lambda_1,\lambda_2, \beta}}\), som svarer til  \eqref{eq:EN1}, at \(\hat{\beta} \del{\lambda_1, \lambda_2}\) må opfylde, at
+Lad \(L \del{\lambda_1,\lambda_2, \beta} = \frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda_1 \Vert \beta \Vert_2^2 + \lambda_2 \Vert \beta \Vert_1\), således at  \(\arg \min_{\beta} \cbr{L \del{\lambda_1,\lambda_2, \beta}}\) svarer til \eqref{eq:EN1}.
+Da må \(\hat{\beta} \del{\lambda_1, \lambda_2}\) opfylde, at
 \begin{align*}
 \frac{\partial L \del{\lambda_1,\lambda_2, \beta} }{\partial \beta_k} \mid_{\beta = \hat{\beta} \del{\lambda_1, \lambda_2}}=0, \text{ hvis } \hat{\beta}_k \del{\lambda_1, \lambda_2} \neq 0.
 \end{align*}
@@ -128,7 +129,7 @@ som er ækvivalent med
 \begin{align}
 \hat{\beta}_i \del{\lambda_1, \lambda_2} - \hat{\beta}_j \del{\lambda_1, \lambda_2} = \frac{1}{\lambda_1} \del{\mathbf{x}_i^T-\mathbf{x}_j^T} \hat{r}\del{\lambda_1, \lambda_2}, \label{eq:EN4}
 \end{align}
-hvor \(\hat{r}\del{\lambda_1, \lambda_2} = \y - \X  \hat{\beta} \del{\lambda_1, \lambda_2}\) er residual vektoren.
+hvor \(\hat{r}\del{\lambda_1, \lambda_2} = \y - \X  \hat{\beta} \del{\lambda_1, \lambda_2}\) er en vektor af residualer.
 Da \(\X\) er standardiseret, har vi, at \(\Vert \mathbf{x}_i - \mathbf{x}_j \Vert_2^2=2 \del{1-\rho}\), hvor \(\rho = \mathbf{x}_i^T \mathbf{x}_j\).
 Af \eqref{eq:EN1} må vi have, at
 \begin{align*}
@@ -136,21 +137,22 @@ L \del{\lambda_1,\lambda_2, \hat{\beta}\del{\lambda_1, \lambda_2}} \leq L \del{\
 \end{align*}
 dvs
 \begin{align*}
-\Vert \hat{r} \del{\lambda_1, \lambda_2} \Vert_2^2 + \lambda_1 \Vert \hat{\beta} \del{\lambda_1, \lambda_2} \Vert_2^2 + \lambda_2 \Vert \hat{\beta} \del{\lambda_1, \lambda_2} \Vert_1 \leq \Vert \y \Vert_2^2.  
+\frac{1}{2n} \Vert \hat{r} \del{\lambda_1, \lambda_2} \Vert_2^2 + \lambda_1 \Vert \hat{\beta} \del{\lambda_1, \lambda_2} \Vert_2^2 + \lambda_2 \Vert \hat{\beta} \del{\lambda_1, \lambda_2} \Vert_1 \leq \frac{1}{2n} \Vert \y \Vert_2^2.  
 \end{align*}
-Dermed \(\vert \hat{r} \del{\lambda_1, \lambda_2} \vert \leq \vert \y \vert\) og \eqref{eq:EN4} medfører, at
+Dermed er \(\vert \hat{r} \del{\lambda_1, \lambda_2} \vert \leq \vert \y \vert\) og \eqref{eq:EN4} medfører, at
 \begin{align*}
 D_{\lambda_1, \lambda_2} \del{i,j} \leq \frac{1}{\lambda_1} \frac{\vert \hat{r} \del{\lambda_1, \lambda_2} \vert}{\vert \y \vert} \vert \mathbf{x}_i - \mathbf{x}_j \vert  \leq \frac{1}{\lambda_1} \sqrt{2 \del{1-\rho}}.
 \end{align*}
 \end{proof}
 Mængden \(D_{\lambda_1, \lambda_2} \del{i,j}\) betegner differensen mellem koefficient stierne af prediktor \(i\) og \(j\).
 Hvis \(\mathbf{x}_i\) og \(\mathbf{x}_j\) er højt korreleret, dvs \(\rho \approx 1\), giver sætning \ref{thm:elastisk_net}, at differensen mellem koefficient stierne af prediktor \(i\) og \(j\) er næsten 0.
-Den øvre grænse i \eqref{eq:EN5} giver en beskrivelse af denne gruppering effekt som naive elastisk net har??\\[4mm]
+Den øvre grænse i \eqref{eq:EN5} giver en beskrivelse af denne gruppering effekt som naiv elastisk net har??\\[4mm]
 %
-Empiriske resultater har vist at den naive elastiske net kun er tilfredsstillende hvis den er tæt på enten ridge regression eller lasso.
+Empiriske resultater har vist, at naiv elastisk net ikke er tilfredsstillende, medmindre den er tæt på enten ridge regression eller lasso.
 Derfor kaldes den \textit{naiv}.
-Den naive elastiske net er en two-stage procedure. For ethvert fast \(\lambda_1\) finder vi først ridge regression koefficienterne, og derefter shrinkages langs lasso koefficient løsnings stien. Derfor indkluderes en dobbelt shrinkage.
-Double shrinkage reducerer ikke variansen meget og introducere unødvendig ekstra bias sammenlignet med lasso eller ridge regression.
+Som nævnt tidligere bestemmes en metodes prediktions performance gennem bias-variance tradeoff. 
+Naiv elastisk net er en two-stage procedure. For ethvert fast \(\lambda_1\) finder vi først ridge regression koefficienterne, og derefter shrinkages langs lasso koefficient løsnings stien. Derfor inkluderes en dobbelt shrinkage.
+Double shrinkage reducerer ikke variansen meget og introducere unødvendig ekstra bias i forhold til ridge regression eller lasso.
 Derfor introduceres blot elastisk net.
 
 I lemma \ref{lem:elastisk_net} fandt vi, at naiv elastisk net løser følgende 
@@ -165,43 +167,45 @@ Da \(\hat{\beta}^\text{naivEN} = \frac{1}{\sqrt{1+\lambda_1}} \hat{\beta}^*\), h
 \begin{align*}
 \hat{\beta}^\text{EN} = \del{1+\lambda_1} \hat{\beta}^\text{naivEN}.
 \end{align*}
-Dermed er elastisk net koefficienterne faktisk reskaleret naiv elastisk net koeffficienter.
-Denne transformation bevarer variabel udvægelsen af den naive elastisk net...
-Derfor er egenskaberne for den naive elastiske net, som er beskrevet i dette afsnit, stadig gældende for elastisk net.
-Empiriske resultater viser, at elastisk net præsterer tilstrækkeligt sammenlignet med ridge regression og lasso.
+Dermed er elastisk net koefficienterne faktisk reskaleret naiv elastisk net koefficienter.
+Denne transformation bevarer variabel udvælgelsen af naiv elastisk net og er den simpleste måde at annullere det ekstra shrinkage.
+Derfor er egenskaberne for naiv elastiske net, som er beskrevet i dette afsnit, stadig gældende for elastisk net.
 
-
+Et andet længere argument for at vælge \(1+\lambda_1\) som skaleringsfaktor, men det forstår jeg ikke!!!
+%
 \begin{thm} \label{thm:elastisk_net2}
 Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\) da er estimaterne for elastisk net givet ved
 \begin{align}
-\hat{\beta}^\text{EN} = \arg \min_\beta \cbr{ \beta^T \del{\frac{\X^T \X + \lambda_1 \mathbf{I}}{1 + \lambda_1}} \beta - 2 \y^T \X \beta + \lambda_2 \Vert \beta \Vert_1}. \label{eq:EN6}
+\hat{\beta}^\text{EN} = \arg \min_\beta \cbr{ \frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_1 \mathbf{I}}{1 + \lambda_1}} \beta - 2 \y^T \X \beta} + \lambda_2 \Vert \beta \Vert_1}. \label{eq:EN6}
 \end{align}
-Det er let at se at
+Estimatoren for lasso kan omskrives til
 \begin{align}
-\hat{\beta}^\text{lasso} = \arg \min_\beta \cbr{ \beta^T \del{\X^T \X} \beta - 2 \y^T \X \beta + \lambda_2 \Vert \beta \Vert_1} \label{eq:EN7}
+\hat{\beta}^\text{lasso} = \arg \min_\beta \cbr{ \frac{1}{2n} \del{ \beta^T \del{\X^T \X} \beta - 2 \y^T \X \beta } + \lambda_2 \Vert \beta \Vert_1}. \label{eq:EN7}
 \end{align}
 \end{thm}
 \begin{proof}
 Af ligning \eqref{eq:EN8} har vi, at
 \begin{align}
 \hat{\beta} &= \arg \min_{\beta} \cbr{\frac{1}{2n} \left\Vert \y^* - \X^* \frac{\beta}{\sqrt{1+\lambda_1}} \right\Vert_2^2 + \frac{\lambda_2}{\sqrt{1+\lambda_1}} \left\Vert \frac{\beta}{\sqrt{1+\lambda_1}} \right\Vert_1} \nonumber \\
-&=\arg \min_{\beta} \cbr{\beta^T \del{\frac{\X^{*^T} \X^*}{1+\lambda_1}} \beta - 2 \frac{\y^{*^T} \X^*}{\sqrt{1+\lambda_1}} + \y^{*^T} \y^* + \frac{\lambda_2 \Vert \beta \Vert_1}{1+\lambda_1}}. \label{eq:EN9}
+&=\arg \min_{\beta} \cbr{\frac{1}{2n} \del{\beta^T \del{\frac{\X^{*^T} \X^*}{1+\lambda_1}} \beta - 2 \frac{\y^{*^T} \X^* \beta}{\sqrt{1+\lambda_1}} + \y^{*^T} \y^*} + \frac{\lambda_2 \Vert \beta \Vert_1}{1+\lambda_1}}. \label{eq:EN9}
 \end{align}
 Følgende identiteter
 \begin{align*}
-\X^{*^T} \X^* &= \frac{\X^T \X + \lambda_1}{1+ \lambda_1}, \\
+\X^{*^T} \X^* &= \frac{\X^T \X + \lambda_1 \mathbf{I}}{1+ \lambda_1}, \\
 \y^{*^T} \X^* &= \frac{\y^T \X}{\sqrt{1+\lambda_1}} ,\\
 \y^{*^T} \y^* &= \y^T \y, 
 \end{align*}
 indsættes i \eqref{eq:EN9}, og vi får, at
 \begin{align*}
-\hat{\beta} &= \arg \min_{\beta} \cbr{\frac{1}{1+\lambda_1} \del{\beta^T \del{\frac{\X^T \X + \lambda_1\mathbf{I}}{1+ \lambda_1}} \beta - 2 \y^T \X \beta + \lambda_2 \Vert \beta \Vert_1} + \y^T \y} \\
-&= \arg \min_{\beta} \cbr{\beta^T \del{\frac{\X^T \X + \lambda_1\mathbf{I}}{1+ \lambda_1}} \beta - 2 \y^T \X \beta + \lambda_2 \Vert \beta \Vert_1}.
+\hat{\beta} &= \arg \min_{\beta} \cbr{\frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_1 \mathbf{I}}{\del{1+\lambda_1}^2}} \beta - 2 \frac{\y^T \X \beta}{1+\lambda_1} + \y^T \y} + \frac{\lambda_2 \Vert \beta \Vert_1}{1+\lambda_1}} \\ 
+%&= \arg \min_{\beta} \cbr{\frac{1}{2n} \frac{1}{1+\lambda_1} \del{\beta^T \del{\frac{\X^T \X + \lambda_1\mathbf{I}}{1+ \lambda_1}} \beta - 2 \y^T \X \beta + \lambda_2 \Vert \beta \Vert_1} + \y^T \y} \\
+&= \arg \min_{\beta} \cbr{ \frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_1\mathbf{I}}{1+ \lambda_1}} \beta - 2 \y^T \X \beta} + \lambda_2 \Vert \beta \Vert_1},
 \end{align*}
+hvor \(\y^T \y= 0 \).
 \end{proof}
 %
 Sætning \ref{thm:elastisk_net2} fortolker elastisk net som en stabil version af lasso.
-Lad \(\hat{\Sigma} = \X^T \X\) være den empiriske korrelations matrix og
+Lad \(\hat{\Sigma} = \X^T \X\) være den empiriske korrelationsmatrix og
 \begin{align*}
 \frac{\X^T \X + \lambda_1 \mathbf{I}}{1 + \lambda_1} = (1-\gamma) \hat{\Sigma} + \gamma \mathbf{I},
 \end{align*}
@@ -213,7 +217,7 @@ Somsagt er lasso et specialtilfælde af elastisk net med \(\lambda_1=0\).
 Et andet interessant specialtilfælde er når \(\lambda_1 \rightarrow \infty\).
 Af sætning \ref{thm:elastisk_net2} gælder, at \(\hat{\beta}^\text{EN} \rightarrow \hat{\beta} \del{\infty}\) når \(\lambda_1 \rightarrow \infty\), hvor
 \begin{align*}
-\hat{\beta} \del{\infty} = \arg \min_\beta \beta^T \beta - 2 \y^T \X \beta + \lambda_2 \Vert \beta \Vert_1.
+\hat{\beta} \del{\infty} = \arg \min_\beta \cbr{\frac{1}{2n} \del{\beta^T \beta - 2 \y^T \X \beta} + \lambda_2 \Vert \beta \Vert_1}.
 \end{align*}
 \(\hat{\beta} \del{\infty}\) har en simpel lukket løsning, som er givet ved
 \begin{align*}
@@ -255,7 +259,7 @@ Bemærk at for \(p \gg n\), har augmented data \(p+n\) observationer og \(p\) va
 \begin{minipage}{0.4\linewidth}
 \scalebox{0.3}{\includegraphics{fig/crime_EN.png}}
 \end{minipage}
-\caption{Koefficientstierne for henholdsvis lasso (ventre) og elastisk net med \(\alpha=0.3\) (højre) plottet imod \(\ell_1\)-normen.} \label{fig:crime_koef_EN}
+\caption{Koefficientstierne for henholdsvis lasso (ventre) og elastisk net med \(\alpha=0.3\) (højre) plottet imod \(\ell_1\)-normen for crime data.} \label{fig:crime_koef_EN}
 \end{figure}
 %
 

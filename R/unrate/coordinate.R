@@ -16,7 +16,6 @@ set.seed(1)
 # lasso -------------------------------------------------------------------
 lasso_fit = glmnet(x, y, family = "gaussian", alpha = 1, intercept = FALSE, standardize=FALSE)
 lasso_cv = cv.glmnet(x, y, intercept = FALSE, family = "gaussian", alpha = 1, standardize=FALSE)
-
 idmin = match(lasso_cv$lambda.min, lasso_cv$lambda)
 lambda_1se = max(lasso_cv$lambda[idmin], na.rm = TRUE)
 

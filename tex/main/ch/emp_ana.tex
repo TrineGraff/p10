@@ -1,93 +1,20 @@
 \chapter{Empirisk analyse}
-I dette kapitel anvender vi data fra FRED, som er hentet fra Federal Reserve Bank of St. Louis \url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}.
-Der anvendes nogle transformationer for at gøre tidsrækkerne stationære, som er noteret mere detaljeret i appendiks ... 
-Disse transformationer er forslået af Michael McCracken fra Federal Reserve Bank of St. Louis.  
-Der observeres at 5 af disse variabler har mere end 43 NA's inkluderet og derfor bliver de fjernet fra datasættet. 
-Derudover ser vi at de resterende NA's opstår kun i de første eller/og sidste observationer, vi fjerner derfor 17 observationer i hver variable for at undgå NA's. 
-Så vores datasæt inkluderer altså 123 tidsrækker, som indeholder $691$ månedlige observationer og går fra 1. januar 1960 til 1. juli 2017. 
-Hernæst har vi standardiseret vores data, således at variablerne er centreret omkring 0 og har en varians 1, således vi undgår skæringen i vores regression. 
-
-Datasættet repræsenterer en stor brede af makroøkonomiske variabler, som Michael McCracken har inddelt i 8 kategorier. 
-\begin{enumerate}
-\item \textbf{Output og indkomst:} Indeholder 16 tidsrækker
-\item \textbf{Arbejdsmarked:}  Indeholder 31 tidsrækker
-\item \textbf{Boliger:} Indeholder 10 tidsrækker
-\item \textbf{Forbrug, ordrer og varebeholdninger:} Indeholder 7 tidsrækker
-\item \textbf{Penge og kredit:} Indeholder 14 tidsrækker
-\item\textbf{ Rente og valutakurs:} Indeholder 21 tidsrækker
-\item \textbf{Priser:} Indeholder 20 tidsrækker
-\item \textbf{Aktiemarked:} Indeholder 4 tidsrækker
-\end{enumerate}
-
-Når vi konstruerer vores model anvender vi 122 forklarende variabler og 1 respons variable og for at validerer vores model deler vi vores fulde datasæt i et træningssæt, som består af 552 observationer fra 1. januar 1960 til 1. december 2005 og et testsæt, som består af 139 observationer fra 1. januar 2006 til 1. Juli 2017. 
-En betydningsfuld makroøkonomisk variable er arbejdsløshed, som blandt andet vil være vores responsvariable.  Arbejdsløshed er inkluderet i gruppen arbejdsmarked. 
+ 
 \section{Benchmark}
 Faktormodel
 
 
 \section{Shrinkage metoder}
-I denne sektion vil vi finde den optimale lambda for de forskellige shrinking metoder. 
+I denne sektion vil vi finde den optimale $\lambda$ for de forskellige shrinking metoder. 
 Vi har tidligere introduceret to algoritmer til at løse vores optimerings problemer, som vi vil anvende i denne sektion.
 Vi deler derfor vores analyse op i to dele, hvor vi anvender hhv. coordinate descent og LARS algoritmen.
 
-Metoderne er alle anvendt med forskellige værdier af $\lambda$, vi vælger derfor én 10-gang-krydsvalidering for at estimerer den optimale værdi af lambda, således vi kan finde den bedste mulige model. 
+Metoderne er alle anvendt med forskellige værdier af $\lambda$, vi vælger derfor én 10-gang-krydsvalidering for at estimerer den optimale værdi af $\lambda$, således vi kan finde den bedste mulige model. 
 Krydsvalidering bliver målt i gennemsnitlig kvadrerede fejl. 
 Vi er interesseret i den model med mindst gennemsnitlige kvadrerede fejl, men kompleksiteten vil også have en rolle.
 Derfor ser vi ikke kun på den $\lambda$ der giver mindst mulige krydvaliderings fejl (der betegnes $\lambda_{\min}$), men også den største værdi således at fejlen er inden for en standard afvigelses af minimum, som vi betegner $\lambda_{\text{1sd}}$.  
-Den optimale lambda bruges til at fitte modellerne, som er beskrevet i sektion .. .  
+Den optimale $\lambda$, bruges til at fitte modellerne, som er beskrevet i sektion .. .  
 
-\subsection{Coordinate descent}
-Den her sektion er baseret på pakkerne \textit{glmnet} og \textit{gglasso}, \citep{gglasso}.
+\input{main/ch/sub/coordinate}
 
-Figur \ref{tab:cv_plot} viser den gennemsnitlige krydsvaliderings fejl for hver værdi af $\log \lambda$.
-Fejlene er målt i MSE.
-
-Det skal lige bemærkes, at for Elastic net har vi to turning parameter $\alpha$ og $\lambda$. 
-Så vi har anvendt en 10-gange krydsvalidering for 10 værdier af $\alpha$, hvor $\alpha \in (0,1)$. 
-For hvert $\alpha$ har vi fundet $\lambda_{\min}$ og $\lambda_{1\text{sd}}$ og deres krydsvalideringsfejl. Vi finder hernæst den $\alpha$, som giver den mindste krydsvaliderings fejl for $\lambda_{\min}$, samt $\lambda_{1\text{sd}}$. 
-Den mindste krydsvalideringsfejl er så når  $\alpha = 0.9$ både for $\lambda_{\min}$ og $\lambda_{1\text{sd}}$. 
-
-Derudover skal der bemærket, at for group lasso skal de forklarende variabler indelles i  grupper. 
-Disse grupper er forslået af Michael McCracken og ses i appendiks(reference).
-
-\imgfigh{cv_plot.pdf}{1}{10-gange krudsvaliderings fejl plottede som en function af $ \log(\lambda)$ for lasso, ridge, group lasso og elastic net. De stiplede linjer indikerer minimum fejl, samt fejlen med en standard afvigelse af minimum}{cv_plot}
-
-For at få et bedre overblik viser tabel  \ref{tab:cv_tab} værdierne af vores $\lambda$ samt antallet af koefficienter. 
-Vi ser for lasso og elastic net der sker en reducering af antallet af parameter når $\lambda_{1\text{sd}}$ anvendes i forhold til $\lambda_{\min}$ og hvor deres MSE ikke er signifikant forskellig.  
-Derfor lader vi den optimale lambda for lasso og elastic net være $\lambda_{1\text{sd}}$.
-
-For Ridge regression vil der ikke ske reducering af antallet af parameter, men derimod en reducering af de estimerede koefficients værdier og derfor lader vi den optimale lambda være den med mindst krydvalideringsfejl og anvender $\lambda_{\min}$, som vores optimale lambda. 
-
-Group lasso opfører sig anderledes end hvad vi ville have forventet. 
-Den fejler i reducering af parameter. 
-Det indikerer lidt på, at Group lasso ikke er en god model for vores data. (??)
-Men vi  lader den optimale lambda være $\lambda_{\min}$, da den har mindst krydsvalideringsfejl. 
-
-\input{fig/tab/cv_tab}
-
-Tabel \ref{tab: lasso_ud} viser hvilken koefficienter elastic net og lasso udvælger. 
-Der ses, at de fleste variabler de to metoder udvælger stammer fra samme gruppe, som vores responsvariable.  
-
-\input{fig/tab/lasso_ud}
-
-\subsection{Lars}
-Vi vil gerne se om en anden iterativ metode til at løse vores problem kan ændre vores resultater. 
-I den her sektion anvender vi lars algoritmen. 
-Vi anvender pakken lars, som er baseret på  \citep{lars} til at udfører variable selektion med lasso.
-
-Vi kan se på figur \ref{fig:lars_lasso} at jo laverer vores L1 norm er, jo større krydsvalideringsfejl får vi.  
-
-\imgfigh{lars_lasso.pdf}{0.7}{10-gange krudsvaliderings fejl plottede som en function af fraktion af side L1 norm. De stiplede linjer indikerer minimum fejl, samt fejlen med en standard afvigelse af minimum}{lars_lasso}
-
-I tabel \ref{tab:lars_tab} ser vi ikke samme tendens som ved coordinate descent. 
-Vi ser nemlig ikke en reducering af antal parameter, hvis vi anvende r$\lambda_{1\text{sd}}$.
-Derfor anvender vi $\lambda_{\min}$, da den har mindst krydsvaliderings fejl samt mindre kompleksitet. 
-
-\input{fig/tab/cv_lars_tab}
-
-\input{fig/tab/lars_ud}
-
-Tabellen viser hvilken variable lasso udvælger, og igen kan vi se at hovedparten af variablerne er i samme gruppe, som vores responsvariable. 
-Trods, at vi har to løsnings metoder for lasso vælger de forholdsvis de samme variable.
-
-- Elasticnet med lars 
+\input{main/ch/sub/lars}

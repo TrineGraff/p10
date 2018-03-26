@@ -1,23 +1,10 @@
-source("/Users/trinegraff/Desktop/Projekt/R/data/setup_data.R")
-library(tidyverse)
-library(glmnet)
-library(gglasso)
-library(ggplot2)
-library(gridExtra)
-drops = c("UNRATE")
-x = data_train[ , !(colnames(data_train) %in% drops)] 
-y = data$UNRATE[1:idx]
+source("/Users/trinegraff/Desktop/Projekt/R/unrate/script/script.R")
 
 parm = function(x) {
   (sum(x != 0))
 }
-set.seed(1)
 
 # lasso -------------------------------------------------------------------
-lasso_fit = glmnet(x, y, family = "gaussian", alpha = 1, intercept = FALSE, standardize=FALSE)
-lasso_cv = cv.glmnet(x, y, intercept = FALSE, family = "gaussian", alpha = 1, standardize=FALSE)
-idmin = match(lasso_cv$lambda.min, lasso_cv$lambda)
-lambda_1se = max(lasso_cv$lambda[idmin], na.rm = TRUE)
 
 data.frame(
   lambda = c("min", "1se"), 
@@ -33,11 +20,6 @@ b_hat[idx_hat, ]
 
 # ridge -------------------------------------------------------------------
 
-ridge_fit = glmnet(x, y, family = "gaussian", alpha = 0, intercept = FALSE, standardize=FALSE)
-ridge_cv = cv.glmnet(x, y, intercept = FALSE, family = "gaussian", alpha = 0, standardize=FALSE)
-
-plot(ridge_cv)
-
 data.frame(
   lambda = c("min", "1se"), 
   lambda_val = c(ridge_cv$lambda.min, ridge_cv$lambda.1se),
@@ -46,12 +28,6 @@ data.frame(
 ) 
 
 # Elastic Net -------------------------------------------------------------------
-
-alpha.grid = seq(0.1, 0.9, length = 10)
-
-for (i in alpha.grid) {
-  assign(paste("fit",i , sep=""), cv.glmnet(x, y, alpha=i,family="gaussian", standardize=FALSE))
-}
 
 cv1_min  = c(lambda = fit0.1$lambda.min, cvm = fit0.1$cvm[fit0.1$lambda == fit0.1$lambda.min], alpha = 0.1)
 cv2_min = c(lambda = fit0.188888888888889$lambda.min, 
@@ -92,7 +68,6 @@ cv9_sd  = c(lambda.sd = fit0.811111111111111$lambda.1se,
 cv10_sd  = c(lambda.sd = fit0.9$lambda.1se, cvm_sd = fit0.9$cvm[fit0.9$lambda == fit0.9$lambda.1se], alpha = 0.9)
 
 
-
 cv = data.frame(cv1_min, cv2_min, cv3_min, cv4_min, cv5_min, cv6_min, cv7_min, cv8_min, cv9_min, cv10_min, 
                 cv1_sd, cv2_sd, cv3_sd, cv4_sd, cv5_sd, cv6_sd, cv7_sd, cv8_sd, cv9_sd, cv10_sd)
 
@@ -103,22 +78,17 @@ which.min(cv_1sd[2,] )
 fit_el = glmnet(x, y, family = "gaussian", alpha = 0.9, intercept = FALSE )
 
 data.frame(
-  lambda = c("min", "1se"), 
+  lambda = c("min", "1sd"), 
   lambda_val = c(fit0.9$lambda.min, fit0.9$lambda.1se),
   error = with(fit0.9, c(cvm[which(lambda == fit0.9$lambda.min)], cvm[which(lambda == fit0.9$lambda.1se)])),  
-  p = apply(coef(fit_el, s = c(fit0.9$lambda.min, fit0.9$lambda.1se)), 2, parm) 
+  p = apply(coef(fit_el, s = c(fit0.9$lambda.min, fit0.9$lambda.1se)), 2, parm)
 ) 
-
-
-
+ 
+b_hat_el = coef(fit_el, s = fit0.9$lambda.1se)
+idx_hat_el = which(b_hat_el != 0) 
+b_hat_el[idx_hat_el, ]
 
 # Group Lasso -------------------------------------------------------------------
-
-grp <- c(1, 1, rep(4, 3), rep(1, 14), rep(2, 27), rep(3, 10), rep(4, 4),
-         rep(5, 10), rep(8, 4), rep(6, 21), rep(7, 20), rep(2, 3), rep(5, 4)) 
-
-gglasso_cv <- cv.gglasso(x, y, group = grp, nfold = 10, intercept = FALSE, standardize=FALSE)
-gglasso_fit = gglasso(x, y, group = grp, intercept = FALSE, standardize=FALSE)
 
 data.frame(
   lambda = c("min", "1se"), 
@@ -127,6 +97,27 @@ data.frame(
   p = apply(coef(gglasso_fit , s = c(gglasso_cv$lambda.min, gglasso_cv$lambda.1se)), 2, parm) 
 ) 
 
+
+# Adaptive lasso med OLS----------------------------------------------------------
+
+data.frame(
+  lambda = c("min", "1se"), 
+  lambda_val = c(adap_ols$lambda.min, adap_ols$lambda.1se),
+  error = with(adap_ols, c(cvm[which(lambda == adap_ols$lambda.min)], cvm[which(lambda == adap_ols$lambda.1se)])),  
+  p = apply(coef(adap_ols_fit, s = c(adap_ols$lambda.min, adap_ols$lambda.1se)), 2, parm) 
+) 
+
+coef(adap_ols_fit, s = adap_ols$lambda.min)
+# Adaptive lasso med Lasso vægte ------------------------------------------
+
+data.frame(
+  lambda = c("min", "1se"), 
+  lambda_val = c(adap_lasso$lambda.min, adap_lasso$lambda.1se),
+  error = with(adap_lasso, c(cvm[which(lambda == adap_lasso$lambda.min)], cvm[which(lambda == adap_lasso$lambda.1se)])),  
+  p = apply(coef(adap_lasso_fit, s = c(adap_lasso$lambda.min, adap_lasso$lambda.1se)), 2, parm) 
+) 
+
+coef(adap_lasso_fit, s = adap_lasso$lambda.min)
 
 # plot --------------------------------------------------------------------
 #getAnywhere(plot.cv.glmnet) #se plot kode
@@ -174,7 +165,32 @@ grp = ggplot(df_grp, aes(log(df_grp$gglasso_cv.lambda),df_grp$gglasso_cv.cvm )) 
   geom_vline(aes(xintercept= log(gglasso_cv$lambda.1se), col = "brown"), linetype="dotted") +
   ggtitle("Group Lasso") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
 
-cv_plot = grid.arrange(l, r, el, grp)
+
+df_adap = data.frame(adap_ols$lambda, adap_ols$cvm, adap_ols$cvsd)
+
+  ad = ggplot(df_adap, aes(log(df_adap$adap_ols.lambda),df_adap$adap_ols.cvm )) + 
+      geom_errorbar(aes(ymin = df_adap$adap_ols.cvm + df_adap$adap_ols.cvsd, 
+                        ymax = df_adap$adap_ols.cvm - df_adap$adap_ols.cvsd, width = .1)) +
+  geom_point(col = "red") +
+  labs(x = expression(log(lambda)), y = "MSE", color = "") + 
+  geom_vline(aes(xintercept= log(adap_ols$lambda.min), col = "blue"), linetype="dotted") +
+  geom_vline(aes(xintercept= log(adap_ols$lambda.1se), col = "brown"), linetype="dotted") +
+  ggtitle("Group Lasso") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
+
+  
+df_ad_l = data.frame(adap_lasso$lambda, adap_lasso$cvm, adap_lasso$cvsd)
+  
+ad_l = ggplot(df_ad_l, aes(log(df_ad_l$adap_lasso.lambda),df_ad_l$adap_lasso.cvm)) + 
+  geom_errorbar(aes(ymin = df_ad_l$adap_lasso.cvm + df_ad_l$adap_lasso.cvsd, 
+                    ymax = df_ad_l$adap_lasso.cvm - df_ad_l$adap_lasso.cvsd, width = .1)) +
+  geom_point(col = "red") +
+  labs(x = expression(log(lambda)), y = "MSE", color = "") + 
+  geom_vline(aes(xintercept= log(adap_lasso$lambda.min), col = "blue"), linetype="dotted") +
+  geom_vline(aes(xintercept= log(adap_lasso$lambda.1se), col = "brown"), linetype="dotted") +
+  ggtitle("Group Lasso") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
+
+
+cv_plot = grid.arrange(l, r, el, grp, ad, ad_l)
 
 
 # Gem resultater ----------------------------------------------------------

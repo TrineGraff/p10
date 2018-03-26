@@ -1,0 +1,21 @@
+\subsection{Lars}
+Vi vil gerne se om en anden iterativ metode til at løse vores problem kan ændre vores resultater. 
+I den her sektion anvender vi lars algoritmen. 
+Vi anvender pakken lars, som er baseret på  \citep{lars} til at udfører variable selektion med lasso.
+
+Vi kan se på figur \ref{fig:lars_lasso} at jo laverer vores L1 norm er, jo større krydsvalideringsfejl får vi.  
+
+\imgfigh{lars_lasso.pdf}{0.7}{10-fold krydsvaliderings fejl plottede som en function af fraktion af side L1 norm. De stiplede linjer indikerer minimum fejl, samt fejlen med en standard afvigelse af minimum}{lars_lasso}
+
+I tabel \ref{tab:lars_tab} ser vi ikke samme tendens som ved coordinate descent. 
+Vi ser nemlig ikke en reducering af antal parameter, hvis vi anvende r$\lambda_{1\text{sd}}$.
+Derfor anvender vi $\lambda_{\min}$, da den har mindst krydsvaliderings fejl samt mindre kompleksitet. 
+
+\input{fig/tab/cv_lars_tab}
+
+\input{fig/tab/lars_ud}
+
+Tabellen viser hvilken variable lasso udvælger, og igen kan vi se at hovedparten af variablerne er i samme gruppe, som vores responsvariable. 
+Trods, at vi har to løsnings metoder for lasso vælger de forholdsvis de samme variable.
+
+- Elasticnet med lars 

@@ -4,11 +4,8 @@ Den her sektion er baseret på pakkerne \textit{glmnet} og \textit{gglasso}, \ci
 Figur \ref{fig:cv_plot} viser den gennemsnitlige krydsvaliderings fejl for hver værdi af $\log \lambda$ for metode.
 Det skal lige bemærkes, at for elastic net har vi to turning parameter $\alpha$ og $\lambda$. 
 Så vi har anvendt en 10-fold krydsvalidering for 10 værdier af $\alpha$, hvor $\alpha \in (0,1)$. 
-For hvert $\alpha$ har vi fundet $\lambda_{\min}$ og $\lambda_{1\text{sd}}$ og deres krydsvalideringsfejl. 
-Vi finder hernæst den $\alpha$, som giver den mindste krydsvaliderings fejl for $\lambda_{\min}$. 
+For hvert $\alpha$ har vi fundet $\lambda_{\min}$ og krydsvaliderings fejlen.  
 Den mindste krydsvaliderings fejl for $\lambda_{\min}$ er når $\alpha =0.9$. 
-Derudover skal der bemærket, at for group lasso skal de forklarende variabler indelles i  grupper. 
-Disse grupper er forslået af Michael McCracken og ses i appendiks (reference).
 
 \imgfigh{cv_plot.pdf}{1}{10-fold krydsvaliderings fejl plottede som en function af $ \log(\lambda)$ for vores metoder. De stiplede linjer indikerer minimum fejl, samt fejlen med en standard afvigelse af minimum}{cv_plot}
 
@@ -18,27 +15,30 @@ For at få et bedre overblik viser tabel  \ref{tab:cv_tab} værdierne af vores $
 Vi ser for lasso og elastic net der sker en reducering af antallet af parameter når $\lambda_{1\text{sd}}$ anvendes i forhold til $\lambda_{\min}$ og hvor deres MSE ikke er signifikant forskellig.  
 Derfor lader vi den optimale $\lambda$, for lasso og elastic net være $\lambda_{1\text{sd}}$.
 Vi ser dog også, at $\lambda_{1\text{sd}}$ er ens i tabellen \ref{tab:cv_tab}. 
-De afviger fra hinanden i 5 decimal.  
+De afviger fra hinanden i 5. decimal.  
 
-For ridge regression vil der ikke ske reducering af antallet af parameter, men derimod en reducering af værdierne af koefficienterne og derfor lader vi den optimale $\lambda$, være den med mindst krydvalideringsfejl og anvender $\lambda_{\min}$, som vores optimale $\lambda$,. 
+For ridge regression vil der ikke ske reducering af antallet af parameter, men derimod en reducering af værdierne af koefficienterne og derfor lader vi den optimale $\lambda$, være den med mindst krydvaliderings fejl og anvender $\lambda_{\min}$, som vores optimale $\lambda$,. 
 %
-Group lasso opfører sig anderledes end hvad vi ville have forventet. 
+For group lasso skal de forklarende variabler indelles i  grupper. 
+Disse grupper er forslået af Michael McCracken og ses i appendiks (reference).
+Men group lasso opfører sig anderledes end hvad vi havde forventet. 
 Den fejler i reducering af parameter. 
 Det indikerer lidt på, at Group lasso ikke er en god model for vores data. (??)
-Men vi lader den optimale $\lambda$, være $\lambda_{\min}$, da den har mindst krydsvalideringsfejl. 
+Men vi lader den optimale $\lambda$, være $\lambda_{\min}$, da den har mindst krydsvaliderings fejl. 
 
 Adaptive lasso m. OLS vægte vælger færreste antal af forklarende variabler. 
-Den udvælger kun 2 for både   $\lambda_{\min}$ og $\lambda_{1\text{sd}}$. 
-Derfor lader vi den optimale $\lambda$ være  $\lambda_{\min}$. 
+Den udvælger kun 2 for både  $\lambda_{\min}$ og $\lambda_{1\text{sd}}$. 
+Derfor lader vi den optimale $\lambda$ være $\lambda_{\min}$. 
 
-Der skal bemærkes, at når vi kører adaptive lasso med lasso vægte anvender vi kun de forklarende variable, som lasso har udvalgt. 
+Der skal bemærkes, at når vi anvender adaptive lasso med lasso vægte anvender vi kun de forklarende variable, som lasso har udvalgt. 
 Vi giver altså ikke alle 122 forklarende variable, men kun de 15, som den optimale $\lambda$ udvælger for lasso.
 For adaptive lasso med lasso vægte lader vi den optimale $\lambda$ være $\lambda_{\min}$.  
 
 Tabel \ref{tab: lasso_ud} viser hvilken koefficienter elastic net og lasso udvælger. 
-Vi får at lasso og elastic net udvælger de samme variable. 
-Det kan skyldes, at deres optimale $\lambda$ værdi er tæt på den samme, samt at $alpha = 1$ for lasso, og derfor er der hellere ikke stor forskel på $\alpha$-værdierne. 
-Der ses derudover, at de fleste variabler de to metoder udvælger stammer fra samme gruppe, som vores responsvariable.  
+Vi får at lasso og elastic net udvælger de samme variable, dog er værdierne af koefficienterne forskellige. 
+Det kan skyldes, at deres optimale $\lambda$ værdi er tæt på den samme. 
+Derudover har vi jo,  at $alpha = 1$ for lasso og $\alpha = 0.9$ for elastic net, så der er altså ikke stor forskel på de to modeller. 
+Derudover ses, at de fleste variabler de to metoder udvælger stammer fra samme gruppe, som vores responsvariable.  
 
 Tabel \ref{tab: v_ud} viser hvilken forklarende variable adaptive lasso udvælger.  Her udvælger metoderne kun variable fra gruppen Arbejdsmarked. 
 

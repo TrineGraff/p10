@@ -2,7 +2,7 @@
 library(tidyverse)
 library(DataCombine)
 
-data = read.csv("transformed_data.csv") %>% as.data.frame()
+data = read.csv("/Users/trinegraff/Desktop/Projekt/R/data/transformed_data.csv") %>% as.data.frame()
 
 idx =  floor(0.80 * nrow(data)) 
 data_train = data[1:idx,]

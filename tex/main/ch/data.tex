@@ -1,0 +1,24 @@
+\chapter{Data}
+I dette kapitel anvender vi data fra FRED, som er hentet fra Federal Reserve Bank of St. Louis \url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}.
+Der anvendes nogle transformationer for at gøre tidsrækkerne stationære, som er noteret mere detaljeret i appendiks ... 
+Disse transformationer er forslået af Michael McCracken fra Federal Reserve Bank of St. Louis.  
+Der observeres at 5 af disse variabler har mere end 43 NA's inkluderet og derfor bliver de fjernet fra datasættet. 
+Derudover ser vi at de resterende NA's opstår kun i de første eller/og sidste observationer, vi fjerner derfor 17 observationer i hver variable for at undgå NA's. 
+Så vores datasæt inkluderer altså 123 tidsrækker, som indeholder $691$ månedlige observationer og går fra 1. januar 1960 til 1. juli 2017. 
+Hernæst har vi standardiseret vores data, således at variablerne er centreret omkring 0 og har en varians 1, således vi undgår skæringen i vores regression. 
+
+Datasættet repræsenterer en stor brede af makroøkonomiske variabler, som Michael McCracken har inddelt i 8 kategorier. 
+\begin{enumerate}
+\item \textbf{Output og indkomst:} Indeholder 16 tidsrækker
+\item \textbf{Arbejdsmarked:}  Indeholder 31 tidsrækker
+\item \textbf{Boliger:} Indeholder 10 tidsrækker
+\item \textbf{Forbrug, ordrer og varebeholdninger:} Indeholder 7 tidsrækker
+\item \textbf{Penge og kredit:} Indeholder 14 tidsrækker
+\item\textbf{ Rente og valutakurs:} Indeholder 21 tidsrækker
+\item \textbf{Priser:} Indeholder 20 tidsrækker
+\item \textbf{Aktiemarked:} Indeholder 4 tidsrækker
+\end{enumerate}
+
+Når vi konstruerer vores model anvender vi 122 forklarende variabler og 1 respons variable og for at validerer vores model deler vi vores fulde datasæt i et træningssæt, som består af 552 observationer fra 1. januar 1960 til 1. december 2005 og et testsæt, som består af 139 observationer fra 1. januar 2006 til 1. Juli 2017. 
+En betydningsfuld makroøkonomisk variable er arbejdsløshed, som blandt andet vil være vores responsvariable.  Arbejdsløshed er inkluderet i gruppen arbejdsmarked. 
+

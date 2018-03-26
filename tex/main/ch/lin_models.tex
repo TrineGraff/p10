@@ -9,7 +9,25 @@ Den velkendte estimator for mindste kvadraters metode (OLS) findes ved at minime
 \begin{align}
 \arg \min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}. \label{eq:OLS}
 \end{align}
-Som bekendt er løsningen hertil på matrix-vektor form givet ved
+
+Ofte standardiseres prædiktorerne, således at de er centreret (\(\frac{1}{n} \sum_{i=1}^n x_{ij} = 0\)) og har unit varians (\(\frac{1}{n} \sum_{i=1}^n x_{ij}^2=1\).).
+Hvis ikke prædiktorerne standardiseres, da vil estimaterne afhænge af enhederne, som prædiktorerne er målt i.
+For fuldstændighed centreres responsvariablen også (\(\frac{1}{n} \sum_{i=1}^n y_{i} = 0\)).
+Hermed kan vi se bort fra skæringen $\beta_0$ i det givne optimeringsproblem.
+Givet en optimal løsning \(\hat{\beta}\) på det centreret data, kan vi finde løsningen for det ikke-centreret data udfra
+\begin{align*}
+\hat{\beta}^{\text{ikke-centreret}} = \hat{\beta}^{\text{centreret}}, \\
+\hat{\beta}_0^{\text{ikke-centreret}} = \bar{y} - \sum_{j=1}^p \bar{x}_j \hat{\beta}_j,
+\end{align*}
+hvor \(\bar{y}\) og \(\cbr{\bar{x}_j}_{j=1}^p\) er de originale gennemsnit.
+Derfor ser vi bort fra skæringen resten af kapitlet.
+
+Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og lad \(\X\) være en $n \times p$ matrix med $x_i \in \R^p$ som den i'te række, da kan \eqref{eq:OLS} omskrives til matrix-vektor form
+\begin{align*}
+\arg \min_{ \beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2},
+\end{align*}
+hvor \(\Vert \cdot \Vert_2\) betegner den Euklidiske norm.
+Som bekendt er løsningen hertil givet ved
 \begin{align*}
 \hat{\beta}^{\text{OLS}} = (\X^T \X)^{-1} \X^T \y.
 \end{align*}

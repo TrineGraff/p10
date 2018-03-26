@@ -4,36 +4,24 @@
 \textit{The Least Absolute Shrinkage Selection Operator}, som forkortes lasso, blev introduceret af \citep{lasso}. 
 Lasso finder løsningen til optimeringsproblemet
 \begin{align}
-\arg \min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t. \label{eq:2.3}
+\arg \min_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t, \label{eq:2.3}
 \end{align} 
-Betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt som en \(\ell_1\)-norm betingelse $\Vert \beta \Vert_1 \leq t$.
+hvor vi bemærker, at betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt som en \(\ell_1\)-norm betingelse $\Vert \beta \Vert_1 \leq t$.
 
-Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og lad \(\X\) være en $n \times p$ matrix med $x_i \in \R^p$ som den i'te række, da kan \eqref{eq:2.3} omskrives til matrix-vektor form
-\begin{align*}
-\arg \min_{\beta_0, \beta} \cbr{\frac{1}{2n} \Vert \y - \beta_0 \mathbf{1} - \X \beta \Vert_2^2}, \ \text{underlagt at } \Vert \beta \Vert_1 \leq t,
-\end{align*}
-hvor \(\mathbf{1}\) er en \(n\) dimensional vektor bestående af 1 taller og \(\Vert \cdot \Vert_2\) betegner den Euklidiske norm.
+%På matrix-vektor form omskrives \eqref{eq:2.3} til
+%\begin{align*}
+%\arg \min_{ \beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2}, \ \text{underlagt at } \Vert \beta \Vert_1 \leq t,
+%\end{align*}
+%hvor \(\Vert \cdot \Vert_2\) betegner den Euklidiske norm.
 Værdi af \(t\) begrænser summen af de absolutte værdier af parameter estimaterne.
 Den kontrollerer kompleksiteten af modellen. 
 Større værdi af \(t\) betyder flere parametre og tillader dermed at modellen tilpasser data meget præcis.
 Mindre værdi af \(t\) vil begrænse antallet af parametre, hvilket fører til mere sparse modeller, som tilpasser data mindre præcis.
 Værdien af \(t\) skal specificeres ved en ekstern procedure kaldet \textit{krydsvalidering}, som vil blive diskuteret i kapitel \ref{kap:statistisk_inferens}.
 
-Ofte standardiseres prediktorerne \(\X\) således at kolonnerne er centeret og har varians 1. Dvs \(\frac{1}{n} \sum_{i=1}^n x_{ij} = 0\) og \(\frac{1}{n} \sum_{i=1}^n x_{ij}^2=1\). Hvis ikke prediktorerne standardiseres da vil lasso estimaterne være afhængige af enhederne, som prediktorerne er målt i.
-Hvis prediktorerne er målt i samme enhed, da vil vi typisk ikke standardisere.
-For fuldstændighed centreres responsvariablen $y_i$ også, dvs \(\frac{1}{n} \sum_{i=1}^n y_{i} = 0\).
-Hermed kan vi se bort fra skæringen $\beta_0$ i lasso optimeringen.
-Givet en optimal lasso løsning \(\hat{\beta}\) på det centreret data, kan vi finde løsningen for det ikke-centreret data udfra
-\begin{align*}
-\hat{\beta}^{\text{ikke-centreret}} = \hat{\beta}^{\text{centreret}}, \\
-\hat{\beta}_0^{\text{ikke-centreret}} = \bar{y} - \sum_{j=1}^p \bar{x}_j \hat{\beta}_j,
-\end{align*}
-hvor \(\bar{y}\) og \(\cbr{\bar{x}_j}_{j=1}^p\) er de originale gennemsnit.
-Derfor ser vi bort fra skæringen resten af kapitlet.
-
 Lasso problemet kan omskrives til Lagrange form
 \begin{align}
-\arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_1}, \label{eq:2.5}
+\hat{\beta}^\text{lasso} = \arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_1}, \label{eq:2.5}
 \end{align}
 hvor $\lambda \geq 0$ er en såkaldt strafparameter, som også bestemmes udfra krydsvalidering. 
 Der er en en-til-en korrespondance mellem det betingede problem \eqref{eq:2.3} og Lagrange problemet \eqref{eq:2.5}. 
@@ -46,17 +34,18 @@ Denne standardisering gør \(\lambda\) værdierne sammenlignelige for samples si
 
 \textit{Ridge regression} estimatoren findes udfra 
 \begin{align} 
-\arg \min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
+\arg \min_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
 \end{align} 
+%som kan omskrives på Lagrange form
+%\begin{align} 
+%\arg \min_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2 + \lambda \sum_{j=1}^p \beta_j^2}, 
+%\end{align} \label{eq:2.8} 
+%hvor $\lambda \geq 0$.
 som kan omskrives på Lagrange form
-\begin{align} 
-\arg \min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2 + \lambda \sum_{j=1}^p \beta_j^2}, 
-\end{align} \label{eq:2.8} 
-hvor $\lambda \geq 0$.
-Efter standardisering
 \begin{align*}
-\arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_2^2}.
+\arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_2^2},
 \end{align*}
+hvor $\lambda \geq 0$.
 Heraf kan ridge regression estimatoren findes ved at differentiere \(\del{\y - \X \beta}^T \del{\y - \X \beta} + \lambda \beta^T \beta\) mht $\beta$, sætte dette lig 0 og isolere for $\beta$. Hvoraf vi finder, at
 \begin{align*} 
 \hat{\beta}^\text{ridge} = (\X^T \X + \lambda I_p)^{-1} \X^T \y. 
@@ -117,7 +106,10 @@ Givet data \(\del{\y, \X}\), defineres et augmented datasæt
 \mathbf{y} \\ 0_p
 \end{bmatrix},
 \end{align*}
-hvor \(\X^* \in \mathbb{R}^{\del{n+p} \times p}\) og \(\y^* \in \mathbb{R}^{n+p}\). Da kan estimatoren for ridge regression udledes udfra mindste kvadraters metode
+hvor \(\X^* \in \mathbb{R}^{\del{n+p} \times p}\) og \(\y^* \in \mathbb{R}^{n+p}\). Da kan estimatoren for ridge regression udledes udfra mindste kvadraters metode.
+\end{lem}
+\begin{proof}
+Vi har, at
 \begin{align*}
 \del{\X^{*^T} \X^*}^{-1} \X^{*^T} \y^* &= \left( \begin{bmatrix}
 \mathbf{X} & \sqrt{\lambda} I_p
@@ -133,15 +125,15 @@ hvor \(\X^* \in \mathbb{R}^{\del{n+p} \times p}\) og \(\y^* \in \mathbb{R}^{n+p}
 \end{bmatrix} \\
 &= \left( \mathbf{X}^T \mathbf{X} + \lambda I_p \right)^{-1} \mathbf{X}^T \mathbf{y}.
 \end{align*}
-\end{lem}
+\end{proof}
+
 
 \subsection{Udregning af lasso}
-Da lasso strafleddet ikke er differentialbel, findes der ikke en eksplicit løsning til lasso problemet.
-Vi antager, at responsvariablerne $y_i$ og prediktorerne $x_{ij}$ er standardiseret således at \(\frac{1}{n} \sum_{i=1}^n y_{i} = 0\), \(\frac{1}{n} \sum_{i=1}^n x_{ij} = 0\) og \(\frac{1}{n} \sum_{i=1}^n x_{ij}^2=1\), da kan vi ser bort fra skæringen $\beta_0$.
+Da lasso strafleddet ikke er differentialbel, findes der ikke en eksplicit løsning til optimeringsproblemet for lasso.
 En simpel procedure kaldet \textit{coordinate descent} kan udfra lagrange formen udregne en numerisk løsning. 
-%
-\subsubsection{Single prediktor: soft tresholding}
-Vi betragter blot en enkelt prediktor \(z_i\). 
+
+\subsubsection{Single prædiktor: soft tresholding}
+Vi betragter blot en enkelt prædiktor \(z_i\). 
 Problemet, som vi skal løse, er da
 \begin{align*}
 \arg \min_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}.
@@ -163,29 +155,39 @@ Vi finder, at
 \lambda & \beta >0 
 \end{cases},
 \end{align*}
-da $\frac{1}{n} \sum_{i=1}^n z_i^2=1$. Herefter sættes disse lig 0 og $\beta$ isoleres, hvoraf vi finder, at
-\begin{align*}
+da $\frac{1}{n} \sum_{i=1}^n z_i^2=1$. Dette sættes lig 0 og vi isolerer $\beta$, hvoraf vi finder, at
+\begin{align}
 \hat{\beta} = \begin{cases}
 \frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle - \lambda, \quad &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle > \lambda, \\
 0 &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle \leq \lambda, \\
 \frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle + \lambda, &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle < \lambda.
-\end{cases}
+\end{cases} \label{eq:2.10}
+\end{align}
+Definer \textit{soft-threshold operatoren}
+\begin{align*}
+S_\lambda\del{x}=\text{sign}\del{x} \del{\vert x \vert - \lambda}_+,
 \end{align*}
-Definer \textit{soft-threshold operatoren} $S_\lambda\del{x}=\text{sign}\del{x} \del{\vert x \vert - \lambda}_+$, som mindsker dens argument $x$ mod 0 ved $\lambda$, og sætter den lig med 0 hvis $\vert x \vert \leq \lambda$. Da kan vi omskrive opdateringen til
+som trækker argumentet $x$ mod 0 med $\lambda$, og sætter den lig med 0 hvis $\vert x \vert \leq \lambda$. 
+Figur \ref{fig:soft_thresholding_fct} illustrerer operatoren.
+Da kan vi omskrive \eqref{eq:2.10} til
 \begin{align*}
 \hat{\beta} = S_\lambda \del{\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle}.
 \end{align*}
 %
-\subsubsection{Multiple prediktorer: cyclic coordinate descent}
-Herefter kan vi betragte multivariate prediktorer. 
-Gentagne cycle gennem prediktorerne i en fast, men vilkårlig orden $j=1, 2, \ldots, p$, hvor koefficienten $\beta_j$ opdateres i det $j$'te step, ved at minimere objektfunktionen i dens koordinat, mens de resterende koefficienter $\cbr{\hat{\beta}_k, k \neq j}$ fastholdes deres nuværende værdier. 
+\begin{figure}[H]
+\centering
+\scalebox{0.8}{\input{fig/soft_thresholding_fct.tikz}}
+\caption[optional short text]{Soft thresholding funktionen $S_\lambda\del{x}=\text{sign}\del{x} \del{\vert x \vert - \lambda}_+$.} \label{fig:soft_thresholding_fct}
+\end{figure}
+%
+\subsubsection{Multiple prædiktorer: cyclic coordinate descent}
+Herefter kan vi betragte multivariate prædiktorer. 
+%Gentagne cycle gennem prædiktorerne i en fast, men vilkårlig orden $j=1, 2, \ldots, p$, hvor koefficienten $\beta_j$ opdateres i det $j$'te step, ved at minimere objektfunktionen i dens koordinat, mens de resterende koefficienter $\cbr{\hat{\beta}_k, k \neq j}$ fastholdes deres nuværende værdier. 
 Vi kan opskrive objektfunktionen i \eqref{eq:2.5} som
 \begin{align*}
 \frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \beta_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert
 \end{align*}
-Definer den partialle residual $r_i^{(j)}=y_i - \sum_{k \neq j} x_{ik} \hat{\beta}_k$, som fjerner nuværende fit fra den $j$'te prediktor.
-
-
+Definer den partialle residual $r_i^{(j)}=y_i - \sum_{k \neq j} x_{ik} \hat{\beta}_k$, som fjerner nuværende fit fra den $j$'te prædiktor.
 Da er den j'te koefficient opdateret ved
 \begin{align}
 \hat{\beta}_j = S_\lambda \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{r}^{(j)} \right\rangle}, \label{eq:2.14}
@@ -193,7 +195,7 @@ Da er den j'te koefficient opdateret ved
 hvor \(r_i = y_i - \sum_{j = 1}^p x_{ij} \hat{\beta}_j \) er de fulde residualer.
 Den beskrevne algoritme svarer til metoden \textit{cyclical coordinate descent}, som minimerer en konveks objektfunktion langs hver koordinat af gangen.
 Under milde regularitetsbetingelser konvergerer løsningen til et global optimum.
-Fra opdateringen \eqref{eq:2.14} ser vi, at algoritmen foretager en univariat regression af den partial residual på hver prediktor, cycling gennem prediktorerne indtil konvergens. \\
+Fra opdateringen \eqref{eq:2.14} ser vi, at algoritmen foretager en univariat regression af den partial residual på hver prædiktor, cycling gennem prædiktorerne indtil konvergens. \\
 
 Ofte er vi interesseret i, at finde lasso løsningen for en mængde af \(\lambda\) værdier og ikke blot én fast lambda.
 \textit{pathwise coordinate descent} kan anvendes hertil, ved at begynde med en værdi af \(\lambda\) som præcis er høj nok således at den optimale løsning er vektor bestående af \(0\).
@@ -212,7 +214,7 @@ Algoritmen kaldet \textit{least angle regression} (LARS) er en homotopy metode s
 En mere teoretisk gennemgang af coordinate descent og LARS algoritmen er givet i kapitel \ref{kap:optimeringsmetoder}. \\[2mm]
 
 
-Hvis prediktorerne er ortogonale, dvs $\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{x}_k \right\rangle = 0$ for alle $j \neq k$.
+Hvis prædiktorerne er ortogonale, dvs $\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{x}_k \right\rangle = 0$ for alle $j \neq k$.
 Da reduceres opdateringen \eqref{eq:2.14} til
 \begin{align*}
 \hat{\beta}_j = S_\lambda \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle},
@@ -261,14 +263,34 @@ Ideen tages et skridt videre i sektion \ref{subsec:kovarians_test} hvor vi beskr
 \textit{Ikke-negative garrote}, introduceret af \citep{nonnegative_garrote}, er en two-stage procedure. 
 Givet et initial estimat af regression koefficienterne \(\tilde{\beta} \in \mathbb{R}^p\), kan vi løse optimeringsproblemet
 \begin{align}
-\arg \min_{c \in \mathbb{R}^p}  \cbr{ \sum_{i=1}^n \del{y_i - \sum_{j=1}^p c_j x_{ij} \tilde{\beta}_j}^2}, \ \text{underlagt at } c_j \geq 0 \text{ og } \Vert c \Vert_1 \leq t. \label{eq:2.19}
+\hat{\beta}_j^\text{garotte} = \arg \min_{c \in \mathbb{R}^p}  \cbr{ \sum_{i=1}^n \del{y_i - \sum_{j=1}^p c_j x_{ij} \tilde{\beta}_j}^2}, \ \text{underlagt at } c_j \geq 0 \text{ og } \Vert c \Vert_1 \leq t. \label{eq:2.19}
 \end{align}
-Lad \(\hat{\beta}_j = \hat{c}_j \cdot \tilde{\beta}_j\), \(j = 1, \ldots, p\). \( \hat{\beta}_j^\text{garotte} = \hat{c}_j \cdot \hat{\beta}_j^\text{OLS}\)
-På Lagrange form
+Lad \(\hat{\beta}_j^\text{garotte} = \hat{c}_j \cdot \tilde{\beta}_j\), for \(j = 1, \ldots, p\).
+Der er en ækvivalent Lagrange form for denne procedure
 \begin{align*}
-\arg \min_{c \in \mathbb{R}^p}  \cbr{\Vert \y - \X \beta \Vert_2^2 + \lambda \Vert c \Vert_1}
+\hat{\beta}_j^\text{garotte} = \arg \min_{c \in \mathbb{R}^p}  \cbr{\Vert \y - \X \beta \Vert_2^2 + \lambda \Vert c \Vert_1}, \ \text{underlagt at } c_j \geq 0.
 \end{align*}
-Der er en ækvivalent Lagrange form for denne procedure, ..
+I den originale artikel \citep{nonnegative_garrote}, er initial estimatet \(\tilde{\beta}\) valgt til at være \(\hat{\beta}_j^\text{OLS}\)
 
+Antag \(\X\) er ortogonal og \(t\) er således at betingelsen \(\Vert c \Vert_1 = t\) er opfyldt, da er
+\begin{align*}
+\hat{c}_j = \del{1 - \frac{\lambda}{\tilde{\beta}_j^2}}_+, \ j = 1, \ldots, p,
+\end{align*}
+hvor \(\lambda\) er valgt således at \(\Vert \hat{c} \Vert_1 = t\).
+Hvis koefficienten \(\tilde{\beta}_j\) er stor, da vil shrinkage faktoren være tæt på 1, dvs ingen shrinkage, men hvis den er lille, da vil estimatet blive shrunkage mod 0.
+Af figur \ref{fig:nonnegative_garrote} ses det, at garrote shrinker lave værdier af \(\beta\) hårdere end lasso, og omvendt for høje værdier.
+%
+\begin{figure}[H]
+\centering
+\scalebox{0.8}{\input{fig/nonnegative_garrote.tikz}}
+\caption[optional short text]{Eksakte løsninger for lasso (\tikz[baseline]{\draw[dashed] (0,.5ex)--++(.5,0) ;}) og nonnegative garrote (\tikz[baseline]{\draw[dotted] (0,.5ex)--++(.5,0) ;}).} \label{fig:nonnegative_garrote}
+\end{figure}
+%
+Nonnegaitve garrote er tæt relateret med adaptive lasso, som vi vil diskutere nærmere i afsnit ---.
+
+-- viste at nonnegative garrote er path-konsistent under mindre strenge betingelser end lasso.
+Dette gælder, hvis initial estimaterne er \(\sqrt{n}\)-konsistent, som inkluderer mindste kvadraters metoder (når \(p < n\)), lasso og elastisk net.
+Path-konsistent betyder, at løsningsstien inkluderer den sande model.
+Konvergens af parameter estimaterne for nonnegative garrote er langsommere end den af initial estimatet.
 \newpage
  

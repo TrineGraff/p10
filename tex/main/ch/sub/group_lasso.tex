@@ -1,21 +1,24 @@
-\subsection{Grouped lasso}
-For mange regressions problemer har kovariaterne en naturlig grupperet struktur, og da foretrækkes det at alle koefficienter indenfor en gruppe er ikke-nul (eller nul) samtidig.
-Betragt en lineær regressions model som har $J$ grupper af kovariater, hvor vektoren $Z_j \in \R^{p_j}$ for $j=1, \ldots, J$ repræsenterer kovariaterne i gruppe $j$.
-Formålet er da at prædiktere responsvariablen $Y \in \R$ baseret på en samling af kovariater $(Z_1,\ldots,Z_J)$.
-En lineær model for regressions funktionen $\E{Y \vert Z}$ er givet ved \(\theta_0 + \sum_{j=1}^J Z_j^T \theta_j\), hvor $\theta_j \in \R^{p_j}$ repræsenterer en gruppe af $p_j$ regressions koefficienter. 
+\section{Grouped lasso}
+\textit{Afsnittet er skrevet udfra kapitel 4 i \citep{hastie}}. \\[4mm]
+%
+I mange regressions problemer har prædiktorerne en naturlig grupperet struktur, og da foretrækkes det at alle koefficienter indenfor en gruppe er ikke-nul (eller nul) samtidig.
 
-Given en samling af $n$ samples \(\{(y_i, z_{i,1}, z_{i,2}, \ldots, z_{i,J})\}_{i=1}^n\) løser group lasso følgende konveks problem
+Betragt en lineær regressions model med $J$ grupper, hvor vektoren $Z_j \in \R^{p_j}$ for $j=1, \ldots, J$ repræsenterer prædiktorerne i gruppe $j$.
+Formålet er da, at prædiktere responsvariablen $Y \in \R$ baseret på en samling af prædiktorer $(Z_1,\ldots,Z_J)$.
+%En lineær model for regressions funktionen $\E{Y \vert Z}$ er givet ved \(\theta_0 + \sum_{j=1}^J Z_j^T \theta_j\), hvor $\theta_j \in \R^{p_j}$ repræsenterer en gruppe af $p_j$ regressions koefficienter. 
+
+Given en samling af $n$ samples \(\{(y_i, z_{i,1}, z_{i,2}, \ldots, z_{i,J})\}_{i=1}^n\) løser group lasso følgende optimeringsproblem
 \begin{align}
-\arg \min_{\theta_0 \in \R, \ \theta_j \in \R^{p_j}} \cbr{\frac{1}{2} \sum_{i=1}^n \del{y_i - \theta_0 - \sum_{j=1}^J z_{ij}^T \theta_j}^2 + \lambda \sum_{j=1}^J \Vert \theta_j \Vert_2},\label{eq:4.5}
+\beta^{\text{group lasso}} = \arg \min_{\theta_j \in \R^{p_j}} \cbr{\frac{1}{2} \sum_{i=1}^n \del{y_i - \sum_{j=1}^J z_{ij}^T \theta_j}^2 + \lambda \sum_{j=1}^J \Vert \theta_j \Vert_2},\label{eq:4.5}
 \end{align}
 hvor $\Vert \theta_j \Vert_2$ er den euklidiske norm af vektoren $\theta_j$.
 Dette er en grupperet generalisering af lasso, som har følgende egenskaber:
 \begin{itemize}
 \item Afhængig af $\lambda$, vil enten alle indgange i vektoren $\hat{\theta}_j$ være nul eller ikke-nul
-\item Når $p_j=1$, da har vi at $\Vert \theta_j \Vert_2 = \vert \theta_j \vert$, således at alle grupper er singletons, dermed reduceres optimerings problemet \eqref{eq:4.5} til standard lasso problemet.
+\item Når $p_j=1$, da har vi at $\Vert \theta_j \Vert_2 = \vert \theta_j \vert$, således at alle grupper er singletons, dermed reduceres optimeringsproblemet \eqref{eq:4.5} til standard lasso.
 \end{itemize}
-Figur \ref{fig:elastisk_net} viser betingelsesområderne for henholdsvis den grupperet lasso og standard lasso for tre variable.
-Vi ser at den grupperet lasso deler egenskaber med både $\ell_1$ og $\ell_2$ kuglen.
+Figur \ref{fig:elastisk_net} viser betingelsesområderne for henholdsvis group lasso og standard lasso for tre variable.
+%Vi ser at den grupperet lasso deler egenskaber med både $\ell_1$ og $\ell_2$ kuglen.
 %
 \begin{figure}[H]
 \centering
@@ -25,7 +28,7 @@ Vi ser at den grupperet lasso deler egenskaber med både $\ell_1$ og $\ell_2$ ku
 \end{figure}
 %
 I \eqref{eq:4.5}, straffes alle grupper ligeligt, hvilket betyder at større grupper vil have en tendens til at blive valgt.
-
+\citep{group_lasso}
 
 \subsubsection{Udregning af group lasso}
 Lad os omsrive optimerings problemet \eqref{eq:4.5} på matrix-vektor form

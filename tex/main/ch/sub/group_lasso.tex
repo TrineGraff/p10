@@ -28,14 +28,13 @@ Figur \ref{fig:elastisk_net} viser betingelsesområderne for henholdsvis group l
 \end{figure}
 %
 I \eqref{eq:4.5}, straffes alle grupper ligeligt, hvilket betyder at større grupper vil have en tendens til at blive valgt.
-\citep{group_lasso}
+\citep{group_lasso} anbefalede at 
 
 \subsubsection{Udregning af group lasso}
-Lad os omsrive optimerings problemet \eqref{eq:4.5} på matrix-vektor form
+Lad os omskrive optimeringsproblemet \eqref{eq:4.5} på matrix-vektor form
 \begin{align*}
 \arg \min_{\theta_1, \ldots, \theta_J} \cbr{\frac{1}{2} \Vert \y - \sum_{j=1}^J \mathbf{Z}_{j} \theta_j \Vert_2^2 + \lambda \sum_{j=1}^J \Vert \theta_j \Vert_2}.
 \end{align*}
-Vi ignorerer skæringen $\theta_0$, da vi centrerer variablerne og responsvariablen.
 For dette problem er nul subgradient ligningerne givet ved
 \begin{align*}
 - \mathbf{Z}_{j}^T \del{\y - \sum_{\ell=1}^J \mathbf{Z}_\ell \hat{\theta}_\ell} + \lambda \hat{s}_j = 0, \quad j=1,\ldots, J,
@@ -45,6 +44,7 @@ Når $\hat{\theta}_j \neq 0$ da har vi, at $\hat{s}_j = \frac{\hat{\theta}_j}{\V
 En metode at løse nul subgradent ligningerne er ved at fastholde alle block vektorer $\{\hat{\theta}_k, k \neq j\}$, og da løse for $\hat{\theta}_j$.
 Hermed udføres block coordinate descent på objektfunktionen af group lasso.
 Da problemet er konveks, og strafleddet kan separeres efter block, er det garanteret at konvergere til en optimal løsning.
+
 Med $\{\hat{\theta}_k, k \neq j\}$ fastholdt, kan vi skrive
 \begin{align*}
 - \mathbf{Z}_{j}^T \del{\mathbf{r}_j - \mathbf{Z}_j \hat{\theta}_j} + \lambda \hat{s}_j = 0,
@@ -54,10 +54,12 @@ Fra betingelserne opfyldt af subgradienten $\hat{s}_j$, må vi have at $\hat{\th
 \begin{align}
 \hat{\theta}_j = \del{\mathbf{Z}_j^T \mathbf{Z}_j + \frac{\lambda}{\Vert \hat{\theta}_j \Vert_2} \mathbf{I}}^{-1} \mathbf{Z}_j^T \mathbf{r}_j. \label{eq:4.14}
 \end{align}
-Denne opdatering er ens med løsningen af ridge regression, bortset fra at den underliggende straf parameter afhænger af $\Vert \hat{\theta}_j \Vert_2$.
-Desværre har ligning \eqref{eq:4.14} ikke en lukket løsning for $\hat{\theta}_j$ medmindre at $\mathbf{Z}_j$ er ortonormal. I dette special tilfælde har vi, at
+Denne opdatering er ens med løsningen af ridge regression, bortset fra at den underliggende strafparameter afhænger af $\Vert \hat{\theta}_j \Vert_2$.
+Ligning \eqref{eq:4.14} har desværre ikke en lukket løsning for $\hat{\theta}_j$, medmindre at $\mathbf{Z}_j$ er ortonormal. I dette special tilfælde har vi, at
 \begin{align*}
 \hat{\theta}_j = \del{1 - \frac{\lambda}{\Vert \mathbf{Z}_j^T \mathbf{r}_j \Vert_2}}_+  \mathbf{Z}_j^T \mathbf{r}_j.
 \end{align*}
+
+\subsection{Sparse group lasso}
 
 \newpage

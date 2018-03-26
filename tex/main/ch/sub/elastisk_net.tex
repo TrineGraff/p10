@@ -79,7 +79,7 @@ Hvis \(\X\) er ortogonal, da er \(\hat{\beta}^\text{OLS} = \X^T \y\) og der gæl
 \begin{align*}
 \hat{\beta}^\text{ridge} &= \frac{\hat{\beta}^\text{OLS}}{1+\lambda_1} \\
 \hat{\beta}^\text{lasso} &= S_{\lambda_2} \del{ \hat{\beta}_i^\text{OLS}} =  \text{sign} \del{\hat{\beta}_i^\text{OLS}} \del{\left\vert \hat{\beta}_i^\text{OLS} \right\vert - \lambda_2}_+ \\
-\hat{\beta}^\text{naivEN} &= \text{sign} \del{\hat{\beta}_i^\text{OLS}} \frac{\del{\left\vert \hat{\beta}_i^\text{OLS} \right\vert - \frac{\lambda_2}{2}}_+}{1+\lambda_1}
+\hat{\beta}^\text{naivEN} &= \text{sign} \del{\hat{\beta}_i^\text{OLS}} \frac{\del{\left\vert \hat{\beta}_i^\text{OLS} \right\vert - \lambda_2}_+}{1+\lambda_1}
 \end{align*}
 Figur \ref{fig:elastisk2} viser de operationelle egenskaber af ridge regression, lasso og naiv elastisk net, hvis \(\X\) er ortogonal. Heraf ses det også at naiv elastisk net er en two-stage procedure, først har vi en ridge lignende shrinkage som efterfølges af en lasso lignende thresholding.
 %

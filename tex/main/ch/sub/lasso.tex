@@ -34,7 +34,7 @@ Denne standardisering gør \(\lambda\) værdierne sammenlignelige for samples si
 
 \textit{Ridge regression} estimatoren findes udfra 
 \begin{align} 
-\arg \min_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
+\hat{\beta}^\text{ridge} = \arg \min_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
 \end{align} 
 %som kan omskrives på Lagrange form
 %\begin{align} 
@@ -43,7 +43,7 @@ Denne standardisering gør \(\lambda\) værdierne sammenlignelige for samples si
 %hvor $\lambda \geq 0$.
 som kan omskrives på Lagrange form
 \begin{align*}
-\arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_2^2},
+\hat{\beta}^\text{ridge} = \arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_2^2},
 \end{align*}
 hvor $\lambda \geq 0$.
 Heraf kan ridge regression estimatoren findes ved at differentiere \(\del{\y - \X \beta}^T \del{\y - \X \beta} + \lambda \beta^T \beta\) mht $\beta$, sætte dette lig 0 og isolere for $\beta$. Hvoraf vi finder, at
@@ -54,24 +54,30 @@ I forhold til mindste kvadraters regression tilføjer ridge regression en positi
 Dermed er en entydig løsning altid garanteret. 
 
 Lad os betragte data givet i tabel \ref{tab:crime}.
-Outputtet er kriminalitetsraten per 1 million indbyggere i byer i United States.
-Prediktorerne er følgende: den årlige politiske finansiering i dollars per indbygger, den procentvise andel af 25 årige eller derover med 4 års gymnasial uddannelse, den procentvise andel af 16-19 årige som ikke er på eller har en gymnasiel uddannelse, den procentvise andel af 18-24 årige på universitetet og den procentvise andel af 25 årige eller derover med mindst 4 år på universitetet.
+For 50 byer i United States er kriminalitetsraten per 1 million indbyggere givet og følgende 5 prædiktorer: 
+\begin{itemize}
+\item \texttt{funding}: årlige politiske finansiering i dollars per indbygger
+\item \texttt{hs}: procentvise andel af 25 årige eller derover med 4 års gymnasial uddannelse
+\item \texttt{not-hs}: procentvise andel af 16-19 årige som ikke går i gymnasiet og ikke har en gymnasiel uddannelse
+\item \texttt{college}: procentvise andel af 18-24 årige som studerer på universitetet
+\item \texttt{college4}: procentvise andel af 25 årige eller derover med mindst 4 år på universitetet
+\end{itemize}
 %
 \input{fig/tab/crime}
 %
-Løbende i rapporten referer vi til dette data, som er inkluderet for at underbygger teorien.
-I dette afsnit anvendes crime data til at illustrere lasso løsningsstierne.
+Datasættet, som vi betegner crime data, er inkluderet for at underbygge teorien og vi vil løbende i rapporten referere til det.
+På figur \ref{fig:crime_koef} anvendes crime data til at illustrere koefficientstierne for henholdsvis ridge regression og lasso.
 %
 \begin{figure}[H]
 \centering
 \begin{minipage}{0.4\linewidth}
-\scalebox{0.3}{\includegraphics{fig/crime_ridge.png}}
+\scalebox{0.32}{\includegraphics{fig/crime_ridge.png}}
 \end{minipage}
 \hspace{0.2cm}
 \begin{minipage}{0.4\linewidth}
-\scalebox{0.3}{\includegraphics{fig/crime_lasso.png}}
+\scalebox{0.32}{\includegraphics{fig/crime_lasso.png}}
 \end{minipage}
-\caption{Koefficientstierne for henholdsvis ridge regression (venstre) og lasso (højre) plottet imod \(\ell_1\)-normen.} \label{fig:crime_koef}
+\caption{Koefficientstierne for ridge regression (venstre) og lasso (højre) plottet imod \(\ell_1\)-normen.} \label{fig:crime_koef}
 \end{figure}
 
 Variabel udvægelsen for ridge regression og lasso illustreres på figur \ref{fig:LassoRig}.

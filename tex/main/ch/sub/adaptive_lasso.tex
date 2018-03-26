@@ -17,8 +17,51 @@ For \(q<1\) er betingelsesområderne ikke-konvekse. Lavere \(q\) svarer til fær
 \end{figure}
 %
 
+
+\section{Orakelegenskaber}
+Vi foretrækker en metode, som har orakelegenskaber. Lad $\mathcal{A} =\{j:\beta_j^* \neq 0\}$, hvor $\beta_j^*$ betegner koefficienten af $x_j$ i den sande model og antag at $\vert \mathcal{A} \vert=p_0 <p$. Så defineres orakelegenskaberne som følgende. 
+
+\begin{defn}[Orakelegenskaber]
+\begin{itemize}
+\item Variabel udvælgelsen er konsistent, dvs. for
+\begin{align*}
+\mathcal{A}_n=\lbrace j :\hat{\beta}_j \neq 0 \rbrace \ \text{og} \ \mathcal{A} =\{j:\beta_j^* \neq 0\},
+\end{align*}
+gælder der, at $\lim_{n \rightarrow \infty }P(\mathcal{A}_n=\mathcal{A})=1$.
+\item Estimatoren er asymptotisk normalfordelt, dvs.
+\begin{align*}
+\sqrt{n}(\hat{\boldsymbol{\beta}}_\mathcal{A}-\boldsymbol{\beta}^*_\mathcal{A}) \overset{d}{\rightarrow} N(\mathbf{0}, \boldsymbol{\Sigma}^*_I),
+\end{align*}
+hvor $\boldsymbol{\beta}^*_\mathcal{A}=\{ \beta_j^*, j \in \mathcal{A} \}$ og $\boldsymbol{\Sigma}^*_I$ er kovarians matricen, hvis vi kender den sande model.
+\end{itemize}
+\end{defn}
+
+%I cite(Zou) vises det at udvælgelsen af variable ved hjælp af lasso ikke er konsistent i alle tilfælde. Lasso kan dermed ikke være en orakel procedure.
+%
+Lad  
+\begin{align*}
+\textbf{C} = 
+\begin{bmatrix}
+\textbf{C}_{11}& \textbf{C}_{12}\\
+\textbf{C}_{21}& \textbf{C}_{22}
+\end{bmatrix},
+\end{align*}
+være en positiv definit matrix, hvor $\textbf{C}_{11}$ er en $p_0 \times p_0$ matrix. Så kan det udledes af proposition \ref{prop:lasso_no_vs}, at lasso ikke er konsistent i variabel udvælgelse i alle tilfælde og dermed ikke opfylder orakelegenskaberne.
+
+\begin{prop}\label{prop:lasso_no_vs}
+Hvis $\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0$, da vil $\hat{\boldsymbol{\beta}}^\text{L} \overset{p}{\rightarrow} \arg \min Z$, hvor
+\begin{align*}
+Z(\mathbf{u})=(\mathbf{u}- \boldsymbol{\beta}^*)^T \mathbf{C} (\mathbf{u}-\boldsymbol{\beta}^*)+\lambda_0 \sum_{j=1}^p \vert u_j \vert.
+\end{align*}
+\end{prop}
+\begin{proof}
+Beviset undlades, men der henvises til s. 1358 i \citep{adaptive_lasso_knight}.
+\end{proof}
+Hvis $\lambda_0=0$, da gælder ifølge proposition \ref{prop:lasso_no_vs}, at $\hat{\boldsymbol{\beta}}^\text{L} \overset{p}{\rightarrow} \hat{\boldsymbol{\beta}}^{*}$, da strafleddet forsvinder og $\mathbf{C}$ er positiv definit, og dermed er $\hat{\boldsymbol{\beta}}^\text{L}$ svagt konsistent. Men da strafleddet forsvinder, medfører det også, at lasso asymptotisk ingen variabel udvægelse har. Hvis $\lambda_0>0$ kan det ikke udledes fra proposition \ref{prop:lasso_no_vs}, om estimatoren er konsistent. Det angives i \citep{adaptive_lasso}, at dette kun vil være tilfældet, når en given betingelse er opfyldt. En metode, der konsekvent udfører konsistent variabeludvælgelse, kan dog opnås med en simpel tilføjelse til lasso estimatet. Denne metode kaldes adaptive lasso.
+
+
 \subsection{Adaptive lasso}
-\citep{adaptive_lasso} introducerede adaptive lasso som er endnu en udvidelse af standard lasso.
+Adaptive lasso blev introduceret af \citep{adaptive_lasso} og er endnu en udvidelse af standard lasso.
 Ideen bag adaptive lasso er at tildele koefficienterne individuelle strafvægte istedet for at staffe koefficienterne ligeligt som i standard lasso.
 Den vægtede lasso er givet ved
 \begin{align*}
@@ -27,9 +70,12 @@ Den vægtede lasso er givet ved
 hvor \(\mathbf{w} \in \mathbb{R}^p\) er en kendt vektor og \(w_j \geq 0\).
 
 Adaptive lasso er blot en vægtet lasso, hvor vægtene \(\mathbf{w}\) er bestemt således at metoden opfylder orakelegenskaberne.
+Orakelegenskaberne er ...
+
+
 Lad \(\tilde{\beta}\) være et pilot estimat og definer $w_j = \frac{1}{\vert \tilde{\beta}_j \vert^\gamma}$ hvor \(\gamma>0\), da er adaptive lasso givet ved
 \begin{align}
-\arg \min_{\beta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{1}{\vert \tilde{\beta}_j \vert^\gamma} \vert \beta_j \vert}, \label{eq:4.76}
+\beta^\text{AL} = \arg \min_{\beta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{1}{\vert \tilde{\beta}_j \vert^\gamma} \vert \beta_j \vert}, \label{eq:4.76}
 \end{align}
 Strafleddet for adaptive lasso kan ses som en approksimation til $\ell_q$ strafleddene med $q=1-\gamma$.
 Givet pilot estimaterne da er \eqref{eq:4.76} konveks.
@@ -42,7 +88,7 @@ Den aktive mængde for adaptive lasso estimatet betegnes \(\mathcal{A}_n^\text{A
 Antag $\frac{\lambda_n}{\sqrt{n}} \rightarrow 0$ og $\lambda_n n^\frac{\gamma-1}{2} \rightarrow \infty$. Da opfylder adaptive lasso estimaterne følgende:
 \begin{itemize}
 \item Udvælgelsen af variabler er konsistent: $\lim_{n \rightarrow \infty} P(\mathcal{A}_n^\text{AL}=\mathcal{A})=1$
-\item Asymptotisk normalitet: $\sqrt{n}\left( \hat{\boldsymbol{\beta}}_\mathcal{A}^{\text{AL}}-\boldsymbol{\beta}_\mathcal{A}^* \right) \overset{d}{\rightarrow} N(\textbf{0},\sigma^2 \boldsymbol{Q}_{11}^{-1}).$
+\item Asymptotisk normalitet: $\sqrt{n}\left( \hat{\boldsymbol{\beta}}_\mathcal{A}^{\text{AL}}-\boldsymbol{\beta}_\mathcal{A}^* \right) \overset{d}{\rightarrow} N(\textbf{0},\sigma^2 \boldsymbol{C}_{11}^{-1}).$
 \end{itemize} 
 \end{thm}
 \begin{proof}
@@ -85,7 +131,8 @@ V(\mathbf{u})^{(n)} & = \textbf{u}^T \left(\frac{1}{n}\textbf{X}^T\textbf{X}\rig
 \right). \label{eq:V_4}
 \end{align}
 %
-Af antagelse \ref{ant:tvaer}.d) har vi, at der for første led i \eqref{eq:V_4} gælder, at $\frac{1}{n} \mathbf{X}^T \mathbf{X} \overset{p}{\rightarrow} \mathbf{Q}$, mens det for andet led følger af antagelse \ref{ant:tvaer}.f), at $\frac{\boldsymbol{\epsilon}^T \mathbf{X}}{\sqrt{n}} \overset{d}{\rightarrow} \textbf{W}=N(\textbf{0},\sigma^2 \boldsymbol{Q})$. Derfor ser vi nu blot på sidste led i \eqref{eq:V_4}. \\
+For første led i \eqref{eq:V_4} gælder der, at $\frac{1}{n} \mathbf{X}^T \mathbf{X} \overset{p}{\rightarrow} \mathbf{C}$ og for andet led har vi, at $\frac{\boldsymbol{\epsilon}^T \mathbf{X}}{\sqrt{n}} \overset{d}{\rightarrow} \textbf{W}=N(\textbf{0},\sigma^2 \boldsymbol{C})$. 
+Derfor ser vi nu blot på sidste led i \eqref{eq:V_4}. \\
 Hvis $\beta_j^{*} \neq 0$, da har vi, at $\hat{w}_j \overset{p}{\rightarrow} \left\vert \beta_j^{*} \right\vert^{-\gamma}$. Yderligere har vi, at 
 \begin{align*}
 \lim_{n\rightarrow \infty}
@@ -105,17 +152,17 @@ hvor $\gamma >0$ og $\hat{\beta}_j$ er rod-$n$-konsistent. Heraf har vi, at $\fr
 Af Slutsky sætning ser vi, at $V^{(n)} (\mathbf{u}) \overset{d}{\rightarrow} V(\textbf{u})$ for alle $\mathbf{u}$, hvor
 \begin{align*}
 V(\textbf{u}) = \begin{cases}
-    \mathbf{u}_\mathcal{A}^T \mathbf{Q}_{11} \mathbf{u}_\mathcal{A}-2\mathbf{u}^T_\mathcal{A} \mathbf{W}_\mathcal{A} & \text{hvis  $u_j=0, \ \forall j \notin \mathcal{A} $},\\
+    \mathbf{u}_\mathcal{A}^T \mathbf{C}_{11} \mathbf{u}_\mathcal{A}-2\mathbf{u}^T_\mathcal{A} \mathbf{W}_\mathcal{A} & \text{hvis  $u_j=0, \ \forall j \notin \mathcal{A} $},\\
     \infty & \text{hvis } \exists u_j \neq 0, \ j \notin \mathcal{A} .
   \end{cases}
 \end{align*}
-Da funktionen $V^{(n)}$ er konveks, og $(\mathbf{Q}_{11}^{-1} \mathbf{W_\mathcal{A}},0)^T$ er et entydig minimum af $V$, følger det af \citep{adaptive_lasso} at 
+Da funktionen $V^{(n)}$ er konveks, og $(\mathbf{C}_{11}^{-1} \mathbf{W_\mathcal{A}},0)^T$ er et entydig minimum af $V$, følger det af \citep{adaptive_lasso} at 
 $\arg\min V^{(n)} \rightarrow \arg\min V$.
 Derfor får vi
 \begin{align}
-\hat{\mathbf{u}}_\mathcal{A}^{(n)} \overset{d}{\rightarrow} \mathbf{Q}_{11}^{-1} \mathbf{W}_\mathcal{A} \quad \text{og} \quad \hat{\mathbf{u}}_{\mathcal{A}^C}^{(n)} \overset{d}{\rightarrow} \mathbf{0}. \label{eq:minUA}
+\hat{\mathbf{u}}_\mathcal{A}^{(n)} \overset{d}{\rightarrow} \mathbf{C}_{11}^{-1} \mathbf{W}_\mathcal{A} \quad \text{og} \quad \hat{\mathbf{u}}_{\mathcal{A}^C}^{(n)} \overset{d}{\rightarrow} \mathbf{0}. \label{eq:minUA}
 \end{align}
-Vi observerer, at $\mathbf{W}_\mathcal{A}=N(\mathbf{0}, \sigma^2 \mathbf{Q}_{11})$. \\
+Vi observerer, at $\mathbf{W}_\mathcal{A}=N(\mathbf{0}, \sigma^2 \mathbf{C}_{11})$, og da har vi bevist asymptotisk normalitet. \\
 
 Herefter vil vi bevise at udvælgelsen af variabler er konsistent. For alle $j \in \mathcal{A}$, giver den asymptotiske normalitet at $\hat{\beta}_j^{\text{AL}} \overset{p}{\rightarrow}\beta_j^{*}$, dvs. $P(j \in \mathcal{A}_n^{\text{AL}}) \rightarrow 1$. Derfor er det tilstrækkeligt at vise at $\forall j' \notin \mathcal{A}$, da vil $P(j' \in \mathcal{A}_n^{\text{AL}}) \rightarrow 0$. \\
 Vi betragter $j' \in \mathcal{A}_n^{\text{AL}}$ således at $\hat{\beta}_{j'}^{\text{AL}} \neq 0$. Af første ordens betingelser har vi, at 

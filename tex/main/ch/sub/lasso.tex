@@ -1,36 +1,29 @@
 \section{Lasso estimatoren} \label{sec:lasso_estimatoren}
-\textit{Dette afsnit er skrevet udfra kapitel 2 i \citep{hastie}}
+\textit{Dette afsnit er skrevet udfra kapitel 2 i \citep{hastie}.}
 
-
-\textit{The Least Absolute Shrinkage Selection Operator} som forkortes lasso blev introduceret af \citep{lasso}. 
-
-%Effektiv for at håndtere flere prediktorer end variable.
-%Derudover producere den parsimonious modeller som er nemme at fortolke.
-%Vi anvender LASSO estimatoren for udvælgelse af modeller for tidsrække data.
-
-Lasso finder løsningen til optimerings problemet
+\textit{The Least Absolute Shrinkage Selection Operator}, som forkortes lasso, blev introduceret af \citep{lasso}. 
+Lasso finder løsningen til optimeringsproblemet
 \begin{align}
 \arg \min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t. \label{eq:2.3}
-\end{align}
-Første led i \eqref{eq:2.3} svarer til OLS, som finder de estimerede koefficienter ved at minimere summen af kvadrerede residualer, mens sidste led mindsker de estimerede koefficienter. 
+\end{align} 
 Betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt som en \(\ell_1\)-norm betingelse $\Vert \beta \Vert_1 \leq t$.
-Ofte skrives lasso estimatoren på matrix-vektor form.
-Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og lad \(\X\) være en $n \times p$ matrix med $x_i \in \R^p$ som den i'te række, da kan \eqref{eq:2.3} omskrives til
+
+Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og lad \(\X\) være en $n \times p$ matrix med $x_i \in \R^p$ som den i'te række, da kan \eqref{eq:2.3} omskrives til matrix-vektor form
 \begin{align*}
 \arg \min_{\beta_0, \beta} \cbr{\frac{1}{2n} \Vert \y - \beta_0 \mathbf{1} - \X \beta \Vert_2^2}, \ \text{underlagt at } \Vert \beta \Vert_1 \leq t,
 \end{align*}
-hvor \(\mathbf{1}\) er en \(n\) dimensional vektor bestående af 1 taller og \(\Vert \cdot \Vert_2\) betegner den Euklidiske norm af vektorer.
+hvor \(\mathbf{1}\) er en \(n\) dimensional vektor bestående af 1 taller og \(\Vert \cdot \Vert_2\) betegner den Euklidiske norm.
 Værdi af \(t\) begrænser summen af de absolutte værdier af parameter estimaterne.
 Den kontrollerer kompleksiteten af modellen. 
-Større værdi af \(t\) betyder flere parametre og tillader dermed at modellen tilpasser data.
-Mindre værdi af \(t\) vil begrænse antallet af parametre hvilket fører til mere sparse modeller, som tilpasser data mindre præcis.
-Denne skal specificeres ved en ekstern procedure kaldet \textit{krydsvalidering}, som vil blive diskuteret i kapitel \ref{kap:statistisk_inferens}.
+Større værdi af \(t\) betyder flere parametre og tillader dermed at modellen tilpasser data meget præcis.
+Mindre værdi af \(t\) vil begrænse antallet af parametre, hvilket fører til mere sparse modeller, som tilpasser data mindre præcis.
+Værdien af \(t\) skal specificeres ved en ekstern procedure kaldet \textit{krydsvalidering}, som vil blive diskuteret i kapitel \ref{kap:statistisk_inferens}.
 
 Ofte standardiseres prediktorerne \(\X\) således at kolonnerne er centeret og har varians 1. Dvs \(\frac{1}{n} \sum_{i=1}^n x_{ij} = 0\) og \(\frac{1}{n} \sum_{i=1}^n x_{ij}^2=1\). Hvis ikke prediktorerne standardiseres da vil lasso estimaterne være afhængige af enhederne, som prediktorerne er målt i.
 Hvis prediktorerne er målt i samme enhed, da vil vi typisk ikke standardisere.
 For fuldstændighed centreres responsvariablen $y_i$ også, dvs \(\frac{1}{n} \sum_{i=1}^n y_{i} = 0\).
 Hermed kan vi se bort fra skæringen $\beta_0$ i lasso optimeringen.
-Given en optimal lasso løsning \(\hat{\beta}\) på det centreret data, kan vi finde løsningen for det ikke-centreret data. Der gælder, at
+Givet en optimal lasso løsning \(\hat{\beta}\) på det centreret data, kan vi finde løsningen for det ikke-centreret data udfra
 \begin{align*}
 \hat{\beta}^{\text{ikke-centreret}} = \hat{\beta}^{\text{centreret}}, \\
 \hat{\beta}_0^{\text{ikke-centreret}} = \bar{y} - \sum_{j=1}^p \bar{x}_j \hat{\beta}_j,
@@ -38,11 +31,11 @@ Given en optimal lasso løsning \(\hat{\beta}\) på det centreret data, kan vi f
 hvor \(\bar{y}\) og \(\cbr{\bar{x}_j}_{j=1}^p\) er de originale gennemsnit.
 Derfor ser vi bort fra skæringen resten af kapitlet.
 
-Vi kan omskrive lasso problemet til Lagrange form
+Lasso problemet kan omskrives til Lagrange form
 \begin{align}
 \arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_1}, \label{eq:2.5}
 \end{align}
-hvor $\lambda \geq 0$ er en såkaldt strafparameter, som bestemmes udfra krydsvalidering. 
+hvor $\lambda \geq 0$ er en såkaldt strafparameter, som også bestemmes udfra krydsvalidering. 
 Der er en en-til-en korrespondance mellem det betingede problem \eqref{eq:2.3} og Lagrange problemet \eqref{eq:2.5}. 
 For hver værdi af \(t\) hvor \(\Vert \beta \Vert_1 \leq t\) er opfyldt, da findes en tilhørende værdi af $\lambda$ som giver den samme løsning for \eqref{eq:2.5}.
 Omvendt gælder der, at løsningen $\hat{\beta}_\lambda$ til \eqref{eq:2.5} løser grænse problemet med $t=\Vert \hat{\beta}_\lambda \Vert_1$.
@@ -50,8 +43,6 @@ Omvendt gælder der, at løsningen $\hat{\beta}_\lambda$ til \eqref{eq:2.5} løs
 I andre beskrivelser af lasso estimatoren ses det at faktoren \(\frac{1}{2n}\) i \eqref{eq:2.3} og \eqref{eq:2.5} erstattes med \(\frac{1}{2}\) eller \(1\).
 Dette gør ingen forskel i \eqref{eq:2.3} og svarer blot til en simpel reparametrisering af \(\lambda\) i \eqref{eq:2.5}.
 Denne standardisering gør \(\lambda\) værdierne sammenlignelige for samples size af forskellige størrelse, som er brugbart i krydsvalidering.
-
-MÅSKE ET EKSEMPEL MED KOEFFICIENT STIERNE?
 
 \textit{Ridge regression} estimatoren findes udfra 
 \begin{align} 
@@ -68,45 +59,31 @@ Efter standardisering
 \end{align*}
 Heraf kan ridge regression estimatoren findes ved at differentiere \(\del{\y - \X \beta}^T \del{\y - \X \beta} + \lambda \beta^T \beta\) mht $\beta$, sætte dette lig 0 og isolere for $\beta$. Hvoraf vi finder, at
 \begin{align*} 
-\hat{\beta}^R = (\X^T \X + \lambda I_p)^{-1} \X^T \y. 
+\hat{\beta}^\text{ridge} = (\X^T \X + \lambda I_p)^{-1} \X^T \y. 
 \end{align*}  
-Ift til mindste kvadraters regression tilføjer ridge regression en positiv konstant $\lambda$ på diagonalen af $\X^T \X$, hvilket medfører, at \(\X^T \X\) er invertibel, selvom $\X$ ikke har fuld rang. 
+I forhold til mindste kvadraters regression tilføjer ridge regression en positiv konstant $\lambda$ på diagonalen af $\X^T \X$, hvilket medfører, at \(\X^T \X\) er invertibel, selvom $\X$ ikke har fuld rang. 
 Dermed er en entydig løsning altid garanteret. 
+
+Lad os betragte data givet i tabel \ref{tab:crime}.
+Outputtet er kriminalitetsraten per 1 million indbyggere i byer i United States.
+Prediktorerne er følgende: den årlige politiske finansiering i dollars per indbygger, den procentvise andel af 25 årige eller derover med 4 års gymnasial uddannelse, den procentvise andel af 16-19 årige som ikke er på eller har en gymnasiel uddannelse, den procentvise andel af 18-24 årige på universitetet og den procentvise andel af 25 årige eller derover med mindst 4 år på universitetet.
 %
-\begin{exmp}
-Vis at responsvariable \(\y\) og designmatricen \(\X\) kan omskrives på passende vis således at vi kan udlede estimatoren for ridge regression udfra mindste kvadraters metode, \(\del{\tilde{\X}^T \tilde{\X}}^{-1} \tilde{\X}^T \tilde{\y}\), hvor \(\tilde{\y}\) og \(\tilde{\X}\) er de omskrevne responsvariable og designmatrix.
-\end{exmp} 
+\input{fig/tab/crime}
 %
-\begin{sol}
-Vi omskriver \eqref{eq:2.8}
-\begin{align*}
-\arg\min_{\beta_0, \beta} \left\lbrace \frac{1}{2n} \sum_{i=1}^n \left(y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j \right)^2 + \sum_{j=1}^p \left( 0 - \sqrt{\lambda} \beta_j \right)^2 \right\rbrace
-\end{align*}
-Hermed har vi omskrevet $\ell_2$ kriteriet, dvs $\sum_{j=1}^p \beta_j^2 \leq t^2$, til et andet OLS problem for et andet datasæt.
-Lad $\tilde{\mathbf{y}} = \begin{bmatrix}
-\mathbf{y} \\ 0_p
-\end{bmatrix}$ og $\tilde{\mathbf{X}} = \begin{bmatrix}
-\mathbf{X} \\ \sqrt{\lambda} I_p
-\end{bmatrix}$
-så
-\begin{align*}
-(\tilde{\mathbf{X}}^T \tilde{\mathbf{X}})^{-1} \tilde{\mathbf{X}}^T \tilde{\mathbf{y}} 
-&= \left( \begin{bmatrix}
-\mathbf{X} & \sqrt{\lambda} I_p
-\end{bmatrix}
-\begin{bmatrix}
-\mathbf{X} \\ \sqrt{\lambda} I_p
-\end{bmatrix} \right)^{-1}
-\begin{bmatrix}
-\mathbf{X} & \sqrt{\lambda} I_p
-\end{bmatrix}
-\begin{bmatrix}
-\mathbf{y} \\ 0
-\end{bmatrix} \\
-&= \left( \mathbf{X}^T \mathbf{X} + \lambda I_p \right)^{-1} \mathbf{X}^T \mathbf{y},
-\end{align*}
-som netop er ridge regression estimatoren.
-\end{sol}
+Løbende i rapporten referer vi til dette data, som er inkluderet for at underbygger teorien.
+I dette afsnit anvendes crime data til at illustrere lasso løsningsstierne.
+%
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.4\linewidth}
+\scalebox{0.3}{\includegraphics{fig/crime_ridge.png}}
+\end{minipage}
+\hspace{0.2cm}
+\begin{minipage}{0.4\linewidth}
+\scalebox{0.3}{\includegraphics{fig/crime_lasso.png}}
+\end{minipage}
+\caption{Koefficientstierne for henholdsvis ridge regression (venstre) og lasso (højre) plottet imod \(\ell_1\)-normen.} \label{fig:crime_koef}
+\end{figure}
 
 Variabel udvægelsen for ridge regression og lasso illustreres på figur \ref{fig:LassoRig}.
 \begin{figure}[H]
@@ -129,6 +106,34 @@ Omvendt har lasso et regulært betingelsesområde med hjørner i hver akse, hvil
 Hvis $t$ er tilstrækkelig stor, da vil betingelsesområderne indeholde $\hat{\beta}^{\text{OLS}}$ og derfor vil ridge regression og lasso estimatorerne være lig OLS estimatoren.
 
 På figur \ref{fig:LassoRig} har vi blot betragtet det simple tilfælde hvor $p=2$. Når $p=3$ vil betingelsesområdet for ridge regression være en kugle, mens betingelsesområdet for lasso vil være en polydron. 
+
+\begin{lem}
+Givet data \(\del{\y, \X}\), defineres et augmented datasæt
+\begin{align*}
+\mathbf{X}^* = \begin{bmatrix}
+\mathbf{X} \\ \sqrt{\lambda} I_p
+\end{bmatrix}, \quad 
+\mathbf{y}^* = \begin{bmatrix}
+\mathbf{y} \\ 0_p
+\end{bmatrix},
+\end{align*}
+hvor \(\X^* \in \mathbb{R}^{\del{n+p} \times p}\) og \(\y^* \in \mathbb{R}^{n+p}\). Da kan estimatoren for ridge regression udledes udfra mindste kvadraters metode
+\begin{align*}
+\del{\X^{*^T} \X^*}^{-1} \X^{*^T} \y^* &= \left( \begin{bmatrix}
+\mathbf{X} & \sqrt{\lambda} I_p
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{X} \\ \sqrt{\lambda} I_p
+\end{bmatrix} \right)^{-1}
+\begin{bmatrix}
+\mathbf{X} & \sqrt{\lambda} I_p
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{y} \\ 0
+\end{bmatrix} \\
+&= \left( \mathbf{X}^T \mathbf{X} + \lambda I_p \right)^{-1} \mathbf{X}^T \mathbf{y}.
+\end{align*}
+\end{lem}
 
 \subsection{Udregning af lasso}
 Da lasso strafleddet ikke er differentialbel, findes der ikke en eksplicit løsning til lasso problemet.

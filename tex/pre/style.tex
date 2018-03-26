@@ -4,6 +4,12 @@
 \usepackage{rotating}
 \usepackage[labelfont=bf,font=it]{caption}
 \usepackage[normalem]{ulem}
+\usepackage{tikz,siunitx}
+
+\usepackage{enumitem}
+\makeatletter
+\newcommand{\mylabel}[2]{#2\def\@currentlabel{#2}\label{#1}}
+\makeatother
 
 %%% CODE %%%
 \usepackage{listings}

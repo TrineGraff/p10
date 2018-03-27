@@ -9,12 +9,23 @@ I denne sektion vil vi finde den optimale $\lambda$ for de forskellige shrinking
 Vi har tidligere introduceret to algoritmer til at løse vores optimerings problemer, som vi vil anvende i denne sektion.
 Vi deler derfor vores analyse op i to dele, hvor vi anvender hhv. coordinate descent og LARS algoritmen.
 
-Metoderne er alle anvendt med forskellige værdier af $\lambda$, vi vælger derfor én 10-gang-krydsvalidering for at estimerer den optimale værdi af $\lambda$, således vi kan finde den bedste mulige model. 
+Metoderne er alle anvendt med forskellige værdier af $\lambda$. 
+Vi anvender blandt andet én 10-fold-krydsvalidering for at estimerer den optimale værdi af $\lambda$, således vi kan finde den bedste mulige model. 
 Krydsvalidering bliver målt i gennemsnitlig kvadrerede fejl. 
 Vi er interesseret i den model med mindst gennemsnitlige kvadrerede fejl, men kompleksiteten vil også have en rolle.
-Derfor ser vi ikke kun på den $\lambda$ der giver mindst mulige krydvaliderings fejl (der betegnes $\lambda_{\min}$), men også den største værdi således at fejlen er inden for en standard afvigelses af minimum, som vi betegner $\lambda_{\text{1sd}}$.  
+Derfor ser vi ikke kun på den $\lambda$ der giver mindst mulige krydsvaliderings fejl (der betegnes $\lambda_{\min}$), men også den største værdi således at fejlen er inden for en standard afvigelses af minimum, som vi betegner $\lambda_{\text{1sd}}$.  
 Den optimale $\lambda$, bruges til at fitte modellerne, som er beskrevet i sektion .. .  
 
 \input{main/ch/sub/coordinate}
 
 \input{main/ch/sub/lars}
+
+\section{BIC}
+En anden måde at finde den optimale model er ved anvendelse af BIC. 
+\begin{defn}[BIC]
+h
+\end{defn}
+
+
+BIC tager højde for kompleksiteten ved at inkluderer et strafled
+Vi er derfor interesseret i den mindste værdi af BIC. 

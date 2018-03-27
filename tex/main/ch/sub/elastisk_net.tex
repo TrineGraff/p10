@@ -5,7 +5,7 @@ Metoden blev først præsenteret af \citep{zou_hastie}.
 Selvom lasso har vist succes i mange tilfælde, har den også nogle begrænsninger:
 %
 \begin{enumerate}[label=\textnormal{(\arabic*)}]
-    \item Hvis $p>n$, da udvælger lasso højst $n$ variable, eftersom lasso er et konvekst optimeringsproblem (KAN DET BEVISES). Derudover er lasso ikke veldefineret medmindre \(\Vert \beta \Vert_1 \leq t\). \label{itm:1}
+    \item Hvis $p>n$, da udvælger lasso højst $n$ variable, hvilket kommer af, at lasso er et konvekst optimeringsproblem (KAN DET BEVISES). Derudover er lasso ikke veldefineret medmindre \(\Vert \beta \Vert_1 \leq t\). \label{itm:1}
     \item Hvis der eksisterer en gruppe af variable, som har høj parvis korrelation, da har lasso en tendens til blot at udvælge  én variabel fra denne gruppe og denne variabel udvælges tilfældigt (MÅSKE EKS PÅ DET). \label{itm:2}
     \item Hvis $n>p$ og variablerne er korrelerede, da er det empirisk bevist at prædiktions performance af lasso er domineret af ridge regression \citep{lasso}.  \label{itm:3}
 \end{enumerate}
@@ -14,18 +14,18 @@ Målet er at finde en metode som overkommer ovenstående begrænsninger.
 Ridge regression kan håndterer multikollinaritet, da den averages effekten af mutually korrelerede variable.
 Men somsagt giver ridge regression ikke en sparse løsning.
 
-Antag responsvariablen er centreret og prediktorerne er standardiseret, da er det naive elastiske net givet ved
+Antag responsvariablen er centreret og prædiktorerne er standardiseret, da er det naive elastiske net givet ved
 \begin{align}
-\arg \min_{\beta} \cbr{ \frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda_1 \Vert \beta \Vert_2^2 + \lambda_2 \Vert \beta \Vert_1}, \label{eq:EN1}
+\hat{\beta}^\text{naivEN} = \arg \min_{\beta} \cbr{ \frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda_1 \Vert \beta \Vert_2^2 + \lambda_2 \Vert \beta \Vert_1}, \label{eq:EN1}
 \end{align}
 for \(\lambda_1, \lambda_2 \geq 0\).
-Lad \(\alpha = \frac{\lambda_1}{\lambda_1 + \lambda_2}\), da kan \eqref{eq:EN1} omskrives til følgende
+Lad \(\alpha = \frac{\lambda_1}{\lambda_1 + \lambda_2}\), da svarer \eqref{eq:EN1} til optimeringsproblemet
 \begin{align*}
-\arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2}, \ \text{underlagt at } \del{1-\alpha} \Vert \beta \Vert_2^2 + \alpha \Vert \beta \Vert_1 \leq t,
+\hat{\beta}^\text{naivEN} = \arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2}, \ \text{underlagt at } \del{1-\alpha} \Vert \beta \Vert_2^2 + \alpha \Vert \beta \Vert_1 \leq t,
 \end{align*}
-som på Lagrange form er givet ved
+som kan omskrives til et Lagrange problem
 \begin{align}
-\arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \sbr{(1- \alpha) \Vert \beta \Vert_2^2 + \alpha \Vert \beta \Vert_1}}. \label{eq:4.2}
+\hat{\beta}^\text{naivEN} =\arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \sbr{(1- \alpha) \Vert \beta \Vert_2^2 + \alpha \Vert \beta \Vert_1}}. \label{eq:4.2}
 \end{align}
 Hvis $\alpha=1$, da reduceres strafleddet til $\ell_1$-normen svarende til strafleddet for lasso, og hvis $\alpha=0$ reduceres det til den kvadrerede $\ell_2$-norm svarende til strafleddet for ridge regression.
 Optimeringsproblemet  \eqref{eq:4.2} er streng konveks for \(\alpha \in [0,1)\), hvilket betyder, at der eksisterer en entydig løsning uafhængigt af korrelationsstrukturen af $\X$.
@@ -35,7 +35,7 @@ Dette ses tydeligt på figur \ref{fig:elastisk}.
 \begin{figure}[H]
 \centering
 \scalebox{0.8}{\input{fig/elastisk_net.tikz}}
-\caption[optional short text]{To dimensional illustration af betingelsesområderne for shrinkage metoderne: \tikz[baseline]{\draw[dashed] (0,.5ex)--++(.5,0) ;} ridge regression,  \tikz[baseline]{\draw[dotted] (0,.5ex)--++(.5,0) ;} lasso og \tikz[baseline]{\draw (0,.5ex)--++(.5,0) ;} elastisk net med \(\alpha = 0.5\). Vi observerer at singulariteten i hjørnerne og kanterne er streng konveks. Styrken af konveksitet varierer med \(\alpha\).} \label{fig:elastisk}
+\caption[optional short text]{To dimensional illustration af betingelsesområderne for shrinkage metoderne: ridge regression (\tikz[baseline]{\draw[dashed] (0,.5ex)--++(.5,0) ;}), lasso (\tikz[baseline]{\draw[dotted] (0,.5ex)--++(.5,0) ;}) og elastisk net med \(\alpha = 0.5\) (\tikz[baseline]{\draw (0,.5ex)--++(.5,0) ;}). Vi observerer, at singulariteter i hjørnerne og kanterne er streng konveks. Styrken af konveksitet varierer med \(\alpha\).} \label{fig:elastisk}
 \end{figure}
 %
 En tre dimensionel illustration af betingelsesområderne for det elastiske net og standard lasso er givet på figur \ref{fig:elastisk_net}.
@@ -44,7 +44,7 @@ Heraf ses at det elastiske net har egenskaberne af både $\ell_1$ kuglen og $\el
 \begin{figure}[H]
 \centering
  \scalebox{0.5}{\includegraphics{fig/elastisk_net.jpg}}
-\caption{Kuglen for elastisk net med \(\alpha=0.7\) (venstre) og \(\ell_1\) kuglen (højre) for tre variable.}
+\caption{Kuglen for elastisk net med \(\alpha=0.7\) (venstre) og \(\ell_1\) kuglen (højre) i tre dimensioner.}
 \label{fig:elastisk_net}
 \end{figure}
 %
@@ -64,14 +64,14 @@ Lad \(\gamma = \frac{\lambda_2}{\sqrt{1+\lambda_1}}\) og \(\beta^* = \sqrt{1+\la
 \begin{align*}
 \hat{\beta}^* = \arg \min_{\beta^*} \cbr{\frac{1}{2n} \Vert \y^* - \X^* \beta^* \Vert_2^2 +\gamma \Vert \beta^* \Vert_1},
 \end{align*}
-og
+hvor
 \begin{align*}
 \hat{\beta}^\text{naivEN} = \frac{1}{\sqrt{1+\lambda_1}} \hat{\beta}^*.
 \end{align*}
 \end{lem}
 %
-Da \(\X^*\) har rang \(p\), kan metoden i princippet altid vælge alle \(p\) prediktorer.
-Dermed er naiv elastisk net ikke begrænset til blot at vælge \(n\) prediktorer hvis \(p > n\), som er tilfældet for lasso som beskrevet i \ref{itm:1}.
+Da \(\X^*\) har rang \(p\), kan metoden i princippet altid vælge alle \(p\) prædiktorer.
+Dermed er naiv elastisk net ikke begrænset til blot at vælge \(n\) prædiktorer hvis \(p > n\), som er tilfældet for lasso som beskrevet i \ref{itm:1}.
 Lemma \ref{lem:elastisk_net} viser også, at naiv  elastisk net udfører variabel udvælgelse svarende til lasso.
 %
 \begin{exmp}
@@ -86,13 +86,13 @@ Figur \ref{fig:elastisk2} viser de operationelle egenskaber af ridge regression,
 \begin{figure}[H]
 \centering
 \scalebox{0.8}{\input{fig/elastisk_net2.tikz}}
-\caption[optional short text]{Eksakte løsninger for \tikz[baseline]{\draw[dotted] (0,.5ex)--++(.5,0) ;} ridge regression, \tikz[baseline]{\draw[dashed] (0,.5ex)--++(.5,0) ;} lasso og \tikz[baseline]{\draw (0,.5ex)--++(.5,0) ;} naiv elastisk net, hvis \(\X\) er ortogonal med \tikz[baseline]{\draw[loosely dotted] (0,.5ex)--++(.5,0) ;} OLS for parametrene \(\lambda_1=1\) og \(\lambda_2=2\).} \label{fig:elastisk2}
+\caption[optional short text]{Eksakte løsninger for ridge regression (\tikz[baseline]{\draw[dotted] (0,.5ex)--++(.5,0) ;}), lasso (\tikz[baseline]{\draw[dashed] (0,.5ex)--++(.5,0) ;}) og naiv elastisk net (\tikz[baseline]{\draw (0,.5ex)--++(.5,0) ;}), hvis \(\X\) er ortogonal (\tikz[baseline]{\draw[loosely dotted] (0,.5ex)--++(.5,0) ;} OLS) for parametrene \(\lambda_1=1\) og \(\lambda_2=2\).} \label{fig:elastisk2}
 \end{figure}
 %
 \end{exmp}
 %
 Hvis vi har en gruppe af højt korreleret variable, da vil lasso blot udvælge én variable og den udvælges tilfældigt, som nævnt i \ref{itm:2}.
-Men elastisk net udvælger alle variable i denne gruppe, som vi nu vil vise. 
+Men naiv elastisk net udvælger alle variable i denne gruppe, som vi nu vil vise. 
 En regression metode udviser denne evne, hvis regressions koeffcienterne af en gruppe af højt korreleret variable er approksimativt ens.
 
 \begin{thm} \label{thm:elastisk_net}
@@ -114,7 +114,7 @@ Hvis \(\hat{\beta}_i \del{\lambda_1, \lambda_2} \hat{\beta}_j \del{\lambda_1, \l
 Lad \(L \del{\lambda_1,\lambda_2, \beta} = \frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda_1 \Vert \beta \Vert_2^2 + \lambda_2 \Vert \beta \Vert_1\), således at  \(\arg \min_{\beta} \cbr{L \del{\lambda_1,\lambda_2, \beta}}\) svarer til \eqref{eq:EN1}.
 Da må \(\hat{\beta} \del{\lambda_1, \lambda_2}\) opfylde, at
 \begin{align*}
-\frac{\partial L \del{\lambda_1,\lambda_2, \beta} }{\partial \beta_k} \mid_{\beta = \hat{\beta} \del{\lambda_1, \lambda_2}}=0, \text{ hvis } \hat{\beta}_k \del{\lambda_1, \lambda_2} \neq 0.
+\frac{\partial L \del{\lambda_1,\lambda_2, \beta} }{\partial \beta_k} \Bigr|_{\beta = \hat{\beta} \del{\lambda_1, \lambda_2}}=0, \text{ hvis } \hat{\beta}_k \del{\lambda_1, \lambda_2} \neq 0.
 \end{align*}
 Derfor har vi, at
 \begin{align}
@@ -146,12 +146,12 @@ D_{\lambda_1, \lambda_2} \del{i,j} \leq \frac{1}{\lambda_1} \frac{\vert \hat{r} 
 \end{proof}
 Mængden \(D_{\lambda_1, \lambda_2} \del{i,j}\) betegner differensen mellem koefficient stierne af prediktor \(i\) og \(j\).
 Hvis \(\mathbf{x}_i\) og \(\mathbf{x}_j\) er højt korreleret, dvs \(\rho \approx 1\), giver sætning \ref{thm:elastisk_net}, at differensen mellem koefficient stierne af prediktor \(i\) og \(j\) er næsten 0.
-Den øvre grænse i \eqref{eq:EN5} giver en beskrivelse af denne gruppering effekt som naiv elastisk net har??\\[4mm]
-%
+Den øvre grænse i \eqref{eq:EN5} giver en kvantitativ beskrivelse af denne gruppering effekt som naiv elastisk net har.
+
 Empiriske resultater har vist, at naiv elastisk net ikke er tilfredsstillende, medmindre den er tæt på enten ridge regression eller lasso.
 Derfor kaldes den \textit{naiv}.
 Som nævnt tidligere bestemmes en metodes prediktions performance gennem bias-variance tradeoff. 
-Naiv elastisk net er en two-stage procedure. For ethvert fast \(\lambda_1\) finder vi først ridge regression koefficienterne, og derefter shrinkages langs lasso koefficient løsnings stien. Derfor inkluderes en dobbelt shrinkage.
+Naiv elastisk net er en two-stage procedure. For ethvert fast \(\lambda_1\) finder vi først ridge regression koefficienterne, og derefter shrinkages langs lasso koefficient løsningsstien. Derfor inkluderes en dobbelt shrinkage.
 Double shrinkage reducerer ikke variansen meget og introducere unødvendig ekstra bias i forhold til ridge regression eller lasso.
 Derfor introduceres blot elastisk net.
 
@@ -221,12 +221,12 @@ Af sætning \ref{thm:elastisk_net2} gælder, at \(\hat{\beta}^\text{EN} \rightar
 \end{align*}
 \(\hat{\beta} \del{\infty}\) har en simpel lukket løsning, som er givet ved
 \begin{align*}
-\hat{\beta} \del{\infty}_i = \text{sign} \del{\y^T \mathbf{x}_i} \del{\left\vert \y^T \mathbf{x}_i \right\vert - \frac{\lambda_2}{2}}_+
+\hat{\beta} \del{\infty}_i = \text{sign} \del{\y^T \mathbf{x}_i} \del{\left\vert \y^T \mathbf{x}_i \right\vert - \lambda_2}_+
 \end{align*}
 for \(i = 1, \ldots, p\).
 Vi har, at \(\y^T \mathbf{x}_i\) er en univariat regressions koefficient af den \(i\)'te prediktor og \(\hat{\beta} \del{\infty}\) er estimaterne som fås udfra soft thresholding på univariater regressions koefficienter.
 En univariat soft thresholding ignorerer afhængighedsstrukturen mellem prediktorerne og behandler dem som uafhængige variable.
-Elastisk net er en natur bro imellem bridges og lasso.
+%Elastisk net er en natur bro imellem bridges og lasso.
 
 \subsubsection{Udregning af elastisk net}
 Somsagt er optimeringsproblemet for det naive elastiske net \eqref{eq:4.2} konveks og dermed kan flere optimeringsmetoder anvendes til at løse det.

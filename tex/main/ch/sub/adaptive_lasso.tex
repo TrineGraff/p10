@@ -18,8 +18,8 @@ For \(q<1\) er betingelsesområderne ikke-konvekse. Lavere \(q\) svarer til fær
 %
 
 
-\section{Orakelegenskaber}
-Vi foretrækker en metode, som har orakelegenskaber. Lad $\mathcal{A} =\{j:\beta_j^* \neq 0\}$, hvor $\beta_j^*$ betegner koefficienten af $x_j$ i den sande model og antag at $\vert \mathcal{A} \vert=p_0 <p$. Så defineres orakelegenskaberne som følgende. 
+\subsection{Adaptive lasso}
+Vi foretrækker en metode, som har orakelegenskaberne. Lad $\mathcal{A} =\{j:\beta_j^* \neq 0\}$, hvor $\beta_j^*$ betegner koefficienten af $x_j$ i den sande model og antag at $\vert \mathcal{A} \vert=p_0 <p$. Så defineres orakelegenskaberne som følgende. 
 
 \begin{defn}[Orakelegenskaber]
 \begin{itemize}
@@ -32,7 +32,7 @@ gælder der, at $\lim_{n \rightarrow \infty }P(\mathcal{A}_n=\mathcal{A})=1$.
 \begin{align*}
 \sqrt{n}(\hat{\boldsymbol{\beta}}_\mathcal{A}-\boldsymbol{\beta}^*_\mathcal{A}) \overset{d}{\rightarrow} N(\mathbf{0}, \boldsymbol{\Sigma}^*_I),
 \end{align*}
-hvor $\boldsymbol{\beta}^*_\mathcal{A}=\{ \beta_j^*, j \in \mathcal{A} \}$ og $\boldsymbol{\Sigma}^*_I$ er kovarians matricen, hvis vi kender den sande model.
+hvor $\boldsymbol{\beta}^*_\mathcal{A}=\{ \beta_j^*, j \in \mathcal{A} \}$ og $\boldsymbol{\Sigma}^*_I$ er kovarians matricen, hvor vi antager, at vi kender den sande model.
 \end{itemize}
 \end{defn}
 
@@ -49,7 +49,7 @@ Lad
 være en positiv definit matrix, hvor $\textbf{C}_{11}$ er en $p_0 \times p_0$ matrix. Så kan det udledes af proposition \ref{prop:lasso_no_vs}, at lasso ikke er konsistent i variabel udvælgelse i alle tilfælde og dermed ikke opfylder orakelegenskaberne.
 
 \begin{prop}\label{prop:lasso_no_vs}
-Hvis $\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0$, da vil $\hat{\boldsymbol{\beta}}^\text{L} \overset{p}{\rightarrow} \arg \min Z$, hvor
+Hvis $\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0$, da vil $\hat{\boldsymbol{\beta}}^\text{lasso} \overset{p}{\rightarrow} \arg \min Z$, hvor
 \begin{align*}
 Z(\mathbf{u})=(\mathbf{u}- \boldsymbol{\beta}^*)^T \mathbf{C} (\mathbf{u}-\boldsymbol{\beta}^*)+\lambda_0 \sum_{j=1}^p \vert u_j \vert.
 \end{align*}
@@ -57,10 +57,8 @@ Z(\mathbf{u})=(\mathbf{u}- \boldsymbol{\beta}^*)^T \mathbf{C} (\mathbf{u}-\bolds
 \begin{proof}
 Beviset undlades, men der henvises til s. 1358 i \citep{adaptive_lasso_knight}.
 \end{proof}
-Hvis $\lambda_0=0$, da gælder ifølge proposition \ref{prop:lasso_no_vs}, at $\hat{\boldsymbol{\beta}}^\text{L} \overset{p}{\rightarrow} \hat{\boldsymbol{\beta}}^{*}$, da strafleddet forsvinder og $\mathbf{C}$ er positiv definit, og dermed er $\hat{\boldsymbol{\beta}}^\text{L}$ svagt konsistent. Men da strafleddet forsvinder, medfører det også, at lasso asymptotisk ingen variabel udvægelse har. Hvis $\lambda_0>0$ kan det ikke udledes fra proposition \ref{prop:lasso_no_vs}, om estimatoren er konsistent. Det angives i \citep{adaptive_lasso}, at dette kun vil være tilfældet, når en given betingelse er opfyldt. En metode, der konsekvent udfører konsistent variabeludvælgelse, kan dog opnås med en simpel tilføjelse til lasso estimatet. Denne metode kaldes adaptive lasso.
+Hvis $\lambda_0=0$, da gælder ifølge proposition \ref{prop:lasso_no_vs}, at $\hat{\boldsymbol{\beta}}^\text{lasso} \overset{p}{\rightarrow} \hat{\boldsymbol{\beta}}^{*}$, da strafleddet forsvinder og $\mathbf{C}$ er en positiv definit matrix, og dermed er $\hat{\boldsymbol{\beta}}^\text{lasso}$ svagt konsistent. Men da strafleddet forsvinder, medfører det også, at lasso asymptotisk ingen variabeludvælgelse har. Hvis $\lambda_0>0$ kan det ikke udledes fra proposition \ref{prop:lasso_no_vs}, om estimatoren er konsistent. Det angives i \citep{adaptive_lasso}, at dette kun vil være tilfældet, når en given betingelse er opfyldt. En metode, der konsekvent udfører konsistent variabeludvælgelse, kan dog opnås med en simpel tilføjelse til lasso estimatet. Denne metode kaldes adaptive lasso.
 
-
-\subsection{Adaptive lasso}
 Adaptive lasso blev introduceret af \citep{adaptive_lasso} og er endnu en udvidelse af standard lasso.
 Ideen bag adaptive lasso er at tildele koefficienterne individuelle strafvægte istedet for at staffe koefficienterne ligeligt som i standard lasso.
 Den vægtede lasso er givet ved
@@ -70,17 +68,15 @@ Den vægtede lasso er givet ved
 hvor \(\mathbf{w} \in \mathbb{R}^p\) er en kendt vektor og \(w_j \geq 0\).
 
 Adaptive lasso er blot en vægtet lasso, hvor vægtene \(\mathbf{w}\) er bestemt således at metoden opfylder orakelegenskaberne.
-Orakelegenskaberne er ...
-
 
 Lad \(\tilde{\beta}\) være et pilot estimat og definer $w_j = \frac{1}{\vert \tilde{\beta}_j \vert^\gamma}$ hvor \(\gamma>0\), da er adaptive lasso givet ved
 \begin{align}
-\beta^\text{AL} = \arg \min_{\beta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{1}{\vert \tilde{\beta}_j \vert^\gamma} \vert \beta_j \vert}, \label{eq:4.76}
+\beta^\text{AL} = \arg \min_{\beta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{1}{\vert \tilde{\beta}_j \vert^\gamma} \vert \beta_j \vert}. \label{eq:4.76}
 \end{align}
 Strafleddet for adaptive lasso kan ses som en approksimation til $\ell_q$ strafleddene med $q=1-\gamma$.
 Givet pilot estimaterne da er \eqref{eq:4.76} konveks.
-Hvis pilot estimaterne er \(\sqrt{n}\) konsitent, da opfylder ..
-Hvis \(p <n\) da kan estimaterne for mindste kvadraters metode anvendes som pilot estimater. Hvis \(p \geq n\) da er estimaterne for mindste kvadraters metode ikke defineret, men de univariate regressions koefficienter kan anvendes som pilot estimater og ...
+Hvis pilot estimaterne er \(\sqrt{n}\) konsistent, da viste \citep{adaptive_lasso} at metoden finder den sande model under mere generelle betingelser end lasso.
+Hvis \(p <n\) da kan estimaterne for mindste kvadraters metode anvendes som pilot estimater. Hvis \(p \geq n\) da er estimaterne for mindste kvadraters metode ikke defineret, men de univariate regressions koefficienter kan anvendes som pilot estimater.
 
 Den aktive mængde for adaptive lasso estimatet betegnes \(\mathcal{A}_n^\text{AL} = \cbr{j \ : \hat{\beta}^{\text{AL}} \neq 0 }\)
 
@@ -186,17 +182,18 @@ P\left(j' \in \mathcal{A}_n^{\text{AL}}\right) \leq P\left(2 \mathbf{x}_{j'}^T \
 \end{align*}
 \end{proof}
 %
-Den ikke-negative Garotte er et special tilfælde af adaptive lasso.
+Den ikke-negative garotte er et special tilfælde af adaptive lasso.
 Antag \(\gamma=1\) og vælg \(\hat{w}=\frac{1}{\vert \hat{\beta}^{\text{OLS}} \vert}\), da løser adaptive lasso følgende optimerinsproblem
 \begin{align*}
 \arg \min_{\beta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{\vert \beta_j \vert}{\vert \hat{\beta}_j^\text{OLS} \vert}}
 \end{align*}
 Da \(c_j = \frac{\hat{\beta}_j^\text{garotte}}{\hat{\beta}_j^\text{OLS}}\), kan \eqref{eq:2.19} omskrives til
 \begin{align*}
-\arg \min_{c \in \mathbb{R}^p}  \cbr{\Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p  \frac{\hat{\beta}_j^\text{garotte}}{\hat{\beta}_j^\text{OLS}}}
+\arg \min_{c \in \mathbb{R}^p}  \cbr{\Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p  \frac{\vert\hat{\beta}_j^\text{garotte}\vert}{\vert\hat{\beta}_j^\text{OLS}\vert}}
 \end{align*}
 Dermed kan ikke-negative garotte betragtes som adaptive lasso, hvor \(\gamma=1\) og med en ekstra betingelse.
-Beviset ovenfor medfører konsistent af ikke-negativ garotte.
+
+Hvis vi vælger \(\lambda_n\) således at \(\frac{\lambda_n}{\sqrt{n}} \rightarrow 0\) og \(\lambda_n \rightarrow \infty\), da er ikke-negativ garrote konsistent for variabeludvælgelse.
 
 %\begin{col}
 %\end{col}

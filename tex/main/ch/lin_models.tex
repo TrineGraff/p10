@@ -14,13 +14,9 @@ Ofte standardiseres prædiktorerne, således at de er centreret (\(\frac{1}{n} \
 Hvis ikke prædiktorerne standardiseres, da vil estimaterne afhænge af enhederne, som prædiktorerne er målt i.
 For fuldstændighed centreres responsvariablen også (\(\frac{1}{n} \sum_{i=1}^n y_{i} = 0\)).
 Hermed kan vi se bort fra skæringen $\beta_0$ i det givne optimeringsproblem.
-Givet en optimal løsning \(\hat{\beta}\) på det centreret data, kan vi finde løsningen for det ikke-centreret data udfra
-\begin{align*}
-\hat{\beta}^{\text{ikke-centreret}} = \hat{\beta}^{\text{centreret}}, \\
-\hat{\beta}_0^{\text{ikke-centreret}} = \bar{y} - \sum_{j=1}^p \bar{x}_j \hat{\beta}_j,
-\end{align*}
-hvor \(\bar{y}\) og \(\cbr{\bar{x}_j}_{j=1}^p\) er de originale gennemsnit.
-Derfor ser vi bort fra skæringen resten af kapitlet.
+Givet en optimal løsning \(\hat{\beta}\) på det centreret data, kan vi finde løsningen for det ikke-centreret data: der gælder, at \(\hat{\beta}\) er den samme og 
+\(\hat{\beta}_0 = \bar{y} - \sum_{j=1}^p \bar{x}_j \hat{\beta}_j\), hvor \(\bar{y}\) og \(\cbr{\bar{x}_j}_{j=1}^p\) er gennemsnits for det ikke-centreret data.
+Derfor ser vi bort fra skæringen i resten af kapitlet.
 
 Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og lad \(\X\) være en $n \times p$ matrix med $x_i \in \R^p$ som den i'te række, da kan \eqref{eq:OLS} omskrives til matrix-vektor form
 \begin{align*}
@@ -32,9 +28,9 @@ Som bekendt er løsningen hertil givet ved
 \hat{\beta}^{\text{OLS}} = (\X^T \X)^{-1} \X^T \y.
 \end{align*}
 Estimatoren er unbiased, men har ofte høj varians. 
-Prediktions performance kan ofte forbedres, hvis koefficienterne mindskes eller sættes direkte lig 0.
-Dette vil give estimatoren lidt bias, men reducere variansen og dermed forbedre prediktions performance. NÆVNE NOGET MED BIAS VARIANCE TRADEOFF!
-Det anden årsag til at vi leder efter alternative til mindste kvadraters metode er, at med et højt antal prediktorer ønsker vi at bestemme en mindre delmængde af disse som siger mest om prediktiorerne, dvs forbedre fortolkning.\\[4mm]
+Prædiktions performance kan ofte forbedres, hvis koefficienterne mindskes eller sættes direkte lig 0.
+Dette vil give estimatoren lidt bias, men reducere variansen, hvilket forbedre bias-variance tradeoff og dermed  prædiktions performance.
+Det anden årsag til at vi leder efter alternative til mindste kvadraters metode er, at med et højt antal prediktorer ønsker vi at bestemme en mindre delmængde af disse som siger mest om prædiktiorerne, dvs forbedre fortolkning.\\[4mm]
 
 Hvis \(p \gg n\) da vil prediktorerne være kollineære og dermed har \(\X\) ikke fuld rang.
 Det betyder, at $\X^T \X$ er singulær og der findes derfor en ikke entydig estimator for mindste kvadraters metode.

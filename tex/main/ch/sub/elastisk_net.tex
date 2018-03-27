@@ -38,6 +38,18 @@ Dette ses tydeligt på figur \ref{fig:elastisk}.
 \caption[optional short text]{To dimensional illustration af betingelsesområderne for shrinkage metoderne: ridge regression (\tikz[baseline]{\draw[dashed] (0,.5ex)--++(.5,0) ;}), lasso (\tikz[baseline]{\draw[dotted] (0,.5ex)--++(.5,0) ;}) og elastisk net med \(\alpha = 0.5\) (\tikz[baseline]{\draw (0,.5ex)--++(.5,0) ;}). Vi observerer, at singulariteter i hjørnerne og kanterne er streng konveks. Styrken af konveksitet varierer med \(\alpha\).} \label{fig:elastisk}
 \end{figure}
 %
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.4\linewidth}
+\scalebox{0.32}{\includegraphics{fig/crime_lasso.png}}
+\end{minipage}
+\hspace{0.2cm}
+\begin{minipage}{0.4\linewidth}
+\scalebox{0.32}{\includegraphics{fig/crime_EN.png}}
+\end{minipage}
+\caption{Koefficientstierne for henholdsvis lasso (ventre) og elastisk net med \(\alpha=0.3\) (højre) plottet imod \(\ell_1\)-normen for crime data.} \label{fig:crime_koef_EN}
+\end{figure}
+%
 En tre dimensionel illustration af betingelsesområderne for det elastiske net og standard lasso er givet på figur \ref{fig:elastisk_net}.
 Heraf ses at det elastiske net har egenskaberne af både $\ell_1$ kuglen og $\ell_2$ kuglen: de skarpe hjørner og kanter opfordrer til variable udvælgelse, mens de kurvede konturer opfordrer stærk korreleret variable til at dele koefficienter.
 %
@@ -221,7 +233,7 @@ Af sætning \ref{thm:elastisk_net2} gælder, at \(\hat{\beta}^\text{EN} \rightar
 \end{align*}
 \(\hat{\beta} \del{\infty}\) har en simpel lukket løsning, som er givet ved
 \begin{align*}
-\hat{\beta} \del{\infty}_i = \text{sign} \del{\y^T \mathbf{x}_i} \del{\left\vert \y^T \mathbf{x}_i \right\vert - \lambda_2}_+
+\hat{\beta} \del{\infty}_i = S_{\lambda_2} \del{\y^T \mathbf{x}_i}=\text{sign} \del{\y^T \mathbf{x}_i} \del{\left\vert \y^T \mathbf{x}_i \right\vert - \lambda_2}_+
 \end{align*}
 for \(i = 1, \ldots, p\).
 Vi har, at \(\y^T \mathbf{x}_i\) er en univariat regressions koefficient af den \(i\)'te prediktor og \(\hat{\beta} \del{\infty}\) er estimaterne som fås udfra soft thresholding på univariater regressions koefficienter.
@@ -230,7 +242,7 @@ En univariat soft thresholding ignorerer afhængighedsstrukturen mellem predikto
 
 \subsubsection{Udregning af elastisk net}
 Somsagt er optimeringsproblemet for det naive elastiske net \eqref{eq:4.2} konveks og dermed kan flere optimeringsmetoder anvendes til at løse det.
-Coordinate descent er særlig effektiv, og opdateringerne er blot en simpel udvidelse af dem for standard lasso i sektion \ref{sec:lasso_estimatoren}.
+Coordinate descent er særlig effektiv, og opdateringerne er blot en simpel udvidelse af dem for standard lasso i sektion \ref{subsec:udregning_lasso}.
 
 Igen centreres prediktorerne \(x_{ij}\), hvoraf den optimale skæring er givet ved \(\hat{\beta}_0=\bar{y}=\frac{1}{n} \sum_{j=1}^n y_j\).
 Efter at have løst \(\hat{\beta}_0\), udregnes den optimale vektor \(\hat{\beta}= \del{\hat{\beta}_1, \ldots, \hat{\beta}_p}\).
@@ -247,21 +259,6 @@ Algoritmen LARS-EN kan anvendes til at løse elastisk net, som er baseret på al
 Af lemma \ref{lem:elastisk_net}, ved vi at for ethvert fast \(\lambda_1\) er elastisk net problemet ækvivalent med lasso problemet på augmented data.
 Derfor kan LARS algoritmen anvendes direkte til at finde en elastisk net løsningssti.
 Bemærk at for \(p \gg n\), har augmented data \(p+n\) observationer og \(p\) variable, hvilket kan forsinket udregningerne.
-
-
-%
-\begin{figure}[H]
-\centering
-\begin{minipage}{0.4\linewidth}
-\scalebox{0.3}{\includegraphics{fig/crime_lasso.png}}
-\end{minipage}
-\hspace{0.2cm}
-\begin{minipage}{0.4\linewidth}
-\scalebox{0.3}{\includegraphics{fig/crime_EN.png}}
-\end{minipage}
-\caption{Koefficientstierne for henholdsvis lasso (ventre) og elastisk net med \(\alpha=0.3\) (højre) plottet imod \(\ell_1\)-normen for crime data.} \label{fig:crime_koef_EN}
-\end{figure}
-%
 
 
 \newpage

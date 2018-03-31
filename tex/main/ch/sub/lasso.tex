@@ -199,9 +199,9 @@ Fra opdateringen \eqref{eq:2.14} ser vi, at algoritmen foretager en univariat re
 
 Hvis prædiktorerne er ortogonale, dvs $\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{x}_k \right\rangle = 0$ for alle $j \neq k$.
 Da reduceres opdateringen \eqref{eq:2.14} til
-\begin{align*}
-\hat{\beta}_j = S_\lambda \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle},
-\end{align*}
+\begin{align}
+\hat{\beta}_j = S_\lambda \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle}, \label{eq:ortogonal_lasso}
+\end{align}
 dermed er $\hat{\beta}_j$ blot soft-thresholded version af det univariate mindste kvadraters estimat af $\mathbf{y}$ regresseret imod $\mathbf{x}_j$. Således har vi en lukket løsning og ingen iterationer er påkrævet.
 
 Ofte er vi interesseret i, at finde lasso løsningen for en mængde af \(\lambda\) værdier og ikke blot én fast lambda.
@@ -239,9 +239,9 @@ y_i = f \del{x_i} + \epsilon_i, \quad i = 1, \ldots, n,
 \end{align*}
 hvor \(f\) er ukendt og \(\epsilon_i \sim iid \del{0, \sigma^2}\).
 Lad \(\hat{\y}\) betegne \(n\) sample prædiktorer, da defineres 
-\begin{align*}
-\text{df}\del{\hat{\y}} := \frac{1}{\sigma^2} \sum_{i=1}^n \text{Cov}\del{\hat{y}_i, y_i}.
-\end{align*}
+\begin{align}
+\text{df}\del{\hat{\y}} := \frac{1}{\sigma^2} \sum_{i=1}^n \text{Cov}\del{\hat{y}_i, y_i}. \label{eq:df_lasso}
+\end{align}
 Kovariansen tages her over det stokastiske i responsvariablen \(\cbr{y_i}_{i=1}^n\) hvor prædiktorerne fastholdes.
 Antal frihedsgrader svarer da til indflydelsen hver respons mål har på dens prædiktion.
 Desto bedre modellen tilpasser data, desto højere antal frihedsgrader.

@@ -1,7 +1,8 @@
 \section{Post-selection inferens}
 Klassisk statistisk inferens kan ikke anvendes for adaptive procedurer.
-I dette afsnit beskrives en test til inferens efter variabeludvælgelse med en adaptiv metode.
-
+I dette afsnit beskrives teste til inferens efter variabeludvælgelse med en adaptiv metode.
+Teorien omkring post-selection inferens er udviklet i nyere tid og er stadig under udvikling.
+R-pakkerne \texttt{covTest} og \texttt{selectiveInference} understøtter testene som beskrives i dette afsnit.
 
 \subsection{Kovarians test} \label{subsec:kovarians_test}
 I dette afsnit introduceres en test, der tildeler \(p\)-værdier til prædiktorerne valgt af adaptive metoder.
@@ -37,6 +38,16 @@ Figur \ref{fig:covarians_test}(a) viser kvantilerne for \(R_1\) af forward stepw
 \end{figure}
 %
 
+Inden vi giver en formel beskrivelse af kovarians testen, gives en betingelse for model matricen \(\X\).
+\begin{defn}
+Kolonnerne \(\mathbf{X}_1, \ldots, \mathbf{X}_p\) siges at være i generel position hvis the affine span af enhver \(k+1\) vektorer \(s_1 \X_1, \ldots, s_{k+1} \X_{k+1}\) ikke indeholder ethvert element af mængden \(\cbr{\pm \X_i : \ i \neq i_1, \ldots, i_{k+1}}\) for ethvert fortegn \(s_1, \ldots, s_{k+1} \in \cbr{-1,1}\), for \(k < \min \cbr{n,p}\). 
+\end{defn}
+Ovenstående betingelse er svag og gælder blandt andet når indgangene af \(\X\) kommer af en kontinuert sandsynligheds fordeling.
+At kolonnerne af model matrix er i generel position sikre at lasso stien er entydig, som vises i ---.
+
+Herefter kan vi defineres teststørrelse af kovarians testen og forklare hvordan \(p\)-værdierne findes.
+
+
 
 
 Lad $\lambda_1 > \lambda_2 > \ldots > \lambda_K$ være knuderne returneret af LARS algoritmen.
@@ -46,13 +57,13 @@ Lad \(\mathcal{A}_{k-1}\) være den aktive mængde, som består af prædiktorern
 Lad \(\hat{\beta}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}}\) være løsningen af lasso problemet ved blot at anvende prædiktorerne  i \(\mathcal{A}_{k-1}\), i \(\lambda=\lambda_{k+1}\).
 Kovarians teststørrelsen er da defineret ved
 \begin{align}
-T_k = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \hat{\beta} \del{\lambda_{k+1}} \right\rangle - \left\langle  \y, \X \hat{\beta}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}. \label{eq:6.5}
+T_k^\text{cov} = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \hat{\beta} \del{\lambda_{k+1}} \right\rangle - \left\langle  \y, \X \hat{\beta}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}. \label{eq:6.5}
 \end{align}
 Teststørrelsen måler hvor stor en andel af kovariansen mellem outcome og den fittede model som kan tilskrives prediktoren som netop er tilføjet til modellen, dvs forbedringen over intervallet \(\del{\lambda_k, \lambda_{k+1}}\).
 
 Under nulhypotesen at alle $k-1$ variable er i modellen, og under generelle betingelser for modelmatricen $\X$, gælder der for prediktoren i næste trin at
 \begin{align*}
-T_k \overset{d}{\rightarrow} \text{Exp}\del{1}
+T_k^\text{cov} \overset{d}{\rightarrow} \text{Exp}\del{1}
 \end{align*}
 når \(n, p \rightarrow \infty\).
 Når \(\sigma^2\) er ukendt, kan den estimeres under den fulde model \(\hat{\sigma}^2 = \frac{1}{n-p} \text{RSS}_p\). 
@@ -65,7 +76,7 @@ Kovarians testen har middelværdi lig en, som er antal frihedsgrader per trin.
 
 Hvis \(\X\) er ortogonal, da er teststørrelsen for kovarians testen givet ved
 \begin{align*}
-T_k = \frac{1}{\sigma^2} \lambda_k \del{\lambda_k - \lambda_{k+1}}
+T_k^\text{cov} = \frac{1}{\sigma^2} \lambda_k \del{\lambda_k - \lambda_{k+1}}
 \end{align*} 
 Derudover fandt vi at \eqref{eq:ortogonal_lasso} som også kan skrives \(\hat{\beta}_j = S_\lambda \del{\frac{1}{n} \mathbf{x}_j^T \y}\).
 Lad \(\mathbf{U}_j = \mathbf{x}_j^T \y\) for \(j=1,\ldots, p\). 
@@ -76,8 +87,17 @@ Knots i lasso stien er blot værdierne af \(\lambda\) for hvilket koefficientern
 hvor \(\vert \mathbf{U}_{(1)} \vert \geq \vert \mathbf{U}_{(2)} \vert \geq \dots \geq \vert \mathbf{U}_{(p)} \vert\) er order statistics af \(\vert \mathbf{U}_1 \vert, \ldots, \vert \mathbf{U}_p \vert\).
 Derfor 
 \begin{align*}
-T_k = \frac{1}{\sigma^2}  \vert \mathbf{U}_{(k)} \vert \del{ \vert \mathbf{U}_{(k)} \vert -  \vert \mathbf{U}_{(k+1)} \vert}
+T_k^\text{cov} = \frac{1}{\sigma^2}  \vert \mathbf{U}_{(k)} \vert \del{ \vert \mathbf{U}_{(k)} \vert -  \vert \mathbf{U}_{(k+1)} \vert}
 \end{align*}
+
+
+Kovarians testen har nogle begrænsninger.
+Først skal der gælde en betingelse for model matricen \(\X\).
+Hvis der eksisterer en kategorisk variabel blandt prædiktorerne, og den resulterende variabel beskrives af dummy variable, da er antagelse om at kolonnerne af \(\X\) er i general position altså ikke overholdt.
+Derudover tager testen ikke højde for, hvis nogle variable medtages i modellen mere end én gang (som er tilladt for lasso modificeringen af LARS algoritmen), da behandles hver situation separat og testene udføres separat.
+Til sidst er testen kun asymptotisk.
+
+I næste afsnit introduceres en test som kan anvendes efter modeludvælgelse og som giver en eksakt fordeling af teststørrelsen.
 
 \newpage
 \subsection{Teste baseret på polyhedral lemmaet}
@@ -423,6 +443,11 @@ hvor \(\lambda_{k-1}, \lambda_k, \lambda_{k+1}\) er LARS knots i steps \(k-1, k,
 ----
 \end{thm}
 
+Teststørrelsen i \eqref{eq:post_43} afhænger af hvor langt knots er fra hinanden.
+Desto større afstand imellem dem, deraf navnet \textit{spacing}, jo mindre \(p\)-værdier.
+
+
+
 \subsubsection{Spacing test relation med kovarians testen}
 Efter \(k\) step af LARS algoritmen, betragtes en liste af aktive variable \(A_k\) og en liste med fortegn \(s_k\).
 Kovariansen testen er en signikant test for \(k\)'te step af LARS algoritmen.
@@ -441,7 +466,17 @@ C_k = \omega_k^2 \cdot \lambda_k \del{\lambda_k - \lambda_{k+1}} / \sigma^2, \la
 hvor \(\lambda_k\) og \(\lambda_{k+1}\) er LARS knots i step \(k\) og \(k+1\) af stien og \(\omega_k\) er vægten givet i \eqref{eq:post_42}.
 
 
-Kovarians testen i \eqref{eq:post_44} og spacing testen ??? er asymptotisk ækvivalent.
+Kovarians testen i \eqref{eq:post_44} og spacing testen \eqref{eq:post_43} er asymptotisk ækvivalent.
+Kovarians testen er derfor en asymptotisk version af spacing testen.
+Men nulhypoteserne er ikke identiske.
+Nulhypotesen for kovarians testen påstår at alle koefficienter for prædiktorerne som ikke er indeholdt i det nuværende aktive mængde er nul i hvert step af LARS algoritmen.
+Nulhypotesen for spacing testen er også defineret i et given step af LARS algoritmen, men tester om koefficienten som joiner den aktive mængde er nul betinget det andre aktive variable.
+Dette betyder at for første prædiktor som skal joine den aktive mængde, er nulhypoteserne ækvivalente, men afviger for de efterfølgende steps.
+TG testen anvender en tilsvarende tilgang som spacing testen, men vi kan fastholde ethvert \(\lambda\) og teste enhver koefficient som ikke er indkluderet i det relateret aktive mængde.
+
+Både kovarians testen og spacing testen er konstrueret for LARS algoritmen, og spacing testen kun for LARS uden lasso modificering, hvor vi ikke betragter at droppe variable fra den aktive mængde. TG testen kan også anvendes til at udregne lasso løsninger fra en anden metode, såsom coordinate descent.
+
+
 
 \begin{thm}[asymptotisk ækvivalens mellem spacing og kovarians testene]
 Efter et fast antal step \(k\) af LARS algoritmen, er --

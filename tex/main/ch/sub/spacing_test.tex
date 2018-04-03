@@ -1,0 +1,151 @@
+\subsection{Spacing test}
+En beregningsmæssig udfordring for LARS og lasso testene som beskrevet ovenfor er at matricerne \(\Gamma\) som udregnes for polyhedron repræsentationerne \(\cbr{\y : \ \Gamma \y \geq 0}\) kan vokse meget stort, for LARS og lasso da vil matricen have groft sagt \(3pk\) rækker efter \(k\) steps.
+Da er det besværligt at udregne \(\mathcal{V}^-\) og \(\mathcal{V}^+\), da udregningerne af disse afhænger lineært af antallet af række i \(\Gamma\).
+
+I dette afsnit udledes en simpel approksimation til polyhedron repræsentationen for LARS, som letter disse udregninger. 
+Først introduceres en alternativ karakterisation for LARS udvælgelses hændelsen, efter \(k\) step.
+%
+\begin{lem} \label{lem:post_lem5}
+Antag LARS algoritmen producerer en liste af aktive variable \(\mathcal{A}_k\) og fortegn \(s_{\mathcal{A}_k}\) efter \(k\) step.
+Definer \(c \del{j, s, \mathcal{A}_{k-1}, s_{\mathcal{A}_{k-1}}} = \frac{P_{\mathcal{A}_{k-1}}^\perp \X_{j}}{s - \X_{j}^T \del{\X_{\mathcal{A}_{k-1}}^+}^T s_{\mathcal{A}_{k-1}}}\), hvor \(\mathcal{A}_0 = s_{\mathcal{A}_0} = \emptyset\) således at \(c \del{j, s, \mathcal{A}_{0}, s_{\mathcal{A}_0}} = c \del{j,s} = s \X_j\).
+Betragt følgende betingelser:
+\begin{align}
+c \del{j_1, s_1, \mathcal{A}_0, s_{\mathcal{A}_0}}^T \y &\geq c \del{j_2, s_2, \mathcal{A}_1, s_{\mathcal{A}_1}}^T \y \geq \dots \nonumber \\
+&\geq  c \del{j_k, s_k, \mathcal{A}_{k-1}, s_{\mathcal{A}_{k-1}}}^T \y \geq 0, \label{eq:post_34} \\
+c \del{j_k, s_k, \mathcal{A}_{k-1}, s_{\mathcal{A}_{k-1}}}^T \y &\geq M_k^+ \del{j_k, s_k, c \del{j_{k-1}, s_{k-1}, \mathcal{A}_{k-2}, s_{\mathcal{A}_{k-2}}}^T \y}, \label{eq:post_35} \\
+c \del{j_\ell, s_\ell, \mathcal{A}_{\ell-1}, s_{\mathcal{A}_{\ell-1}}}^T \y &\leq M_\ell^- \del{j_\ell, s_\ell, c \del{j_{\ell-1}, s_{\ell-1}, \mathcal{A}_{\ell-2}, s_{\mathcal{A}_{\ell-2}}}^T \y}, \ \ell = 1, \ldots, k, \label{eq:post_36} \\
+0 &\geq M_\ell^0 \del{j_\ell, s_\ell, c \del{j_{\ell-1}, s_{\ell-1}, \mathcal{A}_{\ell-2}, s_{\mathcal{A}_{\ell-2}}}^T \y}, \ \ell = 1, \ldots, k, \label{eq:post_37} \\
+0 &\leq M_\ell^S \y,  \ \ell = 1, \ldots, k. \label{eq:post_38}
+\end{align}
+For \(\ell = 0\) i \eqref{eq:post_36} og \eqref{eq:post_37} gælder, at \(c \del{j_0, s_0, \mathcal{A}_{-1}, s_{\mathcal{A}_{-1}}}^T \y = \infty\).
+Mængden af alle \(\y\) som opfylder ovenstående betingelser er de samme som mængden \(\mathcal{P}\) i \eqref{eq:post_28}.
+Mængden \(M_k^+\) i \eqref{eq:post_35} kan skrives som et maksimum af lineære funktioner af \(\y\), hver \(M_\ell^-\) i \eqref{eq:post_36} kan skrives som et minimum af lineære funktioner af \(\y\), hver \(M_\ell^0\) i \eqref{eq:post_37} kan skrives som et maksimum af lineære funktioner af \(\y\) og hver \(M_\ell^S\) i \eqref{eq:post_38} er en matrix.
+Dermed kan \eqref{eq:post_34}-\eqref{eq:post_38} udtrykkes som \(\Gamma \y \geq 0\) for en matrix \(\Gamma\).
+Antallet af rækker af \(\Gamma\) er opadtil begrænset af \(4pk - 2 k^2 -k\).
+\end{lem}
+%
+Ved første øjekast ser det ikke umiddelbart ud som om lemma \ref{lem:post_lem5} har gjort os gavn.
+Efter \(k\) step, har vi nu en matrix \(\Gamma\) som har en orden af \(4pk\) rækker, som faktisk er mere end før.
+Dog er karakteriseringen i lemma \ref{lem:post_lem5} langt mere kortfattet hvis vi ser bort fra betingelserne \eqref{eq:post_36}-\eqref{eq:post_38}.
+
+Hvis \(\X\) er ortogonal, da har vi, at \(M_\ell^-= \infty\) og \(M_\ell^0=-\infty\) og matricen \(M_\ell^S\) har nul rækker for hver \(\ell\).
+Dette betyder, at betingelserne \eqref{eq:post_36}-\eqref{eq:post_38} er intetsigende.
+Polyhedron karakteriseringen i lemma \ref{lem:post_lem5}, reduceres derfor til \(\cbr{\y: \ \Gamma \y \geq U}\), hvor \(\Gamma\) kun har \(k+1\) rækker, defineret ved de \(k+1\) betingelser i \eqref{eq:post_34} og \eqref{eq:post_35} og \(U\) er en stokastisk vektor med komponenterne \(U_1 = \dots = U_k=0\) og \(U_{k+1}= M_k^+ \del{j_k,s_k, c \del{j_{k-1}, s_{k-1}, \mathcal{A}_{k-2}, s_{\mathcal{A}_{k-2}}}^T \y}\).
+
+For en generel ikke-ortogonal matrix \(\X\), kan vi stadig betragte at ignorere betingelserne \eqref{eq:post_36}-\eqref{eq:post_38} og anvende den kompakte repræsentation \(\cbr{\y: \ \Gamma \y \geq U}\) givet ved \eqref{eq:post_34} og \eqref{eq:post_35}.
+Dette er en approksimation til den eksakte polyhedron karakterisering i lemma \ref{lem:post_lem5}, men udregnings mæssig mere attraktiv, da \(\Gamma\) kun har \(k+1\) rækker.
+
+Vi vil nu anvende teorien til \(\cbr{\y: \ \Gamma \y \geq U}\).
+Da ækvivalensen  i \eqref{eq:post_8} er et deterministisk resultat, gælder det også for et stokastisk \(U\).
+
+Approksimationen af \(\cbr{\y : \ \Gamma \y \geq U}\) udledt ovenfor, kan anvendes til at udføre inferens over \(\teta^T \tmu\) for vektorer \(\teta\) som er i spændet af nuværende aktive variable udledt af LARS algoritmen.
+Vektorerne er givet ved
+\begin{align}
+\teta = c \del{j_k, s_k, \mathcal{A}_{k-1}, s_{\mathcal{A}_{k-1}}} = \frac{P_{\mathcal{A}_{k-1}}^\perp \X_{j_{k}}}{s_k - \X_{j_{k}}^T \del{\X_{\mathcal{A}_{k-1}}^+}^T s_{\mathcal{A}_{k-1}}}, \label{eq:post_40}
+\end{align}
+hvor \(P_{\mathcal{A}_{k-1}}^\perp = \mathbf{I} - \X_{\mathcal{A}_{k-1}} \del{\X_{\mathcal{A}_{k-1}}^T \X_{\mathcal{A}_{k-1}}}^{-1} \X_{\mathcal{A}_{k-1}}^T\) er den ortogonale projektion..
+Dette valg af \(\teta\) giver os spacing testen.
+At teste \(H_0: \ \teta^T \tmu = 0\) er nu ækvivalent med at teste \(H_0: \ e_k^T \X_{\mathcal{A}_k}^+ \tmu = \beta_k = 0\).
+Dermed er spacing testen en test for \(k\)'te koefficient i regressionen af \(\tmu\) på \(\X_{\mathcal{A}_k}\), præcis som for ---.
+Men -- af spacing testen ligger i dens simplicitet.
+
+Lad
+\begin{align}
+\omega_k = \left\Vert \del{\X_{\mathcal{A}_k}^+}^T s_{\mathcal{A}_k} -   \del{\X_{\mathcal{A}_{k-1}}^+}^T s_{\mathcal{A}_{k-1}} \right\Vert_2, \label{eq:post_41}
+\end{align}
+da er teststørrelsen af spacing testen givet ved
+\begin{align}
+T_k^\text{sp}= \frac{\Phi \del{\lambda_{k-1} \frac{\omega_k}{\sigma}} - \Phi \del{\lambda_{k} \frac{\omega_k}{\sigma}}}{\Phi \del{\lambda_{k-1} \frac{\omega_k}{\sigma}} - \Phi \del{M_{k}^+ \frac{\omega_k}{\sigma}}}, \label{eq:post_42}
+\end{align}
+hvor \(\lambda_{k-1}\) og \(\lambda_k\) er knots i steps \(k-1\) og \(k\) i LARS stien og \(M_k^+\) er en stokastisk variabel defineret ved
+---
+Teststørrelsen \eqref{eq:post_42} er one-sided, hvor \(H_1:\boldsymbol{\eta}^T \tmu > 0 \), hvor \(\boldsymbol{\eta}\) er givet i \eqref{eq:post_40}.
+Da \(\boldsymbol{\eta}^T \y = \lambda_k \geq 0\), må nævneren i \eqref{eq:post_40} have samme fortegn som \(\X_{jk}^T P_{A_{k-1}}^\perp \y \), som er samme fortegn som \(e_k^T \X_{A_k}^+ \y\). Dvs
+\begin{align*}
+H_1: \ \boldsymbol{\eta}^T \tmu > 0 \ \Longleftrightarrow \ H_1: \ \text{sign} \del{e_k^T \X_{A_k}^+ \y} \cdot e_k^T \X_{A_k}^+ \tmu > 0
+\end{align*}
+
+
+%
+\begin{thm}[Spacing test] \label{thm:sp_test}
+Antag vi har gennemgået \(k\) steps af LARS algoritmen.
+Repræsenter betingelserne -- og -- i lemma -- som \(\Gamma \y \geq U\).
+Specifik defineres \(\Gamma\) til at have følgende \(k + 1 \) rækker:
+\begin{align*}
+\Gamma_1 &= c \del{j_1, s_1, A_0, s_{A_0}} - c \del{j_2, s_2, A_1, s_{A_1}}, \\
+\Gamma_2, &= c \del{j_2, s_2, A_1, s_{A_1}} - c \del{j_3, s_3, A_2, s_{A_2}} \\
+& \quad \vdots \\
+\Gamma_{k-1} &= c \del{j_{k-1}, s_{k-1}, A_{k-2}, s_{A_{k-1}}}, \\
+ \Gamma_k &= \Gamma_{k+1} = c \del{j_k, s_k, A_{k-1}, s_{A_{k-1}}},
+\end{align*}
+og \(U\) til at have følgende \(k+1\) komponenter
+\begin{align*}
+U_1 &= U_2 = \dots = U_k = 0 \\
+U_{k+1} &= M_k^+ \del{j_k, s_k, c \del{j_{k-1}, s _{k-1}, A_{k-2}, s_{A_{k-2}}}^T \y}.
+\end{align*}
+For at teste nulhypotesen \(H_0: \ e_k^T \X_{A_k}^+ \theta = 0\), da giver teststørrelsen af spacing testen defineret i \eqref{eq:post_41} og \eqref{eq:post_42} en eksakt \(p\)-værdi betinget \(\Gamma \y \geq U\):
+\begin{align*}
+\mathbb{P}_{e_k^T \X_{A_k}^+ \theta = 0} \del{T_k^\text{sp} \leq \alpha \given \Gamma \y \geq U} = \alpha,
+\end{align*}
+for ethvert \(0 \leq \alpha \leq 1\).
+\end{thm}
+%
+For polyhedronet \(\cbr{y: \ \Gamma \y \geq U}\) som betragtes i ovenstående sætning, viser det sig at \(\mathcal{V}^- = M_k^+\) og \(\mathcal{V}^+=\lambda_{k-1}\), som betyder at yderligere beregninger ikke er nødvendig for at udregne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) udover hvad der allerede er udregnet til stien og \(M_k^+\).
+Derudover gælder der for kontrast vektoren \(\boldsymbol{\eta}\) at \(\Vert \boldsymbol{\eta} \Vert_2 = \frac{1}{\omega_k}\).
+
+En two-sided version af spacing testen i \eqref{eq:post_42} er givet ved \(T_k^\text{SP} = 2 \cdot \min \cbr{T_k^\text{sp}, 1 - T_k^\text{sp}}\).
+Resultatet i sætning \ref{thm:sp_test} gælder også for denne two-sided test.
+
+Teststørrelsen for spacing testen i \eqref{eq:post_42} er meget simpel, dog afhænger den af en stokastisk variabel \(M_k^+\).
+Udregningen af \(M_k^+\) er \(O\del{p}\) operationer og er ikke et output i R-pakken \texttt{lars}.
+Derfor kan vi erstatte \(M_k^+\) med næste knot i LARS stien, \(\lambda_{k+1}\).
+Ofte er \(M_k^+\) og \(\lambda_{k+1}\) lig hinanden, men ikke altid.
+Der gælder, at \(M_k^+ \leq \lambda_{k+1}\), som fører til en konservativ version af spacing testen.
+
+\begin{thm}[Konservativ spacing test]
+Efter \(k\) steps i LARS stien, defineres en modificeret teststørrelse for spacing test
+\begin{align}
+\tilde{T}_k^\text{sp}= \frac{\Phi \del{\lambda_{k-1} \frac{\omega_k}{\sigma}} - \Phi \del{\lambda_{k} \frac{\omega_k}{\sigma}}}{\Phi \del{\lambda_{k-1} \frac{\omega_k}{\sigma}} - \Phi \del{\lambda_{k+1} \frac{\omega_k}{\sigma}}}, \label{eq:post_43}
+\end{align}
+hvor \(\lambda_{k-1}, \lambda_k, \lambda_{k+1}\) er LARS knots i steps \(k-1, k, k+1\) og \(\omega_k\) er defineret i \eqref{eq:post_41}.
+----
+\end{thm}
+
+Teststørrelsen i \eqref{eq:post_43} afhænger af hvor langt knots er fra hinanden.
+Desto større afstand imellem dem, deraf navnet \textit{spacing}, jo mindre \(p\)-værdier.
+
+
+
+\subsubsection{Spacing test relation med kovarians testen}
+Efter \(k\) step af LARS algoritmen, betragtes en liste af aktive variable \(A_k\) og en liste med fortegn \(s_k\).
+Kovariansen testen er en signikant test for \(k\)'te step af LARS algoritmen.
+Kovarians testen antager en underliggende lineær model \(\theta=\X \beta^*\), og tester nulhypotesen
+\begin{align*}
+H_0: \ A_{k-1} \supseteq \text{supp} \del{\beta^*},
+\end{align*}
+hvor \(\text{supp} \del{\beta^*}\) betegner support af mængden af \(\beta^*\), dvs den sande aktive mængde.
+Denne test signifikant af enhver variable som kommer med i step \(k\) eller senere.
+
+Den originale definition af kovarians testen er motiveret af differensen af de empiriske kovariansen mellem LARS fittede værdier, kan teststørrelsen for kovarians testen omskrives ----.
+I step \(k\) af LARS algoritmen kan teststørrelsen skrives som
+\begin{align}
+C_k = \omega_k^2 \cdot \lambda_k \del{\lambda_k - \lambda_{k+1}} / \sigma^2, \label{eq:post_44}
+\end{align}
+hvor \(\lambda_k\) og \(\lambda_{k+1}\) er LARS knots i step \(k\) og \(k+1\) af stien og \(\omega_k\) er vægten givet i \eqref{eq:post_42}.
+
+
+Kovarians testen i \eqref{eq:post_44} og spacing testen \eqref{eq:post_43} er asymptotisk ækvivalent.
+Kovarians testen er derfor en asymptotisk version af spacing testen.
+Men nulhypoteserne er ikke identiske.
+Nulhypotesen for kovarians testen påstår at alle koefficienter for prædiktorerne som ikke er indeholdt i det nuværende aktive mængde er nul i hvert step af LARS algoritmen.
+Nulhypotesen for spacing testen er også defineret i et given step af LARS algoritmen, men tester om koefficienten som joiner den aktive mængde er nul betinget det andre aktive variable.
+Dette betyder at for første prædiktor som skal joine den aktive mængde, er nulhypoteserne ækvivalente, men afviger for de efterfølgende steps.
+TG testen anvender en tilsvarende tilgang som spacing testen, men vi kan fastholde ethvert \(\lambda\) og teste enhver koefficient som ikke er indkluderet i det relateret aktive mængde.
+
+Både kovarians testen og spacing testen er konstrueret for LARS algoritmen, og spacing testen kun for LARS uden lasso modificering, hvor vi ikke betragter at droppe variable fra den aktive mængde. TG testen kan også anvendes til at udregne lasso løsninger fra en anden metode, såsom coordinate descent.
+
+
+
+\begin{thm}[asymptotisk ækvivalens mellem spacing og kovarians testene]
+Efter et fast antal step \(k\) af LARS algoritmen, er --
+\end{thm}

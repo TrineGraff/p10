@@ -4,120 +4,26 @@ I dette afsnit beskrives teste til inferens efter variabeludvælgelse med en ada
 Teorien omkring post-selection inferens er udviklet i nyere tid og er stadig under udvikling.
 R-pakkerne \texttt{covTest} og \texttt{selectiveInference} understøtter testene som beskrives i dette afsnit.
 
-\subsection{Kovarians test} \label{subsec:kovarians_test}
-I dette afsnit introduceres en test, der tildeler \(p\)-værdier til prædiktorerne valgt af adaptive metoder.
-Testen er baseret på LARS algoritmen og blev introduceret af \citep{lockhart}.
+\input{main/ch/sub/covarians_test}
 
-Betragt det velkendte lineær regression setup med en responsvariable \(\y \in \mathbb{R}^n\) og en matrix af prædiktorer \(\X \in \mathbb{R}^{n \times p}\), som er relateret ved
-\begin{align}
-\y = \X \beta + \boldsymbol{\epsilon}, \quad \boldsymbol{\epsilon} \sim N\del{\mathbf{0}, \sigma^2 \mathbf{I}}, \label{eq:set-up}
-\end{align}
-hvor \(\beta \in \mathbb{R}^p\) er ukendte koefficienter, som skal estimeres.
-
-For at motivere kovarians testen, vil vi først betragte forward-stepwise regression.
-Proceduren udvælger én prædiktor af gangen og vælger den prædiktor således at summen af kvadrerede residualer aftager mest.
-Lad \(\text{SSR}_k\) betegne summen af kvadrerede residualer for modellen med \(k\) prædiktorer.
-Da kan vi udlede en teststørrelse ved at betragte ændringen i SSR
-\begin{align*}
-R_k = \frac{1}{\sigma^2} \del{\text{SSR}_{k-1} - \text{SSR}_k},
-\end{align*}
-hvor \(\sigma\) antages at være kendt. 
-Denne teststørrelse følger en \(\chi_1^2\) fordeling.
-Hvis \(\sigma\) ikke er kendt, da den estimeres udfra sample variansen, hvilket resulterer i en \(F\)-test eller ækvivalent en \(t\)-test til at teste om variabel \(j\) er signifikant.
-
-Betragt forward stepwise regression: start med en tom model, tilføj en prædiktor af gangen, for hvert step vælg den prædiktor \(j\) som giver den største fald i SSR.
-Figur \ref{fig:covarians_test}(a) viser kvantilerne for \(R_1\) af forward stepwise regression imod en \(\chi_1^2\) fordeling, hvor \(\beta=0\).
- 
-
-%
-\begin{figure}[H]
-\centering
- \scalebox{0.5}{\includegraphics{fig/covarians_test.jpg}}
-\caption{Et .}
-\label{fig:covarians_test}
-\end{figure}
-%
-
-Inden vi giver en formel beskrivelse af kovarians testen, gives en betingelse for model matricen \(\X\).
-\begin{defn}
-Kolonnerne \(\mathbf{X}_1, \ldots, \mathbf{X}_p\) siges at være i generel position hvis the affine span af enhver \(k+1\) vektorer \(s_1 \X_1, \ldots, s_{k+1} \X_{k+1}\) ikke indeholder ethvert element af mængden \(\cbr{\pm \X_i : \ i \neq i_1, \ldots, i_{k+1}}\) for ethvert fortegn \(s_1, \ldots, s_{k+1} \in \cbr{-1,1}\), for \(k < \min \cbr{n,p}\). 
-\end{defn}
-Ovenstående betingelse er svag og gælder blandt andet når indgangene af \(\X\) kommer af en kontinuert sandsynligheds fordeling.
-At kolonnerne af model matrix er i generel position sikre at LARS og lasso stierne er entydig, som vises i \citep{lasso_unique}.
-
-Herefter kan vi defineres teststørrelse af kovarians testen og forklare hvordan \(p\)-værdierne findes.
-
-
-
-
-Lad $\lambda_1 > \lambda_2 > \ldots > \lambda_K$ være knuderne returneret af LARS algoritmen.
-Disse er værdierne af regularitets parameteren $\lambda$ ,hvor der sker en ændring i mængden af aktive prædiktorer.
-V ønsker, at teste om prædiktoren valgt i \(\lambda_k\) af LARS algoritmen er signifikant.
-Lad \(\mathcal{A}_{k-1}\) være den aktive mængde, som består af prædiktorerne med ikke-nul koefficienter, inden denne prædiktor er tilføjet og lad estimatet til slut af dette step være \(\hat{\beta} \del{\lambda_{k+1}}\).
-Lad \(\hat{\beta}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}}\) være løsningen af lasso problemet ved blot at anvende prædiktorerne  i \(\mathcal{A}_{k-1}\), i \(\lambda=\lambda_{k+1}\).
-Kovarians teststørrelsen er da defineret ved
-\begin{align}
-T_k^\text{cov} = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \hat{\beta} \del{\lambda_{k+1}} \right\rangle - \left\langle  \y, \X \hat{\beta}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}. \label{eq:6.5}
-\end{align}
-Teststørrelsen måler hvor stor en andel af kovariansen mellem outcome og den fittede model som kan tilskrives prediktoren som netop er tilføjet til modellen, dvs forbedringen over intervallet \(\del{\lambda_k, \lambda_{k+1}}\).
-
-Under nulhypotesen at alle $k-1$ variable er i modellen, og under generelle betingelser for modelmatricen $\X$, gælder der for prediktoren i næste trin at
-\begin{align*}
-T_k^\text{cov} \overset{d}{\rightarrow} \text{Exp}\del{1}
-\end{align*}
-når \(n, p \rightarrow \infty\).
-Når \(\sigma^2\) er ukendt, kan den estimeres under den fulde model \(\hat{\sigma}^2 = \frac{1}{n-p} \text{RSS}_p\). 
-Dette indsættes i \eqref{eq:6.5}, og eksponential testen bliver en eksakt \(F_{2,n-p}\) test.
-
-Denne test er også det naturlige analog til degrees of freedom resultaterne for lasso \eqref{eq:df_lasso} og LARS (section 2.5).
-Lasso med \(k\) ikke-nul koefficienter forventes at have \(k\) frihedsgrader, og LARS anvender en frihedsgrad for hver segment \(\del{\lambda_{k+1}, \lambda_k}\) langs stien.
-Kovarians testen har middelværdi lig en, som er antal frihedsgrader per trin.
-
-
-Hvis \(\X\) er ortogonal, da er teststørrelsen for kovarians testen givet ved
-\begin{align*}
-T_k^\text{cov} = \frac{1}{\sigma^2} \lambda_k \del{\lambda_k - \lambda_{k+1}}
-\end{align*} 
-Derudover fandt vi at \eqref{eq:ortogonal_lasso} som også kan skrives \(\hat{\beta}_j = S_\lambda \del{\frac{1}{n} \mathbf{x}_j^T \y}\).
-Lad \(\mathbf{U}_j = \mathbf{x}_j^T \y\) for \(j=1,\ldots, p\). 
-Knots i lasso stien er blot værdierne af \(\lambda\) for hvilket koefficienterne er ikke-nul
-\begin{align*}
-\lambda_1 = \vert \mathbf{U}_{(1)} \vert, \quad \lambda_2 = \vert \mathbf{U}_{(2)} \vert, \quad \ldots, \lambda_p = \vert \mathbf{U}_{(p)} \vert, \quad,
-\end{align*}
-hvor \(\vert \mathbf{U}_{(1)} \vert \geq \vert \mathbf{U}_{(2)} \vert \geq \dots \geq \vert \mathbf{U}_{(p)} \vert\) er order statistics af \(\vert \mathbf{U}_1 \vert, \ldots, \vert \mathbf{U}_p \vert\).
-Derfor 
-\begin{align*}
-T_k^\text{cov} = \frac{1}{\sigma^2}  \vert \mathbf{U}_{(k)} \vert \del{ \vert \mathbf{U}_{(k)} \vert -  \vert \mathbf{U}_{(k+1)} \vert}
-\end{align*}
-
-
-Kovarians testen har nogle begrænsninger.
-Først skal der gælde en betingelse for model matricen \(\X\).
-Hvis der eksisterer en kategorisk variabel blandt prædiktorerne, og den resulterende variabel beskrives af dummy variable, da er antagelse om at kolonnerne af \(\X\) er i general position altså ikke overholdt.
-Derudover tager testen ikke højde for, hvis nogle variable medtages i modellen mere end én gang (som er tilladt for lasso modificeringen af LARS algoritmen), da behandles hver situation separat og testene udføres separat.
-Til sidst er testen kun asymptotisk.
-
-I næste afsnit introduceres en test som kan anvendes efter modeludvælgelse og som giver en eksakt fordeling af teststørrelsen.
-
-\newpage
 \subsection{Teste baseret på polyhedral lemmaet}
-I dette afsnit introduceres \textit{TG testen}, hvor TG står for "truncated gaussian" og \textit{spacing testen}, som er baseret på polyhedral lemmaet. 
+I dette afsnit introduceres \textit{TG testen}, hvor TG står for "truncated gaussian" som er baseret på polyhedral lemmaet. 
 Afsnit er baseret på \citep{post_inference}.
-Testene kan anvendes for enhver modeludvælgelses procedure for hvilket udvælgelsen kan karakteriseres ved en mængde af lineære uligheder i \(\y\): \(\cbr{\Gamma \y \geq u}\), hvor \(\Gamma \in \mathbb{R}^{m \times n}\) og \(u \in \mathbb{R}^m\). Uligheden skal fortolkes elementvis.
-Den resulterende fordeling af teststørrelsen er eksakt og generelt antager TG testen ingen betingelser på model matricen \(\X\) som er tilfældet for kovarians testen.
-Spacing testen er en eksakt version af kovarians testen. 
-
-Antag \(\y \sim N(\tmu, \Sigma)\), hvor \(\tmu \in \R^{n}\) er ukendt, men \(\Sigma \in \R^{n \times n}\) er kendt.
-Dette generaliserer set-up i \eqref{eq:set-up}, hvor vi nu tillader en generel fejl kovarians matrix.
-For et fast \(\teta \in \R^n\) ønsker vi at lave inferens af \(\teta^T \tmu\) betinget \(\cbr{\Gamma \y \geq u}\).
-
-Nedenfor gives en alternativ repræsentation af polyhedronet.
-
 
 Indledningsvis introduceres notation som anvendes i dette afsnit.
+For en matrix \(M \in \R^{n \times p}\) og liste \(S = \sbr{s_1, \ldots, s_r} \subseteq \sbr{1, \ldots, p}\), skriver vi \(M_S \in \R^{n \times \vert S \vert}\) for submatricen som findes ved at udtrække tilhørende kolonner af \(M\).
+Tilsvarende for en vektor \(x \in \R^p\), betegnes \(x_S\) for subvektoren.
+Vi skriver \(\del{M^T M}^+\) for Moore Penrose pseudoinverse af den kvadratiske matrix \(M\) og \(M^+ = \del{M^T M}^+ M^T\) for pseudoinverse af en rektangulær matrix \(M\).
 Vi anvender \(P_L\) for projektions operatoren på det lineære underrum \(L\).
-\(\mathbb{P}_{\teta^T \tmu = 0} \del{\cdot \given y \in \mathcal{P}} \) er sandsynligheds målet under \(\tmu\) for hvilket \(\teta^T \tmu =0 \) betinget \(\y \in \mathcal{P}\).
-Vi skriver \(\del{M^T M}^+\) for Moore Penrose pseudoinverse af den kvadratiske matrix \(M\) og \(M^+ = \del{M^T M}^+ M^T\) for pseudoinverse af en rektangulær matrix \(M\). 
+\(\mathbb{P}_{\teta^T \tmu = 0} \del{\cdot \given y \in \mathcal{P}} \) er sandsynligheds målet under \(\tmu\) for hvilket \(\teta^T \tmu =0 \) betinget \(\y \in \mathcal{P}\). 
+
+Antag \(\y \sim N(\tmu, \Sigma)\), hvor \(\tmu \in \R^{n}\) er ukendt, men \(\Sigma \in \R^{n \times n}\) er kendt.
+Dette generaliserer vores setup i \eqref{eq:set-up}.
+Vi betragter polyhedronen \(\mathcal{P} = \cbr{\y : \ \Gamma \y \geq u}\), hvor \(\Gamma \in \mathbb{R}^{m \times n}\) og \(u \in \mathbb{R}^m\) er faste og uligheden skal fortolkes elementvis.
+For et fast \(\teta \in \R^n\) ønsker vi at lave inferens af \(\teta^T \tmu\) betinget \(\y \in \mathcal{P}\).
+Nedenfor gives en alternativ repræsentation af \(\mathcal{P}\).
+
+
 
 %Antag \(\y \sim N\del{\boldsymbol{\mu}, \sigma^2 \mathbf{I}_{n \times n}}\) og at vi ønsker at lave inferens betinget på hændelsen \(\cbr{\mathbf{A} \y \leq b}\).
 %Mere præcis ønsker vi at lave inferens om \(\boldsymbol{\eta}^T \boldsymbol{\mu}\), hvor \(\boldsymbol{\eta}\) muligvis afhænger af udvægelsen.
@@ -146,15 +52,15 @@ Vi skriver \(\del{M^T M}^+\) for Moore Penrose pseudoinverse af den kvadratiske 
 %
 \begin{lem}[Polyhedral lemma] \label{lem:polyhedral}
 %Lad \(\mathbf{z}\) være defineret som i \eqref{eq:z} og \(\mathbf{c}\) som i \eqref{eq:c}. 
-For ethvert \(\Sigma\) og \(\teta\) således at \(\teta^T \Sigma \teta \neq 0\), da kan \(\cbr{\Gamma \y \geq u}\) udfra \(\teta^T \y\) omskrives til følgende:
+For ethvert \(\Sigma\) og \(\teta\) således at \(\teta^T \Sigma \teta \neq 0\), da gælder, at
 \begin{align}
-\cbr{\Gamma \y \geq u} \ \Longleftrightarrow \ \cbr{\mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}, \  \mathcal{V}^0 \del{\y} \leq 0}, \label{eq:post_8}
+\Gamma \y \geq u \ \Longleftrightarrow \ \mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}, \  \mathcal{V}^0 \del{\y} \leq 0, \label{eq:post_8}
 \end{align}
 hvor
 \begin{align}
-\mathcal{V}^- \del{\y} &= \max_{j: \rho_j > 0} \frac{u_j - \del{\Gamma \y}_j + \rho_j \boldsymbol{\eta}^T \y}{\rho_j} \label{eq:V-} \\
-\mathcal{V}^+ \del{\y} &= \min_{j: \rho_j < 0} \frac{u_j - \del{\Gamma \y}_j + \rho_j \boldsymbol{\eta}^T \y}{\rho_j} \label{eq:V+} \\
-\mathcal{V}^0 \del{\y} &= \max_{j: \rho_j = 0} \del{u_j - \del{\Gamma \y}_j}.  \label{eq:V0} 
+\mathcal{V}^- \del{\y} &= \max_{j: \rho_j > 0} \frac{u_j - \del{\Gamma \y}_j + \rho_j \boldsymbol{\eta}^T \y}{\rho_j}, \label{eq:V-} \\
+\mathcal{V}^+ \del{\y} &= \min_{j: \rho_j < 0} \frac{u_j - \del{\Gamma \y}_j + \rho_j \boldsymbol{\eta}^T \y}{\rho_j}, \label{eq:V+} \\
+\mathcal{V}^0 \del{\y} &= \max_{j: \rho_j = 0} \del{u_j - \del{\Gamma \y}_j}, \label{eq:V0} 
 \end{align}
 og \(\rho=\frac{\Gamma \Sigma \boldsymbol{\eta}}{\teta^T \Sigma \teta}\).
 Yderligere  er \(\boldsymbol{\eta}^T \y\) og \(\del{\mathcal{V}^-\del{\y}, \mathcal{V}^+\del{\y},\mathcal{V}^0\del{\y}}\) uafhængige. 
@@ -173,12 +79,12 @@ Yderligere  er \(\boldsymbol{\eta}^T \y\) og \(\del{\mathcal{V}^-\del{\y}, \math
 %\end{align*}
 %Da \(\boldsymbol{\eta}^T \y \) er den samme mængde for alle \(j\), må det mindste være maksimum af de nedre grænser, som er \(\mathcal{V}^- \del{\mathbf{z}}\), og ikke mere end minimum af de øvre grænser, som er \(\mathcal{V}^+ \del{\mathbf{z}}\).
 %\end{proof}
-Resultatet i \eqref{eq:polyhedral} hvor \(\mathcal{V}^-\), \(\mathcal{V}^+\) og \(\mathcal{V}^0\) defineres i \eqref{eq:V-}-\eqref{eq:V0} er deterministisk og gælder for alle \(\y\).
-Blot uafhængigheds resultatet afhænger af normaliteten af \(\y\).
+Resultatet i \eqref{eq:post_8} hvor \(\mathcal{V}^-\), \(\mathcal{V}^+\) og \(\mathcal{V}^0\) defineres i \eqref{eq:V-}-\eqref{eq:V0} er deterministisk og gælder for alle \(\y\).
+Blot uafhængighedsresultatet afhænger af normaliteten af \(\y\).
 Se figur \ref{fig:polyhedron} for en geometrisk illustration af lemmaet.
-For simplicitet antages at \(\Sigma= \mathbf{I}\).
-Lad os dekomponere \(\y=P_{\boldsymbol{\eta}} \y + P_{\boldsymbol{\eta}^\perp} \y\), hvor \(P_{\boldsymbol{\eta}} \y = \frac{\boldsymbol{\eta} \boldsymbol{\eta}^T \y}{\Vert \boldsymbol{\eta} \Vert_2^2}\) er projektionen af \(\y\) langs \(\boldsymbol{\eta}\) og  \(P_{\boldsymbol{\eta}^\perp} \y = \y - P_{\boldsymbol{\eta}} \y\) er projektionen på ortokomplementet af \(\boldsymbol{\eta}\).
-Vi kan betragte \(\y\) som afvigelse fra \(P_{\boldsymbol{\eta}^\perp} \y\) af en mængde \(\boldsymbol{\eta}^T \y\), langs linjen bestemt af \(\boldsymbol{\eta}\).
+Intuitivt kan resultatet forklares som følgende, hvor vi antager, at \(\Sigma= \mathbf{I}\).
+Først dekomponeres \(\y=P_{\boldsymbol{\eta}} \y + P_{\boldsymbol{\eta}^\perp} \y\), hvor \(P_{\boldsymbol{\eta}} \y = \frac{\boldsymbol{\eta} \boldsymbol{\eta}^T \y}{\Vert \boldsymbol{\eta} \Vert_2^2}\) er projektionen af \(\y\) langs \(\boldsymbol{\eta}\) og  \(P_{\boldsymbol{\eta}^\perp} \y = \y - P_{\boldsymbol{\eta}} \y\) er projektionen på ortokomplementet af \(\boldsymbol{\eta}\).
+Vi kan betragte \(\y\) som en afvigelse fra \(P_{\boldsymbol{\eta}^\perp} \y\) af en mængde \(\boldsymbol{\eta}^T \y\), langs linjen bestemt af \(\boldsymbol{\eta}\).
 Mængderne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) betegner hvor langt vi kan afvige fra hver side af \(P_{\boldsymbol{\eta}^\perp} \y\) inden \(\y\) forlader polyhedronen.
 Dette giver anledning til uligheden \(\mathcal{V}^- \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+\).
 Nogle flader af polyhedronen kan være perfekt justeret med \(\boldsymbol{\eta}\), dvs deres normal vektorer kan være ortogonale med \(\boldsymbol{\eta}\).
@@ -192,7 +98,7 @@ Dette kan tjekkes udfra \(\mathcal{V}^0\) ved at \(\y\) ligger på den rigtige s
 \centering
 \scalebox{1}{\input{fig/polyhedron.tikz}}
 \caption{Geometri af polyhedron udvælgelsen som trunkering. For simplicitet antages at \(\Sigma = \mathbf{I}\). Det blå område er polyhedron mængden \(\cbr{\y : \ \Gamma \y \geq u}\).
-Ved at opdele \(\y\) til dens projektion på \(\teta\) og dens projektion på det ortogonale komplement af \(\teta\), ser vi at \(\Gamma \y \geq u\) gælder, hvis og kun hvis \(\teta^T \y\) ikke afviger for langt fra \(P_{\boldsymbol{\eta}^\perp} \y\), dvs fastholdt imellem grænserne \(\mathcal{V}^-\) og \(\mathcal{V}^+\).
+Ved at opdele \(\y\) til dens projektion på \(\teta\) og dens projektion på det ortogonale komplement af \(\teta\), ses at \(\Gamma \y \geq u\) er opfyldt, hvis og kun hvis \(\teta^T \y\) ikke afviger for langt fra \(P_{\boldsymbol{\eta}^\perp} \y\), dvs den skal fastholdes imellem grænserne \(\mathcal{V}^-\) og \(\mathcal{V}^+\).
 Yderligere er grænserne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) kun funktioner af \(P_{\boldsymbol{\eta}^\perp} \y\), derfor er de uafhængige af \(\teta^T \y\) under normalitet.} \label{fig:polyhedron}
 \end{figure}
 %
@@ -202,7 +108,6 @@ Af lemma \ref{lem:polyhedral} kan fordelingen af enhver lineær funktion \(\bold
 \boldsymbol{\eta}^T \y \given \mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}, \ \mathcal{V}^0 \del{\y} \leq 0.
 \end{align*}
 Da \(\boldsymbol{\eta}^T \y\) er normalfordelt, er overstående trunkeret normalfordelt.
-
 En simpel transformation fører til pivotal statistic, som er kritisk for inferens af \(\boldsymbol{\eta}^T \tmu\).
 
 \begin{lem}  \label{lem:lem2}
@@ -210,7 +115,7 @@ Lad \(\Phi \del{x}\) betegne fordelingsfunktionen af en standard normalfordeling
 \begin{align*}
 F_{\mu, \sigma^2}^{\sbr{a,b}} \del{x} = \frac{\Phi\del{\frac{x-\mu}{\sigma}} - \Phi\del{\frac{a-\mu}{\sigma}}}{\Phi\del{\frac{b-\mu}{\sigma}} - \Phi\del{\frac{a-\mu}{\sigma}}}.
 \end{align*}
-For \(\boldsymbol{\eta}^T \Sigma \boldsymbol{\eta} \neq 0\) da er teststørrelsen \(F_{\boldsymbol{\eta}^T \tmu, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^-,\mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} \) a pivotal quantity betinget \(\Gamma \y \geq u\):
+For \(\boldsymbol{\eta}^T \Sigma \boldsymbol{\eta} \neq 0\), da følger teststørrelsen \(F_{\boldsymbol{\eta}^T \tmu, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^-,\mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} \) betinget \(\Gamma \y \geq u\) en standard uniform fordeling. Dvs
 \begin{align*}
 \mathbb{P} \del{F_{\boldsymbol{\eta}^T \tmu, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^-,\mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} \leq \alpha \given \Gamma \y \geq u} = \alpha, 
 \end{align*}
@@ -218,7 +123,7 @@ for ethvert \(0 \leq \alpha \leq 1\), hvor \(\mathcal{V}^-\) og \(\mathcal{V}^+\
 \end{lem}
 %
 Denne pivotal statistic i lemmaet fører til gyldige betinget \(p\)-værdier for at teste nulhypotesen \(H_0: \boldsymbol{\eta}^T \boldsymbol{\mu}=0\) og tilhørende betinget konfidensintervaller for \(\boldsymbol{\eta}^T \tmu\).
-
+Herefter betragtes one-sided inferens efterfulgt af two-sided inferens.
 %
 \begin{lem} \label{lem:lem3}
 Givet \(\boldsymbol{\eta}^T \Sigma \boldsymbol{\eta} \neq 0\), antag at vi vil teste
@@ -239,15 +144,14 @@ Definer \(\delta_{\alpha}\) som opfylder, at
 \begin{align*}
 1-F_{\delta_{\alpha}, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= \alpha.
 \end{align*}
-Da er \(I= [\delta_\alpha, \infty )\) en gyldig konfidensinterval for \(\teta^T \tmu\) betinget \(\Gamma \y \geq u\)
+Da er \(I= [\delta_\alpha, \infty )\) et gyldig one-sided konfidensinterval for \(\teta^T \tmu\) betinget \(\Gamma \y \geq u\)
 \begin{align*}
 \mathbb{P} \del{\boldsymbol{\eta}^T \tmu \geq \delta_\alpha \given \Gamma \y \geq u} = 1- \alpha.
 \end{align*}
 \end{lem}
 %
-TEXT
-
-Nedenfor betragtes en two-sided inferens.
+Bemærk-----
+Herefter betragtes two-sided inferens.
 %
 \begin{lem} \label{lem:lem4}
 Givet \(\boldsymbol{\eta}^T \Sigma \boldsymbol{\eta} \neq 0\), antag at vi vil teste
@@ -265,93 +169,26 @@ Da er \(T\) en gyldig \(p\)-værdi for \(H_0\) betinget \(\Gamma \y \geq u\)
 \end{align}
 for ethvert \(0 \leq \alpha \leq 1\). 
 Definer \(\delta_{\frac{\alpha}{2}}, \delta_{1-\frac{\alpha}{2}}\) som opfylder, at
-\begin{align*}
-1-F_{\delta_{\frac{\alpha}{2}}, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= \frac{\alpha}{2}, \\
-1-F_{\delta_{1-\frac{\alpha}{2}}, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta} }^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= 1-\frac{\alpha}{2}.
-\end{align*}
+\begin{align}
+1-F_{\delta_{\frac{\alpha}{2}}, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= \frac{\alpha}{2}, \label{eq:post_20} \\
+1-F_{\delta_{1-\frac{\alpha}{2}}, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta} }^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= 1-\frac{\alpha}{2}. \label{eq:post_21}
+\end{align}
 Da gælder, at
-\begin{align*}
-\mathbb{P} \del{\delta_{\frac{\alpha}{2}} \leq  \boldsymbol{\eta}^T \tmu \leq \delta_{1-\frac{\alpha}{2}} \given \Gamma \y \geq u} = 1- \alpha.
-\end{align*}
+\begin{align}
+\mathbb{P} \del{\delta_{\frac{\alpha}{2}} \leq  \boldsymbol{\eta}^T \tmu \leq \delta_{1-\frac{\alpha}{2}} \given \Gamma \y \geq u} = 1- \alpha. \label{eq:post_22}
+\end{align}
 \end{lem}
 %
-Teststørrelse i \eqref{eq:post_1.18} defineret som minimum af den trunkerede norma ..
-Beviset for dens nulhypotese i \eqref{eq:post_1.19} kommer af, at hvis \(U\) er en standard uniform fordelingen, da er \(2 \cdot \min \cbr{U,1-U}\) også.
-Konstruktionen af konfidensintervallet i -- .
+Teststørrelsen i \eqref{eq:post_1.18} defineret som minimum af den trunkerede fordelingsfunktion af normalfordelingen og overlevelsesfunktionen, har magt imod den alternative hypotese \(H_1: \boldsymbol{\eta}^T \tmu \neq 0\).
+Beviset for dens nulhypotese i \eqref{eq:post_1.19} kommer af, at hvis \(U\) følger en standard uniform fordelingen, da gør \(2 \cdot \min \cbr{U,1-U}\) også.
+Konstruktionen af konfidensintervallet i \eqref{eq:post_20}, \eqref{eq:post_21} og \eqref{eq:post_22} anvendes igen monotonicitet af en trunkeret normal overlevelsesfunktion i den underliggende middelværdi parameter.
 
 
 Herefter vil vi vise at modeludvælgelses hændelsen for LARS og lasso kan karakteriseres som et polyhedron (dvs kegler) på formen \(\cbr{\y : \ \Gamma \y \geq u}\).
+\input{main/ch/sub/polyhedral_sets_LARS}
+\input{main/ch/sub/polyhedral_sets_lasso}
 
-\subsubsection{Polyhedral mængder for LARS udvælgelses hændelse}
-
-Lad os opsummere en kort beskrivelse af stepsene i LARS algoritmen
-I step \(k\), initialiseres mængden af aktive variable og listen af fortegn med \(A=\sbr{j_1}\) og \(S_{A_1} = \sbr{s_1}\), hvor \(j_1\) og \(s_1\) opfylder
-\begin{align}
-\del{j_1, s_1} = \arg \max_{j=1,\ldots, p, \ s \in \sbr{-1,1}} s \mathbf{x}_j \y. \label{eq:polyhedron_rep_LARS1}
-\end{align}
-Første knot er givet ved
-\begin{align*}
-\lambda_1 = s_1 \mathbf{x}_{j_1}^T \y.
-\end{align*}
-For det generelle step \(k > 1\), konstrueres listen \(A_k\) ved at tilføje \(j_k\) til \(A_{k-1}\) og listen \(s_{A_k}\) konstrueres ved at tilføje \(s_k\) til \(s_{A_{k-1}}\), hvor \(j_k\) og \(s_k\) opfylder, at
-\begin{align}
-\del{j_k, s_k} = \arg \max_{j \notin A_{k-1} , \ s \in \sbr{-1,1}} \frac{\mathbf{x}_j^T P_{A_{k-1}}^\perp \y}{s - \mathbf{x}_j^T \del{\mathbf{x}_{A_{k-1}}^+}^T s_{A_{k-1}}} \cdot \mathbb{1} \cbr{\frac{\mathbf{x}_j^T P_{A_{k-1}}^\perp \y}{s - \mathbf{x}_j^T \del{\mathbf{x}_{A_{k-1}}^+}^T s_{A_{k-1}}} \leq \lambda_{k-1}}, \label{eq:polyhedron_rep_LARS2}
-\end{align}
-hvor \(P_{A_{k-1}}^\perp \) er projektionen ortogonal med column space af \(\mathbf{X}_{A_{k-1}}\), \(\mathbb{1} \cbr{\cdot}\) er indikator funktionen og \(\lambda_{k-1}\) er knot værdien af step \(k-1\).
-Det \(k\)'te knot er da givet ved
-\begin{align}
-\lambda_k = \frac{\X_{jk}^T P_{A_{k-1}}^\perp \y}{s_k - \X_{jk}^T \del{\X_{A_{k-1}}^+}^T s_{A_{k-1}}}. \label{eq:polyhedron_rap_LARS3}
-\end{align}
-Algoritmen afsluttes efter \(k\)-step hvis \(k=p\) eller hvis \(\lambda_{k+1} < 0\).
-
-Herefter vil vi verificere at LARS udvælgelses hændelsen
-\begin{align}
-\mathcal{P} = \cbr{y: \ \hat{A}_k \del{\y} = A_k, \ \hat{s}_{A_k} \del{\y} = s_{A_k}, \ \hat{S}_\ell \del{\y} = S_\ell, \ \ell = 1, \ldots, k} \label{eq:post_28}
-\end{align}
-er en polyhedron på formen \(\mathcal{P} = \cbr{\y : \ \Gamma \y \geq 0}\).
-
-Polyhedral repræsentationen for \(\mathcal{P}\) i \eqref{eq:polyhedron_rep_LARS} kan bevises vha induktion.
-For \(k=1\), finder vi, udfra \eqref{eq:polyhedron_rep_LARS1} at
-\begin{align*}
-c \del{j_1, s_1}^T \y \geq c \del{j,s}^T \y, \ \forall j \neq j_1, \ s \in \cbr{-1,1},
-\end{align*}
-hvor \(c \del{j,s} = s \X_j\).
-Hermed finder vi, at \(\Gamma\) har \(2 \del{p-1}\) rækker, som er givet ved \(c \del{j_1, s_1} - c \del{j, s}\) for \( \neq j_1, \ s \in \cbr{-1,1}\).
-For \(k-1\) step kan optimaliteten af \(j_k\) og \(s_k\) i \eqref{eq:polyhedron_rep_LARS2} udtrykkes som
-\begin{align*}
-c \del{j_k, s_k, A_{k-1}, s_{A_{k-1}}}^T \y &\geq c \del{j, s, A_{k-1}, s_{A_{k-1}}}^T \y, \ \forall \del{j,s} \in S_k \backslash \cbr{\del{j_k, s_k}}, \\
-c \del{j_k, s_k, A_{k-1}, s_{A_{k-1}}}^T \y &\geq 0,
-\end{align*}
-hvor \(c \del{j, s, A_{k-1}, s_{A_{k-1}}} = \frac{P_{A_{k-1}}^\perp \mathbf{x}_j}{s - \mathbf{x}_j^T \del{\mathbf{x}_{A_{k-1}}^+}^T s_{A_{k-1}}}\).
-Mængden \(S_k\) er karakteriseret ved
-\begin{align*}
-c \del{j, s, A_{k-1}, s_{A_{k-1}}}^T \y &\leq \lambda_{k-1}, \ \del{j,s} \in S_k, \\
-c \del{j, s, A_{k-1}, s_{A_{k-1}}}^T \y &\geq \lambda_{k-1}, \ \del{j,s} \in \del{A_{k-1}^c \times \cbr{-1,1}} \backslash S_k.
-\end{align*}
-Af induktionshypotesen er \(\lambda_{k-1} = c \del{j_{k-1}, s_{k-1}, A_{k-2}, s_{A_{k-2}}}^T \y\) selv en lineær funktion af \(\y\).
-Derfor konstrueres \(\Gamma\) ved at tilføje følgende \(\vert S_k \vert + 2 \del{p-k+1}\) rækker til førnævnte matrix: 
-\(c \del{j_k, s_k, A_{k-1}, s_{A_{k-1}}} - c \del{j, s, A_{k-1}, s_{A_{k-1}}}\) for \(\del{j,s} \in S_k \backslash \cbr{\del{j_k, s_k}}\) \\
-\(c \del{j_k, s_k, A_{k-1}, s_{A_{k-1}}}\) \\
-\(c \del{j_{k-1}, s_{k-1}, A_{k-2}, s_{A_{k-2}}}  - c \del{j, s, A_{k-1}, s_{A_{k-1}}}\) for \(\del{j,s} \in S_k\) \\
-\(c \del{j, s, A_{k-1}, s_{A_{k-1}}} - c \del{j_{k-1}, s_{k-1}, A_{k-2}, s_{A_{k-2}}}\) for \(\del{j,s} \in \del{A_{k-1}^c \times \cbr{-1,1}} \backslash S_k\) \\
-Det totale antal af rækker af \(\Gamma\) i step \(k\) af LARS algoritmen er opadtil begrænset af \(\sum_{\ell=1}^k \del{\vert S_\ell \vert + 2 \del{p - \ell + 1}} \leq 3 pk - 3 \frac{k^2}{2} + 3 \frac{k}{2}\).
-
-\subsubsection{Polyhedral mængder for lasso udvælgelses hændelse}
-Ved at introducere et step i LARS algoritmen som fjerner variabler fra den aktive mængde hvis deres koefficientsti  går igennem 0, da kan LARS algoritmen anvendes til at løse lasso.
-Lad \(\del{j_k^\text{add}, s_k^\text{add}}\) betegne som indgår i modellen næst som defineret i \eqref{eq:polyhedron_rep_LARS2} og lad \(\lambda_k^\text{add}\) være værdien af \(\lambda\) for hvilket de indgår som defineret i \eqref{eq:polyhedron_rap_LARS3}.
-Definer variablerne som forlader modellen herefter
-\begin{align*}
-j_k^\text{del} = \arg \max_{j \in A_{k-1} \backslash \cbr{j_{k-1}}} \frac{e_j^T \X_{A_{k-1}}^+ \y}{e_j^T \del{\X_{A_{k-1}}^T \X_{A_{k-1}}}^{-1} s_{A_{k-1}}} \cdot \mathbb{1} \cbr{\frac{e_j^T \X_{A_{k-1}}^+ \y}{e_j^T \del{\X_{A_{k-1}}^T \X_{A_{k-1}}}^{-1} s_{A_{k-1}}} \leq \lambda_{k-1}}
-\end{align*}
-og værdien af \(\lambda\) som forlader modellen
-\begin{align*}
-\lambda_k^\text{del} = \frac{e_{j_k^\text{del}}^T \X_{A_{k-1}}^+ \y}{e_{j_k^\text{del}}^T \del{\X_{A_{k-1}}^T \X_{A_{k-1}}}^{-1} s_{A_{k-1}}}.
-\end{align*}
-
-
-
-\subsubsection{TG test}
-Givet antallet af step \(k\) og matricen \(\Gamma\) for henholdsvis LARS eller lasso, da kan \(p\)-værdierne og konfidensintervallerne nemt udregnes.
+Givet antallet af steps \(k\) og matricen \(\Gamma\) for henholdsvis LARS eller lasso, da kan \(p\)-værdierne og konfidensintervallerne nemt udregnes.
 Lad os teste nulhypotesen \(H_0: \ \teta^T \tmu = 0\), hvor \(\teta\) er vilkårlig.
 
 Som specificeret af lemma \ref{lem:polyhedral}, udregnes først mængderne
@@ -359,7 +196,7 @@ Som specificeret af lemma \ref{lem:polyhedral}, udregnes først mængderne
 \mathcal{V}^- \del{\y} &= \max_{j: \del{\Gamma \teta}_j > 0} - \del{\Gamma \y}_j \cdot \frac{\Vert \teta \Vert_2^2}{\del{\Gamma \teta}_j} + \teta^T \y, \\
 \mathcal{V}^+ \del{\y} &= \min_{j: \del{\Gamma \teta}_j < 0} - \del{\Gamma \y}_j \cdot \frac{\Vert \teta \Vert_2^2}{\del{\Gamma \teta}_j} + \teta^T \y.
 \end{align*}
-Bemærk at antallet af operation for at udregne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) er \(O \del{mn}\), hvor \(m\) er antallet af række i \(\Gamma\).
+Bemærk at antallet af operationer for at udregne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) er \(O \del{mn}\), hvor \(m\) er antallet af rækker i \(\Gamma\).
 
 For at teste imod en one-sided alternativ \(H_1: \ \teta^T \tmu > 0\),  defineres teststørrelsen
 \begin{align*}
@@ -367,7 +204,7 @@ T_k^\text{tg}=1- F_{0, \sigma^2 \Vert \boldsymbol{\eta} \Vert_2^2}^{\sbr{\mathca
 \end{align*}
 Af lemma \ref{lem:lem3}, giver dette en gyldig \(p\)-værdi betinget udvælgelsen, dvs
 \begin{align}
-\mathbb{P}_{\boldsymbol{\eta}^T \theta = 0} \del{T_k^\text{tg} \leq \alpha \given \hat{A}_k \del{\y} = A_k, \hat{s}_{A_k} \del{y} = s_{A_k}} = \alpha, \label{eq:post_32}
+\mathbb{P}_{\boldsymbol{\eta}^T \theta = 0} \del{T_k^\text{tg} \leq \alpha \given \hat{\A}_k \del{\y} = \A_k, \hat{s}_{\A_k} \del{y} = s_{\A_k}} = \alpha, \label{eq:post_32}
 \end{align}
 for ethvert \(0 \leq \alpha \leq 1\).
 Lemma \ref{lem:lem3} giver også at et betinget konfidensinterval udledes ved først at udregne \(\delta_\alpha\) som opfylder
@@ -376,18 +213,16 @@ Lemma \ref{lem:lem3} giver også at et betinget konfidensinterval udledes ved f�
 \end{align*}
 Da lader vi \(I_k = [\delta_\alpha, \infty)\), som er en passende betinget coverage, da
 \begin{align}
-\mathbb{P} \del{\boldsymbol{\eta}^T \theta \in I_k \given \hat{A}_k \del{\y} = A_k, \hat{s}_{A_k} \del{\y} = s_{A_k}} = 1-\alpha. \label{eq:post_33}
+\mathbb{P} \del{\boldsymbol{\eta}^T \theta \in I_k \given \hat{\A}_k \del{\y} = \A_k, \hat{s}_{\A_k} \del{\y} = s_{\A_k}} = 1-\alpha. \label{eq:post_33}
 \end{align}
 
 For at teste imod en two-sided alternative \(H_1: \ \teta^T \tmu \neq 0\), anvendes istedet teststørrelsen
 \begin{align*}
 T_k^\text{TG}= 2 \cdot \min \cbr{T_k^{\text{tg}}, 1-T_k^{\text{tg}}}.
 \end{align*}
-Af lemma \ref{lem:lem4}, fås de samme resultaterne i \eqref{eq:post_32} og \eqref{eq:post_33} men med \(T_k^\text{TG}\) istedet for \(T_k^\text{tg}\) og \(I_k'= \sbr{\delta_{\frac{\alpha}{2}}, \delta{1-\frac{\alpha}{2}}}\) istedet for \(I_k\).
+Af lemma \ref{lem:lem4}, fås de samme resultaterne i \eqref{eq:post_32} og \eqref{eq:post_33} men hvor \(T_k^\text{tg}\) erstattes med \(T_k^\text{TG}\) og \(I_k\) erstattes med \(I_k'= \sbr{\delta_{\frac{\alpha}{2}}, \delta_{1-\frac{\alpha}{2}}}\).
 
-For et signifikant niveau $\alpha$ afvises nulhypotesen hvis \(T^{\text{TG}} \leq \alpha\).
-
-
+%For et signifikant niveau $\alpha$ afvises nulhypotesen hvis \(T^{\text{TG}} \leq \alpha\).
 
 Hvis \(\teta = \del{\X_{A_k}^+}^T e_k\), hvor \(e_k\) er den \(k\)'te enhedsvektor, da kan nulhypotesen \(H_0: \ \teta^T \tmu =0\) omskrives til
 \begin{align*}
@@ -399,6 +234,9 @@ Dvs da svarer nulhypotesen til at teste om \(k\)'te variabel er signifikant.
 Nulhypotesen for TG testen er stokastisk, da \(\mathcal{V}^-\) og \(\mathcal{V}^+\) er stokastiske variable ...
 TG testen for lasso antager blot en generel position af kolonnerne af \(\X\), som er en svag antagelse.
 Testen kan bruges for ethvert fast \(\lambda\) og er eksakt.
+
+Den resulterende fordeling af teststørrelsen er eksakt og generelt antager TG testen ingen betingelser på model matricen \(\X\) som er tilfældet for kovarians testen.
+Spacing testen er en eksakt version af kovarians testen. 
 \newpage
 
 \input{main/ch/sub/spacing_test}

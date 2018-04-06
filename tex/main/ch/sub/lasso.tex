@@ -40,11 +40,12 @@ Heraf kan ridge regression estimatoren findes ved at differentiere \(\del{\y - \
 \begin{align*} 
 \hat{\beta}^\text{ridge} = (\X^T \X + \lambda \mathbf{I})^{-1} \X^T \y. 
 \end{align*}  
-I forhold til mindste kvadraters regression tilføjer ridge regression en positiv konstant $\lambda$ på diagonalen af $\X^T \X$, hvilket medfører, at \(\X^T \X\) er invertibel, selvom $\X$ ikke har fuld rang. 
+Mht mindste kvadraters regression tilføjer ridge regression en positiv konstant $\lambda$ på diagonalen af $\X^T \X + \lambda \mathbf{I}$, hvilket medfører, at \(\X^T \X\) er invertibel, selvom $\X$ ikke har fuld rang. 
 Dermed er en entydig løsning altid garanteret. 
 
-Lad os betragte data givet i tabel \ref{tab:crime}.
-For 50 byer i United States er kriminalitetsraten per 1 million indbyggere givet og følgende 5 prædiktorer: 
+\begin{exmp}
+Lad os betragte data givet i tabel \ref{tab:crime} af?????.
+For 50 byer i USA er kriminalitetsraten per 1 million indbyggere givet og følgende 5 prædiktorer: 
 \begin{itemize}
 \item \texttt{funding}: årlige politiske finansiering i dollars per indbygger
 \item \texttt{hs}: procentvise andel af 25 årige eller derover som har gennemført 4 år på high school
@@ -56,6 +57,7 @@ For 50 byer i United States er kriminalitetsraten per 1 million indbyggere givet
 \input{fig/tab/crime}
 %
 Datasættet, som vi betegner crime data, er inkluderet for at underbygge teorien og vi vil løbende i rapporten referere til det.
+\end{exmp}
 På figur \ref{fig:crime_koef} anvendes crime data til at illustrere koefficientstierne for henholdsvis ridge regression og lasso.
 %
 \begin{figure}[H]

@@ -75,8 +75,23 @@ statistisk procedure der anvender en ortogonal transformation til at konverterer
 Denne transformation defineres således at første PC har den størst mulige varians, og hver efterfølgende PC har igen den størst mulige varians givet de foregående PC er ortogonale.
 
 
+s. 203 i hastie
+
 \section{Valg af antal faktorer}
 Der findes flere metoder til at estimere antallet af static faktorer $r$ og antallet af dynamiske faktorer $q$.
+Der findes ikke en definit definition.
+Men den totale varians, den relative størrelse af egenværdierne (variansen af sample komponenterne), bør tages i betragtning.
+En komponent med tilhørende egenværdi omkring nul, ses som værende ikke vigtig, kan indikere en uventet afhængighed i data.
+
+
+
+
+
+Antallet af faktorer kan bestemmes udfra et \textit{scree plot}.
+Her er egenværdierne ordnede fra den største til den mindste.
+For at bestemme antallet af faktorer ser vi efter en bøjning i scree plot.
+Antallet af komponenter er givet ved punktet hvori de resterende egenværdier er relativ lav og approksimativ samme størrelse.
+
 
 
 For dynamiske faktor modeller udviklede --- at minimere penalized sum of squares

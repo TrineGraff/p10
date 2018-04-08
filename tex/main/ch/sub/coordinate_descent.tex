@@ -1,0 +1,24 @@
+\section{Coordinate descent}
+Coordinate Descent er en første ordens iterative algoritme, hvilket betyder der kun bruges gradienten af funktionen, som information. 
+Hvis koordinat $k$ er valgt i iteration $t$, så får vi følgende opdaterings linje
+\begin{align*}
+\beta_k^{t+1} =\underset{ \beta_k}{\arg \min}  f\del{ \beta_1^t, \beta_2^t, \dots, \beta_{k-1}^t, \beta_k, \beta_{k+1}^t, \dots, \beta_p^t  },
+\end{align*}
+hvor $\beta_j^{t+1} = \beta_j^t$ for $j \neq k$. 
+Der er to basale modeller for coordinate algoritmer i forhold til den måde de opdaterer parametrene. Den første er cyclic coordinate og den anden kaldes greedy coordinate. 
+Cyclic opdaterer en parameter i hvert loop og den greedy opdaterer parameteren, som giver den største ændring i funktionen. 
+
+Coordinate algoritmer er generelt rigtig anvendt, når man skal estimerer parameter af en funktion, som ikke er differentiable. Sådan en funktion kunne se følgende ud
+\begin{align*}
+f(\beta_1, \dots, \beta_p) = g(\beta_1, \dots, \beta_p) + \sum_{j = 1}^p h_j \del{\beta_j},
+\end{align*}
+hvor $g: \R^p \rightarrow \R $ er differentialble og konveks, og hvor den univariate funktion $h_j : \R \rightarrow \R$ er konveks (ikke nødvendigvis differentialble). Udfra Tseng .... kan det vises at en hver konveks funktion, som $f$, konvergerer coordinate descent til det globale minimum. 
+?? bevis
+ 
+ 
+\begin{alg} [Coordinate descent]
+\begin{enumerate}
+%
+\item Standardisere prædiktorerne til at have en middelværdi 0 og $\norm{\textbf{x}_j}_2^2$ for alle $j$.
+\end{enumerate}
+\end{alg}

@@ -16,16 +16,16 @@ Men somsagt giver ridge regression ikke en sparse løsning.
 
 Antag responsvariablen er centreret og prædiktorerne er standardiseret, da er det naive elastiske net givet ved
 \begin{align}
-\hat{\beta}^\text{naivEN} = \arg \min_{\beta} \cbr{ \frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda_1 \Vert \beta \Vert_2^2 + \lambda_2 \Vert \beta \Vert_1}, \label{eq:EN1}
+\hat{\beta}^\text{naivEN} = \argmin_{\beta} \cbr{ \frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda_1 \Vert \beta \Vert_2^2 + \lambda_2 \Vert \beta \Vert_1}, \label{eq:EN1}
 \end{align}
 for \(\lambda_1, \lambda_2 \geq 0\).
 Lad \(\alpha = \frac{\lambda_1}{\lambda_1 + \lambda_2}\), da svarer \eqref{eq:EN1} til optimeringsproblemet
 \begin{align*}
-\hat{\beta}^\text{naivEN} = \arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2}, \ \text{underlagt at } \del{1-\alpha} \Vert \beta \Vert_2^2 + \alpha \Vert \beta \Vert_1 \leq t,
+\hat{\beta}^\text{naivEN} = \argmin_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2}, \ \text{underlagt at } \del{1-\alpha} \Vert \beta \Vert_2^2 + \alpha \Vert \beta \Vert_1 \leq t,
 \end{align*}
 som kan omskrives til et Lagrange problem
 \begin{align}
-\hat{\beta}^\text{naivEN} =\arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \sbr{(1- \alpha) \Vert \beta \Vert_2^2 + \alpha \Vert \beta \Vert_1}}. \label{eq:4.2}
+\hat{\beta}^\text{naivEN} =\argmin_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \sbr{(1- \alpha) \Vert \beta \Vert_2^2 + \alpha \Vert \beta \Vert_1}}. \label{eq:4.2}
 \end{align}
 Hvis $\alpha=1$, da reduceres strafleddet til $\ell_1$-normen svarende til strafleddet for lasso, og hvis $\alpha=0$ reduceres det til den kvadrerede $\ell_2$-norm svarende til strafleddet for ridge regression.
 Optimeringsproblemet  \eqref{eq:4.2} er streng konveks for \(\alpha \in [0,1)\), hvilket betyder, at der eksisterer en entydig løsning uafhængigt af korrelationsstrukturen af $\X$.
@@ -74,7 +74,7 @@ Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), defin
 hvor \(\X^* \in \mathbb{R}^{\del{n+p} \times p}\) og \(\y^* \in \mathbb{R}^{n+p}\).
 Lad \(\gamma = \frac{\lambda_2}{\sqrt{1+\lambda_1}}\) og \(\beta^* = \sqrt{1+\lambda_1} \beta\), da kan \eqref{eq:EN1} omskrives til
 \begin{align*}
-\hat{\beta}^* = \arg \min_{\beta^*} \cbr{\frac{1}{2n} \Vert \y^* - \X^* \beta^* \Vert_2^2 +\gamma \Vert \beta^* \Vert_1},
+\hat{\beta}^* = \argmin_{\beta^*} \cbr{\frac{1}{2n} \Vert \y^* - \X^* \beta^* \Vert_2^2 +\gamma \Vert \beta^* \Vert_1},
 \end{align*}
 hvor
 \begin{align*}
@@ -169,7 +169,7 @@ Derfor introduceres blot elastisk net.
 
 I lemma \ref{lem:elastisk_net} fandt vi, at naiv elastisk net løser følgende 
 \begin{align}
-\hat{\beta}^* = \arg \min_{\beta^*} \cbr{\frac{1}{2n} \Vert \y^* - \X^* \beta^* \Vert_2^2 + \frac{\lambda_2}{\sqrt{1+\lambda_1}} \Vert \beta^* \Vert_1}. \label{eq:EN8}
+\hat{\beta}^* = \argmin_{\beta^*} \cbr{\frac{1}{2n} \Vert \y^* - \X^* \beta^* \Vert_2^2 + \frac{\lambda_2}{\sqrt{1+\lambda_1}} \Vert \beta^* \Vert_1}. \label{eq:EN8}
 \end{align}
 Estimaterne for elastisk net (korrigeret) er defineret ved
 \begin{align*}
@@ -188,18 +188,18 @@ Et andet længere argument for at vælge \(1+\lambda_1\) som skaleringsfaktor, m
 \begin{thm} \label{thm:elastisk_net2}
 Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\) da er estimaterne for elastisk net givet ved
 \begin{align}
-\hat{\beta}^\text{EN} = \arg \min_\beta \cbr{ \frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_1 \mathbf{I}}{1 + \lambda_1}} \beta - 2 \y^T \X \beta} + \lambda_2 \Vert \beta \Vert_1}. \label{eq:EN6}
+\hat{\beta}^\text{EN} = \argmin_\beta \cbr{ \frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_1 \mathbf{I}}{1 + \lambda_1}} \beta - 2 \y^T \X \beta} + \lambda_2 \Vert \beta \Vert_1}. \label{eq:EN6}
 \end{align}
 Estimatoren for lasso kan omskrives til
 \begin{align}
-\hat{\beta}^\text{lasso} = \arg \min_\beta \cbr{ \frac{1}{2n} \del{ \beta^T \del{\X^T \X} \beta - 2 \y^T \X \beta } + \lambda_2 \Vert \beta \Vert_1}. \label{eq:EN7}
+\hat{\beta}^\text{lasso} = \argmin_\beta \cbr{ \frac{1}{2n} \del{ \beta^T \del{\X^T \X} \beta - 2 \y^T \X \beta } + \lambda_2 \Vert \beta \Vert_1}. \label{eq:EN7}
 \end{align}
 \end{thm}
 \begin{proof}
 Af ligning \eqref{eq:EN8} har vi, at
 \begin{align}
-\hat{\beta} &= \arg \min_{\beta} \cbr{\frac{1}{2n} \left\Vert \y^* - \X^* \frac{\beta}{\sqrt{1+\lambda_1}} \right\Vert_2^2 + \frac{\lambda_2}{\sqrt{1+\lambda_1}} \left\Vert \frac{\beta}{\sqrt{1+\lambda_1}} \right\Vert_1} \nonumber \\
-&=\arg \min_{\beta} \cbr{\frac{1}{2n} \del{\beta^T \del{\frac{\X^{*^T} \X^*}{1+\lambda_1}} \beta - 2 \frac{\y^{*^T} \X^* \beta}{\sqrt{1+\lambda_1}} + \y^{*^T} \y^*} + \frac{\lambda_2 \Vert \beta \Vert_1}{1+\lambda_1}}. \label{eq:EN9}
+\hat{\beta} &= \argmin_{\beta} \cbr{\frac{1}{2n} \left\Vert \y^* - \X^* \frac{\beta}{\sqrt{1+\lambda_1}} \right\Vert_2^2 + \frac{\lambda_2}{\sqrt{1+\lambda_1}} \left\Vert \frac{\beta}{\sqrt{1+\lambda_1}} \right\Vert_1} \nonumber \\
+&=\argmin_{\beta} \cbr{\frac{1}{2n} \del{\beta^T \del{\frac{\X^{*^T} \X^*}{1+\lambda_1}} \beta - 2 \frac{\y^{*^T} \X^* \beta}{\sqrt{1+\lambda_1}} + \y^{*^T} \y^*} + \frac{\lambda_2 \Vert \beta \Vert_1}{1+\lambda_1}}. \label{eq:EN9}
 \end{align}
 Følgende identiteter
 \begin{align*}
@@ -209,9 +209,9 @@ Følgende identiteter
 \end{align*}
 indsættes i \eqref{eq:EN9}, og vi får, at
 \begin{align*}
-\hat{\beta} &= \arg \min_{\beta} \cbr{\frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_1 \mathbf{I}}{\del{1+\lambda_1}^2}} \beta - 2 \frac{\y^T \X \beta}{1+\lambda_1} + \y^T \y} + \frac{\lambda_2 \Vert \beta \Vert_1}{1+\lambda_1}} \\ 
-%&= \arg \min_{\beta} \cbr{\frac{1}{2n} \frac{1}{1+\lambda_1} \del{\beta^T \del{\frac{\X^T \X + \lambda_1\mathbf{I}}{1+ \lambda_1}} \beta - 2 \y^T \X \beta + \lambda_2 \Vert \beta \Vert_1} + \y^T \y} \\
-&= \arg \min_{\beta} \cbr{ \frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_1\mathbf{I}}{1+ \lambda_1}} \beta - 2 \y^T \X \beta} + \lambda_2 \Vert \beta \Vert_1},
+\hat{\beta} &= \argmin_{\beta} \cbr{\frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_1 \mathbf{I}}{\del{1+\lambda_1}^2}} \beta - 2 \frac{\y^T \X \beta}{1+\lambda_1} + \y^T \y} + \frac{\lambda_2 \Vert \beta \Vert_1}{1+\lambda_1}} \\ 
+%&= \argmin_{\beta} \cbr{\frac{1}{2n} \frac{1}{1+\lambda_1} \del{\beta^T \del{\frac{\X^T \X + \lambda_1\mathbf{I}}{1+ \lambda_1}} \beta - 2 \y^T \X \beta + \lambda_2 \Vert \beta \Vert_1} + \y^T \y} \\
+&= \argmin_{\beta} \cbr{ \frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_1\mathbf{I}}{1+ \lambda_1}} \beta - 2 \y^T \X \beta} + \lambda_2 \Vert \beta \Vert_1},
 \end{align*}
 hvor \(\y^T \y= 0 \).
 \end{proof}
@@ -229,7 +229,7 @@ Somsagt er lasso et specialtilfælde af elastisk net med \(\lambda_1=0\).
 Et andet interessant specialtilfælde er når \(\lambda_1 \rightarrow \infty\).
 Af sætning \ref{thm:elastisk_net2} gælder, at \(\hat{\beta}^\text{EN} \rightarrow \hat{\beta} \del{\infty}\) når \(\lambda_1 \rightarrow \infty\), hvor
 \begin{align*}
-\hat{\beta} \del{\infty} = \arg \min_\beta \cbr{\frac{1}{2n} \del{\beta^T \beta - 2 \y^T \X \beta} + \lambda_2 \Vert \beta \Vert_1}.
+\hat{\beta} \del{\infty} = \argmin_\beta \cbr{\frac{1}{2n} \del{\beta^T \beta - 2 \y^T \X \beta} + \lambda_2 \Vert \beta \Vert_1}.
 \end{align*}
 \(\hat{\beta} \del{\infty}\) har en simpel lukket løsning, som er givet ved
 \begin{align*}
@@ -240,7 +240,7 @@ Vi har, at \(\y^T \mathbf{x}_i\) er en univariat regressions koefficient af den 
 En univariat soft thresholding ignorerer afhængighedsstrukturen mellem prediktorerne og behandler dem som uafhængige variable.
 %Elastisk net er en natur bro imellem bridges og lasso.
 
-\subsubsection{Udregning af elastisk net}
+\subsection{Udregning af elastisk net}
 Somsagt er optimeringsproblemet for det naive elastiske net \eqref{eq:4.2} konveks og dermed kan flere optimeringsmetoder anvendes til at løse det.
 Coordinate descent er særlig effektiv, og opdateringerne er blot en simpel udvidelse af dem for standard lasso i sektion \ref{subsec:udregning_lasso}.
 

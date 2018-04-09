@@ -3,7 +3,7 @@
 Flere algoritmer kan løse dette problemet grundet konveksiteten.  
 I dette kapitel beskrives to af disse algoritmer kaldet coordinate descent og Least Angle Regression (LARS).} \\[4mm]
 %
-For en model matrix i general position findes der ikke en eksplicit løsning for lasso estimatoren.
+For en model matrix i general position (se definition \ref{defn:general_position}) findes der ikke en eksplicit løsning for lasso estimatoren.
 Men som sagt er objektfunktionen af lasso problemet \eqref{eq:2.5} konveks.
 For at vise dette kan objektfunktionen skrives som
 \begin{align*}
@@ -24,6 +24,20 @@ h \del{\alpha \beta + \del{1+\alpha}\beta'} &= \lambda \Vert \alpha \beta + \del
 \end{align*}
 hvilket medfører, at \(h \del{\beta}\) er konveks af definition \ref{defn:konveks}.
 Da summen af to konvekse funktioner er konveks, medfører dette konveksiteten af \(f \del{\beta}\). 
+
+Som nævnt i underafsnittet \ref{subsec:udregning_lasso} er \(\ell_1\)-normen \(\sum_{j=1}^p \vert \beta_j \vert\) ikke differentialbel i \(\beta = 0\).
+En general egenskab af differentialble konvekse funktioner er, at en første ordens tangent approksimation altid giver en nedre grænse.
+Begrebet subgradient er baseret på en generalisering af dette.
+Givet en konveks funktion \(f: \ \R^p \rightarrow \R\), siges \(z \in \R^p\) at være en subgradient af \(f\) i \(\beta\) hvis
+\begin{align*}
+f \del{\beta'} \geq f \del{\beta} + \left\langle z, \beta' - \beta \right\rangle, 
+\end{align*}
+for alle \(\beta' \in \R^p\).
+Geometrisk er subgradient vektoren \(z\) normal til et hyperplan som understøtter ---.
+Mængden af alle subgradienter af \(f\) i \(\beta\) kaldes \textit{subdifferential} og betegnes \(\partial f \del{\beta}\).
+Når \(f\) er differentialble i \(\beta\), da reduceres subdifferentialet til én vektor, givet ved \(\partial f \del{\beta} = \cbr{\nabla f \del{\beta}}\).
+I punkter hvor \(f\) ikke er differentialble, da er subdifferentialet en konveks mængde bestående af alle mulige subgradienter.
+
 
 
 

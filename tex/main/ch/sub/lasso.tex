@@ -142,8 +142,8 @@ Problemet, som vi skal løse, er da
 \argmin_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}.
 \end{align*}
 Som bekendt er standard proceduren at finde den første ordens afledede mht $\beta$, sætte denne lig 0 og isolere for $\beta$. 
-Men vi bemærker, at \(\vert \beta \vert \) ikke har en afledt i $\beta=0$.
-Vi kan dog fortsætte ...
+Men vi bemærker, at \(\vert \beta \vert \) ikke er differentialbel i $\beta=0$.
+Dette betegnes som en såkaldt \textit{subgradient}, hvilket vi vil beskrive nærmere i kapitel \ref{kap:optimeringsmetoder}.
 Vi finder, at
 \begin{align*}
 \frac{\partial}{\partial \beta} \del{\frac{1}{2n} \sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}

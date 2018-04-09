@@ -29,6 +29,22 @@ Hvis $X_n \overset{d}{\rightarrow} X$ og $Y_n \overset{p}{\rightarrow} c$, hvor 
 Sætning \ref{thm:sluktsky} tillader at finde grænsefordelingen af $X_n$ og sandsynlighedsgrænsen af $Y_n$ separat.
 
 
+\begin{defn}[General position] \label{defn:general_position}
+Kolonnerne \(\mathbf{X}_1, \ldots, \mathbf{X}_p\) siges at være i generel position hvis the affine span af enhver \(k+1\) vektorer \(s_1 \X_1, \ldots, s_{k+1} \X_{k+1}\) ikke indeholder ethvert element af mængden \(\cbr{\pm \X_i : \ i \neq i_1, \ldots, i_{k+1}}\) for ethvert fortegn \(s_1, \ldots, s_{k+1} \in \cbr{-1,1}\), for \(k < \min \cbr{n,p}\). 
+\end{defn}
+Ovenstående betingelse er svag og gælder blandt andet når indgangene af \(\X\) kommer af en kontinuert sandsynlighedsfordeling.
+At kolonnerne af model matrix er i generel position sikrer at LARS og lasso stierne er entydig, som vises i \citep{lasso_unique}.
+
+
+\begin{defn}[Konveks] \label{defn:konveks}
+En funktion \(f: \ \R^p \rightarrow \R\) er konveks, hvis der for \(\beta\), \(\beta'\) i defintionsmængden af \(f\) og enhver skalar \(s \in \del{0,1}\) gælder
+\begin{align*}
+f \del{\beta \del{s}} = f \del{s \beta + \del{1-s} \beta'} \leq s f\del{\beta} + \del{1-s} f\del{\beta'}.
+\end{align*}
+\end{defn}
+Geometrisk medfører uligheden at akkorden mellem \(f \del{\beta}\) og  \(f \del{\beta'}\) ligger over grafen af \(f\), som illustreres på figur ---.
+Uligheden sikrer, at en konveks funktion ikke kan have et lokalt minimum som ikke også er et globalt minimum, som illustreres på figur --.
+
 %\section{Diebold Mariano test}
 %Diebold Mariano testen kan anvendes til at vurdere to konkurrerende prædiktioner i forhold til hinanden.
 %

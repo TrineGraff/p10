@@ -1,1 +1,9 @@
 \section{Entydighed af lasso estimatoren}
+
+Af konveks dualiteten kan det vises at løsningen til lasso problemet \eqref{eq:2.5} er entydig, hvis kolonnerne af \(\X\) er i general position (se definition \ref{defn:general_position}).
+Dette gælder også når \(p \geq n\), selvom antallet af ikke-nul koefficienter er højst \(n\).
+
+Derfor kan lasso kun være ikke-entydig for diskret data, som kommer af dummy-værdi kodning eller kategorisk prædiktorer.
+
+Numeriske algoritmer for at løse lasso problemet vil typisk give gyldig løsninger i det ikke-entydige tilfælde.
+For coordinat descent, har valget af begyndelsesværdier indflydelse på den endelige løsning.

@@ -4,7 +4,7 @@
 \textit{The Least Absolute Shrinkage Selection Operator}, som forkortes lasso, blev introduceret af \citep{lasso}. 
 Lasso finder løsningen til optimeringsproblemet
 \begin{align}
-\hat{\beta}^\text{lasso} = \arg \min_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t, \label{eq:2.3}
+\hat{\beta}^\text{lasso} = \argmin_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t, \label{eq:2.3}
 \end{align} 
 hvor vi bemærker, at betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt som en \(\ell_1\)-norm betingelse $\Vert \beta \Vert_1 \leq t$.
 Værdi af \(t\) begrænser summen af de absolutte værdier af parameter estimaterne.
@@ -15,7 +15,7 @@ Værdien af \(t\) skal specificeres ved en ekstern procedure kaldet \textit{kryd
 
 Lasso problemet kan omskrives til et Lagrange problem
 \begin{align}
-\hat{\beta}^\text{lasso} = \arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_1}, \label{eq:2.5}
+\hat{\beta}^\text{lasso} = \argmin_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_1}, \label{eq:2.5}
 \end{align}
 hvor $\lambda \geq 0$ er en såkaldt strafparameter, som også bestemmes udfra krydsvalidering. 
 Der er en en-til-en korrespondance mellem det betingede problem \eqref{eq:2.3} og Lagrange problemet \eqref{eq:2.5}. 
@@ -28,23 +28,24 @@ Dette gør værdierne for \(\lambda\) sammenlignelige for sample sizes af forske
 
 \textit{Ridge regression} estimatoren findes udfra 
 \begin{align} 
-\hat{\beta}^\text{ridge} = \arg \min_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
+\hat{\beta}^\text{ridge} = \argmin_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
 \end{align} 
 hvor betingelsen $\sum_{j=1}^p \beta_j^2 \leq t$ kan skrives mere kompakt som en \(\ell_2\)-norm betingelse $\Vert \beta \Vert_2^2 \leq t$.
 Ridge regression problemet kan også omskrives til et Lagrange problem
 \begin{align*}
-\hat{\beta}^\text{ridge} = \arg \min_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_2^2},
+\hat{\beta}^\text{ridge} = \argmin_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_2^2},
 \end{align*}
 hvor $\lambda \geq 0$.
 Heraf kan ridge regression estimatoren findes ved at differentiere \(\del{\y - \X \beta}^T \del{\y - \X \beta} + \lambda \beta^T \beta\) mht. $\beta$, sætte dette lig 0 og isolere for $\beta$. Hvoraf vi finder, at
 \begin{align*} 
 \hat{\beta}^\text{ridge} = (\X^T \X + \lambda \mathbf{I})^{-1} \X^T \y. 
 \end{align*}  
-I forhold til mindste kvadraters regression tilføjer ridge regression en positiv konstant $\lambda$ på diagonalen af $\X^T \X$, hvilket medfører, at \(\X^T \X\) er invertibel, selvom $\X$ ikke har fuld rang. 
+Mht mindste kvadraters regression tilføjer ridge regression en positiv konstant $\lambda$ på diagonalen af $\X^T \X + \lambda \mathbf{I}$, hvilket medfører, at \(\X^T \X\) er invertibel, selvom $\X$ ikke har fuld rang. 
 Dermed er en entydig løsning altid garanteret. 
 
-Lad os betragte data givet i tabel \ref{tab:crime}.
-For 50 byer i United States er kriminalitetsraten per 1 million indbyggere givet og følgende 5 prædiktorer: 
+\begin{exmp}
+Lad os betragte data givet i tabel \ref{tab:crime} af?????.
+For 50 byer i USA er kriminalitetsraten per 1 million indbyggere givet og følgende 5 prædiktorer: 
 \begin{itemize}
 \item \texttt{funding}: årlige politiske finansiering i dollars per indbygger
 \item \texttt{hs}: procentvise andel af 25 årige eller derover som har gennemført 4 år på high school
@@ -56,6 +57,8 @@ For 50 byer i United States er kriminalitetsraten per 1 million indbyggere givet
 \input{fig/tab/crime}
 %
 Datasættet, som vi betegner crime data, er inkluderet for at underbygge teorien og vi vil løbende i rapporten referere til det.
+\end{exmp}
+Ridge regression shrinks koefficienter mod nul, men lasso også udfører variabeludvælgelse ved at nogle koefficienter sættes lig 0.
 På figur \ref{fig:crime_koef} anvendes crime data til at illustrere koefficientstierne for henholdsvis ridge regression og lasso.
 %
 \begin{figure}[H]
@@ -136,11 +139,11 @@ En simpel procedure kaldet \textit{coordinate descent} kan udfra Lagrange proble
 Vi betragter blot en enkelt prædiktor \(z_i\). 
 Problemet, som vi skal løse, er da
 \begin{align*}
-\arg \min_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}.
+\argmin_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}.
 \end{align*}
 Som bekendt er standard proceduren at finde den første ordens afledede mht $\beta$, sætte denne lig 0 og isolere for $\beta$. 
-Men vi bemærker, at \(\vert \beta \vert \) ikke har en afledt i $\beta=0$.
-Vi kan dog fortsætte ...
+Men vi bemærker, at \(\vert \beta \vert \) ikke er differentialbel i $\beta=0$.
+Dette betegnes som en såkaldt \textit{subgradient}, hvilket vi vil beskrive nærmere i kapitel \ref{kap:optimeringsmetoder}.
 Vi finder, at
 \begin{align*}
 \frac{\partial}{\partial \beta} \del{\frac{1}{2n} \sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}
@@ -261,12 +264,12 @@ Ideen tages et skridt videre i sektion \ref{subsec:kovarians_test} hvor vi beskr
 \textit{Ikke-negative garrote}, introduceret af \citep{nonnegative_garrote}, er en two-stage procedure. 
 Givet et initial estimat af regression koefficienterne \(\tilde{\beta} \in \mathbb{R}^p\), kan vi løse optimeringsproblemet
 \begin{align}
-\hat{\beta}_j^\text{garotte} = \arg \min_{c \in \mathbb{R}^p}  \cbr{ \sum_{i=1}^n \del{y_i - \sum_{j=1}^p c_j x_{ij} \tilde{\beta}_j}^2}, \ \text{underlagt at } c_j \geq 0 \text{ og } \Vert c \Vert_1 \leq t. \label{eq:2.19}
+\hat{\beta}_j^\text{garotte} = \argmin_{c \in \mathbb{R}^p}  \cbr{ \sum_{i=1}^n \del{y_i - \sum_{j=1}^p c_j x_{ij} \tilde{\beta}_j}^2}, \ \text{underlagt at } c_j \geq 0 \text{ og } \Vert c \Vert_1 \leq t. \label{eq:2.19}
 \end{align}
 Lad \(\hat{\beta}_j^\text{garotte} = \hat{c}_j \cdot \tilde{\beta}_j\), for \(j = 1, \ldots, p\).
 Der er en ækvivalent Lagrange problem for denne procedure
 \begin{align*}
-\hat{\beta}_j^\text{garotte} = \arg \min_{c \in \mathbb{R}^p}  \cbr{\Vert \y - \X \beta \Vert_2^2 + \lambda \Vert c \Vert_1}, \ \text{underlagt at } c_j \geq 0,
+\hat{\beta}_j^\text{garotte} = \argmin_{c \in \mathbb{R}^p}  \cbr{\Vert \y - \X \beta \Vert_2^2 + \lambda \Vert c \Vert_1}, \ \text{underlagt at } c_j \geq 0,
 \end{align*}
 hvor \(\lambda \geq 0\).
 I den originale artikel \citep{nonnegative_garrote}, er initial estimatet \(\tilde{\beta}\) valgt til at være \(\hat{\beta}_j^\text{OLS}\)
@@ -291,5 +294,4 @@ Nonnegaitve garrote er tæt relateret med adaptive lasso, som vi vil diskutere n
 Dette gælder, hvis initial estimaterne er \(\sqrt{n}\)-konsistent, som inkluderer mindste kvadraters metoder (når \(p < n\)), lasso og elastisk net.
 Path-konsistent betyder, at løsningsstien inkluderer den sande model.
 Dog er konvergensen af parameter estimaterne for nonnegative garrote langsommere end den er for initial estimatet.
-\newpage
  

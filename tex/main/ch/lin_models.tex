@@ -1,13 +1,12 @@
 \chapter{Lasso i lineære modeller}
 \textit{I dette kapital introduceres lasso estimatoren for lineær regression. 
-Først beskrives standard lasso og dens relation til ridge regression, hvorefter vi skitser en simple udregning af lasso.
-Efterfølgende beskrives nogle generaliseringer af standard lasso herunder elastisk net, group lasso og adaptive lasso.} \\[4mm]
+Først beskrives standard lasso og dens relation til ridge regression, hvorefter vi skitser en simple udregning af lasso.} \\[4mm]
 %
 Betragt \(n\) observationer \(\{x_i, y_i\}_{i=1}^n \), hvor $x_i=(x_{i1}, \ldots, x_{ip})$ er en $p$ dimensional vektor af forklarende variable eller prædiktorer og $y_i \in \R$ er den tilhørende responsvariabel.
 
 Den velkendte estimator for mindste kvadraters metode (OLS) findes ved at minimere summen af kvadrerede residualer (SSR)
 \begin{align}
-\arg \min_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}. \label{eq:OLS}
+\argmin_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}. \label{eq:OLS}
 \end{align}
 
 Ofte standardiseres prædiktorerne, således at de er centreret (\(\frac{1}{n} \sum_{i=1}^n x_{ij} = 0\)) og har unit varians (\(\frac{1}{n} \sum_{i=1}^n x_{ij}^2=1\).).
@@ -20,7 +19,7 @@ Derfor ser vi bort fra skæringen i resten af kapitlet.
 
 Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og lad \(\X\) være en $n \times p$ matrix med $x_i \in \R^p$ som den i'te række, da kan \eqref{eq:OLS} omskrives til matrix-vektor form
 \begin{align*}
-\arg \min_{ \beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2},
+\argmin_{ \beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2},
 \end{align*}
 hvor \(\Vert \cdot \Vert_2\) betegner den Euklidiske norm.
 Som bekendt er løsningen hertil givet ved
@@ -32,9 +31,9 @@ Prædiktions performance kan ofte forbedres, hvis koefficienterne mindskes eller
 Dette vil give estimatoren lidt bias, men reducere variansen, hvilket forbedre bias-variance tradeoff og dermed  prædiktions performance.
 Det anden årsag til at vi leder efter alternative til mindste kvadraters metode er, at med et højt antal prediktorer ønsker vi at bestemme en mindre delmængde af disse som siger mest om prædiktiorerne, dvs forbedre fortolkning.\\[4mm]
 
-Hvis \(p \gg n\) da vil prediktorerne være kollineære og dermed har \(\X\) ikke fuld rang.
+Hvis \(p > n\) da vil prediktorerne være kollineære og dermed har \(\X\) ikke fuld rang.
 Det betyder, at $\X^T \X$ er singulær og der findes derfor en ikke entydig estimator for mindste kvadraters metode.
-flere variabel end obs \\[4mm]
+For \(n>p\) er OLS estimatoren ikke entydig. \\[4mm]
 %
 Nedenfor introduceres \textit{lasso} som kombinerer objektfunktionen i \eqref{eq:OLS} med en $\ell_1$-norm betingelse eller øvre grænse for summen af de absolutte værdier af koefficienterne.
 Denne betingelse mindsker koefficienterne og sætter endda nogle lig 0. 
@@ -65,4 +64,5 @@ Det resulterende optimeringsproblem er konveks, og kan løses effektivt som besk
 
 
 \input{main/ch/sub/lasso}
-\input{main/ch/sub/generalizations_lasso}
+\input{main/ch/sub/uniqueness_lasso}
+\input{main/ch/sub/consistency_lasso}

@@ -9,7 +9,7 @@ Formålet er da, at prædiktere responsvariablen $Y \in \R$ baseret på en samli
 
 Given en samling af $n$ samples \(\{(y_i, z_{i,1}, z_{i,2}, \ldots, z_{i,J})\}_{i=1}^n\) løser group lasso følgende optimeringsproblem
 \begin{align}
-\beta^{\text{group lasso}} = \arg \min_{\theta_j \in \R^{p_j}} \cbr{\frac{1}{2} \sum_{i=1}^n \del{y_i - \sum_{j=1}^J z_{ij}^T \theta_j}^2 + \lambda \sum_{j=1}^J \Vert \theta_j \Vert_2},\label{eq:4.5}
+\beta^{\text{group lasso}} = \argmin_{\theta_j \in \R^{p_j}} \cbr{\frac{1}{2} \sum_{i=1}^n \del{y_i - \sum_{j=1}^J z_{ij}^T \theta_j}^2 + \lambda \sum_{j=1}^J \Vert \theta_j \Vert_2},\label{eq:4.5}
 \end{align}
 hvor $\Vert \theta_j \Vert_2$ er den euklidiske norm af vektoren $\theta_j$.
 Dette er en grupperet generalisering af lasso, som har følgende egenskaber:
@@ -30,10 +30,10 @@ Figur \ref{fig:elastisk_net} viser betingelsesområderne for henholdsvis group l
 I \eqref{eq:4.5}, straffes alle grupper ligeligt, hvilket betyder at større grupper vil have en tendens til at blive valgt.
 \citep{group_lasso} anbefalede at 
 
-\subsubsection{Udregning af group lasso}
+\subsection{Udregning af group lasso}
 Lad os omskrive optimeringsproblemet \eqref{eq:4.5} på matrix-vektor form
 \begin{align*}
-\arg \min_{\theta_1, \ldots, \theta_J} \cbr{\frac{1}{2} \Vert \y - \sum_{j=1}^J \mathbf{Z}_{j} \theta_j \Vert_2^2 + \lambda \sum_{j=1}^J \Vert \theta_j \Vert_2}.
+\argmin_{\theta_1, \ldots, \theta_J} \cbr{\frac{1}{2} \Vert \y - \sum_{j=1}^J \mathbf{Z}_{j} \theta_j \Vert_2^2 + \lambda \sum_{j=1}^J \Vert \theta_j \Vert_2}.
 \end{align*}
 For dette problem er nul subgradient ligningerne givet ved
 \begin{align*}

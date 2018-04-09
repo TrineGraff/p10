@@ -1,4 +1,5 @@
 \chapter{Dynamisk faktor modeller}
+\textit{I dette kapitel introduceres dynamisk faktor modeller.}
 
 Den dynamiske faktor model er givet ved
 \begin{align}
@@ -53,7 +54,7 @@ Dette minimerings problem er ækvivalent til følgende maksimerings problem
 \begin{align*}
 \max_\Lambda \text{tr} \cbr{\del{\del{\Lambda^T \Lambda}^{-1/2}}^T \Lambda^T \del{T^{-1} \sum_{t=1}^T X_t X_t^T} \Lambda \del{\Lambda^T \Lambda}^{-1/2}},
 \end{align*}
-som er ækvivalent med $\max_\Lambda^T \hat{\Sigma}_{XX} \Lambda$ underlagt at $n^{-1} \Lambda^T \Lambda=I_r$, hvor $\hat{\Sigma}_{XX}=T^{-1} \sum_{t=1}^T X_t X_t^T$
+som er ækvivalent med $\max_\Lambda \Lambda^T \hat{\Sigma}_{XX} \Lambda$ underlagt at $n^{-1} \Lambda^T \Lambda=I_r$, hvor $\hat{\Sigma}_{XX}=T^{-1} \sum_{t=1}^T X_t X_t^T$
 
 Da $\hat{\Lambda}^T \hat{\Lambda}=nI_r$ følger det af mindste kvadraters metode estimatoren af $F_t$ er $\hat{F}_t=\hat{F}_t \del{n^{-1}\hat{\Lambda}}=n^{-1}\hat{\Lambda}^TX_t$, som er de skaleret første $r$ principal komponenter af $X_t$.
 
@@ -74,8 +75,40 @@ statistisk procedure der anvender en ortogonal transformation til at konverterer
 Denne transformation defineres således at første PC har den størst mulige varians, og hver efterfølgende PC har igen den størst mulige varians givet de foregående PC er ortogonale.
 
 
+s. 203 i hastie
+
 \section{Valg af antal faktorer}
 Der findes flere metoder til at estimere antallet af static faktorer $r$ og antallet af dynamiske faktorer $q$.
+Der findes ikke en definit definition.
+Men den totale varians, den relative størrelse af egenværdierne (variansen af sample komponenterne), bør tages i betragtning.
+En komponent med tilhørende egenværdi omkring nul, ses som værende ikke vigtig, kan indikere en uventet afhængighed i data.
+
+
+
+
+
+Antallet af faktorer kan bestemmes udfra et \textit{scree plot}.
+Her er egenværdierne ordnede fra den største til den mindste.
+For at bestemme antallet af faktorer ser vi efter en bøjning i scree plot.
+Antallet af komponenter er givet ved punktet hvori de resterende egenværdier er relativ lav og approksimativ samme størrelse.
+
+
+
+For dynamiske faktor modeller udviklede --- at minimere penalized sum of squares
+\begin{align*}
+\text{IC} \del{r} = \ln V_r \del{\hat{\Lambda}, \hat{F}} + r g \del{n,T}
+\end{align*}
+hvor \(V_r \del{\hat{\Lambda}, \hat{F}}\) er objektfunktionen i \eqref{eq:dfm11} evalueret i de principielle komponenters estimatorer \(del{\hat{\Lambda}, \hat{F}}\) og hvor \(g \del{n,T}\) er en straffaktor således at \(g \del{n,T} \rightarrow 0\) og \(\min \cbr{n, T} g \del{n,T} \rightarrow \infty\) når \(n, T \rightarrow \infty\).
+
+Tre af straf funktioerne foreslået af Bai og Ng 
+\begin{align*}
+g_1 \del{n,T} &= \frac{n + T}{n T} \ln \del{\frac{nT}{n + T}}, \\
+g_2 \del{n,T} &= \frac{n + T}{n T} \ln \del{ \min \cbr{n, T}}, \\
+g_3 \del{n,T} &= \frac{\ln \del{\min \cbr{n, T}}}{\min \cbr{n, T}}.
+\end{align*}
+
+For \(n = T\) simplificeres \(g_2 \del{n,T} \) til \(2 \frac{1}{T} \ln \del{T}\)
+
 
 
 \section{Faktor-Augmented vektor autoregression}

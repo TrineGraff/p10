@@ -60,5 +60,7 @@ adap_lasso = cv.glmnet(x[,idx_hat -1], y, intercept = FALSE,
                        family = "gaussian", alpha = 1, standardize = FALSE, 
                        penalty.factor = v_l)
 
-adap_lasso_fit = glmnet(x[,idx_hat-1], y, intercept = FALSE, family = "gaussian", alpha = 1, standardize=FALSE, penalty.factor = v_l)
+adap_lasso_fit = glmnet(x[,idx_hat-1], y, intercept = FALSE, 
+                        family = "gaussian", alpha = 1, standardize=FALSE, 
+                        penalty.factor = v_l)
 

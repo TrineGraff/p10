@@ -26,7 +26,6 @@ idse = lars_cv$cv <= se #større eller lig med en standard afvigelse
 l1_1se = max(lars_cv$index[idse], na.rm = TRUE)
 match(lars_cv$index, l1_1se)
 
-
 data.frame(
   lambda = c("min", "1se"), 
   vaedi = c(l1_min, l1_1se),
@@ -38,7 +37,6 @@ data.frame(
 b_hat = coef(lars_, s = l1_min, mode = "fraction")
 idx_hat = which(b_hat != 0) 
 b_hat[idx_hat]
-
 
 # Elastic net -------------------------------------------------------------
 

@@ -37,9 +37,9 @@ Ridge regression problemet kan også omskrives til et Lagrange problem
 \end{align*}
 hvor $\lambda \geq 0$.
 Heraf kan ridge regression estimatoren findes ved at differentiere \(\del{\y - \X \beta}^T \del{\y - \X \beta} + \lambda \beta^T \beta\) mht. $\beta$, sætte dette lig 0 og isolere for $\beta$. Hvoraf vi finder, at
-\begin{align*} 
-\hat{\beta}^\text{ridge} = (\X^T \X + \lambda \mathbf{I})^{-1} \X^T \y. 
-\end{align*}  
+\begin{align} 
+\hat{\beta}^\text{ridge} = (\X^T \X + \lambda \mathbf{I})^{-1} \X^T \y. \label{eq:ridge_estimator}
+\end{align}  
 Mht mindste kvadraters regression tilføjer ridge regression en positiv konstant $\lambda$ på diagonalen af $\X^T \X + \lambda \mathbf{I}$, hvilket medfører, at \(\X^T \X\) er invertibel, selvom $\X$ ikke har fuld rang. 
 Dermed er en entydig løsning altid garanteret. 
 
@@ -163,7 +163,7 @@ da $\frac{1}{n} \sum_{i=1}^n z_i^2=1$. Dette sættes lig 0 og vi isolerer $\beta
 \hat{\beta} = \begin{cases}
 \frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle - \lambda, \quad &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle > \lambda, \\
 0 &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle \leq \lambda, \\
-\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle + \lambda, &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle < \lambda.
+\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle + \lambda, &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle < -\lambda.
 \end{cases} \label{eq:2.10}
 \end{align}
 Definer \textit{soft-threshold operatoren}
@@ -196,7 +196,7 @@ Da er den j'te koefficient opdateret ved
 \hat{\beta}_j = S_\lambda \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{r}^{(j)} \right\rangle}, \label{eq:2.14}
 \end{align}
 hvor \(r_i = y_i - \sum_{j = 1}^p x_{ij} \hat{\beta}_j \) er de fulde residualer.
-Den beskrevne algoritme svarer til metoden \textit{cyclical coordinate descent}, som minimerer en konveks objektfunktion langs hver koordinat af gangen.
+Den beskrevne algoritme svarer til metoden \textit{cyclical coordinate descent}, som separat minimerer en konveks objektfunktion langs hver koordinat.
 Under milde regularitetsbetingelser konvergerer løsningen til et global optimum.
 Fra opdateringen \eqref{eq:2.14} ser vi, at algoritmen foretager en univariat regression af den partial residual på hver prædiktor, cycling gennem prædiktorerne indtil konvergens.
 

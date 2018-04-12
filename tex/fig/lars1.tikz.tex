@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+%\draw [<-] (4,0) node [below] {$\x_1$}-- (-3,0);
+\draw [blue] [<-] (1,0) node [below] {$\widehat{\tmu}_1$} -- (-3,0);
+\draw [<-] (4,0) node [below] {$\x_1$} -- (1,0);
+\filldraw [blue] (1,0) circle (2pt) node [below, black] {$\widehat{\boldsymbol{\mu}}_1$};
+\filldraw [green] (-3,0)  circle (2pt) node [below, black]{$\widehat{\boldsymbol{\mu}}_0$};
+\draw [dashed] [<-] (5,4) node [above] {$\x_2$} --(1,0);
+\draw [<-] (1,4) node [above] {$\x_2$} --(-3,0);
+
+\draw [green] (5,1.66) node [above, black] {$\bar{\y}_2$} -- (-3,0);
+\filldraw [green] (5,1.66) circle (2pt);
+\draw [blue] [->] (1,0) -- (3, 0.83) node [below, black] {$\mathbf{u}_2$} ;
+\draw [green] (3,0.83) -- (5,1.66) ; 
+
+\draw [green] (5,0) node [below] {} -- (4.1,0);
+\filldraw [green] (5,0) circle (2pt) ;
+\draw (5,0) node [black, below] {$\bar{\y}_1$};
+\end{tikzpicture}

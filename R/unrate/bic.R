@@ -112,5 +112,18 @@ idx_adl = which.min(adap_lasso)
 lambda.opt.ad.la = adap_lasso_fit$lambda[idx_adl]
 coef(adap_lasso_fit, s = lambda.opt.ad.la)
 
-# 
+
+
+# gglasso -----------------------------------------------------------------
+
+grp <- c(1, 1, rep(4, 3), rep(1, 14), rep(2, 27), rep(3, 10), rep(4, 4),
+         rep(5, 10), rep(8, 4), rep(6, 21), rep(7, 20), rep(2, 3), rep(5, 4)) 
+gglasso_fit = gglasso(x, y, group = grp)
+
+
+grp_bic = lassoBIC(y, x, gglasso_fit)
+
+idx.bic = which.min(grp_bic)
+lambda.opt.grp = gglasso_fit$lambda[idx.bic]
+length(coef(gglasso_fit, s = lambda.opt.grp))
 

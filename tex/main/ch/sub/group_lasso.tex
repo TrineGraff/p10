@@ -31,6 +31,7 @@ I \eqref{eq:4.5}, straffes alle grupper ligeligt, hvilket betyder at større gru
 \citep{group_lasso} anbefalede at vægte strafleddene for hver gruppe i forhold til gruppens størrelse med en factor \(\sqrt{p_j}\).
 
 \subsection{Udregning af group lasso}
+\subsubsection{Coordinate descent}
 Lad os omskrive optimeringsproblemet \eqref{eq:4.5} på matrix-vektor form
 \begin{align*}
 \argmin_{\theta_1, \ldots, \theta_J} \cbr{\frac{1}{2} \Vert \y - \sum_{j=1}^J \mathbf{Z}_{j} \theta_j \Vert_2^2 + \lambda \sum_{j=1}^J \Vert \theta_j \Vert_2}.
@@ -59,6 +60,8 @@ Ligning \eqref{eq:4.14} har desværre ikke en lukket løsning for $\hat{\theta}_
 \begin{align*}
 \hat{\theta}_j = \del{1 - \frac{\lambda}{\Vert \mathbf{Z}_j^T \mathbf{r}_j \Vert_2}}_+  \mathbf{Z}_j^T \mathbf{r}_j.
 \end{align*}
+
+\subsubsection{LARS}
 
 \subsection{Sparse group lasso}
 

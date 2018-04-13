@@ -7,9 +7,8 @@ library(gridExtra)
 set.seed(1)
 
 drops = c("UNRATE")
-x = data_train[ , !(colnames(data_train) %in% drops)] 
-y = data$UNRATE[1:idx]
-
+x = scale(data_train[ , !(colnames(data_train) %in% drops)]) 
+y = scale(data_train[, "UNRATE"], scale = FALSE)
 
 # lasso -------------------------------------------------------------------
 lasso_fit = glmnet(x, y, family = "gaussian", alpha = 1, intercept = FALSE, standardize=FALSE)
@@ -19,7 +18,6 @@ lasso_cv = cv.glmnet(x, y, intercept = FALSE, family = "gaussian", alpha = 1, st
 # ridge -------------------------------------------------------------------
 ridge_fit = glmnet(x, y, family = "gaussian", alpha = 0, intercept = FALSE, standardize=FALSE)
 ridge_cv = cv.glmnet(x, y, intercept = FALSE, family = "gaussian", alpha = 0, standardize=FALSE)
-
 
 # elasticnet --------------------------------------------------------------
 
@@ -63,4 +61,9 @@ adap_lasso = cv.glmnet(x[,idx_hat -1], y, intercept = FALSE,
 adap_lasso_fit = glmnet(x[,idx_hat-1], y, intercept = FALSE, 
                         family = "gaussian", alpha = 1, standardize=FALSE, 
                         penalty.factor = v_l)
+
+
+library(broom)
+c <- cbind(lambda_min = ridge_cv$lambda.min) %>% tidy()
+write.csv(c, file = "ridge_lambda.csv") 
 

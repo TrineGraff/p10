@@ -1,45 +1,35 @@
 source("/Users/trinegraff/Desktop/Projekt/R/data/setup_data.R")
-y = data$UNRATE[1:idx]
-x = lag(y, k = 1)
+library(Metrics)
 
-x.lag = function(x, p.max){
-  BIC.vektor = c(NA)
-  
-for (p in 1:p.max){
-  y = x[(p.max + 1):length(x)]
-  n.obs = length(y)
-  
-  x.lag = matrix(nrow = n.obs, ncol = p)
-  for (j in 1:p){
-    for (i in 1:n.obs){
-      x.lag[i,j] = x[p+i-j]
+y = scale(data_raw[, "UNRATE"], scale = FALSE)
+
+forecast = function(data, p, h, idx = idx ) {
+  fc = c(NA)
+  for(k in 0:length(data[-c(1:idx)]) -1) {
+    y = data[(p + 1):(length(data[1:idx]) + k)] #y bliver opdateret med den observerede værdi for hvert k
+    n.obs = length(y) 
+
+    x_lag = matrix(nrow = n.obs, ncol = p)
+    for (j in 1:p){
+      for (i in 1:n.obs){
+        x_lag[i,j] = data[p+i-j]
+      }
     }
+    beta_hat = solve(crossprod(x_lag), crossprod(x_lag, y))
+      fc[k+1] = data[(length(data[1:idx]) +k): (length(data[1:idx]) +k - p +1)] %*% beta_hat
   }
-  beta.hat = solve(crossprod(x.lag), crossprod(x.lag, y))
-  print(beta.hat)
-  sigma2.hat = mean((y- x.lag %*% beta.hat)^2)
-  BIC = log(sigma2.hat) + (p * log(n.obs)/n.obs)
-  BIC.vektor[p] = BIC
-}
-  print(which.min(BIC.vektor))
-}
-
-x.lag(y, 12)
-
-beta.hat = function(x, p) {
-  y = x[(p + 1):length(x)]
-  n.obs = length(y)
-  
-  x.lag = matrix(nrow = n.obs, ncol = p)
-  for (j in 1:p){
-    for (i in 1:n.obs){
-      x.lag[i,j] = x[p+i-j]
-    }
+  print(list("fc" = fc))
   }
-  beta.hat = solve(crossprod(x.lag), crossprod(x.lag, y))
-  sigma2.hat = mean((y- x.lag %*% beta.hat)^2)
-  
-  print(list("beta.hat" = beta.hat ))
+
+fit = forecast(y, 11, 1, idx)
+
+loss = function(fc, y_test){
+  print(mae(y_test, fc))
+  print(rmse(y_test, fc))
 }
 
-beta.hat(y, 11)
+loss(fit$fc, y[-c(1:idx)])
+
+plot(fit$fc, type ="l", ylim = c(-0.5, 0.5), xlim = c(0, 140), col = "red")
+par(new = TRUE)
+plot(y[-c(1:idx)], type ="l", ylim = c(-0.5, 0.5), xlim = c(0, 140))

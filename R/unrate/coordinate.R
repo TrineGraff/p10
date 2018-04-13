@@ -1,4 +1,4 @@
-source("/Users/trinegraff/Desktop/Projekt/R/unrate/script/script.R")
+source("/Users/trinegraff/Desktop/Projekt/R/unrate/script/script_coordinate.R")
 
 parm = function(x) {
   (sum(x != 0))
@@ -194,7 +194,6 @@ cv_plot = grid.arrange(l, r, el, grp, ad, ad_l)
 
 
 # Gem resultater ----------------------------------------------------------
-install.packages("broom")
 library(broom)
 c <- tidy(coef(lasso_cv, s="lambda.min"))
-write.csv(c, file = "results") 
+write.csv(c, file = "ridge_lambda") 

@@ -1,21 +1,10 @@
-source("/Users/trinegraff/Desktop/Projekt/R/data/setup_data.R")
-library(lars)
-library(ggplot2)
-library(elasticnet)
-library(broom)
-drops = c("UNRATE")
-x = data_train[ , !(colnames(data_train) %in% drops)] 
-y = data$UNRATE[1:idx]
+source("/Users/trinegraff/Desktop/Projekt/R/unrate/script/script_lars.R")
 
 parm = function(x) {
   (sum(x != 0))
 }
-set.seed(109)
-
 
 # lasso -------------------------------------------------------------------
-lars_cv = cv.lars(x, y, type = "lasso", intercept = FALSE, normalize = FALSE, trace = TRUE)
-lars_ = lars(x, y, type = "lasso")
 
 min <- min(lars_cv$cv)
 idmin = match(min, lars_cv$cv)

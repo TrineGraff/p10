@@ -1,29 +1,15 @@
-source("/Users/trinegraff/Desktop/Projekt/R/data/setup_data.R")
-setwd("~/Desktop/Projekt/R/unrate")
-
-lars_cv = read.csv("results/lars_cv.csv")
-beta = read.csv("results/result_lars.csv")
-
-drops = c("UNRATE")
-x = data_train[ , !(colnames(data_train) %in% drops)] 
-y = data$UNRATE[1:idx]
-
-parm = function(x) {
-  (sum(x != 0))
+forecast = function(y, x, idx = idx, lambda = lambda, alpha, weights = NULL) {
+  fc = c(NA)
+  for(k in 0:length(y[-c(1:idx)]) - 1) {
+    y_res = y[1:(idx + k)] #y bliver opdateret med den observerede værdi for hvert k
+    x_kov = x[1:(idx + k), ] #tilføjede en ny række i hver iteration
+    
+    fit = glmnet(x_kov, y_res, alpha = alpha, intercept = FALSE, weights = weights)
+    beta_hat = coef(fit, s = lambda) %>% .[-c(1),]
+    fc[k+1] = x[dim(x_kov)[1], ] %*% beta_hat #finder række i vores df og ganger på beta_hat
+    test = length(x[dim(x_kov)[1],]) 
+  }
+  print(list("fc" = fc, "test" = test))
 }
 
-# insample ----------------------------------------------------------------
-min <- min(lars_cv$cv)
-idmin = match(min, lars_cv$cv)
-l1_min = lars_cv$index[idmin]
 
-
-  n.obs = length(y)
-  h = 1
-  fc.y = y[(1+h):n.obs] #fjerner en observation
-  fc.vars = as.matrix(x[(1:n.obs - h), ]) #fjerner en observation
-  lambda.opt = min
-  fac= as.data.frame(beta)
-  f = which(beta_opt != 0) 
-
-Lasso_fc(x,y,1)

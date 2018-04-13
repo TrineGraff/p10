@@ -1,7 +1,7 @@
 source("/Users/trinegraff/Desktop/Projekt/R/data/setup_data.R")
 library(Metrics)
 
-y = scale(data_raw[, "UNRATE"], scale = FALSE)
+y = scale(data[, "UNRATE"], scale = FALSE)
 
 forecast = function(data, p, h, idx = idx ) {
   fc = c(NA)

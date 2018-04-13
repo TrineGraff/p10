@@ -1,37 +1,70 @@
 \section{LARS}
-LARS algoritmen var først introduceret i \citep{efron}.  
+LARS algoritmen blev først introduceret i \citep{efron}. 
+Kun \(p\) steps er krævet for den fulde mængde af løsninger, hvor \(p\) er antallet af kovariater.
+ 
 Vi introducerer først den originale version af LARS algoritmen, hvor efter vi laver en simple modifikation af LARS algoritmen for at løse lasso. 
 
-Ideen bag algoritmen er, at vi først sætter alle koefficienter lig nul, hvor vi herefter finder den , $x_{1j}$, som er mest korrelerede med respons variablen, $\textbf{y}$.  
-Vi tager hernæst den størst mulige trin i retningen af vores prædiktor, hvor vi anvender en simple lineær regression af $\textbf{y}$ på $x_{1j}$. 
-Vi får en residual vektor, som er ortogonal på $x_{j1}$ og bliver vores nye respons. 
-Vi fortsætter indtil $x_{2j}$ er lige så korrelerede  med residualerne, som $x_{j1}$. 
-LARS algoritmen anvender herefter den ensvinklet retning mellem $x_{1j}$ og $x_{2j}$, som den nye retning indtil den rammer den tredje variable, som er den mest korrelerede, hvorefter den nye retning er ensvinklet mellem de de tre variable $x_{1j}$, $x_{2j}$ og $x_{3j}$. Dette fortsættes. 
+Først sættes alle koefficienter lig nul, og vi finder prædiktoren som er mest korreleret med responsvariablen, som betegnes \(x_{1j}\).
+Herefter tages det størst mulige step i retningen af denne prædiktor indtil en anden prædiktor har samme korrelation med den nuværende residual.
+Istedet for at fortsætte langs \(x_{1j}\), fortsætter LARS i en retning som er ensvinklet mellem de to prædiktorer indtil en tredje variabel bliver den mest korreleret mængde.
+LARS fortsætter da ensvinklet imellem \(x_{j_1}\), \(x_{j_2}\) og \(x_{j_3}\), dvs langs "least angle direction" indtil en fjerde variable medtages.
+Dette fortsættes.
 
-I hvert trin bliver der tilføjet en kovariat til vores model $\widehat{\boldsymbol{\mu}} = \textbf{X} \widehat{\boldsymbol{ \beta}}$, så efter $k$ iterationer er der k elementer i  $\widehat{\beta}_j$, som er forskellige fra nul.  
+I hvert step tilføjes én kovariat til modellen, således at efter \(k\) steps er præcis \(k\) af disse \(\hat{\beta}_j\) som er forskellig fra nul.
 
-Figur \ref{fig:lars} illustrerer algoritmen, hvor $p = 2$ og $X = \del{\textbf{x}_1, \textbf{x}_2}$. 
-Vi lader kovariaterne være standardiseret med middelværdi 0 og unit varians og lader respons have en middelværdi 0. Den nuværende korrelation er givet ved 
+
+
+%
+%Ideen bag algoritmen er, at vi først sætter alle koefficienter lig nul, hvor vi herefter finder den , $x_{1j}$, som er mest korrelerede med respons variablen, $\textbf{y}$.  
+%Vi tager hernæst den størst mulige trin i retningen af vores prædiktor, hvor vi anvender en simple lineær regression af $\textbf{y}$ på $x_{1j}$. 
+%Vi får en residual vektor, som er ortogonal på $x_{j1}$ og bliver vores nye respons. 
+%Vi fortsætter indtil $x_{2j}$ er lige så korrelerede  med residualerne, som $x_{j1}$. 
+%LARS algoritmen anvender herefter den ensvinklet retning mellem $x_{1j}$ og $x_{2j}$, som den nye retning indtil den rammer den tredje variable, som er den mest korrelerede, hvorefter den nye retning er ensvinklet mellem de de tre variable $x_{1j}$, $x_{2j}$ og $x_{3j}$. Dette fortsættes. 
+%
+%I hvert trin bliver der tilføjet en kovariat til vores model $\widehat{\boldsymbol{\mu}} = \textbf{X} \widehat{\boldsymbol{ \beta}}$, så efter $k$ iterationer er der k elementer i  $\widehat{\beta}_j$, som er forskellige fra nul.  
+
+Figur \ref{fig:lars} illustrerer algoritmen, hvor $p = 2$ og $\X = \del{\textbf{x}_1, \textbf{x}_2}$. 
+%Vi lader kovariaterne være standardiseret med middelværdi 0 og unit varians og lader respons have en middelværdi 0. 
+Kovariaterne standardiseres og responsvariablen centreres.
+De nuværende korrelationer er givet ved 
 \begin{align*}
-\textbf{c}\del{\boldsymbol{\widehat{\mu}}} = X^T\del{\textbf{y} - \widehat{\boldsymbol{\mu}}} = X^T \del{ \textbf{y}_2 - \boldsymbol{\widehat{\mu}}}.
+\textbf{c}\del{\boldsymbol{\widehat{\mu}}} = \X^T\del{\textbf{y} - \widehat{\boldsymbol{\mu}}} = \X^T \del{ \textbf{y}_2 - \boldsymbol{\widehat{\mu}}}.
 \end{align*}
-I dette tilfælde er den nuværende korrelation kun afhængige af projektionen $\textbf{y}_2 $, som er projektionen af $\textbf{y}$ i det lineære rum $L(X)$ udspændt af $ \textbf{x}_1 $og $\textbf{x}_2$. 
-Algoritmen starter i $\widehat{\boldsymbol{\mu}}_0 = \textbf{0}$, hvor vi ser på figur \ref{fig:lars} at $ \textbf{y}_2 - \boldsymbol{\widehat{\mu}}_0$ og $\textbf{x}_1$ har den mindste vinkel i forhold til $ \textbf{y}_2 - \boldsymbol{\widehat{\mu}}_0$  og $\textbf{x}_2$, dvs at $\textbf{c}_1\del{\boldsymbol{\widehat{\mu}}_0} > \textbf{c}_2\del{\boldsymbol{\widehat{\mu}}_0}$. 
-LARS algoritmen forstærker  $\boldsymbol{\widehat{\mu}}_0$ i retning af $\textbf{x}_1$ ved
-%
- \begin{align*}
- \boldsymbol{\widehat{\mu}}_1 = \boldsymbol{\widehat{\mu}}_0 + \widehat{\gamma}_1 \textbf{x}_1.
- \end{align*}
- %
- Lad $\widehat{\gamma}$ være stepsize og bestemmes  således at $ \textbf{y}_2 - \boldsymbol{\widehat{\mu}}$ er lige korrelerede med $\textbf{x}_1$ og $\textbf{x}_2$, dvs det er når  $\textbf{y}_2 - \boldsymbol{\widehat{\mu}}_1$ deler vinkel i lige står dele mellem  $\textbf{x}_1$ og $\textbf{x}_2$, således at $\textbf{c}_1\del{\boldsymbol{\widehat{\mu}}_1} = \textbf{c}_2\del{\boldsymbol{\widehat{\mu}}_1}$.  
- 
- Vi lader $\boldsymbol{\mu}_2$ være en enheds vektor liggende på bisektoren. Den næste LARS estimat er 
- %
- \begin{align*}
- \boldsymbol{\widehat{\mu}}_2 = \boldsymbol{\widehat{\mu}}_1+ \widehat{\gamma}_2 \boldsymbol{\widehat{\mu}}_2,
- \end{align*}
-%
-hvor $\widehat{\gamma}_2$ er valgt således at  $ \boldsymbol{\widehat{\mu}}_2 = \textbf{y}_2$ i tilfældet hvor $p = 2$. 
+I dette tilfælde er de nuværende korrelationer kun afhængige af projektionen $\textbf{y}_2$ af $\textbf{y}$ på det lineære rum $\mathcal{L} \del{\X}$ udspændt af $ \textbf{x}_1 $og $\textbf{x}_2$. 
+Algoritmen starter i $\widehat{\boldsymbol{\mu}}_0 = \textbf{0}$.
+På figur \ref{fig:lars} ses at \(y_2 - \widehat{\boldsymbol{\mu}}_0\) har en mindre vinkel med \(\x_1\) end \(\x_2\), dvs \(c_1 \del{\widehat{\boldsymbol{\mu}}_0} > c_2 \del{\widehat{\boldsymbol{\mu}}_0}\).
+LARS tilføjer derfor \(\widehat{\boldsymbol{\mu}}_0\) i retningen af \(\x_1\), og vi får
+\begin{align*}
+\boldsymbol{\widehat{\mu}}_1 = \boldsymbol{\widehat{\mu}}_0 + \widehat{\gamma}_1 \textbf{x}_1,
+\end{align*}
+hvor \(\widehat{\gamma}_1\), som er stepstørrelsen, vælges således at \(y_2 - \boldsymbol{\widehat{\mu}}\) er ligelige korreleret med \(\x_1\) som med \(\x_2\).
+Dermed halverer \(y_2 - \widehat{\boldsymbol{\mu}}\) vinklen mellem \(\x_1\) og \(\x_2\) således at \(c_1 \del{\widehat{\boldsymbol{\mu}}_1} = c_2 \del{\widehat{\boldsymbol{\mu}}_1}\).
+
+Lad $\mathbf{u}_2$ være enhedsvektoren som ligger langs denne halveringslinje.
+Det næste LARS estimat er dermed
+\begin{align*}
+\widehat{\boldsymbol{\mu}}_2 = \widehat{\boldsymbol{\mu}}_1+ \widehat{\gamma}_2 \mathbf{u}_2,
+\end{align*}
+hvor $\widehat{\gamma}_2$ vælges således at $\widehat{\boldsymbol{\mu}}_2 = \textbf{y}_2$ i tilfældet hvor $p = 2$. 
+For \(p>2\), da vil stepstørrelsen \(\widehat{\gamma}_2\) være mindre, hvilket fører til en anden ændring af retningen, som illustreres på figur --.
+
+
+%Algoritmen starter i $\widehat{\boldsymbol{\mu}}_0 = \textbf{0}$, hvor vi ser på figur \ref{fig:lars} at $ \textbf{y}_2 - \boldsymbol{\widehat{\mu}}_0$ og $\textbf{x}_1$ har den mindste vinkel i forhold til $ \textbf{y}_2 - \boldsymbol{\widehat{\mu}}_0$  og $\textbf{x}_2$, dvs at $\textbf{c}_1\del{\boldsymbol{\widehat{\mu}}_0} > \textbf{c}_2\del{\boldsymbol{\widehat{\mu}}_0}$. 
+%LARS algoritmen forstærker  $\boldsymbol{\widehat{\mu}}_0$ i retning af $\textbf{x}_1$ ved
+%%
+% \begin{align*}
+% \boldsymbol{\widehat{\mu}}_1 = \boldsymbol{\widehat{\mu}}_0 + \widehat{\gamma}_1 \textbf{x}_1.
+% \end{align*}
+% %
+% Lad $\widehat{\gamma}$ være stepsize og bestemmes  således at $ \textbf{y}_2 - \boldsymbol{\widehat{\mu}}$ er lige korrelerede med $\textbf{x}_1$ og $\textbf{x}_2$, dvs det er når  $\textbf{y}_2 - \boldsymbol{\widehat{\mu}}_1$ deler vinkel i lige står dele mellem  $\textbf{x}_1$ og $\textbf{x}_2$, således at $\textbf{c}_1\del{\boldsymbol{\widehat{\mu}}_1} = \textbf{c}_2\del{\boldsymbol{\widehat{\mu}}_1}$.  
+
+% Vi lader $\boldsymbol{\mu}_2$ være en enheds vektor liggende på bisektoren. Den næste LARS estimat er 
+% %
+% \begin{align*}
+% \boldsymbol{\widehat{\mu}}_2 = \boldsymbol{\widehat{\mu}}_1+ \widehat{\gamma}_2 \boldsymbol{\widehat{\mu}}_2,
+% \end{align*}
+%%
+%hvor $\widehat{\gamma}_2$ er valgt således at  $ \boldsymbol{\widehat{\mu}}_2 = \textbf{y}_2$ i tilfældet hvor $p = 2$. 
 %
 \begin{figure}[H]
 \centering
@@ -39,30 +72,80 @@ hvor $\widehat{\gamma}_2$ er valgt således at  $ \boldsymbol{\widehat{\mu}}_2 =
 \caption{Figuren viser LARS algoritmen, i tilfældet hvor $p = 2$. Vi har to kovariater  $\textbf{x}_1$ og $\textbf{x}_2$, $\textbf{y}_2$ er projektionen af $\textbf{y}$ in i det lineære rum $L  \del{ \textbf{x}_1, \textbf{x}_2} $. }\label{fig:lars}
 \end{figure}
 %
-Vi vil beskrive algoritmen mere generelt.
-Vi antager at kovariaterne $ \textbf{x}_1,  \textbf{x}_2,  \dots,  \textbf{x}_p$ er lineært uafhængige og lader $\mathcal{A}$ være en delmængde af indekser $\{1, 2, \dots, p \}$. 
-Vi definerer følgende mængder 
-%
-\begin{align*}
-X_{\mathcal{A}} & = \del{\cdots s_j \textbf{x}_j \cdots}  \nonumber \\ 
-N_{\mathcal{A}} & = X^T_{\mathcal{A}} X_{\mathcal{A}} \\ \
-A_{\mathcal{A}} & = \del{ \textbf{1}^T_{\mathcal{A}} N_{\mathcal{A}} \textbf{1}_{\mathcal{A}} }^{- 1/2} , \nonumber 
-\end{align*}
-%
-hvor  $s_j = \pm 1$ og $\textbf{1}_{\mathcal{A}} $ er en vektor bestående af 1-taller, som har samme længde som $\abs{\mathcal{A}}$. 
+Efterfølgende LARS steps udover kun to kovariater tages lang ensvinklet vektorer.¨¨¨
+Vi antager, at kovariaterne \(\x_1, \ldots, \x_p\) er lineært uafhængige.
+Lad \(\A\) være en delmængde af indekser \(\cbr{1,\ldots, p}\), og definer matricen
+\begin{align}
+\X_\A = \del{\dots s_j \x_j \dots}_{j \in \A}, \label{eq:lars_2.4}
+\end{align}
+hvor  $s_j = \pm 1$, således at \(\X_\A\) er en matrix bestående af kolonnerne af \(\X\) som er inkluderet i \(\mathcal{A}\) multipliceret \(s_j\).
 Lad 
-%
+\begin{align}
+N_\A = \X_\A^T \X_\A \quad \text{og} \quad A_\A = \del{\mathbf{1}_\A^T N_\A^{-1} \mathbf{1}_\A}^{-1/2}, \label{eq:lars_2.5}
+\end{align}
+hvor \(\mathbf{1}_\A\) er en vektor bestående af 1-tallet med længde lig antal elementer i \(\A\).
+Da defineres en ensvinklet vektor
+\begin{align}
+\mathbf{u}_\A = \X_\A \omega_\A, \quad \text{hvor } \omega_\A = A_\A N_\A^{-1} \mathbf{1}_\A \label{eq:lars_2.6}
+\end{align}
+er en enhedsvektor som medvirker at kolonnerne af \(\X_\A\), dvs
 \begin{align*}
-\textbf{u}_{\mathcal{A}} = X_{\mathcal{A}} \omega_{\mathcal{A}}, 
+\X_\A^T \mathbf{u}_\A = A_\A \mathbf{1}_\A \quad \text{og} \quad \Vert \mathbf{u}_\A \Vert^2 = 1.
 \end{align*}
-%
-kaldes den ensvinklet vektor og hvor $ \omega_{\mathcal{A}} = A_{\mathcal{A}} G^{-1}_{\mathcal{A}}  \textbf{1}^T_{\mathcal{A}}$. 
+Herefter kan vi give en fyldestgørende beskrivelse af LARS algoritmen.
+Somsagt starter vi med \(\widehat{\boldsymbol{\mu}}_0 = \mathbf{0}\), og opbygger \(\widehat{\boldsymbol{\mu}}\) igennem steps.
+Antag \(\widehat{\boldsymbol{\mu}}_\A\) er det nuværende LARS estimat og at
+\begin{align*}
+\widehat{\mathbf{c}} = \X^T \del{\y - \widehat{\boldsymbol{\mu}}_\A},
+\end{align*} 
+er vektoren af nuværende korrelationer --.
+Den aktive mængde \(\A\) er en mængde af indekser svarende til kovariater med størst absolut nuværende korrelationer
+\begin{align*}
+\widehat{C} = \max_j \cbr{\abs{\widehat{c}_j}} \quad \text{og} \quad \A= \cbr{j: \ \abs{ \widehat{c}_j} = \widehat{C}}.
+\end{align*}
+Lad 
+\begin{align*}
+s_j = \text{sign} \cbr{\widehat{c}_j} \quad j \in \A,
+\end{align*}
+da udregnes \(\X_\A\), \(A_\A\) og \(\mathbf{u}_\A\) som i \eqref{eq:lars_2.4}-\eqref{eq:lars_2.6}  samt vektoren af indre produkt
+\begin{align*}
+\mathbf{a} = \X^T \mathbf{u}_\A.
+\end{align*}
+Herefter opdateres \(\widehat{\boldsymbol{\mu}}_\A\) til
+\begin{align*}
+\widehat{\boldsymbol{\mu}}_{\A_+} = \widehat{\boldsymbol{\mu}}_\A + \widehat{\gamma} \mathbf{u}_\A,
+\end{align*}
+hvor 
+\begin{align}
+\widehat{\gamma} = \min_{j \in \A^c}^+ \cbr{ \frac{\widehat{C}- \widehat{c}_j}{A_\A - a_j} , \frac{\widehat{C} + \widehat{c}_j}{A_\A + a_j}}, \label{eq:lars_2.13}
+\end{align}
+hvor \(\min^+\) indikerer at minimum kun tages over de positive komponenter indenfor valget af \(j\) i \eqref{eq:lars_2.13}.
 
-Der gælder følgende 
+
+%Vi vil beskrive algoritmen mere generelt.
+%Vi antager at kovariaterne $ \textbf{x}_1,  \textbf{x}_2,  \dots,  \textbf{x}_p$ er lineært uafhængige og lader $\mathcal{A}$ være en delmængde af indekser $\{1, 2, \dots, p \}$. 
+%Vi definerer følgende mængder 
+%%
+%\begin{align*}
+%X_{\mathcal{A}} & = \del{\cdots s_j \textbf{x}_j \cdots}  \nonumber \\ 
+%N_{\mathcal{A}} & = X^T_{\mathcal{A}} X_{\mathcal{A}} \\ \
+%A_{\mathcal{A}} & = \del{ \textbf{1}^T_{\mathcal{A}} N_{\mathcal{A}} \textbf{1}_{\mathcal{A}} }^{- 1/2} , \nonumber 
+%\end{align*}
+%%
+%hvor  $s_j = \pm 1$ og $\textbf{1}_{\mathcal{A}} $ er en vektor bestående af 1-taller, som har samme længde som $\abs{\mathcal{A}}$. 
+%Lad 
+%%
+%\begin{align*}
+%\textbf{u}_{\mathcal{A}} = X_{\mathcal{A}} \omega_{\mathcal{A}}, 
+%\end{align*}
+%%
+%kaldes den ensvinklet vektor og hvor $ \omega_{\mathcal{A}} = A_{\mathcal{A}} G^{-1}_{\mathcal{A}}  \textbf{1}^T_{\mathcal{A}}$. 
 %
- \begin{align*}
- X^T_{\mathcal{A}} \textbf{u}_{\mathcal{A}} = A_{\mathcal{A}}  \textbf{1}_{\mathcal{A}}   \quad  \text{og} \quad \norm{ \textbf{u}_{\mathcal{A}}}^2 = 1.
-\end{align*}  
+%Der gælder følgende 
+%%
+% \begin{align*}
+% X^T_{\mathcal{A}} \textbf{u}_{\mathcal{A}} = A_{\mathcal{A}}  \textbf{1}_{\mathcal{A}}   \quad  \text{og} \quad \norm{ \textbf{u}_{\mathcal{A}}}^2 = 1.
+%\end{align*}  
 %
 Derudover lad $\widehat{c}$ være en vektor af nuværende korrelationer, lad $\widehat{C}$ være den maksimale nuværende absolut korrelation, og lad $s_j$ være fortegnet af $\widehat{c}$: 
 %
@@ -109,6 +192,7 @@ hvor $\min^+$ betyder, at minimum kun er taget af positive komponenter for hvert
 \end{itemize}
 \end{enumerate}
 \end{alg}
+
 Overstående viser hvordan algoritmen bliver brugt. Men for lasso skal der bruges en lille modifikation. 
 Vi lader $\widehat{\boldsymbol\beta} = \del{\widehat{\beta}_1, \dots, \widehat{\beta}_p }^T$ være en lasso løsning til $\widehat{\boldsymbol{\mu}} = X \widehat{\boldsymbol\beta}$. Der gælder at fortegnet af enhver estimerede koefficient $\beta_j$ må have samme fortegn som den nuværende korrelation $\widehat{c}_j = \textbf{x}_j \del{\textbf{y} - \widehat{\mu}}$, 
 \begin{align*}

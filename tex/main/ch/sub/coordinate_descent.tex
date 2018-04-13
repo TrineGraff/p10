@@ -1,4 +1,5 @@
 \section{Coordinate descent}
+Ideen bag coordinat descent er somsagt at optimere over hver parameter separat, mens de resterende parametre fastholdes.
 Coordinate descent er en første ordens iterativ algoritme, og derfor er det blot gradienten som betragtes.
 Algoritmen opdaterer fra \(\beta^t\) til \(\beta^{t+1}\) ved at vælge én koordinat som skal opdateres, og da udføres en univariat minimering over dette koordinat.
 Dvs hvis koordinat $k$ er valgt i iteration $t$, da er opdateringen givet ved
@@ -6,22 +7,40 @@ Dvs hvis koordinat $k$ er valgt i iteration $t$, da er opdateringen givet ved
 \beta_k^{t+1} =\underset{ \beta_k}{\arg \min}  f\del{ \beta_1^t, \beta_2^t, \dots, \beta_{k-1}^t, \beta_k, \beta_{k+1}^t, \dots, \beta_p^t  }, \label{eq:5.36}
 \end{align}
 hvor $\beta_j^{t+1} = \beta_j^t$ for $j \neq k$. 
+%For at algoritmen konvergerer til det globale minimum af en konveks funktion, skal funktionen være kontinuert differentiabel og streng konveks i hver koordinat.
+%
+%Der er to basale modeller for coordinate algoritmer i forhold til den måde de opdaterer parametrene. Den første er cyclic coordinate og den anden kaldes greedy coordinate. 
+%Cyclic opdaterer en parameter i hvert loop og den greedy opdaterer parameteren, som giver den største ændring i funktionen. 
 
-Der er to basale modeller for coordinate algoritmer i forhold til den måde de opdaterer parametrene. Den første er cyclic coordinate og den anden kaldes greedy coordinate. 
-Cyclic opdaterer en parameter i hvert loop og den greedy opdaterer parameteren, som giver den største ændring i funktionen. 
-
-Coordinate algoritmer er generelt ofte anvendt, når man skal estimere parametre af en funktion, som ikke er differentiable. 
-En sådan funktion kan se ud som følgende
+For mange optimeringsproblemer kan objektfunktionen opskrives på formen
 \begin{align}
 f(\beta_1, \dots, \beta_p) = g(\beta_1, \dots, \beta_p) + \sum_{j = 1}^p h_j \del{\beta_j}, \label{eq:5.37}
 \end{align}
-hvor $g: \R^p \rightarrow \R $ er differentialble og konveks, og hvor den univariate funktion $h_j : \R \rightarrow \R$ er konveks, men ikke nødvendigvis differentialble. Udfra Tseng .... kan det vises at en hver konveks funktion, som $f$ i \eqref{eq:5.37}, konvergerer coordinate descent algoritmen \eqref{eq:5.36} til det globale minimum. 
-?? bevis
- 
- 
-\begin{alg} [Coordinate descent]
-\begin{enumerate}
+svarende til \eqref{eq:opdeling_fkt}, hvor \(g \del{\beta} = \frac{1}{2n} \Vert \y - \X \beta \Vert_2^2\) og \(h_j \del{\beta_j} = \lambda \vert \beta_j \vert\) for lasso.
+Hvis \(g: \ \R^p \rightarrow \R\) er konveks og differentialbel og $h_j: \ \R \rightarrow \R$ er konveks, men ikke nødvendigvis differentialbel, da viste \citep{Tseng_coordinate}, at for enhver konveks funktion som kan opdeles som \eqref{eq:5.37}, konvergerer coordinate descent algoritmen \eqref{eq:5.36} til det globale minimum. 
 %
-\item Standardisere prædiktorerne til at have en middelværdi 0 og $\norm{\textbf{x}_j}_2^2$ for alle $j$.
+\begin{alg} [Coordinate descent for lasso problemet]
+\begin{enumerate}
+\item Standardisere prædiktorerne \(\x_1, \ldots, \x_p\) og centre responsvariablen.
+Sæt alle \(\beta_j = 0\).
+Definer et gitter af værdier \(\lambda_1 > \lambda_2 > \ldots\), hvor \(\lambda_1\) vælges således at \(\hat{\beta}^\text{lasso} \del{\lambda_1} =\mathbf{0}\).
+\item For hvert \(\Lambda \in \cbr{\lambda_1, \lambda_2, \ldots}\), gentages følgende steps over \(j = 1, \ldots, p\) indtil konvergens:
+\begin{itemize}
+\item Udregn de partielle residualer \(r_{ij} = y_i - \sum_{k \neq j} x_{ik} \beta_k\)
+\item Udregn simple mindste kvadraters koefficienter af disse residualer på \(j\)'te prædiktor: \(\beta_j^* = \frac{1}{n} \sum_{i=1}^n x_{ij} r_{ij}\) 
+\item Opdater \(\beta_j\) udfra soft-thresholding
+\begin{align}
+\beta_j \rightarrow S_\lambda \del{\beta_j^*}. \label{eq:update_coordinate}
+\end{align}
+\end{itemize}
 \end{enumerate}
 \end{alg}
+%
+Vi starter dermed med den mindste værdi \(\lambda_1\) for hvilket \(\hat{\beta}^\text{lasso} \del{\lambda_1} = 0\), herefter mindskes \(\lambda\) og cycle igennem variablerne indtil konvergens.
+Derefter aftages \(\lambda\) igen og processen gentages hvor vi anvender den tidligere løsning som begyndelsesværdi for den nye værdi af \(\lambda\).
+
+Coordinate descent kan være hurtigere end LARS algoritmen særligt for store problemer.
+Dette skyldes at \eqref{eq:update_coordinate} hurtigt kan opdateres som \(j\) varierer, og ofte er opdateringen at lade \(\beta_j = 0\).
+Coordinate descent algoritmen for lasso giver ikke den fulde lasso løsningsstil som LARS algoritmen, men kan bruges til at udregne lasso løsningerne for \(\Lambda\).
+
+\newpage

@@ -1,15 +1,15 @@
 \chapter{Optimeringsmetoder} \label{kap:optimeringsmetoder}
 \textit{Lasso problemet er et quadratic programming problem med lineære uligheder. 
-Flere algoritmer kan løse dette problemet grundet konveksiteten.  
+Flere algoritmer kan løse dette problem grundet konveksiteten.  
 I dette kapitel beskrives to af disse algoritmer kaldet coordinate descent og Least Angle Regression (LARS).} \\[4mm]
 %
 For en model matrix i general position (se definition \ref{defn:general_position}) findes der ikke en eksplicit løsning for lasso estimatoren.
 Men som sagt er objektfunktionen af lasso problemet \eqref{eq:2.5} konveks.
 For at vise dette kan objektfunktionen skrives som
-\begin{align*}
-f \del{\beta} = g \del{\beta} + h \del{\beta},
-\end{align*}
-hvor \(g \del{\beta} = \Vert \y - \X \beta \Vert_2^2\) og \(h \del{\beta} = \lambda \Vert \beta \Vert_1\).
+\begin{align}
+f \del{\beta} = g \del{\beta} + h \del{\beta}, \label{eq:opdeling_fkt}
+\end{align}
+hvor \(g \del{\beta} = \frac{1}{2n} \Vert \y - \X \beta \Vert_2^2\) og \(h \del{\beta} = \lambda \Vert \beta \Vert_1\).
 For \(g \del{\beta}\) udregnes Hessematricen
 \begin{align*}
 \Delta^2 g \del{\beta} = \frac{\partial^2 g }{\partial \beta_i \partial \beta_j} = 2 \X^T \X.
@@ -42,5 +42,5 @@ I punkter hvor \(f\) ikke er differentialble, da er subdifferentialet en konveks
 
 
 \input{main/ch/sub/coordinate_descent}
-\input{main/ch/sub/lars_theory}
+\input{main/ch/sub/lars_theory1}
 

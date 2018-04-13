@@ -17,6 +17,11 @@ b_hat = coef(lasso_fit, s = lasso_cv$lambda.1se)
 idx_hat = which(b_hat != 0) 
 b_hat[idx_hat, ]
 
+c <- tidy(coef(lasso_cv, s= lasso_cv$lambda.1se))
+write.csv(c, file = "lasso_coef.csv") 
+
+c <- tidy(lasso_cv$lambda.1se)
+write.csv(c, file = "lasso_lambda.csv") 
 
 # ridge -------------------------------------------------------------------
 

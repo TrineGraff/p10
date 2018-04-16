@@ -1,5 +1,45 @@
 \chapter{Dynamisk faktor modeller}
-\textit{I dette kapitel introduceres dynamisk faktor modeller.}
+\textit{I dette kapitel introduceres dynamisk faktor modeller. Kapitlet er baseret på \citep{stock_watson_2002a}}
+
+
+Faktor modellen er givet ved
+\begin{align}
+X_t = \Lambda F_t + e_t,
+\end{align}
+hvor 
+
+Nedenfor introduceres nogle modelantagelse.
+\begin{ass}[Faktorer og faktor loadings]
+\begin{enumerate}
+\item \(n^{-1} \Lambda^T \Lambda \rightarrow I_r\)
+\item \(\E{F_t F_t^T} = \Sigma_{FF}\), hvor \(\Sigma_{FF}\) er en diagonalmatrix med indgange \(\sigma_{ii} > \sigma_{jj} > 0\) for \(i < j\)
+\item \(\abs{\lambda_{i,m}} \leq \bar{\lambda} < \infty\) for \(i = 1, \ldots, n\) og \(m = 1, \ldots, r\)
+\item \(T^{-1} \sum_{t=1}^T F_t F_t^T \overset{p}{\rightarrow} \Sigma_{FF}\) 
+\end{enumerate}
+\end{ass}
+
+\begin{ass}[Momenter af fejlene \(e_t\)]
+\begin{enumerate}
+\item \(\lim_{n \rightarrow \infty} \sup_t \sum_{u = - \infty}^\infty \abs{\E{n^{-1} e_t^T e_{t+u}}} < \infty\)
+\item \(\lim_{n \rightarrow \infty} \sup_t n^{-1} \sum_{j = 1}^n \abs{\E{e_{it} e_{jt}}} < \infty\)
+\item \(\lim_{n \rightarrow \infty} \sup_{t,s} n^{-1} \sum_{i=1}^n \sum_{j=1}^n \abs{\text{cov}\del{e_{is} e_{it}, e_{js} e_{jt}}} < \infty\)
+\end{enumerate}
+\end{ass}
+
+Estimation
+De dynamiske faktorer estimeres ikke-parametrisk udfra principal komponent analyse.
+
+Betragt en ikke-lineær mindste kvadraters objekt funktion
+\begin{align*}
+V \del{h}
+\end{align*}
+
+
+
+
+
+
+
 
 
 Formålet med faktor analyse er at beskrive covariansen mellem variable i form af nogle underliggende, ikke observerbare stokatiske mængder kaldet faktorer.
@@ -10,22 +50,28 @@ Begge kan anses som et forsøg på at approksimere kovarians matricen \(\Sigma\)
 
 
 
+Dynamiske faktor modeller er udviklet af Geweke (1977) som en tidsrække udvidelse af faktor modellen som tidligere var udviklet for tværsnitsdata.
+få faktorer kan forklare en stor andel af variansen af mange makroøkonomiske tidsrækker.
+
+latent dynamisk faktorer \(f_t\)
+de latente faktorer følger en tidsrække som er en vektor autoregression (VAR)
+
 
 Den dynamiske faktor model er givet ved
 \begin{align}
 X_t &= \lambda(L) f_t + e_t \label{eq:dfm1}\\
 f_t &= \Psi(L) f_{t-1} + \eta_t, \label{eq:dfm2}
 \end{align} 
-hvor $X_t$ og $e_t$ er \(n\) dimensionale vektorer og $f_t$ og $\eta_t$ er \(q\) dimensionelle vektorer og lag polynomierne $\lambda(L)$ og $\Psi(L)$ er henholdsvis $n \times q$ og $q \times q$ matricer.
-Det $i$'te lag polynomie $\lambda_i(L)$ kaldes den dynamiske faktor loading for $i$'te tidsrække $X_{it}$ og $\lambda_i(L) f_t$ kaldes den fælles komponent af den $i$'te tidsrække.
-Vi antager, at processerne i -- og -- er stationære.
-Yderligere antages at $\E{e_t \eta_{t-k}^T}=0$ for alle $k$ og at
+hvor $X_t$ og $e_t$ er \(N\) dimensionselle vektorer og $f_t$ og $\eta_t$ er \(q\) dimensionselle vektorer og lag polynomierne $\lambda(L)$ og $\Psi(L)$ er henholdsvis $n \times q$ og $q \times q$ matricer.
+Det $i$'te lag polynomie $\lambda_i(L)$ kaldes den dynamiske faktor loading for $i$'te tidsrække $X_{it}$ og $\lambda_i(L) f_t$ kaldes fælles komponenten af den $i$'te tidsrække.
+Vi antager, at processerne i \eqref{eq:dfm1} og \eqref{eq:dfm2} er stationære.
+Yderligere antages at $\E{e_t \eta_{t-k}^T}=0$ for alle $k$ og alle lags.??
 
 For den eksakte dynamiske faktor model antages idiosyncratic disturbances at være mutually uafhængige for alle leads og lags, dvs $\E{e_{it} e_{js}}=0$ for alle $s$ hvis $i \neq j$.
 
 Den optimale one-step ahead forecast af den $i$'te variabel er
 \begin{align*}
-\E{X_{it+1}} &= \E{\lambda_i(L)f_{t+1} + e_{it+1} \given X_t,f_t,X_{t-1},f_{t-1},\ldots} \\
+\E{X_{it+1} \given X_t, f_t, X_{t-1}, f_{t-1}, \ldots} &= \E{\lambda_i(L)f_{t+1} + e_{it+1} \given X_t,f_t,X_{t-1},f_{t-1},\ldots} \\
 &= \E{\lambda_i(L)f_{t+1} \given X_t,f_t,X_{t-1},f_{t-1},\ldots} + \E{e_{it+1} \given X_t,f_t,X_{t-1},f_{t-1},\ldots} \\
 &= \E{\lambda_i(L)f_{t+1} \given f_t, f_{t-1}, \ldots} + \E{e_{it+1} \given e_{it}, e_{it-1}, \ldots} \\
 &= \alpha(L) f_t + \delta(L) X_{it},
@@ -33,13 +79,23 @@ Den optimale one-step ahead forecast af den $i$'te variabel er
 hvor anden sidste lighed kommer af \eqref{eq:dfm2} og sidste lighed følger af \eqref{eq:dfm1} samt den eksakte dfm antagelse.
 Dermed stiger dimensionen af regression ikke hvis vi tilføjer variabler.
 
-Inden prædiktion, skal vi estimerer faktorerne og bestemme antallet af faktorer.
+Inden prædiktion skal vi estimerer faktorerne og bestemme antallet af faktorer.
 Nedenfor introduceres nogle metoder til at estimerer faktorerne.
 
 \section{Estimation af faktorer}
+I --- præsenteres flere metoder til dette formål.
+Først anvende gaussian maksimum likelihood estimation med kalman filteret.
+nonparametrisk estimation med averaging metoder.
+-----
+
+Vi undgår skæringen og antager at data er transformeret til at være stationært.
+dvs standaridiser variablerne.
+
+
+
 Først opskrives DFM som en lineær state space model.
-Lad $p$ være ordenen af lag polynomiet $\lambda(L)$, lad $F_t=(f_t^T,f_{t-1}^T,\ldots,f_{t-p}^T)^T$ betegne en $r \times 1$ vektor og lad $\Lambda=(\lambda_0,\lambda_1,\ldots,\lambda_p)$, hvor $\lambda_i$ er en $n \times q$ matrix af koefficienter af det $i$'te lag i $\lambda(L)$.
-Tilsvarende, lader vi $\Phi(L)$ være en matrix bestående af 0 og 1, og elementerne af $\Psi(L)$ således at vektor autoregressionen i \eqref{eq:dfm2} er skrevet ift $F_t$.
+Lad $p$ være ordenen af lag polynomiet $\lambda(L)$, lad $F_t=(f_t^T,f_{t-1}^T,\ldots,f_{t-p}^T)^T$ betegne en $r \times 1$ vektor og lad $\Lambda=(\lambda_0,\lambda_1,\ldots,\lambda_p)$, hvor $\lambda_i$ er en $n \times q$ matrix med koefficienter af det $i$'te lag i $\lambda(L)$.
+Tilsvarende, lader vi $\Phi(L)$ være en matrix bestående af 0 og 1, og elementerne af $\Psi(L)$ således at vektor autoregressionen i \eqref{eq:dfm2} er skrevet udfra $F_t$.
 Med denne notation kan DFM omsrives til
 \begin{align}
 X_t &= \Lambda F_t + e_t \label{eq:dfm4}\\
@@ -47,38 +103,37 @@ X_t &= \Lambda F_t + e_t \label{eq:dfm4}\\
 \end{align}
 hvor $G$ er en matrix bestående af 0 og 1 som vælges således at \eqref{eq:dfm5} og \eqref{eq:dfm2} er ækvivalente.
 
-Principal komponent estimatoren kan udledes udfra 
+Motivationen for at betragte tværsnit averaging af \(X_t\) til estimation af faktorerne er at de vægtede gennemsnit af idiosyncratisk disturvances vil konvergere mod nul af store tals lov, således at det kun er den lineære kombinationer af faktorerne som forbliver.
+Disse tværsnits averaging estimationerer er baseret på den statisk repræsentation i \eqref{eq:dfm4}.
+Estimatorerne er nonparametrisk, da de ikke kræver en parametrisk model for faktorerne \(F_t\) eller for dynamikken af isiosyncratisk.
+Istedet behandles \(F_t\) som en \(r\) dimensionel parameter der skal estimeres udfra en \(N\)-dimensional datavektor \(X_t\).
+
+Principal komponent estimatoren kan udledes udfra følgende mindste kvadraters problem
 \begin{align}
-\min_{F_1,\ldots,F_T, \Lambda} V_r(\Lambda, F), \text{ hvor } V_r(\Lambda, F)=\frac{1}{nT} \sum_{t=1}^T(X_t-\Lambda F_t)^T(X_t - \Lambda F_t), \label{eq:dfm11}
+\min_{F_1,\ldots,F_T, \Lambda} \cbr{\frac{1}{NT} \sum_{t=1}^T(X_t-\Lambda F_t)^T(X_t - \Lambda F_t)}, \ \text{underlagt at } N^{-1} \Lambda^T \Lambda = I_r. \label{eq:dfm11}
 \end{align}
-underlagt at $n^{-1} \Lambda^T \Lambda = I_r$.
-For at løse \eqref{eq:dfm11} minimeres $V_r\del{\Lambda,F}$ mht $F_t$ givet $\Lambda$, hvor vi får
+For at løse optimeringsproblemet \eqref{eq:dfm11} differentieres objektfunktionen mht \(F_t\), dette udtryk sættes lig 0 og vi isoleres for \(F_t\), hvoraf vi får, at
 \begin{align}
-\hat{F}_t \del{\Lambda \del{\Lambda^T \Lambda}^{-1}}=\del{\Lambda^T \Lambda}^{-1} \Lambda^T X_t. \label{eq:dfm12}
+\frac{\partial}{\partial F_t} \del{(X_t-\Lambda F_t)^T(X_t - \Lambda F_t)} = -2 \Lambda^T X_t + 2 \Lambda^T \Lambda F_t \quad \Longrightarrow \quad \hat{F}_t = \del{\Lambda^T \Lambda}^{-1} \Lambda^T X_t. \label{eq:dfm12}
 \end{align}
-Hvis vi indsætter \eqref{eq:dfm12} i \eqref{eq:dfm11} fås concentrared objekt funktion
+Hvis vi indsætter \eqref{eq:dfm12} i \eqref{eq:dfm11} fås concentrate objektfunktion
 \begin{align*}
+\min_{\Lambda} \cbr{\frac{1}{NT} \sum_{t=1}^T \del{X_t^T X_t - 2 F_t^T \Lambda^T X_t + F_t^T \Lambda^T \Lambda F_t}} \\
 \min_\Lambda \frac{1}{T} \sum_{t=1}^T X_t^T \sbr{I- \Lambda \del{\Lambda^T \Lambda}^{-1} \Lambda} X_t.
 \end{align*}
-Dette minimerings problem er ækvivalent til følgende maksimerings problem
+Dette minimeringsproblem er ækvivalent til følgende maksimeringsproblem
 \begin{align*}
 \max_\Lambda \text{tr} \cbr{\del{\del{\Lambda^T \Lambda}^{-1/2}}^T \Lambda^T \del{T^{-1} \sum_{t=1}^T X_t X_t^T} \Lambda \del{\Lambda^T \Lambda}^{-1/2}},
 \end{align*}
-som er ækvivalent med $\max_\Lambda \Lambda^T \hat{\Sigma}_{XX} \Lambda$ underlagt at $n^{-1} \Lambda^T \Lambda=I_r$, hvor $\hat{\Sigma}_{XX}=T^{-1} \sum_{t=1}^T X_t X_t^T$
+som er ækvivalent med $\max_\Lambda \Lambda^T \hat{\Sigma}_{XX} \Lambda$ underlagt at $N^{-1} \Lambda^T \Lambda=I_r$, hvor $\hat{\Sigma}_{XX}=T^{-1} \sum_{t=1}^T X_t X_t^T$.
+Løsningen til dette problemet er at sætte \(\hat{\Lambda}\) lig med de skalerede egenvektorer af \(\hat{\Sigma}_{XX}\), svarende til dens \(r\) største egenværdier.
 
-Da $\hat{\Lambda}^T \hat{\Lambda}=nI_r$ følger det af mindste kvadraters metode estimatoren af $F_t$ er $\hat{F}_t=\hat{F}_t \del{n^{-1}\hat{\Lambda}}=n^{-1}\hat{\Lambda}^TX_t$, som er de skaleret første $r$ principal komponenter af $X_t$.
-
+Da $\hat{\Lambda}^T \hat{\Lambda}=N I_r$ følger det af mindste kvadraters estimatoren af $F_t$ er $\hat{F}_t=\hat{F}_t \del{N^{-1}\hat{\Lambda}}=N^{-1}\hat{\Lambda}^TX_t$, som er de skalerede $r$ første principal komponenter af $X_t$. \\[4mm]
+%
 De principale komponenter udregnes ved at første komponent beskriver så meget af variation i data som muligt, dvs at den har den største varians, anden komponent er da en lin kombination af variablerne som er ukorreleret med den første principal komponent og den har den største varians underlagt denne betingelse.
 Dvs hver komponent har den største muligt varians under betingelsen af den er ortgonal til de foregående komponenter.
 Dvs den nye tidsrækker er ukorreleret og den første principal komponenter i tidsrækkerne har det største variantion i den originale tidsrækker.
 
-
-udvælgelse af faktorer
-to tilgange til at vælge faktorer
-- financial økonomisk teori (makroøkonomiske variable)
-- statistisk tilgang: 
-- faktor analyse
-- principal komponent analyse (PCA)
 
 PCA
 statistisk procedure der anvender en ortogonal transformation til at konverterer en mængde observationer af korrelerede variable til en mængde af værdier af ukorreleret variable, som kaldes principale komponenter (PC)
@@ -86,6 +141,13 @@ Denne transformation defineres således at første PC har den størst mulige var
 
 
 s. 203 i hastie
+
+
+Optimeringsproblemet kan løses ved at sætte løsningen lig matricen af de \(r\) egenvektorer af \(\X^T \X\) som svarer til de \(r\) største egenværdier af \(\X^T \X\).
+\(\Lambda\) konstrueres som \(\sqrt{n} \cdot \nu_r\), hvor \(\nu_r\) er egenvektorerne svarende til de \(r\) største egenværdier af \(\X^T \X\).
+Normaliseringen $n^{-1} \Lambda^T \Lambda=I_r$ medfører, at\(\hat{F}^r = n^{-1} \X \hat{\Lambda}\).
+%Yderligere en reskaleret estimator af faktorerne er defineret som \(\bar{F}^r = \hat{F}^r \del{{\hat{F}^r}^T \hat{F}^r T^{-1}}^{1/2}\), og den asymptotiske egenskaber er givet i sætn 1 af Bai og Ng (2002).
+
 
 \section{Valg af antal faktorer}
 Der findes flere metoder til at estimere antallet af static faktorer $r$ og antallet af dynamiske faktorer $q$.
@@ -110,7 +172,7 @@ For dynamiske faktor modeller udviklede --- at minimere penalized sum of squares
 \end{align*}
 hvor \(V_r \del{\hat{\Lambda}, \hat{F}}\) er objektfunktionen i \eqref{eq:dfm11} evalueret i de principielle komponenters estimatorer \(del{\hat{\Lambda}, \hat{F}}\) og hvor \(g \del{n,T}\) er en straffaktor således at \(g \del{n,T} \rightarrow 0\) og \(\min \cbr{n, T} g \del{n,T} \rightarrow \infty\) når \(n, T \rightarrow \infty\).
 
-Tre af straf funktioerne foreslået af Bai og Ng 
+Tre af straf funktioerne foreslået af \citep{Bai_Ng}
 \begin{align*}
 g_1 \del{n,T} &= \frac{n + T}{n T} \ln \del{\frac{nT}{n + T}}, \\
 g_2 \del{n,T} &= \frac{n + T}{n T} \ln \del{ \min \cbr{n, T}}, \\

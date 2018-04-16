@@ -13,5 +13,4 @@ data_test = data_raw[-c(1:idx),]
 test_dato = data_test$dato
 data_test = data_test[, -c(1, 2)]
 
-
 data = data_raw[, -c(1, 2)]

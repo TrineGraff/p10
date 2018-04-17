@@ -1,83 +1,70 @@
-\chapter{Dynamisk faktor modeller}
-\textit{I dette kapitel introduceres dynamisk faktor modeller. Kapitlet er baseret på \citep{stock_watson_2002a}}
-
-
+\chapter{Faktor modellen}
+\textit{I dette kapitel introduceres faktor modellen, som kan reducere antallet af variable til et mindre andtal faktorer, der beskriver data. 
+Kapitlet er baseret på \citep{stock_watson_2002a}} \\[2mm]
+%
 Faktor modellen er givet ved
 \begin{align}
-X_t = \Lambda F_t + e_t,
+X_t = \Lambda F_t + e_t, \label{eq:factor_model}
 \end{align}
-hvor 
+hvor \(\Lambda\) er en \(N \times r\) matrix, \(F_t\) er en \(r \times 1\) vektor af faktorer og \(e_t\) er en \(N \times 1\) vektor af fejlled.
 
 Nedenfor introduceres nogle modelantagelse.
-\begin{ass}[Faktorer og faktor loadings]
+%
+\begin{ass}[Faktorer og faktor loadings] \label{ass:faktor}
 \begin{enumerate}
-\item \(n^{-1} \Lambda^T \Lambda \rightarrow I_r\)
+\item \(N^{-1} \Lambda^T \Lambda \rightarrow I_r\)
 \item \(\E{F_t F_t^T} = \Sigma_{FF}\), hvor \(\Sigma_{FF}\) er en diagonalmatrix med indgange \(\sigma_{ii} > \sigma_{jj} > 0\) for \(i < j\)
-\item \(\abs{\lambda_{i,m}} \leq \bar{\lambda} < \infty\) for \(i = 1, \ldots, n\) og \(m = 1, \ldots, r\)
+\item \(\abs{\lambda_{i,m}} \leq \bar{\lambda} < \infty\) for \(i = 1, \ldots, N\) og \(m = 1, \ldots, r\)
 \item \(T^{-1} \sum_{t=1}^T F_t F_t^T \overset{p}{\rightarrow} \Sigma_{FF}\) 
 \end{enumerate}
 \end{ass}
+%
+Antagelse \(\ref{ass:faktor}\) er nødvendige for at identificere faktorerne.
+Da \(\Lambda F_t = \Lambda R R^{-1} F_t\) for enhver ikke-singulær matrix \(R\), er normaliseringen påkrævet for entydig at definere faktorerne.
+Dvs at modellen med faktor loadings \(\Lambda R\) og faktorer \(R^{-1} F_t\) er ækvivalent med modellem med faktor loadings \(\Lambda\) og faktorer \(F_t\).
+Antagelse \ref{ass:faktor}.a) restringerer \(R\) til at være en ortonormal matrix mens antagelse \ref{ass:faktor}.b) yderligere restringerer \(R\) til at være en diagonal matrix med diagonal elementerne \(\pm 1\).
+Herfra vil vi kunne bestemme faktorerne op til fortegnsfejl.
 
-\begin{ass}[Momenter af fejlene \(e_t\)]
+Antagelse \ref{ass:faktor} tillader faktorerne at være korreleret, men også lags af faktorerne at være korreleret.
+
+Makroøkonomiske tidsrækker er sjældent i.i.d. og normalfordelte fejlled, da tidrækkerne er korreleret. 
+Derfor har vi følgende antagelser for fejlledene.
+%
+\begin{ass}[Momenter af fejlene \(e_t\)] \label{ass:momenter_fejl}
 \begin{enumerate}
-\item \(\lim_{n \rightarrow \infty} \sup_t \sum_{u = - \infty}^\infty \abs{\E{n^{-1} e_t^T e_{t+u}}} < \infty\)
-\item \(\lim_{n \rightarrow \infty} \sup_t n^{-1} \sum_{j = 1}^n \abs{\E{e_{it} e_{jt}}} < \infty\)
-\item \(\lim_{n \rightarrow \infty} \sup_{t,s} n^{-1} \sum_{i=1}^n \sum_{j=1}^n \abs{\text{cov}\del{e_{is} e_{it}, e_{js} e_{jt}}} < \infty\)
+\item \(\lim_{N \rightarrow \infty} \sup_t \sum_{u = - \infty}^\infty \abs{\E{N^{-1} e_t^T e_{t+u}}} < \infty\)
+\item \(\lim_{N \rightarrow \infty} \sup_t N^{-1} \sum_{j = 1}^N \abs{\E{e_{it} e_{jt}}} < \infty\)
+\item \(\lim_{N \rightarrow \infty} \sup_{t,s} N^{-1} \sum_{i=1}^N \sum_{j=1}^N \abs{\text{cov}\del{e_{is} e_{it}, e_{js} e_{jt}}} < \infty\)
 \end{enumerate}
 \end{ass}
+%
+Antagelse \ref{ass:momenter_fejl}.a) tillader serial korrelation for \(e_{it}\) processerne.
+Antagelse \ref{ass:faktor}.b) tillader \(\cbr{e_{it}}\) at være svagt korreleret på tværs af tidsrækkerne.
+Vi antager ikke normalitet, men \ref{ass:faktor}.c) begrænser størrelsen af fjerde momenter.
 
-Estimation
-De dynamiske faktorer estimeres ikke-parametrisk udfra principal komponent analyse.
-
-Betragt en ikke-lineær mindste kvadraters objekt funktion
-\begin{align*}
-V \del{h}
-\end{align*}
-
-
-
-
-
-
-
-
-
-Formålet med faktor analyse er at beskrive covariansen mellem variable i form af nogle underliggende, ikke observerbare stokatiske mængder kaldet faktorer.
-Faktor modellen er motiveret af: antag variablerne kan grupperes ved der korrelationer.
-Dvs antag at variablerne indenfor en bestemt gruppe er højt korreleret med hinanden, men relativ lav korreleret med variablerne i andre grupper.
-Faktor analyse kan betragtes som en udvidelse af principal component analyse.
-Begge kan anses som et forsøg på at approksimere kovarians matricen \(\Sigma\).
-
-
-
-Dynamiske faktor modeller er udviklet af Geweke (1977) som en tidsrække udvidelse af faktor modellen som tidligere var udviklet for tværsnitsdata.
-få faktorer kan forklare en stor andel af variansen af mange makroøkonomiske tidsrækker.
-
-latent dynamisk faktorer \(f_t\)
-de latente faktorer følger en tidsrække som er en vektor autoregression (VAR)
-
-
-Den dynamiske faktor model er givet ved
+Faktormodellen forecastes udfra
 \begin{align}
-X_t &= \lambda(L) f_t + e_t \label{eq:dfm1}\\
-f_t &= \Psi(L) f_{t-1} + \eta_t, \label{eq:dfm2}
-\end{align} 
-hvor $X_t$ og $e_t$ er \(N\) dimensionselle vektorer og $f_t$ og $\eta_t$ er \(q\) dimensionselle vektorer og lag polynomierne $\lambda(L)$ og $\Psi(L)$ er henholdsvis $n \times q$ og $q \times q$ matricer.
-Det $i$'te lag polynomie $\lambda_i(L)$ kaldes den dynamiske faktor loading for $i$'te tidsrække $X_{it}$ og $\lambda_i(L) f_t$ kaldes fælles komponenten af den $i$'te tidsrække.
-Vi antager, at processerne i \eqref{eq:dfm1} og \eqref{eq:dfm2} er stationære.
-Yderligere antages at $\E{e_t \eta_{t-k}^T}=0$ for alle $k$ og alle lags.??
+y_{t+h} = \beta_F^T F_t + \beta_\omega^T \omega_t + \epsilon_{t+h} \label{eq:forecast_ligning_faktor}
+\end{align}
+Vi antager, at forecasten er well behaved således at hvis \(\cbr{F_t}\) er observeret, da vil mindste kvadraters metode give en konsistent estimator af regressions koefficienterne.
+%
+\begin{ass} \label{ass:forecasting_ligning}
+Lad \(z_t = \del{F_t^T, \omega_t^T}\) og \(\beta = \del{\beta_F^T, \beta_\omega^T}\), da gælder følgende
+\begin{enumerate}
+\item \(\E{z_t z_t^T} = \Sigma_{zz} = \begin{pmatrix}
+\Sigma_{FF} & \Sigma_{F \omega} \\
+\Sigma_{\omega F} & \Sigma_{\omega \omega}
+\end{pmatrix} \) er en positiv definit matrix.
+\item \(T^{-1} \sum_{t=1}^T z_t z_t^T \overset{p}{\rightarrow} \Sigma_{zz}\)
+\item \(T^{-1} \sum_{t=1}^T z_t \epsilon_{t+h} \overset{p}{\rightarrow} 0\)
+\item  \(T^{-1} \sum_{t=1}^T \epsilon_{t+h}^2 \overset{p}{\rightarrow} \sigma^2\)
+\item \(\abs{\beta} < \infty\) 
+\end{enumerate}
+\end{ass}
+%
+Antagelse \ref{ass:forecasting_ligning}.a)-\ref{ass:forecasting_ligning}.c) medfører at regression af \(y_{t+h}\) på \(z_t\) giver konsistent OLS estimatorer.
+De yderligere antagelser er nødvendige for at sikre, at OLS regressions koefficienterne i regressionen af \(y_{t+h}\) på \(\del{\hat{F}_t^T, \omega_t^T}\), hvor \(F_t\) altså ikke er observeret.
 
-For den eksakte dynamiske faktor model antages idiosyncratic disturbances at være mutually uafhængige for alle leads og lags, dvs $\E{e_{it} e_{js}}=0$ for alle $s$ hvis $i \neq j$.
-
-Den optimale one-step ahead forecast af den $i$'te variabel er
-\begin{align*}
-\E{X_{it+1} \given X_t, f_t, X_{t-1}, f_{t-1}, \ldots} &= \E{\lambda_i(L)f_{t+1} + e_{it+1} \given X_t,f_t,X_{t-1},f_{t-1},\ldots} \\
-&= \E{\lambda_i(L)f_{t+1} \given X_t,f_t,X_{t-1},f_{t-1},\ldots} + \E{e_{it+1} \given X_t,f_t,X_{t-1},f_{t-1},\ldots} \\
-&= \E{\lambda_i(L)f_{t+1} \given f_t, f_{t-1}, \ldots} + \E{e_{it+1} \given e_{it}, e_{it-1}, \ldots} \\
-&= \alpha(L) f_t + \delta(L) X_{it},
-\end{align*}
-hvor anden sidste lighed kommer af \eqref{eq:dfm2} og sidste lighed følger af \eqref{eq:dfm1} samt den eksakte dfm antagelse.
-Dermed stiger dimensionen af regression ikke hvis vi tilføjer variabler.
 
 Inden prædiktion skal vi estimerer faktorerne og bestemme antallet af faktorer.
 Nedenfor introduceres nogle metoder til at estimerer faktorerne.
@@ -93,15 +80,15 @@ dvs standaridiser variablerne.
 
 
 
-Først opskrives DFM som en lineær state space model.
-Lad $p$ være ordenen af lag polynomiet $\lambda(L)$, lad $F_t=(f_t^T,f_{t-1}^T,\ldots,f_{t-p}^T)^T$ betegne en $r \times 1$ vektor og lad $\Lambda=(\lambda_0,\lambda_1,\ldots,\lambda_p)$, hvor $\lambda_i$ er en $n \times q$ matrix med koefficienter af det $i$'te lag i $\lambda(L)$.
-Tilsvarende, lader vi $\Phi(L)$ være en matrix bestående af 0 og 1, og elementerne af $\Psi(L)$ således at vektor autoregressionen i \eqref{eq:dfm2} er skrevet udfra $F_t$.
-Med denne notation kan DFM omsrives til
-\begin{align}
-X_t &= \Lambda F_t + e_t \label{eq:dfm4}\\
-\Phi(L) F_t &= G \eta_t, \label{eq:dfm5}
-\end{align}
-hvor $G$ er en matrix bestående af 0 og 1 som vælges således at \eqref{eq:dfm5} og \eqref{eq:dfm2} er ækvivalente.
+%Først opskrives DFM som en lineær state space model.
+%Lad $p$ være ordenen af lag polynomiet $\lambda(L)$, lad $F_t=(f_t^T,f_{t-1}^T,\ldots,f_{t-p}^T)^T$ betegne en $r \times 1$ vektor og lad $\Lambda=(\lambda_0,\lambda_1,\ldots,\lambda_p)$, hvor $\lambda_i$ er en $n \times q$ matrix med koefficienter af det $i$'te lag i $\lambda(L)$.
+%Tilsvarende, lader vi $\Phi(L)$ være en matrix bestående af 0 og 1, og elementerne af $\Psi(L)$ således at vektor autoregressionen i \eqref{eq:dfm2} er skrevet udfra $F_t$.
+%Med denne notation kan DFM omsrives til
+%\begin{align}
+%X_t &= \Lambda F_t + e_t \label{eq:dfm4}\\
+%\Phi(L) F_t &= G \eta_t, \label{eq:dfm5}
+%\end{align}
+%hvor $G$ er en matrix bestående af 0 og 1 som vælges således at \eqref{eq:dfm5} og \eqref{eq:dfm2} er ækvivalente.
 
 Motivationen for at betragte tværsnit averaging af \(X_t\) til estimation af faktorerne er at de vægtede gennemsnit af idiosyncratisk disturvances vil konvergere mod nul af store tals lov, således at det kun er den lineære kombinationer af faktorerne som forbliver.
 Disse tværsnits averaging estimationerer er baseret på den statisk repræsentation i \eqref{eq:dfm4}.
@@ -126,9 +113,15 @@ Dette minimeringsproblem er ækvivalent til følgende maksimeringsproblem
 \max_\Lambda \text{tr} \cbr{\del{\del{\Lambda^T \Lambda}^{-1/2}}^T \Lambda^T \del{T^{-1} \sum_{t=1}^T X_t X_t^T} \Lambda \del{\Lambda^T \Lambda}^{-1/2}},
 \end{align*}
 som er ækvivalent med $\max_\Lambda \Lambda^T \hat{\Sigma}_{XX} \Lambda$ underlagt at $N^{-1} \Lambda^T \Lambda=I_r$, hvor $\hat{\Sigma}_{XX}=T^{-1} \sum_{t=1}^T X_t X_t^T$.
-Løsningen til dette problemet er at sætte \(\hat{\Lambda}\) lig med de skalerede egenvektorer af \(\hat{\Sigma}_{XX}\), svarende til dens \(r\) største egenværdier.
+Løsningen til dette problemet findes ved at sætte \(\hat{\Lambda}\) lig med de skalerede egenvektorer af \(\hat{\Sigma}_{XX}\), svarende til dens \(r\) største egenværdier.
+dvs \(\Lambda\) konstrueres som \(\sqrt{n} \cdot \nu_r\), hvor \(\nu_r\) er egenvektorerne svarende til de \(r\) største egenværdier af \(\X^T \X\).
 
-Da $\hat{\Lambda}^T \hat{\Lambda}=N I_r$ følger det af mindste kvadraters estimatoren af $F_t$ er $\hat{F}_t=\hat{F}_t \del{N^{-1}\hat{\Lambda}}=N^{-1}\hat{\Lambda}^TX_t$, som er de skalerede $r$ første principal komponenter af $X_t$. \\[4mm]
+Da $\hat{\Lambda}^T \hat{\Lambda}=N I_r$ følger det af mindste kvadraters estimatoren af $F_t$ er $\hat{F}_t=\hat{F}_t \del{N^{-1}\hat{\Lambda}}=N^{-1}\hat{\Lambda}^TX_t$, som er de skalerede $r$ første principal komponenter af $X_t$. 
+
+Hvis \(N > T\), kan løsningen udregnes simplere ved at koncentrere \(\Lambda\) ud istedet for \(F_t\).
+%
+\\[4mm]
+%
 %
 De principale komponenter udregnes ved at første komponent beskriver så meget af variation i data som muligt, dvs at den har den største varians, anden komponent er da en lin kombination af variablerne som er ukorreleret med den første principal komponent og den har den største varians underlagt denne betingelse.
 Dvs hver komponent har den største muligt varians under betingelsen af den er ortgonal til de foregående komponenter.
@@ -139,14 +132,83 @@ PCA
 statistisk procedure der anvender en ortogonal transformation til at konverterer en mængde observationer af korrelerede variable til en mængde af værdier af ukorreleret variable, som kaldes principale komponenter (PC)
 Denne transformation defineres således at første PC har den størst mulige varians, og hver efterfølgende PC har igen den størst mulige varians givet de foregående PC er ortogonale.
 
+\subsection{Konsistens af estimatorer}
 
-s. 203 i hastie
+\begin{thm} \label{thm:factorthm1}
+Lad \(S_i\) betegne en variabel med værdi \(\pm 1\), lad \(N, T \rightarrow \infty\) og antag at antagelse \ref{ass:faktor} og \ref{ass:momenter_fejl} er opfyldt.
+Antag yderligere at \(k\) faktorer bliver estimeret.
+Da kan \(S_i\) vælges således at følgende gælder:
+\begin{enumerate}
+\item \(T^{-1} \sum_{t=1}^T \del{S_i \hat{F}_{it} - F_{it}}^2 \overset{p}{\rightarrow} 0\), for \(i=1, \ldots, r\).
+\item \(S_i \hat{F}_{it} \overset{p}{\rightarrow} F_{it}\), for \(i=1, \ldots, r\).
+\item \(T^{-1} \sum_{t=1}^T \hat{F}_{it}^2 \overset{p}{\rightarrow} 0\), for \(i=r+1, \ldots, k\).
+\end{enumerate}
+\end{thm}
 
 
-Optimeringsproblemet kan løses ved at sætte løsningen lig matricen af de \(r\) egenvektorer af \(\X^T \X\) som svarer til de \(r\) største egenværdier af \(\X^T \X\).
-\(\Lambda\) konstrueres som \(\sqrt{n} \cdot \nu_r\), hvor \(\nu_r\) er egenvektorerne svarende til de \(r\) største egenværdier af \(\X^T \X\).
-Normaliseringen $n^{-1} \Lambda^T \Lambda=I_r$ medfører, at\(\hat{F}^r = n^{-1} \X \hat{\Lambda}\).
-%Yderligere en reskaleret estimator af faktorerne er defineret som \(\bar{F}^r = \hat{F}^r \del{{\hat{F}^r}^T \hat{F}^r T^{-1}}^{1/2}\), og den asymptotiske egenskaber er givet i sætn 1 af Bai og Ng (2002).
+De principal komponent estimatorer er punktvis konsistent og har begrænset middelkvadratfejl (MSE) som konvergerer i sandsynlighed mod 0.
+Da antagelse \ref{ass:faktor} ikke identificerer fortegnet af faktorerne, er sætningen kun givet i forhold til fortegns justerede estimatorer.
+
+
+
+Estimationen vil være markant simplificeret hvis \(\Lambda\)  er kendt, da \(F_t\)  kunne estimeres udfra mindste kvadraters regression af \(\cbr{x_{it}}_{i=1}^N\) på \(\cbr{\lambda_i}_{i=1}^N\).
+Konsistent af den resulterende estimator vil studeres ved at analyser \(\hat{F}_t - F_t = \del{\Lambda^T \Lambda / N}^{-1} \del{N^{-1} \sum_{i=1}^N \lambda_i e_{it}}\).
+For \(N \rightarrow \infty\) gælder at \(\Lambda^T \Lambda / N \overset{p}{\rightarrow} I_r\) af antagelse \ref{ass:faktor}.a) og \(N^{-1} \sum_{i=1}^N \lambda_i e_{it} \overset{p}{\rightarrow} 0\) af antagelse \ref{ass:momenter_fejl}.a) og \ref{ass:faktor}.c), hvoraf konsistens af \(\hat{F}_t\) følger direkte.
+Hvis istedet \(F\) er kendt, da kan \(\lambda_i\) estimeres udfra regression \(\cbr{x_{it}}_{i=1}^N\) på \(\cbr{F_{t}}_{t=1}^T\) og konsistens kunne analysere ved at undersøge \(\del{T^{-1} \sum_{t=1}^T F_t F_t^T}^{-1} T^{-1} \sum_{t=1}^T F_t e_{it}\) for \(T \rightarrow \infty\) på lignende vis.
+
+Da både \(F\) og \(\Lambda\) er ukendt, kræves at \(N, T \rightarrow \infty\), hvilket er betydeligt sværere at bevise.
+Strategien for beviset er at vise at de første \(r\) egenvektorer af \(\del{NT}^{-1} X^T X\) opfører sig som de første \(r\) egenvektorer af \(\del{NT}^{-1} \Lambda^T F^T F \Lambda\), og da vise at disse egenvektorer kan bruges til at konstruere en konsistent estimator af \(F\).
+
+Næste resultat viser feasible forecast, som konstrueres udfra de estimerede faktorer og estimerede parametre, konvergerer til det optimale infeasible forecast, og dermed er asymptotisk efficient.
+Yderligere vises at de feasible regressions koefficient estimatorer er konsistente.
+
+Resultatet antager at forecast ligningen er estimeret ved at anvende \(k=r\) faktorer.
+Dette tager lidt generalitet, da der er flere metoder for ...
+
+\begin{thm}
+Antag antagelse \ref{ass:forecasting_ligning} og betingelserne i sætning \ref{thm:factorthm1} er opfyldt. 
+Lad \(\hat{\beta}_F\) og \(\hat{\beta}_\omega\) betegne OLS estimaterne af \(\beta_F\) og \(\beta_\omega\) fra regressionen af \(\cbr{y_{t+h}}_{t=1}^{T-h}\) på \(\cbr{\hat{F}_t, \omega_t}_{t=1}^{T-h}\). Da gælder følgende
+\begin{enumerate}
+\item \(\del{\hat{\beta}_F^T \hat{F}_T + \hat{\beta}_\omega \omega_T} - \del{\beta_F^T F_T + \beta_\omega \omega_T} \overset{p}{\rightarrow} 0\).
+\item \(\hat{\beta}_\omega - \beta_\omega \overset{p}{\rightarrow} 0\) og \(S_i\) defineret i sætning \ref{thm:factorthm1} kan vælges således at \(S_i \hat{\beta}_{iF} - \beta_{iF} \overset{p}{\rightarrow} 0\) for \(i = 1, \ldots, r\).
+\end{enumerate}
+\end{thm}
+\begin{proof}
+Først bevises b). 
+Lad \(\hat{\beta}\) være opdelt som \(\hat{\beta} = \del{\hat{\beta}_z^T \hat{\beta}_\omega^T}^T\), da skal vi vise at \(\hat{\beta}_\omega - \beta_\omega \overset{p}{\rightarrow} 0\) og \(S_i \hat{\beta}_{iz} \overset{p}{\rightarrow} 0\) for \(i = 1, \ldots, r\).
+Vi opskriver
+\begin{align*}
+\begin{pmatrix}
+S \hat{\beta}_z \\ \hat{\beta}_w
+\end{pmatrix} - \begin{pmatrix}
+\beta_z \\ \beta_w
+\end{pmatrix} &= \begin{pmatrix}
+T^{-1} \sum_{t=1}^T \hat{F}_t \hat{F}_t^T & T^{-1} S \sum_{t=1}^T \hat{F}_t w_t^T \\
+T^{-1} \sum_{t=1}^T w_t \hat{F}_t^T S & T^{-1} \sum_{t=1}^T w_t w_t^T
+\end{pmatrix}^{-1} \begin{pmatrix}
+T^{-1} S \sum_{t=1}^T \hat{F}_t \epsilon_{t+h} \\
+T^{-1} \sum_{t=1}^T w_t \epsilon_{t+h}
+\end{pmatrix} \\
+&\overset{p}{\rightarrow} \begin{pmatrix}
+\Sigma_{FF} & \Sigma_{Fw} \\ \Sigma_{wF} & \Sigma_{ww}   
+\end{pmatrix}^{-1} \begin{pmatrix}
+0 \\ 0
+\end{pmatrix} = 0.
+\end{align*}
+
+Herefter bevises a).
+
+Lad \(\hat{z}_t = \del{\hat{F}_t, \omega_t^T}\) og \(\hat{\beta} = \del{\sum_{t=1}^{T-h} \hat{z}^T \hat{z}}^{-1} \del{\sum_{t=1}^{T-h} \hat{z}_t y_{t+h}}\), da gælder, at \(\hat{\beta}^T \hat{z}_T - \beta^T z_T \overset{p}{\rightarrow} 0\).
+Dette ses ved at lade \(R = \begin{pmatrix}
+S & 0 \\ 0 & I_p
+\end{pmatrix}\), hvor \(p\) betegner antallet af elementer i \(\omega_t\), da fås
+\begin{align*}
+\hat{\beta}^T \hat{z}_T - \beta^T z_T &= \del{R \hat{\beta}}^T R \hat{z}_T - \beta^T z_t \\
+&= \del{R \hat{\beta} - \beta}^T z_T + \del{R \hat{\beta}}^T \del{R \hat{z}_T - z_T}
+\end{align*}
+\end{proof}
+
+
 
 
 \section{Valg af antal faktorer}
@@ -164,35 +226,50 @@ Her er egenværdierne ordnede fra den største til den mindste.
 For at bestemme antallet af faktorer ser vi efter en bøjning i scree plot.
 Antallet af komponenter er givet ved punktet hvori de resterende egenværdier er relativ lav og approksimativ samme størrelse.
 
+Antallet af faktorer kan baseres på informationskriterier.
+\citep{Bai_Ng} 
+Informationskriterierne betragter tradeoff mellem at inkludere en ekstra faktor, dvs en ekstra parameter i modellen, mod omkostningen af at øge variabiliteten som kommer af at estimere en anden parameter.
+Dette gøres ved at minimere en penalized likelihood, hvor straffaktoren stiger lineært med antallet af faktorer.
 
-
-For dynamiske faktor modeller udviklede --- at minimere penalized sum of squares
+For dynamiske faktor modeller betragtes
 \begin{align*}
-\text{IC} \del{r} = \ln V_r \del{\hat{\Lambda}, \hat{F}} + r g \del{n,T}
+\text{IC} \del{r} = \ln V_r \del{\hat{\Lambda}, \hat{F}} + r g \del{N,T}
 \end{align*}
-hvor \(V_r \del{\hat{\Lambda}, \hat{F}}\) er objektfunktionen i \eqref{eq:dfm11} evalueret i de principielle komponenters estimatorer \(del{\hat{\Lambda}, \hat{F}}\) og hvor \(g \del{n,T}\) er en straffaktor således at \(g \del{n,T} \rightarrow 0\) og \(\min \cbr{n, T} g \del{n,T} \rightarrow \infty\) når \(n, T \rightarrow \infty\).
+hvor \(V_r \del{\hat{\Lambda}, \hat{F}}\) er objektfunktionen i \eqref{eq:dfm11} evalueret i de principielle komponenters estimatorer \(\del{\hat{\Lambda}, \hat{F}}\) og hvor \(g \del{N,T}\) er en straffaktor således at \(g \del{N,T} \rightarrow 0\) og \(\min \cbr{N, T} \cdot g \del{N,T} \rightarrow \infty\) når \(N, T \rightarrow \infty\).
 
-Tre af straf funktioerne foreslået af \citep{Bai_Ng}
+Tre af straffaktionerne foreslået af \citep{Bai_Ng} er
 \begin{align*}
-g_1 \del{n,T} &= \frac{n + T}{n T} \ln \del{\frac{nT}{n + T}}, \\
-g_2 \del{n,T} &= \frac{n + T}{n T} \ln \del{ \min \cbr{n, T}}, \\
-g_3 \del{n,T} &= \frac{\ln \del{\min \cbr{n, T}}}{\min \cbr{n, T}}.
+g_1 \del{N,T} &= \frac{N + T}{N T} \ln \del{\frac{NT}{N + T}}, \\
+g_2 \del{N,T} &= \frac{N + T}{N T} \ln \del{ \min \cbr{N, T}}, \\
+g_3 \del{N,T} &= \frac{\ln \del{\min \cbr{N, T}}}{\min \cbr{N, T}},
 \end{align*}
+som resulterer i kriterierne der betegnes henholdsvis \(\text{IC}_1 \del{r}\), \(\text{IC}_2 \del{r}\) samt \(\text{IC}_3 \del{r}\).
 
-For \(n = T\) simplificeres \(g_2 \del{n,T} \) til \(2 \frac{1}{T} \ln \del{T}\)
+For \(N = T\) fås at \(g_2 \del{T,T} = 2T^{-1} \ln \del{T}\), som bekendt er \(2\) gange BIC straffaktoren.
+
+\citep{Bai_Ng} viste, at under betingelserne af approksimativ dfm, da er \(\hat{r}\) som minimere et af informationskriterierne med \(g \del{N,T}\) opfylder disse betingelser konsistent for den sande værdi af \(r\), under antagelse af at værdien af \(r\) er endelig og ikke stiger med \(\del{N, T}\).
 
 
 
-\section{Faktor-Augmented vektor autoregression}
-Bernanke, Boivin Eliasz (2005) introducerede faktor-augmented vektor autoregression (FAVAR).
+Estimation
+De dynamiske faktorer estimeres ikke-parametrisk udfra principal komponent analyse.
 
-kombinere standard structural VAR analyse med factor analyse for big data.
-
-Dette problem kan løses ved at give restriktioner udledt fra DFM.
-Vi omskriver dfm \eqref{eq:dfm4} på VAR form.
-Resultatet er 
+Betragt en ikke-lineær mindste kvadraters objekt funktion
 \begin{align*}
-\begin{vmatrix}
-F_t \\ X_t
-\end{vmatrix} = 
+V \del{h}
 \end{align*}
+
+
+
+
+
+
+
+
+
+Formålet med faktor analyse er at beskrive covariansen mellem variable i form af nogle underliggende, ikke observerbare stokatiske mængder kaldet faktorer.
+Faktor modellen er motiveret af: antag variablerne kan grupperes ved der korrelationer.
+Dvs antag at variablerne indenfor en bestemt gruppe er højt korreleret med hinanden, men relativ lav korreleret med variablerne i andre grupper.
+Faktor analyse kan betragtes som en udvidelse af principal component analyse.
+Begge kan anses som et forsøg på at approksimere kovarians matricen \(\Sigma\).
+

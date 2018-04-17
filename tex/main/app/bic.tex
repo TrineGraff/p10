@@ -4,7 +4,15 @@ I dette appendiks er der givet definitioner og sætninger, som anvendes i projek
 \begin{defn}[Bayesian informationskriterium (BIC)]\label{def:bic}
 BIC er givet ved
 \begin{align*}
-BIC = \ln\del{n}p - 2 \ln\del{\widehat{L)}}, \label{eq:bic}
+\text{BIC} = \ln\del{n}p - 2 \ln\del{\widehat{L)}}, \label{eq:bic}
 \end{align*}
 hvor $\widehat{L}$ er maksimerede værdi af likelihood funktion, $n$ er antallet observationer og $p$ er antallet af parameter.
 \end{defn} 
+
+\begin{defn}[En autoregressiv model af orden $p$] \label{def:ar}
+En autoregressiv model af orden $p$, betegnes AR($p$) er givet ved
+\begin{align*}
+y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \dots + \phi_p y_{t-p} + \omega_t, \qquad t = p+1, \dots, n,  
+\end{align*}
+hvor $y_t$ er stationær og $\phi_1 , \phi_2, \dots, \phi_p $ er konstanter  $\del{ \phi_p \neq 0}$ og $\omega_t \sim iid\del{0, \sigma_\omega^2}$, hvis ikke andet er angivet.  
+\end{defn}

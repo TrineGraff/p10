@@ -1,9 +1,10 @@
 # orden p -----------------------------------------------------------------
 #Vi bestemmer orden af vores træningsmængde 
-train = data$UNRATE[1:idx]
+source("/Users/trinegraff/Desktop/Projekt/R/data/setup_data.R")
+train = scale(data_train$UNRATE[1:idx], scale = FALSE)
 
 x.lag = function(x, p.max){
-  BIC.vektor = c(NA)
+  BIC.vektor = rep(NA, p.max)
   
   for (p in 1:p.max){
     y = x[(p.max + 1):length(x)]
@@ -18,10 +19,12 @@ x.lag = function(x, p.max){
     sigma2.hat = mean((y- x.lag %*% beta.hat)^2)
     BIC = log(sigma2.hat) + (p * log(n.obs)/n.obs)
     BIC.vektor[p] = BIC
-    print(which.min(BIC.vektor))
   }
+  print(which.min(BIC.vektor))
+  print(BIC.vektor)
 }
-x.lag(train, 12)
+
+test = x.lag(train, 24)
 
 
 #x.lag_beta =  [2,]  0.17571061
@@ -53,7 +56,8 @@ beta = function(x, p) {
   beta_hat = solve(crossprod(x_lag), crossprod(x_lag, y))
   sigma2.hat = mean((y- x_lag %*% beta_hat)^2)
   
-  list("beta_hat" = beta_hat)
+  print(list("beta_hat" = beta_hat, "x.lag" = x.lag))
 }
 
-beta(train, 11)
+x_est = beta(train, 1)
+

@@ -1,1 +1,34 @@
 \chapter{Benchmark}
+Vi har valgt at anvende to modeller, som vores benchmarkmodel. Den første er en autoregressiv model, da den er simpel og kun anvender tidligere lags af vores responsvariable. Derudover har vi med tidsrække data at gøre. 
+Derudover har vi valgt en faktor model, da det er den første selektions metode der blev introduceret. 
+Vi deler derfor kapitlet op i to dele. 
+
+\section{Autoregressive model}
+Den autoregressive model (AR($p$)) er givet i definition \ref{def:ar}. 
+AR($p$) modellen estimeres med mindste kvadraters metode (OLS), og ordenen $p \leq 24$ bestemmes udfra BIC. Den maksimale orden på 24, betyder at modellen kun betinger med højst to års tidligere data. Dette begrænsning har vi valgt at pålægge modellen fordi vi mener, at en model af højere orden er realistisk for vores data. 
+Forcastnings ligningen for en AR($p$) er givet ved 
+\begin{equation}
+\widehat{y}_{t+h \given t} = \sum_{j = 1}^p \widehat{\beta_j}^h_j y_{t-j+1}
+\end{equation}
+Vi får, at når $p = 1$ har vi den mindste BIC. 
+Derfor bliver en AR(1) vores benchmarkmodel. 
+Vi foretager et one-step-ahead forecast med én AR(1) model på vores testsæt.
+Forholdet mellem forecastet og de sande værdier er illustreret i figur \ref{fig:ar_arbejds}. 
+Det ses, at det ikke er et særligt godt forecast, da den ikke fanger udsvingerne. 
+Derudover viser tabel \ref{tab:ar_tab} værdierne af MSE og RMSE, som også er relative høje. 
+
+\imgfigh{ar_fc.pdf}{0.7}{Viser one-step-ahead forecast, hvor den røde linje er en AR(1) model. Hvor den grå linje er de observerede arbejdsløsheds observationer}{ar_arbejds}
+
+\input{fig/tab/ar_rmse_mae}
+ 
+Vi vil hernæst se om de standardiserede residualer er normalfordelte og ukorrelerede.
+Af figur \ref{fig:resid_ar} tydes, at de standardiserede residualer ikke følger en normalfordeling og derudover at der stadig er noget autokorrelation tilbage. 
+Tabel \ref{tab:ar_jb_lb} viser skewness, excess kurtosis samt p-værdierne for JB og LB test. 
+Vi ser at vi har positive værdier for både excess kurtosis og skewness, samt at JB-testen afviser nul hypotesen for normalitet. 
+LB-testen ved lag $10$ afviser også null hypotesen af afhængighed af både de standardiserede residualer og de kvadrede residualer. 
+
+\imgfigh{resid_ar.pdf}{1}{Analyse af de standardiserede residualer for AR(1). }{resid_ar}
+\input{fig/tab/ar_jb_lb}
+
+ 
+\section{Faktor model}

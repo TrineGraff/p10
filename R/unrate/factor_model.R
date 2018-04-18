@@ -1,24 +1,12 @@
+source("/Users/trinegraff/Desktop/Projekt/R/data/setup_data.R")
 library(matrixcalc)
 library(tidyverse)
 
-df <- read.csv("/Users/LouiseNygaardChristensen/Desktop/P10/R/data/transformed_data.csv")
-# 1 jan 1960 til 1 juli 2017 - svarende til 691 obs (dvs næsten 58 år)
-
-# opdeler data i træningsmængde og testmængde
-idx =  floor(0.80 * nrow(df)) 
-data_train = df[1:idx, -c(1, 2)]
-data_test = df[-c(1:idx), -c(1, 2)]
-
-# forecaster arbejdsløsheden
-y <- data_train$UNRATE
-X <- data_train[ , !(names(data_train) %in% "UNRATE")]
-
-
-data_train1 <- df[1:idx, -c(1)]
-X.df <- data_train1[ , !(names(data_train) %in% "UNRATE")]
+drops = c("UNRATE")
+x = scale(data[ , !(colnames(data) %in% drops)]) 
+y = scale(data[, "UNRATE"], scale = FALSE) 
 
 # Funktioner til at estimere faktorer i faktor-modellen -------------------
-
 getFactors <- function(X, r) {
   n.var <- ncol(X)
   XTX <- crossprod(X)
@@ -36,9 +24,9 @@ getFactors <- function(X, r) {
   return(list.out)
 }
 
+
 estFactors <- function(X, ic = 1, trace = FALSE) {
   X <- as.matrix(X.df[, -1])
-  X <- scale(X)
   n.obs <- nrow(X)
   n.var <- ncol(X)
   

@@ -1,4 +1,4 @@
-source("/Users/trinegraff/Desktop/Projekt/R/data/setup_data.R")
+source("../data/setup_data.R")
 library(Metrics)
 library(ggplot2)
 library(gridExtra)

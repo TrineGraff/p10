@@ -8,7 +8,7 @@ Den autoregressive model (AR($p$)) er givet i definition \ref{def:ar}.
 AR($p$) modellen estimeres med mindste kvadraters metode (OLS), og ordenen $p \leq 24$ bestemmes udfra BIC. Den maksimale orden på 24, betyder at modellen kun betinger med højst to års tidligere data. Dette begrænsning har vi valgt at pålægge modellen fordi vi mener, at en model af højere orden er realistisk for vores data. 
 Forcastnings ligningen for en AR($p$) er givet ved 
 \begin{equation}
-\widehat{y}_{t+h \given t} = \sum_{j = 1}^p \widehat{\beta_j}^h_j y_{t-j+1}
+\widehat{y}_{t+h \given t} = \sum_{j = 1}^p \widehat{\beta}_j^h y_{t-j+1}
 \end{equation}
 Vi får, at når $p = 1$ har vi den mindste BIC. 
 Derfor bliver en AR(1) vores benchmarkmodel. 
@@ -32,3 +32,4 @@ LB-testen ved lag $10$ afviser også null hypotesen af afhængighed af både de 
 
  
 \section{Faktor model}
+For at få et bedre overblik beskriver vi fremgangsmåden i punkter. 

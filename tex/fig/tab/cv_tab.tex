@@ -2,18 +2,18 @@
 \center
 \begin{tabular}{cccc | cccccc}
 \toprule
- &  \multicolumn{3}{c}{Lasso} &  \multicolumn{3}{c}{Ridge regression}  \\ \midrule
- & værdi & MSE & p & 	værdi & MSE & p \\
- $\lambda_{\min}$ &0.0014& 0.0019 & 20 	& 0.0123 &  0.0049 & 122 \\ 
- $\lambda_{1 \text{sd}}$ & 0.0027 & 0.0020 & 15 & 0.0148 & 0.0051 & 122  \\ \bottomrule \toprule
-  &  \multicolumn{3}{c}{Elastisk Net}  &  \multicolumn{3}{c}{Group Lasso}  \\ \midrule
- & værdi & MSE & p & værdi & MSE & p \\
- $\lambda_{\min}$ & 0.0014 & 0.0020 & 23 & 0.0003 & 0.0023  & 122\\
-  $\lambda_{1\text{sd}}$ & 0.0027 & 0.0021 & 15 & 0.0005 & 0.0024 & 122 \\  \bottomrule \toprule
- &  \multicolumn{3}{c}{Adaptive lasso m. OLS vægte}  &  \multicolumn{3}{c}{Adaptive lasso m. lasso vægte}  \\ \midrule
-  & værdi & MSE & p & værdi & MSE & p \\
- $\lambda_{\min}$  & 0.0868 & 0.0018 & 2 & 0.0034 & 0.0018 & 4   \\
- $\lambda_{1\text{sd}}$ & 0.4222 & 0.0018 & 2 & 0.0085 & 0.0019 & 4  \\ \bottomrule
+   \multicolumn{4}{c}{Lasso} &  \multicolumn{4}{c}{Ridge regression}  \\ \midrule
+ & værdi & MSE & p & & 	værdi & MSE & p \\
+ $\lambda_{\min}$ &0.0014& 0.0019 & 20 &	$\boldsymbol{\lambda_{\min}}$ &  \textbf{0.0123} &   \textbf{0.0049} &  \textbf{122} \\ 
+ $\boldsymbol{\lambda_{1 \text{sd}}}$ & \textbf{0.0027} & \textbf{0.0020} & \textbf{15} & $\lambda_{1 \text{sd}}$& 0.0148 & 0.0051 & 122  \\ \bottomrule \toprule
+    \multicolumn{4}{c}{Elastisk net, $\alpha = 0.9$}  &  \multicolumn{4}{c}{Group lasso}  \\ \midrule
+ & værdi & MSE & p && værdi & MSE & p \\
+ $\lambda_{\min}$ & 0.0014 & 0.0020 & 23 & $\boldsymbol{\lambda_{\min}}$& \textbf{0.0003} & \textbf{0.0023}  & \textbf{122} \\
+  $\boldsymbol{\lambda_{1\text{sd}}}$ & \textbf{0.0027} & \textbf{0.0021} & \textbf{15} &   $\lambda_{1\text{sd}}$  & 0.0005 & 0.0024 & 122 \\  \bottomrule \toprule
+  \multicolumn{4}{c}{Adaptive lasso m. OLS vægte}  &  \multicolumn{4}{c}{Adaptive lasso m. lasso vægte}  \\ \midrule
+  & værdi & MSE & p & & værdi & MSE & p \\
+ $\boldsymbol{\lambda_{\min}}$  & \textbf{0.0868} & \textbf{0.0018} & \textbf{2} &  $\boldsymbol{\lambda_{\min}}$   &   \textbf{0.2701} &  \textbf{0.0018} &  \textbf{2}   \\
+ $\lambda_{1\text{sd}}$ & 0.4222 & 0.0018 & 2 & $\lambda_{1\text{sd}}$  & 1.9052 & 0.0019 & 2  \\ \bottomrule
  \end{tabular}
-\caption{Tabellen viser $\lambda$ værdierne fundet udfra krydsvalidering, samt krydsvalideringsfejl, som er målt i MSE og antallet af parameter.} \label{tab:cv_tab}
+\caption{Tabellen viser $\lambda$ værdierne fundet udfra krydsvalidering, samt det genenmsnitlige krydsvalideringsfejl, som er målt i MSE og antallet af parameter. De værdier der er markeret med tykt er vores $\widehat{\lambda}$} \label{tab:cv_tab}
 \end{table}

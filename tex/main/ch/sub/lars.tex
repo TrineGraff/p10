@@ -2,6 +2,7 @@
 Vi vil gerne se om en anden iterativ metode til at løse vores problem kan ændre vores resultater. 
 I den her sektion anvender vi lars algoritmen. 
 Vi anvender pakken lars, som er baseret på  \citep{lars} til at udfører variable selektion med lasso.
+\subsection{Krydsvalidering}
 
 Vi kan se på figur \ref{fig:lars_lasso} at jo laverer vores L1 norm er, jo større krydsvalideringsfejl får vi.  
 
@@ -18,4 +19,5 @@ Derfor anvender vi $\lambda_{\min}$, da den har mindst krydsvaliderings fejl sam
 Tabellen viser hvilken variable lasso udvælger, og igen kan vi se at hovedparten af variablerne er i samme gruppe, som vores responsvariable. 
 Trods, at vi har to løsnings metoder for lasso vælger de forholdsvis de samme variable.
 
-- Elasticnet med lars 
+
+\subsection{BIC}

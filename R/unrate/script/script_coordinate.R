@@ -52,7 +52,7 @@ adap_ols_fit = glmnet(x, y, intercept = FALSE, family = "gaussian", alpha = 1, s
 b_hat = coef(lasso_fit, s = lasso_cv$lambda.1se)
 idx_hat = which(b_hat != 0) 
 
-v_l = 1/abs(b_hat[idx_hat -1, ]) #intercept er inkluderet
+v_l = 1/abs(b_hat[idx_hat, ]) #intercept er inkluderet
 
 adap_lasso = cv.glmnet(x[,idx_hat -1], y, intercept = FALSE, 
                        family = "gaussian", alpha = 1, standardize = FALSE, 

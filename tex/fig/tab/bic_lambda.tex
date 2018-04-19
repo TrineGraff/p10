@@ -1,0 +1,14 @@
+\begin{table}
+\center
+\begin{tabular}{llll} 
+\toprule
+& \multicolumn{1}{c}{${\widehat\lambda}$} & \multicolumn{1}{c}{BIC} & \multicolumn{1}{c}{p} \\ \midrule
+Lasso & 0.0023 & -6.1424 & 14  \\
+Ridge regression & 0.0112 & -4.2931 & 122 \\
+Elastik net, $\alpha = 0.9$ & 0.0019 & -6.1202 &17 \\
+Group lasso & $6.34 \cdot 10^{-5}$ & -5.0744 & 122 \\
+Adaptive lasso med OLS vægte & 0.0599 & -6.3174 & 2 \\
+Adaptive lasso med lasso vægte &  0.1058& -6.3174 & 2\\ \bottomrule
+ \end{tabular}
+\caption{Tabellen viser ${\widehat\lambda}$ fundet udfra BIC, samt BIC-værdien og antallet af parameter hver metode udvælger} \label{tab:bic_lambda}
+\end{table}

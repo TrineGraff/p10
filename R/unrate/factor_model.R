@@ -1,7 +1,6 @@
 source("/Users/trinegraff/Desktop/Projekt/R/data/setup_data.R")
 library(matrixcalc)
 library(tidyverse)
-
 drops = c("UNRATE")
 x = scale(data[ , !(colnames(data) %in% drops)]) 
 y = scale(data[, "UNRATE"], scale = FALSE) 
@@ -24,7 +23,7 @@ getFactors <- function(X, r) {
   return(list.out)
 }
 
-
+getFactors(x, 10)
 estFactors <- function(X, ic = 1, trace = FALSE) {
   X <- as.matrix(X.df[, -1])
   n.obs <- nrow(X)

@@ -10,7 +10,7 @@ y = scale(data[, "UNRATE"], scale = FALSE)
 forecast = function(data, p, idx = idx ) {
   fc = c(NA)
   for(k in 0:length(data[-c(1:idx)])) {
-    y = data[(p + 1):(length(data[1:idx]) + k)] #y bliver opdateret med den observerede værdi for hvert k
+    y = data[(p + 1):(length(data[1:idx]) + k)] #y bliver opdateret med den sande værdi for hvert k
     n.obs = length(y) 
 
     x_lag = matrix(nrow = n.obs, ncol = p)

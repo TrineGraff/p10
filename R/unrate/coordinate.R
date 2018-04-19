@@ -156,7 +156,7 @@ el = ggplot(df_el, aes(log(df_el$fit0.9.lambda),df_el$fit0.9.cvm )) +
   labs(x = expression(log(lambda)), y = "MSE", color = "") + 
   geom_vline(aes(xintercept= log(fit0.9$lambda.min), col = "blue"), linetype="dotted") +
   geom_vline(aes(xintercept= log(fit0.9$lambda.1se), col = "brown"), linetype="dotted") +
-  ggtitle("Elastic Net") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
+  ggtitle(expression(paste("Eleatik net, ", alpha, '= 0.9'))) + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
 
 
 df_grp = data.frame(gglasso_cv$lambda, gglasso_cv$cvm, gglasso_cv$cvsd)
@@ -168,7 +168,7 @@ grp = ggplot(df_grp, aes(log(df_grp$gglasso_cv.lambda),df_grp$gglasso_cv.cvm )) 
   labs(x = expression(log(lambda)), y = "MSE", color = "") + 
   geom_vline(aes(xintercept= log(gglasso_cv$lambda.min), col = "blue"), linetype="dotted") +
   geom_vline(aes(xintercept= log(gglasso_cv$lambda.1se), col = "brown"), linetype="dotted") +
-  ggtitle("Group Lasso") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
+  ggtitle("Group lasso") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
 
 
 df_adap = data.frame(adap_ols$lambda, adap_ols$cvm, adap_ols$cvsd)
@@ -180,7 +180,7 @@ df_adap = data.frame(adap_ols$lambda, adap_ols$cvm, adap_ols$cvsd)
   labs(x = expression(log(lambda)), y = "MSE", color = "") + 
   geom_vline(aes(xintercept= log(adap_ols$lambda.min), col = "blue"), linetype="dotted") +
   geom_vline(aes(xintercept= log(adap_ols$lambda.1se), col = "brown"), linetype="dotted") +
-  ggtitle("Group Lasso") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
+  ggtitle("Adaptive lasso med OLS vægte") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
 
   
 df_ad_l = data.frame(adap_lasso$lambda, adap_lasso$cvm, adap_lasso$cvsd)
@@ -192,7 +192,7 @@ ad_l = ggplot(df_ad_l, aes(log(df_ad_l$adap_lasso.lambda),df_ad_l$adap_lasso.cvm
   labs(x = expression(log(lambda)), y = "MSE", color = "") + 
   geom_vline(aes(xintercept= log(adap_lasso$lambda.min), col = "blue"), linetype="dotted") +
   geom_vline(aes(xintercept= log(adap_lasso$lambda.1se), col = "brown"), linetype="dotted") +
-  ggtitle("Group Lasso") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
+  ggtitle("Adaptive lasso med lasso vægte") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
 
 
 cv_plot = grid.arrange(l, r, el, grp, ad, ad_l)

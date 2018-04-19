@@ -1,4 +1,4 @@
-source("/Users/trinegraff/Desktop/Projekt/R/unrate/script/script_coordinate.R")
+source("script/script_coordinate.R")
 
 parm = function(x) {
   (sum(x != 0))

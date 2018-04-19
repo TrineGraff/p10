@@ -1,7 +1,7 @@
 # orden p -----------------------------------------------------------------
 #Vi bestemmer orden af vores træningsmængde 
 source("/Users/trinegraff/Desktop/Projekt/R/data/setup_data.R")
-train = scale(data_train$UNRATE[1:idx], scale = FALSE)
+train = scale(data_train$UNRATE, scale = FALSE)
 
 x.lag = function(x, p.max){
   BIC.vektor = rep(NA, p.max)
@@ -21,7 +21,7 @@ x.lag = function(x, p.max){
     BIC.vektor[p] = BIC
   }
   print(which.min(BIC.vektor))
-  print(BIC.vektor)
+  #print(BIC.vektor)
 }
 
 test = x.lag(train, 24)

@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 source("../data/setup_data.R")
+=======
+source("/Desktop/Projekt/R/data/setup_data.R")
+>>>>>>> Stashed changes
 library(Metrics)
 library(ggplot2)
 library(gridExtra)

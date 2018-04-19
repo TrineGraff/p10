@@ -1,8 +1,5 @@
-<<<<<<< Updated upstream
 source("../data/setup_data.R")
-=======
-source("/Desktop/Projekt/R/data/setup_data.R")
->>>>>>> Stashed changes
+
 library(Metrics)
 library(ggplot2)
 library(gridExtra)
@@ -11,7 +8,7 @@ library(grid)
 y = scale(data[, "UNRATE"], scale = FALSE)
 
 # Forecast - AR -----------------------------------------------------------
-forecast = function(data, p, idx = idx ) {
+forecast = function(data, p, idx = idx) {
   fc = c(NA)
   for(k in 0:length(data[-c(1:idx)])) {
     y = data[(p + 1):(length(data[1:idx]) + k)] #y bliver opdateret med den sande værdi for hvert k
@@ -24,7 +21,7 @@ forecast = function(data, p, idx = idx ) {
       }
     }
     beta_hat = solve(crossprod(x_lag), crossprod(x_lag, y))
-      fc[k+1] = data[(length(data[1:idx]) +k): (length(data[1:idx]) +k - p +1)] %*% beta_hat
+      fc[k+1] = data[(length(data[1:idx]) + k):(length(data[1:idx]) + k - p +1)] %*% beta_hat
   }
   print(list("fc" = fc))
   }

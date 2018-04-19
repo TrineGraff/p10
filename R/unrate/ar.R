@@ -1,5 +1,4 @@
 source("../data/setup_data.R")
->>>>>>> Stashed changes
 
 library(Metrics)
 library(ggplot2)

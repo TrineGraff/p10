@@ -1,7 +1,7 @@
 # orden p -----------------------------------------------------------------
 #Vi bestemmer orden af vores træningsmængde 
-source("/Users/trinegraff/Desktop/Projekt/R/data/setup_data.R")
 train = scale(data_train$UNRATE, scale = FALSE)
+source("../data/setup_data.R")
 
 x.lag = function(x, p.max){
   BIC.vektor = rep(NA, p.max)
@@ -16,7 +16,7 @@ x.lag = function(x, p.max){
       }
     }
     beta.hat = solve(crossprod(x.lag), crossprod(x.lag, y))
-    sigma2.hat = mean((y- x.lag %*% beta.hat)^2)
+    sigma2.hat = mean((y - x.lag %*% beta.hat)^2)
     BIC = log(sigma2.hat) + (p * log(n.obs)/n.obs)
     BIC.vektor[p] = BIC
   }
@@ -24,7 +24,7 @@ x.lag = function(x, p.max){
   #print(BIC.vektor)
 }
 
-test = x.lag(train, 24)
+test = x.lag(y_train, 24)
 
 
 #x.lag_beta =  [2,]  0.17571061
@@ -40,7 +40,7 @@ test = x.lag(train, 24)
 
 # Beta print --------------------------------------------------------------
 
-#Udfra overstående funktion er p bestemt. 
+# Udfra overstående funktion er p bestemt. 
 # Vi finder beta baseret på træningsmængden
 beta = function(x, p) {
   y = x[(p + 1):length(x)]

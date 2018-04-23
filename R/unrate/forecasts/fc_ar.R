@@ -12,16 +12,16 @@ forecast = function(data, p, idx = idx) {
   fc = c(NA)
   for(k in 0:length(data[-c(1:idx)])) {
     y = data[(p + 1):(length(data[1:idx]) + k)] #y bliver opdateret med den sande værdi for hvert k
-    n.obs = length(y) 
+    n = length(y) 
 
-    x_lag = matrix(nrow = n.obs, ncol = p)
+    x_lag = matrix(nrow = n, ncol = p)
     for (j in 1:p){
-      for (i in 1:n.obs){
+      for (i in 1:n){
         x_lag[i,j] = data[p+i-j]
       }
     }
     beta_hat = solve(crossprod(x_lag), crossprod(x_lag, y))
-      fc[k+1] = data[(length(data[1:idx]) + k):(length(data[1:idx]) + k - p +1)] %*% beta_hat
+      fc[k+1] = data[(length(data[1:idx]) + k):(length(data[1:idx]) + k - p + 1)] %*% beta_hat
   }
   print(list("fc" = fc))
   }

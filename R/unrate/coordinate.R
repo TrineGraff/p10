@@ -17,11 +17,8 @@ b_hat = coef(lasso_fit, s = lasso_cv$lambda.1se)
 idx_hat = which(b_hat != 0) 
 b_hat[idx_hat, ]
 
-c <- tidy(coef(lasso_cv, s= lasso_cv$lambda.1se))
-write.csv(c, file = "lasso_coef.csv") 
-
 c <- tidy(lasso_cv$lambda.1se)
-write.csv(c, file = "lasso_lambda.csv") 
+write.csv(c, file = "results/lasso_lambda.csv") 
 
 # ridge -------------------------------------------------------------------
 
@@ -93,6 +90,9 @@ b_hat_el = coef(fit_el, s = fit0.9$lambda.1se)
 idx_hat_el = which(b_hat_el != 0) 
 b_hat_el[idx_hat_el, ]
 
+c <- tidy(fit0.9$lambda.1se)
+write.csv(c, file = "results/el_lambda.csv") 
+
 # Group Lasso -------------------------------------------------------------------
 
 data.frame(
@@ -102,7 +102,8 @@ data.frame(
   p = apply(coef(gglasso_fit , s = c(gglasso_cv$lambda.min, gglasso_cv$lambda.1se)), 2, parm) 
 ) 
 
-
+c <- tidy(gglasso_cv$lambda.min)
+write.csv(c, file = "results/grp_lambda.csv") 
 # Adaptive lasso med OLS----------------------------------------------------------
 
 data.frame(

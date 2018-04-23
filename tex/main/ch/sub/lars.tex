@@ -1,8 +1,10 @@
 \section{Lars}
-Vi vil gerne se om en anden iterativ metode til at løse vores problem kan ændre vores resultater. 
-I den her sektion anvender vi lars algoritmen. 
-Vi anvender pakken lars, som er baseret på  \citep{lars} til at udfører variable selektion med lasso.
+I den her sektion anvender vi lars algoritmen med to modifikationer, som er beskrevet i sektionerne ... .,til at estimerer lasso og elastik net
+Vi anvender funktionerne \texttt{lars} og \texttt{elnet} fra R-pakkerne af hhv. samme navn.
+
 \subsection{Krydsvalidering}
+I denne sektion anvender funktionerne  \texttt{cv.lars} og \texttt{cv.enet} fra R pakkerne \texttt{lars} og \texttt{elnet}. 
+I ligning 
 
 Vi kan se på figur \ref{fig:lars_lasso} at jo laverer vores L1 norm er, jo større krydsvalideringsfejl får vi.  
 
@@ -19,5 +21,10 @@ Derfor anvender vi $\lambda_{\min}$, da den har mindst krydsvaliderings fejl sam
 Tabellen viser hvilken variable lasso udvælger, og igen kan vi se at hovedparten af variablerne er i samme gruppe, som vores responsvariable. 
 Trods, at vi har to løsnings metoder for lasso vælger de forholdsvis de samme variable.
 
+
+
+Som tidligere beskrevet kan vi for et fast $\lambda_2$ løse elastik net problemet med LARS-EN algoritmen. 
+Vi udregner
+anvender vi sekvens af værdier for $\lambda_2$, som 
 
 \subsection{BIC}

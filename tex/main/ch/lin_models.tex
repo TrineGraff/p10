@@ -14,8 +14,8 @@ Hvis ikke prædiktorerne standardiseres, da vil estimaterne afhænge af enhedern
 For fuldstændighed centreres responsvariablen også (\(\frac{1}{n} \sum_{i=1}^n y_{i} = 0\)).
 Hermed kan vi se bort fra skæringen $\beta_0$ i det givne optimeringsproblem.
 Givet en optimal løsning \(\hat{\beta}\) på det centreret data, kan vi finde løsningen for det ikke-centreret data: der gælder, at \(\hat{\beta}\) er den samme og 
-\(\hat{\beta}_0 = \bar{y} - \sum_{j=1}^p \bar{x}_j \hat{\beta}_j\), hvor \(\bar{y}\) og \(\cbr{\bar{x}_j}_{j=1}^p\) er gennemsnits for det ikke-centreret data.
-Derfor ser vi bort fra skæringen i resten af kapitlet.
+\(\hat{\beta}_0 = \bar{y} - \sum_{j=1}^p \bar{x}_j \hat{\beta}_j\), hvor \(\bar{y}\) og \(\cbr{\bar{x}_j}_{j=1}^p\) er gennemsnittene for det ikke-centreret data.
+Derfor ser vi bort fra skæringen i resten af kapitlet samt kapitel \ref{ch:generalisering_lasso}.
 
 Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og lad \(\X\) være en $n \times p$ matrix med $x_i \in \R^p$ som den i'te række, da kan \eqref{eq:OLS} omskrives til matrix-vektor form
 \begin{align*}
@@ -28,12 +28,11 @@ Som bekendt er løsningen hertil givet ved
 \end{align*}
 Estimatoren er unbiased, men har ofte høj varians. 
 Prædiktions performance kan ofte forbedres, hvis koefficienterne mindskes eller sættes direkte lig 0.
-Dette vil give estimatoren lidt bias, men reducere variansen, hvilket forbedre bias-variance tradeoff og dermed  prædiktions performance.
-Det anden årsag til at vi leder efter alternative til mindste kvadraters metode er, at med et højt antal prediktorer ønsker vi at bestemme en mindre delmængde af disse som siger mest om prædiktiorerne, dvs forbedre fortolkning.\\[4mm]
+Dette vil give estimatoren lidt bias, men reducerer variansen, hvilket forbedrer bias-variance tradeoff og dermed  prædiktions performance.
+En anden årsag til, at vi leder efter alternative til mindste kvadraters metode er, at med et højt antal prediktorer ønsker vi, at bestemme en mindre delmængde af disse som siger mest om prædiktiorerne, dvs forbedre fortolkning.\\[4mm]
 
 Hvis \(p > n\) da vil prediktorerne være kollineære og dermed har \(\X\) ikke fuld rang.
-Det betyder, at $\X^T \X$ er singulær og der findes derfor en ikke entydig estimator for mindste kvadraters metode.
-For \(n>p\) er OLS estimatoren ikke entydig. \\[4mm]
+Det betyder, at $\X^T \X$ er singulær og der findes derfor ikke en entydig estimator for mindste kvadraters metode. \\[4mm]
 %
 Nedenfor introduceres \textit{lasso} som kombinerer objektfunktionen i \eqref{eq:OLS} med en $\ell_1$-norm betingelse eller øvre grænse for summen af de absolutte værdier af koefficienterne.
 Denne betingelse mindsker koefficienterne og sætter endda nogle lig 0. 

@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+\filldraw [green] (-3,0) circle (2pt) node [below, black]{$\widehat{\tmu}_0$};
+\draw [<-] (6.8,0) node [below] {$\x_1$} -- (-3,0);
+\draw [<-] (1,4) node [above] {$\x_2$} --(-3,0);
+\draw [<-] (-5,4) node [above] {$\x_3$} --(-3,0);
+
+\draw [green] (4,0) node [above, black] {$\bar{\y}_1$} -- (-3,0);
+\filldraw [green] (4,0) circle (2pt) ;
+\draw [blue] (1,0) node [below, black] {$\widehat{\tmu}_1$} -- (-3,0);
+\draw [blue] [->] (-3,0) -- (-1.5, 0) node [below, black] {$\mathbf{u}_1$} ;
+
+\draw [green] (6,2.1) node [above, black] {$\bar{\y}_2$} -- (1,0);
+\filldraw [green] (6,2.1) circle (2pt) ;
+\draw [blue] (4,1.25) node [below, black] {$\widehat{\tmu}_2$} -- (1,0);
+\draw [blue] [->] (1,0) -- (2.6, 0.65) node [below, black] {$\mathbf{u}_2$} ;
+
+\draw [green] (5,3.5) node [above, black] {$\bar{\y}_3$} -- (4,1.25);
+\filldraw [green] (5,3.5) circle (2pt) ;
+\draw [blue] [<-] (4.4,2.2)  -- (4,1.25);
+\draw [blue] (4.8,3.1)-- (4.4,2.2);
+\draw [blue] [<-] (4.5,3.5) -- (4.8,3.1);
+\end{tikzpicture}

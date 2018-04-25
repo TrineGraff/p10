@@ -111,24 +111,25 @@ Givet data \(\del{\y, \X}\), defineres et augmented datasæt
 hvor \(\X^* \in \mathbb{R}^{\del{n+p} \times p}\) og \(\y^* \in \mathbb{R}^{n+p}\). Da kan estimatoren for ridge regression udledes udfra mindste kvadraters metode.
 \end{lem}
 %
-\begin{proof}
-Vi har, at
-\begin{align*}
-\del{\X^{*^T} \X^*}^{-1} \X^{*^T} \y^* &= \left( \begin{bmatrix}
-\mathbf{X} & \sqrt{\lambda} \mathbf{I}
-\end{bmatrix}
-\begin{bmatrix}
-\mathbf{X} \\ \sqrt{\lambda} \mathbf{I}
-\end{bmatrix} \right)^{-1}
-\begin{bmatrix}
-\mathbf{X} & \sqrt{\lambda} \mathbf{I}
-\end{bmatrix}
-\begin{bmatrix}
-\mathbf{y} \\ \mathbf{0}
-\end{bmatrix} \\
-&= \left( \mathbf{X}^T \mathbf{X} + \lambda \mathbf{I} \right)^{-1} \mathbf{X}^T \mathbf{y}.
-\end{align*}
-\end{proof}
+Beviset følger af simpel algebra og er derfor undladt.
+%\begin{proof}
+%Vi har, at
+%\begin{align*}
+%\del{\X^{*^T} \X^*}^{-1} \X^{*^T} \y^* &= \left( \begin{bmatrix}
+%\mathbf{X} & \sqrt{\lambda} \mathbf{I}
+%\end{bmatrix}
+%\begin{bmatrix}
+%\mathbf{X} \\ \sqrt{\lambda} \mathbf{I}
+%\end{bmatrix} \right)^{-1}
+%\begin{bmatrix}
+%\mathbf{X} & \sqrt{\lambda} \mathbf{I}
+%\end{bmatrix}
+%\begin{bmatrix}
+%\mathbf{y} \\ \mathbf{0}
+%\end{bmatrix} \\
+%&= \left( \mathbf{X}^T \mathbf{X} + \lambda \mathbf{I} \right)^{-1} \mathbf{X}^T \mathbf{y}.
+%\end{align*}
+%\end{proof}
 %
 \subsection{Udregning af lasso} \label{subsec:udregning_lasso}
 Da lasso strafleddet ikke er differentialbel, findes der ikke en eksplicit løsning til optimeringsproblemet for lasso.

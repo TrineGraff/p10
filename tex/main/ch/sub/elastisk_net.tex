@@ -1,6 +1,6 @@
 \section{Elastisk net}
 I dette afsnit introduceres en shrinkage metode kaldet elastisk net, som kombinerer ridge regression og lasso.
-Metoden blev først præsenteret af \citep{zou_hastie}.
+Metoden blev først præsenteret i \citep{zou_hastie}.
 
 Selvom lasso har vist succes i mange tilfælde, har den også nogle begrænsninger:
 %
@@ -72,7 +72,7 @@ Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), defin
 \end{bmatrix},
 \end{align*}
 hvor \(\X^* \in \mathbb{R}^{\del{n+p} \times p}\) og \(\y^* \in \mathbb{R}^{n+p}\).
-Lad \(\gamma = \frac{\lambda_1}{\sqrt{1+\lambda_2}}\) og \(\beta^* = \sqrt{1+\lambda_2} \beta\), da kan \eqref{eq:EN1} omskrives til
+Lad \(\gamma = \frac{\lambda_1}{\sqrt{1+\lambda_2}}\) og \(\beta^* = \sqrt{1+\lambda_2} \beta^\text{naivEN}\), da kan \eqref{eq:EN1} omskrives til
 \begin{align*}
 \hat{\beta}^* = \argmin_{\beta^*} \cbr{\frac{1}{2n} \Vert \y^* - \X^* \beta^* \Vert_2^2 +\gamma \Vert \beta^* \Vert_1},
 \end{align*}
@@ -82,6 +82,7 @@ hvor
 \end{align*}
 \end{lem}
 %
+Beviset følger af simpel algebra og er derfor undladt.
 Da \(\X^*\) har rang \(p\), kan metoden i princippet altid vælge alle \(p\) prædiktorer.
 Dermed er naiv elastisk net ikke begrænset til blot at vælge \(n\) prædiktorer hvis \(p > n\), som er tilfældet for lasso som beskrevet i punkt \ref{itm:1}.
 Lemma \ref{lem:elastisk_net} viser også, at naiv  elastisk net udfører variabel udvælgelse svarende til lasso.
@@ -105,7 +106,7 @@ Figur \ref{fig:elastisk2} viser de operationelle egenskaber af ridge regression,
 %
 \begin{proof}
 Ridge estimatoren i det ortogonale tilfælde \eqref{eq:orto_ridge} følger direkte udfra ridge estimatoren \eqref{eq:ridge_estimator}, da \(\X^T \X = \mathbf{I}\) og \(\hat{\beta}^\text{OLS} = \X^T \y\).
-For lasso estimatoren i det ortogonale tilfælde \eqref{eq:orto_lasso}, omskrives lasso problemet \eqref{eq:2.5} til følgende
+For at bevise lasso estimatoren i det ortogonale tilfælde \eqref{eq:orto_lasso}, omskrives lasso problemet \eqref{eq:2.5} til følgende
 \begin{align*}
 \hat{\beta}^\text{lasso} &= \argmin_{\beta} \cbr{\frac{1}{2n} \del{\y - \X \beta}^T \del{\y - \X \beta} + \lambda_1 \vert \beta \vert} \\
 &= \argmin_{\beta} \cbr{\frac{1}{2n} \del{\y^T \y - 2 \beta^T \X^T \y + \beta^T \X^T \X \beta} + \lambda_1 \vert \beta \vert} \\
@@ -144,6 +145,18 @@ Afslutningsvis følger naiv elastisk net estimatoren i det ortogonale tilfælde 
 Hvis vi har en gruppe af højt korreleret variable, da vil lasso blot udvælge én variabel og den udvælges tilfældigt, som nævnt i punkt \ref{itm:2}.
 Men naiv elastisk net udvælger alle variable i denne gruppe, som vi nu vil vise. 
 En regression metode udviser denne evne, hvis regressions koeffcienterne af en gruppe af højt korreleret variable er approksimativt ens.
+%
+\begin{lem} \label{lem:elastisk_net2}
+Antag \(\x_i = \x_j\), for \(i, j = 1, \ldots, p\).
+\begin{enumerate}[label=\alph*)]
+\item Hvis \(J \del{\cdot}\) er streng konveks, da er \(\hat{\beta}_i = \hat{\beta}_j\), for alle \(\lambda \geq 0\)
+\item Hvis \(J \del{\beta} = \Vert \beta \Vert_1\), da er \(\hat{\beta}_i \hat{\beta}_j \geq 0\) og \(\hat{\beta}^*\) 
+\end{enumerate}
+\end{lem}
+%
+Lemma \ref{lem:elastisk_net2} giver altså at streng konveksitet sikrer gruppe effekt hvis vi har identitiske prædiktorer, mens lasso ikke engang har en entydig løsning.
+Elastisk net med \(\lambda_2 > 0\) er streng konveks, og har dermed egenskaben i????.
+
 
 \begin{thm} \label{thm:elastisk_net}
 Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), hvor responsvariablen er centreret og prediktorerne er standardiseret.

@@ -42,7 +42,7 @@ data.frame(
 
 beta_hat = coef(lars_, s = getmin_l$lambda.min, mode = "fraction")
 which(beta_hat != 0)
-predict(lars_, s = l1_min, mode = "fraction", type = "coefficients")$coefficients)
+predict(lars_, s = getmin_l$lambda.min, mode = "fraction", type = "coefficients")$coefficients
 
 
 # plot --------------------------------------------------------------------
@@ -75,4 +75,22 @@ getmin_en = getmin(fit0.01$s, fit0.01$cv, fit0.01$cv.error)
 enet = enet(x, y, lambda = 0.01, intercept= FALSE, normalize = FALSE)
 
 
+# adaptive lasso med ols ----------------------------------------------------------
+
+fit.ols = lars(x_scale, y, type="lasso", normalize=FALSE, intercept = FALSE)
+
+lambda.ols = getmin(cv.ols$index, cv.ols$cv, cv.ols$cv.error)
+coef(fit.ols, s = lambda$lambda.min)
+
+predict(fit.ols, s = lambda$lambda.min, mode = "fraction", type = "coefficients")$coefficients
+beta_hat = coef(fit.ols, s = lambda$lambda.min, mode = "fraction")
+length(which(beta_hat != 0))
+
+
+# adaptive lasso med lasso vægte ----------------------------------------------------------
+
+adap_lasso_fit = lars(x_scale_las, y, intercept = FALSE, type = "lasso", normalize = FALSE)
+
+lambda.adap.l = getmin(cv.adap.l$index, cv.adap.l$cv, cv.adap.l$cv.error)
+predict(adap_lasso_fit, s = lambda.adap.l$lambda.min, mode = "fraction", type = "coefficients")$coefficients
 

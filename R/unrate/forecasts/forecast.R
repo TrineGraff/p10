@@ -1,43 +1,92 @@
-source("script/script_forecast_glmnet.R")
-source("script/script_forecast_gglasso.R")
+source("data_unrate.R")
+library(glmnet)
 
-# ridge -------------------------------------------------------------------
-lambda_ridge = read.csv("results/ridge_lambda.csv") %>% .[1, 2]
-fc_ridge = forecast_glmnet(y, x, idx = idx, lambda = lambda_ridge, alpha = 0)
+# Uden reestimering -------------------------------------------------------
 
-# lasso -------------------------------------------------------------------
-lambda_lasso = read.csv("results/lasso_lambda.csv") %>% .[1, 2]
-fc_lasso = forecast_glmnet(y, x, idx = idx, lambda = lambda_lasso, alpha = 1)
-
-# elastik net -------------------------------------------------------------
-lambda_el = read.csv("results/el_lambda.csv") %>% .[1, 2]
-fc_el = forecast_glmnet(y, x, idx = idx, lambda = lambda_el, alpha = 0.9)
+pred_test = x_test %*% lasso_fit$beta
+x_test
+pred = predict(lasso_fit, x_test)
+identical(as.vector(pred), as.vector(pred_test)) #true
 
 
-# group lasso -------------------------------------------------------------
-#NB: MEGET LANGSOM
-lambda_grp = read.csv("results/grp_lambda.csv") %>% .[1, 2]
-fc_grp = forecast_gglasso(y, x, grp, lambda_grp)
+# Rolling Window forecast -------------------------------------------------
 
-
-# adaptive lasso med OLS vægte --------------------------------------------
-
-
-# plot --------------------------------------------------------------------
-dato = c(as.character(data_raw$dato[idx][1]), as.character(data_raw$dato[-c(1:idx)]))
-
-df = data.frame(date = as.Date(c(dato)),
-                               fc_ridge, fc_lasso, fc_el, fc_grp, y = c(y[idx], y[-c(1:idx)]))
-
-ggplot(df, aes(x = date ))  +
-  geom_line(aes(y = y, colour = "Arbejdsløshed")) +
-  geom_line(aes(y = fc_ridge, colour = "Ridge")) +
-  geom_line(aes(y = fc_lasso, colour = "Lasso")) +
-  geom_line(aes(y = fc_el, colour = "Elastik net")) +
-  geom_line(aes(y = fc_grp, colour = "Group lasso")) +
-  ylab("Rate") + xlab("Dato") +
-  theme(legend.title=element_blank()) +
-  ggtitle("One-step-ahead forecast") 
-
+rolling_window_fc = function(y, x, alpha, w_size, lambda ){
+  n = length(y_test) # skal igennem data setup_data 
   
+  fc = foreach(i = 1:n, .combine = rbind) %do%{
+  #Rolling window forecast
+  x_in = x[i:(w_size + i - 1), ] 
+  y_res = y[i:(w_size + i - 1)]
+  x_out = x[w_size + i, ]
   
+    #Regression Model
+  fit = glmnet(x_in, y_res, family = "gaussian", alpha = alpha, 
+              intercept = FALSE, standardize = FALSE)
+  beta = as.vector(coef(fit, s = lambda) %>% .[-c(1),])
+  pred_test = x_out %*% beta
+
+  return(pred_test)
+}
+print(fc)
+}
+
+
+# Expanding window forecast -----------------------------------------------
+
+expanding_window_fc = function(y, x, alpha, idx, lambda ){
+  n = length(y_test)
+  
+  fc = foreach(i = 1:n, .combine = rbind) %do%{
+    #expanding window
+    x_in = x[1:(idx + i - 1), ] 
+    y_res = y[1:(idx + i - 1)]
+    x_out = x[idx + i, ]
+    
+    # Regression Model #
+    fit = glmnet(x_in, y_res, family = "gaussian", alpha = alpha, 
+                 intercept = FALSE, standardize = FALSE)
+    beta = as.vector(coef(fit, s = lambda) %>% .[-c(1),])
+    pred_test = x_out %*% beta
+    
+    return(pred_test)
+  }
+  print(fc)
+}
+
+# h-step-ahead forecast ---------------------------------------------------
+multi_step_fc = function(y, x, alpha, idx, lambda ){
+  n = length(y_test)
+  h = 5
+  fc = foreach(i = 1:n, .combine = rbind) %do%{
+    #expanding window
+    x_in = x[1:(idx + i - 1), ] 
+    y_res = y[1:(idx + i - 1)]
+    x_out = x[idx + i, ]
+    
+    # Regression Model #
+    fit = glmnet(x_in, y_res, family = "gaussian", alpha = alpha, 
+                 intercept = FALSE, standardize = FALSE)
+    beta = as.vector(coef(fit, s = lambda) %>% .[-c(1),])
+    pred_test = x_out %*% beta
+    
+    return(pred_test)
+  }
+  print(fc)
+}
+
+multi = multi_step_fc(y, x, alpha = 1, idx = idx, lambda = lambda_lasso)
+plot(multi, type = "l", col = "red", xlim = c(0, 140), ylim = c(-0.5, 0.5))
+par(new = TRUE)
+plot(y[-c(1:idx)], type = "l", xlim = c(0, 140), ylim = c(-0.5, 0.5))
+
+
+pred = x_train %*% lasso_fit$beta
+
+pred_5 = x[c((idx +1 ):(idx + 5)), ] %*% lasso_fit$beta
+
+y_trine = rbind(pred, pred_5)
+fit_trine = glmnet(x[1:(idx +5),], y_trine, family = "gaussian", alpha = 1, 
+                   intercept = FALSE, standardize = FALSE, lambda = lambda_lasso)
+
+pred = x[1:] %*% fit_trine$beta

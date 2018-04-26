@@ -26,7 +26,6 @@ for (i in alpha.grid) {
   assign(paste("fit",i , sep=""), cv.glmnet(x, y, alpha=i,family="gaussian", standardize=FALSE))
 }
 
-
 # group lasso -------------------------------------------------------------
 grp <- c(1, 1, rep(4, 3), rep(1, 14), rep(2, 27), rep(3, 10), rep(4, 4),
          rep(5, 10), rep(8, 4), rep(6, 21), rep(7, 20), rep(2, 3), rep(5, 4)) 
@@ -54,13 +53,14 @@ idx_hat = which(b_hat != 0)
 
 v_l = 1/abs(b_hat[idx_hat, ]) #intercept er inkluderet
 
-adap_lasso = cv.glmnet(x[,idx_hat -1], y, intercept = FALSE, 
-                       family = "gaussian", alpha = 1, standardize = FALSE, 
-                       penalty.factor = v_l)
 
 adap_lasso_fit = glmnet(x[,idx_hat-1], y, intercept = FALSE, 
                         family = "gaussian", alpha = 1, standardize=FALSE, 
                         penalty.factor = v_l)
+
+
+
+
 
 
 library(broom)

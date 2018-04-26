@@ -147,10 +147,11 @@ Men naiv elastisk net udvælger alle variable i denne gruppe, som vi nu vil vise
 En regression metode udviser denne evne, hvis regressions koeffcienterne af en gruppe af højt korreleret variable er approksimativt ens.
 %
 \begin{lem} \label{lem:elastisk_net2}
+Lad os betragte \(\hat{\beta} = \argmin_\beta \Vert \y - \X \beta \Vert_2^2 + \lambda J \del{\beta}\), hvor \(J \del{\cdot}\) er positiv for \(\beta \neq 0\).
 Antag \(\x_i = \x_j\), for \(i, j = 1, \ldots, p\).
 \begin{enumerate}[label=\alph*)]
-\item Hvis \(J \del{\cdot}\) er streng konveks, da er \(\hat{\beta}_i = \hat{\beta}_j\), for alle \(\lambda \geq 0\)
-\item Hvis \(J \del{\beta} = \Vert \beta \Vert_1\), da er \(\hat{\beta}_i \hat{\beta}_j \geq 0\) og \(\hat{\beta}^*\) 
+\item Hvis \(J \del{\cdot}\) er streng konveks, da er \(\hat{\beta}_i = \hat{\beta}_j\), for alle \(\lambda \geq 0\).
+\item Hvis \(J \del{\beta} = \Vert \beta \Vert_1\), da er \(\hat{\beta}_i \hat{\beta}_j \geq 0\) og \(\hat{\beta}^*\) er optimum af 
 \end{enumerate}
 \end{lem}
 %
@@ -224,7 +225,7 @@ I lemma \ref{lem:elastisk_net} fandt vi, at naiv elastisk net løser følgende
 \end{align}
 Estimaterne for elastisk net (korrigeret) er defineret ved
 \begin{align*}
-\hat{\beta}^\text{EN} = \sqrt{\del{1+\lambda_2}} \hat{\beta}^*.
+\hat{\beta}^\text{EN} = \sqrt{1+\lambda_2} \hat{\beta}^*.
 \end{align*}
 Da \(\hat{\beta}^\text{naivEN} = \frac{1}{\sqrt{1+\lambda_2}} \hat{\beta}^*\), har vi, at
 \begin{align*}
@@ -316,9 +317,25 @@ Vi gennemløber opdateringen \eqref{eq:4.4} indtil konvergens.
 \subsubsection{LARS}
 Algoritmen LARS-EN kan anvendes til at løse elastisk net, som er baseret på algoritmen LARS, der præsenteres i \cite{efron}.
 Af lemma \ref{lem:elastisk_net} ved vi, at for ethvert fast \(\lambda_2\) er elastisk net problemet ækvivalent med lasso problemet på augmented data.
-Derfor kan LARS algoritmen anvendes direkte til at finde en elastisk net løsningssti.
+Derfor kan LARS algoritmen anvendes direkte til at finde en elastisk net løsningssti med computermæssig omkostninger som et OLS fit.
 Bemærk at for \(p \gg n\), har augmented data \(p+n\) observationer og \(p\) variable, hvilket kan forsinket udregningerne.
 
+Vi kan yderligere lette udregningerne ved at drage fordel af sparsititeten af \(\X^*\) som er afgørende for \(p \gg n\)
+
+Hvis algoritmen stoppes efter \(m\) steps, da kræves \(O \del{m^3 + pm^2}\) operationer.
 
 Løsningsstien for elastisk net er piecewise linear.
+
+For elastisk net har vi to tuning parametre. 
+Typisk vælges en lav værdi for \(\lambda_2\), f.eks. \(\del{0,0.01,0.1,1,10,100}\).
+For hvert \(\lambda_2\), giver LARS-EN hele løsningsstien for elastisk net.
+Den anden tuning parameter \(\lambda_1\) vælges af en 10 fold krydsvalidering.
+Den valgte \(\lambda_2\) er den som giver den mindste krydsvalideringsfejl.
+
+For hvert \(\lambda_2\), svarer de computermæssige omkostninger af en 10 fold krydsvalidering til 10 OLS fits.
+Derfor er en to-dimensional krydsvalidering computermæssigt sparsommelig for \(n > p\).
+Hvis \(p \gg n\), vokser omkostningerne lineært med \(p\).
+
+\subsection{Entydighed og konsistens af elastisk net}
+Opfylder den orakel egenskaberne?
 \newpage

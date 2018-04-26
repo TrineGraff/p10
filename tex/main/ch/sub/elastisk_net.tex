@@ -159,7 +159,7 @@ Elastisk net med \(\lambda_2 > 0\) er streng konveks, og har dermed egenskaben i
 
 
 \begin{thm} \label{thm:elastisk_net}
-Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), hvor responsvariablen er centreret og prediktorerne er standardiseret.
+Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), hvor responsvariablen er centreret og prædiktorerne er standardiseret.
 Lad \(\hat{\beta} \del{\lambda_1, \lambda_2}\) være estimatet for naiv elastisk net.
 Antag \(\hat{\beta}_i \del{\lambda_1, \lambda_2} \hat{\beta}_j \del{\lambda_1, \lambda_2} > 0\).
 Definer
@@ -181,10 +181,10 @@ Da må \(\hat{\beta} \del{\lambda_1, \lambda_2}\) opfylde, at
 \end{align*}
 Derfor har vi, at
 \begin{align}
--\mathbf{x}_i^T \del{\y - \X \hat{\beta} \del{\lambda_1, \lambda_2}} +  \lambda_1 \text{sign} \cbr{\hat{\beta}_i \del{\lambda_1, \lambda_2}} + 2 \lambda_2 \hat{\beta}_i \del{\lambda_1, \lambda_2} &= 0, \label{eq:EN2}\\
--\mathbf{x}_j^T \del{\y - \X \hat{\beta} \del{\lambda_1, \lambda_2}} + \lambda_1 \text{sign} \cbr{\hat{\beta}_j \del{\lambda_1, \lambda_2}}+ 2 \lambda_2 \hat{\beta}_j \del{\lambda_1, \lambda_2} &= 0. \label{eq:EN3}
+-\frac{1}{n} \mathbf{x}_i^T \del{\y - \X \hat{\beta} \del{\lambda_1, \lambda_2}} +  2 \lambda_2 \hat{\beta}_i \del{\lambda_1, \lambda_2} + \lambda_1 \text{sign} \cbr{\hat{\beta}_i \del{\lambda_1, \lambda_2}} &= 0, \label{eq:EN2}\\
+-\frac{1}{n} \mathbf{x}_j^T \del{\y - \X \hat{\beta} \del{\lambda_1, \lambda_2}} + 2 \lambda_2 \hat{\beta}_j \del{\lambda_1, \lambda_2} + \lambda_1 \text{sign} \cbr{\hat{\beta}_j \del{\lambda_1, \lambda_2}} &= 0. \label{eq:EN3}
 \end{align}
-Vi subtraherer \eqref{eq:EN2} fra \eqref{eq:EN3} og finder, at
+Vi subtraherer \eqref{eq:EN3} fra \eqref{eq:EN2} og finder, at
 \begin{align*}
 \del{\mathbf{x}_j^T-\mathbf{x}_i^T} \del{\y - \X \hat{\beta} \del{\lambda_1, \lambda_2}} + \lambda_2 \del{\hat{\beta}_i \del{\lambda_1, \lambda_2} - \hat{\beta}_j \del{\lambda_1, \lambda_2}} =0,
 \end{align*}
@@ -207,16 +207,16 @@ Dermed er \(\vert \hat{r} \del{\lambda_1, \lambda_2} \vert \leq \vert \y \vert\)
 D_{\lambda_1, \lambda_2} \del{i,j} \leq \frac{1}{\lambda_2} \frac{\vert \hat{r} \del{\lambda_1, \lambda_2} \vert}{\vert \y \vert} \vert \mathbf{x}_i - \mathbf{x}_j \vert  \leq \frac{1}{\lambda_2} \sqrt{2 \del{1-\rho}}.
 \end{align*}
 \end{proof}
-Mængden \(D_{\lambda_1, \lambda_2} \del{i,j}\) betegner differensen mellem koefficient stierne af prediktor \(i\) og \(j\).
-Hvis \(\mathbf{x}_i\) og \(\mathbf{x}_j\) er højt korreleret, dvs \(\rho \approx 1\), giver sætning \ref{thm:elastisk_net}, at differensen mellem koefficient stierne af prediktor \(i\) og \(j\) er næsten 0.
+Mængden \(D_{\lambda_1, \lambda_2} \del{i,j}\) betegner differensen mellem koefficient stierne af prædiktor \(i\) og \(j\).
+Hvis \(\mathbf{x}_i\) og \(\mathbf{x}_j\) er højt korreleret, dvs \(\rho \approx 1\), giver sætning \ref{thm:elastisk_net}, at differensen mellem koefficient stierne af prædiktor \(i\) og \(j\) er næsten 0.
 Den øvre grænse i \eqref{eq:EN5} giver en kvantitativ beskrivelse af denne gruppering effekt som naiv elastisk net har.
 
 Empiriske resultater har vist, at naiv elastisk net ikke er tilfredsstillende, medmindre den er tæt på enten ridge regression eller lasso.
 Derfor kaldes den \textit{naiv}.
-Som nævnt tidligere bestemmes en metodes prediktions performance gennem bias-variance tradeoff. 
+Som nævnt tidligere bestemmes en metodes prædiktions performance gennem bias-variance tradeoff. 
 Naiv elastisk net er en two-stage procedure. For ethvert fast \(\lambda_2\) finder vi først ridge regression koefficienterne, og derefter shrinkages langs lasso koefficient løsningsstien. Derfor inkluderes en dobbelt shrinkage.
 Double shrinkage reducerer ikke variansen meget og introducere unødvendig ekstra bias i forhold til ridge regression eller lasso.
-Derfor introduceres blot elastisk net.
+Derfor introduceres blot elastisk net, som korrigerer for denne dobbelt skrinkage.
 
 I lemma \ref{lem:elastisk_net} fandt vi, at naiv elastisk net løser følgende 
 \begin{align}
@@ -233,23 +233,17 @@ Da \(\hat{\beta}^\text{naivEN} = \frac{1}{\sqrt{1+\lambda_2}} \hat{\beta}^*\), h
 Dermed er elastisk net koefficienterne faktisk reskaleret naiv elastisk net koefficienter.
 Denne transformation bevarer variabel udvælgelsen af naiv elastisk net og er den simpleste måde at annullere det ekstra shrinkage.
 Derfor er egenskaberne for naiv elastiske net, som er beskrevet i dette afsnit, stadig gældende for elastisk net.
-
-Et andet længere argument for at vælge \(1+\lambda_2\) som skaleringsfaktor, men det forstår jeg ikke!!!
 %
 \begin{thm} \label{thm:elastisk_net2}
-Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\) da er estimaterne for elastisk net givet ved
+Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), da er estimaterne for elastisk net givet ved
 \begin{align}
 \hat{\beta}^\text{EN} = \argmin_\beta \cbr{ \frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}}{1 + \lambda_2}} \beta - 2 \y^T \X \beta} + \lambda_1 \Vert \beta \Vert_1}. \label{eq:EN6}
-\end{align}
-Estimatoren for lasso kan omskrives til
-\begin{align}
-\hat{\beta}^\text{lasso} = \argmin_\beta \cbr{ \frac{1}{2n} \del{ \beta^T \del{\X^T \X} \beta - 2 \y^T \X \beta } + \lambda_1 \Vert \beta \Vert_1}. \label{eq:EN7}
 \end{align}
 \end{thm}
 \begin{proof}
 Af ligning \eqref{eq:EN8} har vi, at
 \begin{align}
-\hat{\beta} &= \argmin_{\beta} \cbr{\frac{1}{2n} \left\Vert \y^* - \X^* \frac{\beta}{\sqrt{1+\lambda_2}} \right\Vert_2^2 + \frac{\lambda_1}{\sqrt{1+\lambda_2}} \left\Vert \frac{\beta}{\sqrt{1+\lambda_2}} \right\Vert_1} \nonumber \\
+\hat{\beta}^\text{EN} &= \argmin_{\beta} \cbr{\frac{1}{2n} \left\Vert \y^* - \X^* \frac{\beta}{\sqrt{1+\lambda_2}} \right\Vert_2^2 + \frac{\lambda_1}{\sqrt{1+\lambda_2}} \left\Vert \frac{\beta}{\sqrt{1+\lambda_2}} \right\Vert_1} \nonumber \\
 &=\argmin_{\beta} \cbr{\frac{1}{2n} \del{\beta^T \del{\frac{\X^{*^T} \X^*}{1+\lambda_2}} \beta - 2 \frac{\y^{*^T} \X^* \beta}{\sqrt{1+\lambda_2}} + \y^{*^T} \y^*} + \frac{\lambda_1 \Vert \beta \Vert_1}{1+\lambda_2}}. \label{eq:EN9}
 \end{align}
 Følgende identiteter
@@ -260,14 +254,18 @@ Følgende identiteter
 \end{align*}
 indsættes i \eqref{eq:EN9}, og vi får, at
 \begin{align*}
-\hat{\beta} &= \argmin_{\beta} \cbr{\frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}}{\del{1+\lambda_2}^2}} \beta - 2 \frac{\y^T \X \beta}{1+\lambda_2} + \y^T \y} + \frac{\lambda_1 \Vert \beta \Vert_1}{1+\lambda_2}} \\ 
+\hat{\beta}^\text{EN} &= \argmin_{\beta} \cbr{\frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}}{\del{1+\lambda_2}^2}} \beta - 2 \frac{\y^T \X \beta}{1+\lambda_2} + \y^T \y} + \frac{\lambda_1 \Vert \beta \Vert_1}{1+\lambda_2}} \\ 
 %&= \argmin_{\beta} \cbr{\frac{1}{2n} \frac{1}{1+\lambda_2} \del{\beta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}}{1+ \lambda_2}} \beta - 2 \y^T \X \beta + \lambda_1 \Vert \beta \Vert_1} + \y^T \y} \\
 &= \argmin_{\beta} \cbr{ \frac{1}{2n} \del{\beta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}}{1+ \lambda_2}} \beta - 2 \y^T \X \beta} + \lambda_1 \Vert \beta \Vert_1},
 \end{align*}
 hvor \(\y^T \y= 0 \).
 \end{proof}
 %
-Sætning \ref{thm:elastisk_net2} fortolker elastisk net som en stabil version af lasso.
+Estimatoren for lasso kan omskrives til
+\begin{align}
+\hat{\beta}^\text{lasso} = \argmin_\beta \cbr{ \frac{1}{2n} \del{ \beta^T \del{\X^T \X} \beta - 2 \y^T \X \beta } + \lambda_1 \Vert \beta \Vert_1}, \label{eq:EN7}
+\end{align}
+derfor fortolker sætning \ref{thm:elastisk_net2} elastisk net som en stabil version af lasso.
 Lad \(\hat{\Sigma} = \X^T \X\) være den empiriske korrelationsmatrix og
 \begin{align*}
 \frac{\X^T \X + \lambda_2 \mathbf{I}}{1 + \lambda_2} = (1-\gamma) \hat{\Sigma} + \gamma \mathbf{I},
@@ -287,8 +285,8 @@ Af sætning \ref{thm:elastisk_net2} gælder, at \(\hat{\beta}^\text{EN} \rightar
 \hat{\beta} \del{\infty}_i = S_{\lambda_1} \del{\y^T \mathbf{x}_i}=\text{sign} \del{\y^T \mathbf{x}_i} \del{\left\vert \y^T \mathbf{x}_i \right\vert - \lambda_1}_+
 \end{align*}
 for \(i = 1, \ldots, p\).
-Vi har, at \(\y^T \mathbf{x}_i\) er en univariat regressions koefficient af den \(i\)'te prediktor og \(\hat{\beta} \del{\infty}\) er estimaterne som fås udfra soft thresholding på univariater regressions koefficienter.
-En univariat soft thresholding ignorerer afhængighedsstrukturen mellem prediktorerne og behandler dem som uafhængige variable.
+Vi har, at \(\y^T \mathbf{x}_i\) er en univariat regressions koefficient af den \(i\)'te prædiktor og \(\hat{\beta} \del{\infty}\) er estimaterne som fås udfra soft thresholding på univariater regressions koefficienter.
+En univariat soft thresholding ignorerer afhængighedsstrukturen mellem prædiktorerne og behandler dem som uafhængige variable.
 %Elastisk net er en natur bro imellem bridges og lasso.
 
 \subsection{Udregning af elastisk net}
@@ -316,8 +314,8 @@ Vi gennemløber opdateringen \eqref{eq:4.4} indtil konvergens.
 
 
 \subsubsection{LARS}
-Algoritmen LARS-EN kan anvendes til at løse elastisk net, som er baseret på algoritmen LARS af \cite{efron}.
-Af lemma \ref{lem:elastisk_net}, ved vi at for ethvert fast \(\lambda_2\) er elastisk net problemet ækvivalent med lasso problemet på augmented data.
+Algoritmen LARS-EN kan anvendes til at løse elastisk net, som er baseret på algoritmen LARS, der præsenteres i \cite{efron}.
+Af lemma \ref{lem:elastisk_net} ved vi, at for ethvert fast \(\lambda_2\) er elastisk net problemet ækvivalent med lasso problemet på augmented data.
 Derfor kan LARS algoritmen anvendes direkte til at finde en elastisk net løsningssti.
 Bemærk at for \(p \gg n\), har augmented data \(p+n\) observationer og \(p\) variable, hvilket kan forsinket udregningerne.
 

@@ -7,3 +7,10 @@ Derfor kan lasso kun være ikke-entydig for diskret data, som kommer af dummy-v�
 
 Numeriske algoritmer for at løse lasso problemet vil typisk give gyldig løsninger i det ikke-entydige tilfælde.
 For coordinat descent, har valget af begyndelsesværdier indflydelse på den endelige løsning.
+
+
+Lasso løsningen er entydige når \(\text{rank} \del{X}=p\), da lasso da er streng konveks.
+Men ikke streng konveks når \(\text{rank} \del{X} < p\) og der findes multiple minimizers af lasso problemet.
+Når antallet af variabler er større end antallet af observationer, \(p>n\), da må vi have at  \(\text{rank} \del{X} < p\).
+
+

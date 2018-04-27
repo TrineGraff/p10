@@ -147,14 +147,46 @@ Men naiv elastisk net udvælger alle variable i denne gruppe, som vi nu vil vise
 En regression metode udviser denne evne, hvis regressions koeffcienterne af en gruppe af højt korreleret variable er approksimativt ens.
 %
 \begin{lem} \label{lem:elastisk_net2}
-Lad os betragte \(\hat{\beta} = \argmin_\beta \Vert \y - \X \beta \Vert_2^2 + \lambda J \del{\beta}\), hvor \(J \del{\cdot}\) er positiv for \(\beta \neq 0\).
+Lad os betragte
+\begin{align}
+\hat{\beta} = \argmin_\beta \Vert \y - \X \beta \Vert_2^2 + \lambda J \del{\beta}, \label{eq:EN10}
+\end{align}
+hvor \(J \del{\cdot}\) er positiv for \(\beta \neq 0\).
 Antag \(\x_i = \x_j\), for \(i, j = 1, \ldots, p\).
 \begin{enumerate}[label=\alph*)]
 \item Hvis \(J \del{\cdot}\) er streng konveks, da er \(\hat{\beta}_i = \hat{\beta}_j\), for alle \(\lambda \geq 0\).
-\item Hvis \(J \del{\beta} = \Vert \beta \Vert_1\), da er \(\hat{\beta}_i \hat{\beta}_j \geq 0\) og \(\hat{\beta}^*\) er optimum af 
+\item Hvis \(J \del{\beta} = \Vert \beta \Vert_1\), da er \(\hat{\beta}_i \hat{\beta}_j \geq 0\) og \(\hat{\beta}^*\) er optimum af \ref{eq:EN10}, hvor
+\begin{align*}
+\hat{\beta}_k^* = \begin{cases}
+\hat{\beta}_k & k \neq i \text{ og } k \neq j, \\
+\del{\hat{\beta}_i + \hat{\beta}_j} s & k = i, \\
+\del{\hat{\beta}_i + \hat{\beta}_j} \del{1-s} & k = j,
+\end{cases}
+\end{align*}
+for ethvert \(s \in \sbr{0,1}\).
 \end{enumerate}
 \end{lem}
 %
+\begin{proof}
+Først bevises a).
+Fasthold \(\lambda > 0\).
+Hvis \(\hat{\beta}_i \neq \hat{\beta}_j\), lad os betragte \(\hat{\beta}^*\) som
+\begin{align*}
+\hat{\beta}_k^* = \begin{cases}
+\hat{\beta}_k & k \neq i \text{ og } k \neq j, \\
+\frac{1}{2} \del{\hat{\beta}_i + \hat{\beta}_j} & k = 1 \text{ eller } k = j.
+\end{cases}
+\end{align*}
+Da \(\x_i = \x_j\), må vi have at \(\X \hat{\beta}^* = \X \hat{\beta}\) og dermed \(\Vert \y - \X \hat{\beta}^* \Vert_2^2 = \Vert \y - \X \hat{\beta} \Vert_2^2\).
+Men da \(J \del{\cdot}\) er streng konveks, må vi have, at \(J \del{\hat{\beta}^*} < J \del{\hat{\beta}}\).
+Dermed kan \(\hat{\beta}\) være optimum af \eqref{eq:EN10}, som er en modstrid.
+Derfor må vi have at \(\hat{\beta}_i = \hat{\beta}_j\).
+
+Herefter bevises b).
+Hvis \(\hat{\beta}_i \hat{\beta}_j < 0\), lad os igen betragte \(\hat{\beta}^*\) som ovenfor.
+Da ser vi, at \(\vert \hat{\beta}^* \vert < \vert \hat{\beta} \vert\), så \(\hat{\beta}\) kan ikke være en lasso løsning.
+MANGLER NOGET!
+\end{proof}
 Lemma \ref{lem:elastisk_net2} giver altså at streng konveksitet sikrer gruppe effekt hvis vi har identitiske prædiktorer, mens lasso ikke engang har en entydig løsning.
 Elastisk net med \(\lambda_2 > 0\) er streng konveks, og har dermed egenskaben i????.
 

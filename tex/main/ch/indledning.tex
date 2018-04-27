@@ -1,6 +1,8 @@
 \chapter{Indledning}
 
+big data, hvor antallet af variable er større end antallet af observationer.
 
+prædikterer makroøkonomiske nøgletal
 
 Generelt er lasso baseret metoder og faktor modellen dimension reducerende metoder til at forecaste når vi har et stort antal tidsrækker.
 Men måden hvorpå dimensionen reduceres er ikke ens.
@@ -9,4 +11,25 @@ Hvis kun få prædiktorer omfatter information til prædiktionen, da vil lasso b
 Hvis istedet at variablen som prædikteres påvirkes af mange tidsrækker, da forventes faktor modellen at finde og karakterisere de underliggende faktorer og outperforme lasso baseret metoder.
 
 
+Vi vil betragte lasso-baseret approach som generaliserer standard lasso regression.
+\citep{zou_hastie} viste at ustabiliteten for variabeludvægelse af lasso kommer af parameter usikkerheden i at estimere en stor kovariansmatrix.
+Ved at erstatte den empiriske estimator af kovariansmatricen med en skrinkage estimator, viste de at de resulterende regressions koefficienter og variabeludvælgelses proces er mere stabil.
+Dette er ækvivalent med at pålægge en ekstra \(\ell_2\) norm betingelse på lasso problemet.
+Denne metoden er kendt som \textit{elastisk net}, eftersom det er som et net der fanger alle "store fisk" til bedre forecasts.
+
+Da prædiktorerne kan opdeles i blokke, pålægges en sparse betingerlser på disse blokke.
+Dette gøres ved en two-stage procedure.
+I første stage opdeles prædiktorerne i blokkene. I anden stage, group lasso \citep{group_lasso} is lavet således at prædiktorerne i samme block har en tendens til at vælges sammen.
+
+Som det kan ses i den empiriske del, har lasso varianterne tilsvarende out-of-sample forcast og generelt outperformes disse dynamisk faktor model, men elastisk net og group lasso giver mere konsistent variabel udvælgelses resultat over ...
+
+
 Teori for lasso er baseret på tværsnitsdata, men anvendes på tidsrækker.
+
+
+I kaptiel -- introduceres faktor modellen.
+Herefter standard lasso,
+Hernæst teori for optimeringsmetoderne som anvendes.
+Herefter coordinate descent samt least angle regression.
+Generaliseringerne for standard lasso præsenteres herefter, elastisk net, group lasso samt adaptive lasso.
+Herefter introduceres statiske inferens for lasso.

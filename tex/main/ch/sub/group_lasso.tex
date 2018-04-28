@@ -9,9 +9,8 @@ Formålet er da, at prædiktere responsvariablen $Y \in \R$ baseret på en samli
 
 Given en samling af $n$ samples \(\{(y_i, z_{i,1}, z_{i,2}, \ldots, z_{i,J})\}_{i=1}^n\) løser group lasso følgende optimeringsproblem
 \begin{align}
-\beta^{\text{group lasso}} = \argmin_{\theta_j \in \R^{p_j}} \cbr{\frac{1}{2} \sum_{i=1}^n \del{y_i - \sum_{j=1}^J z_{ij}^T \theta_j}^2 + \lambda \sum_{j=1}^J \Vert \theta_j \Vert_2},\label{eq:4.5}
+\beta^{\text{group lasso}} = \argmin_{\theta_j \in \R^{p_j}} \cbr{\frac{1}{2} \sum_{i=1}^n \del{y_i - \sum_{j=1}^J z_{ij}^T \theta_j}^2 + \lambda \sum_{j=1}^J \Vert \theta_j \Vert_2}. \label{eq:4.5}
 \end{align}
-hvor $\Vert \theta_j \Vert_2$ er den euklidiske norm af vektoren $\theta_j$.
 Dette er en grupperet generalisering af lasso, som har følgende egenskaber:
 \begin{itemize}
 \item Afhængig af $\lambda$, vil enten alle indgange i vektoren $\hat{\theta}_j$ være nul eller ikke-nul
@@ -60,6 +59,9 @@ Ligning \eqref{eq:4.14} har desværre ikke en lukket løsning for $\hat{\theta}_
 \begin{align*}
 \hat{\theta}_j = \del{1 - \frac{\lambda}{\Vert \mathbf{Z}_j^T \mathbf{r}_j \Vert_2}}_+  \mathbf{Z}_j^T \mathbf{r}_j.
 \end{align*}
+Algoritmen er stabil og vil normal nå en fornuftig konvergens tolerance indenfor få iterationer.
+De computermæssig byrde vil stige voldsomt når antallet af prædiktorer stiger.
+
 
 \subsubsection{LARS}
 

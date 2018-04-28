@@ -37,14 +37,20 @@ At kolonnerne af model matrix er i generel position sikrer at LARS og lasso stie
 
 
 \begin{defn}[Konveks] \label{defn:konveks}
-En funktion \(f: \ \R^p \rightarrow \R\) er konveks, hvis der for \(\beta\), \(\beta'\) i defintionsmængden af \(f\) og enhver skalar \(s \in \del{0,1}\) gælder
+En funktion \(f: \ \R^p \rightarrow \R\) er konveks, hvis der for \(\beta\), \(\beta'\) i definitionsmængden af \(f\) og enhver skalar \(s \in \del{0,1}\) gælder
 \begin{align*}
 f \del{\beta \del{s}} = f \del{s \beta + \del{1-s} \beta'} \leq s f\del{\beta} + \del{1-s} f\del{\beta'}.
 \end{align*}
 \end{defn}
-Geometrisk medfører uligheden at akkorden mellem \(f \del{\beta}\) og  \(f \del{\beta'}\) ligger over grafen af \(f\), som illustreres på figur ---.
-Uligheden sikrer, at en konveks funktion ikke kan have et lokalt minimum som ikke også er et globalt minimum, som illustreres på figur --.
-
+Geometrisk medfører uligheden at akkorden mellem \(f \del{\beta}\) og  \(f \del{\beta'}\) ligger over grafen af \(f\), som illustreres på figur \ref{fig:konveks}.
+Uligheden sikrer, at en konveks funktion ikke kan have et lokalt minimum som ikke også er et globalt minimum.
+%
+\begin{figure}[H]
+\centering
+\scalebox{1.2}{\input{fig/konveks1.tikz}}
+\caption{For en konveks funktion ligger linjen \(s f \del{\beta} + \del{1-s} f \del{\beta'}\) altid over funktionsværdien \(f \del{s \beta + \del{1-s} \beta'}\).} \label{fig:konveks}
+\end{figure}
+%
 %\section{Diebold Mariano test}
 %Diebold Mariano testen kan anvendes til at vurdere to konkurrerende prædiktioner i forhold til hinanden.
 %

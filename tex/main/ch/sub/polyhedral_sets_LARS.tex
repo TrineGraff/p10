@@ -1,4 +1,6 @@
-\subsubsection{Polyhedral mængder for LARS udvælgelses hændelse}
+\subsubsection{Polyhedral mængder for LARS modeludvælgelse}
+Antag \(\A_k=\sbr{j_1, \ldots, j_k}\) er en liste af aktive variable valgt af LARS algoritmen efter \(k\) steps og lad \(s_{\A_k}=\sbr{s_1,\ldots,s_k}\) betegne variablernes fortegn idet de medtages i den aktive mængde.
+
 Lad os opsummere en kort beskrivelse af stepsene i LARS algoritmen.
 I step \(k=1\), initialiseres mængden af aktive variable og listen af fortegn med \(\A=\sbr{j_1}\) og \(s_{\A_1} = \sbr{s_1}\), hvor \(j_1\) og \(s_1\) opfylder
 \begin{align}
@@ -8,20 +10,20 @@ Første knot er givet ved
 \begin{align*}
 \lambda_1 = s_1 \X_{j_1}^T \y.
 \end{align*}
-For det generelle step \(k > 1\), konstrueres listen \(\A_k\) ved at tilføje \(j_k\) til \(\A_{k-1}\) og \(s_{\A_k}\) konstrueres ved at tilføje \(s_k\) til \(s_{\A_{k-1}}\), hvor \(j_k\) og \(s_k\) opfylder, at
+For det generelle step \(k > 1\), konstrueres listen \(\A_k\) ved at tilføje \(j_k\) til \(\A_{k-1}\) mens \(s_{\A_k}\) konstrueres ved at tilføje \(s_k\) til \(s_{\A_{k-1}}\), hvor \(j_k\) og \(s_k\) opfylder, at
 \begin{align}
 \del{j_k, s_k} = \argmax_{j \notin \A_{k-1} , \ s \in \sbr{-1,1}} \frac{\X_j^T P_{\A_{k-1}}^\perp \y}{s - \X_j^T \del{\X_{\A_{k-1}}^+}^T s_{\A_{k-1}}} \cdot \mathbb{1} \cbr{\frac{\X_j^T P_{\A_{k-1}}^\perp \y}{s - \X_j^T \del{\X_{\A_{k-1}}^+}^T s_{\A_{k-1}}} \leq \lambda_{k-1}}, \label{eq:polyhedron_rep_LARS2}
 \end{align}
-hvor \(P_{\A_{k-1}}^\perp \) er projektionen ortogonal med column space af \(\X_{\A_{k-1}}\), \(\mathbb{1} \cbr{\cdot}\) er indikator funktionen og \(\lambda_{k-1}\) er knot værdien af step \(k-1\).
+hvor \(P_{\A_{k-1}}^\perp \) er projektionen ortogonal med søjlerummet af \(\X_{\A_{k-1}}\), \(\mathbb{1} \cbr{\cdot}\) er indikator funktionen og \(\lambda_{k-1}\) er knot værdien fra step \(k-1\).
 Det \(k\)'te knot er da givet ved
 \begin{align}
 \lambda_k = \frac{\X_{j_k}^T P_{\A_{k-1}}^\perp \y}{s_k - \X_{j_k}^T \del{\X_{\A_{k-1}}^+}^T s_{\A_{k-1}}}. \label{eq:polyhedron_rap_LARS3}
 \end{align}
 Algoritmen afsluttes efter \(k\)-step hvis \(k=p\) eller hvis \(\lambda_{k+1} < 0\).
 
-Herefter vil vi verificere at LARS udvælgelses hændelsen
+Herefter vil vi verificere at LARS modeludvælgelsen
 \begin{align}
-\mathcal{P} = \cbr{y: \ \hat{\A}_k \del{\y} = \A_k, \ \hat{s}_{\A_k} \del{\y} = s_{\A_k}, \ \hat{S}_\ell \del{\y} = S_\ell, \ \ell = 1, \ldots, k} \label{eq:post_28}
+\mathcal{P} = \cbr{\y: \ \hat{\A}_k \del{\y} = \A_k, \ \hat{s}_{\A_k} \del{\y} = s_{\A_k}, \ \hat{S}_\ell \del{\y} = S_\ell, \ \ell = 1, \ldots, k} \label{eq:post_28}
 \end{align}
 er en polyhedron på formen \(\mathcal{P} = \cbr{\y : \ \Gamma \y \geq 0}\).
 
@@ -32,7 +34,7 @@ c \del{j_1, s_1}^T \y \geq c \del{j,s}^T \y, \ \forall j \neq j_1, \ s \in \cbr{
 \end{align*}
 hvor \(c \del{j,s} = s \X_j\).
 Hermed finder vi, at \(\Gamma\) har \(2 \del{p-1}\) rækker, som er givet ved \(c \del{j_1, s_1} - c \del{j, s}\) for \(j \neq j_1, \ s \in \cbr{-1,1}\).
-For \(k-1\) step kan optimaliteten af \(j_k\) og \(s_k\) i \eqref{eq:polyhedron_rep_LARS2} udtrykkes som
+For \(k-1\) steps kan optimaliteten af \(j_k\) og \(s_k\) i \eqref{eq:polyhedron_rep_LARS2} udtrykkes som
 \begin{align*}
 c \del{j_k, s_k, \A_{k-1}, s_{\A_{k-1}}}^T \y &\geq c \del{j, s, \A_{k-1}, s_{\A_{k-1}}}^T \y, \ \forall \del{j,s} \in S_k \backslash \cbr{\del{j_k, s_k}}, \\
 c \del{j_k, s_k, \A_{k-1}, s_{\A_{k-1}}}^T \y &\geq 0,

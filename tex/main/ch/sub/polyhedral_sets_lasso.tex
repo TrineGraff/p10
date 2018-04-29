@@ -1,27 +1,28 @@
-\subsubsection{Polyhedral mængder for lasso udvælgelses hændelse}
-Ved at introducere et step i LARS algoritmen som fjerner variable fra den aktive mængde, hvis deres koefficient sti  går igennem nul, da kan en modificeret LARS algoritme anvendes til at løse lasso. SOM BESKREVET I AFSNIT ---.
-For at skitser denne modificering i step \(k>1\), betegnes \(\del{j_k^\text{add}, s_k^\text{add}}\) som indgår i modellen næst som defineret i \eqref{eq:polyhedron_rep_LARS2} og lad \(\lambda_k^\text{add}\) være værdien af \(\lambda\) for hvilket de indgår som defineret i \eqref{eq:polyhedron_rap_LARS3}.
-Definer variablerne som forlader modellen herefter
+\subsubsection{Polyhedral mængder for lasso modeludvælgelse}
+Som nævnt i underafsnit \ref{subsec:lasso_modifikation} fås en modificeret LARS algoritme til at løse lasso problemet, hvis vi introducerer et step i LARS algoritmen, som fjerner variable fra den aktive mængde, hvis deres koefficientsti går igennem nul.
+For at beskrive denne modifikation i et step \(k>1\), lader vi \(\del{j_k^\text{add}, s_k^\text{add}}\) betegne et variabel-fortegns par som medtages i modellen næste gang, som defineret i \eqref{eq:polyhedron_rep_LARS2}, og vi lader \(\lambda_k^\text{add}\) være værdien af \(\lambda\) for hvilket parret medtages som defineret i \eqref{eq:polyhedron_rap_LARS3}.
+Herefter defineres variablen som forlader modellen
 \begin{align}
-j_k^\text{del} = \argmax_{j \in \A_{k-1} \backslash \cbr{j_{k-1}}} \frac{e_j^T \X_{\A_{k-1}}^+ \y}{e_j^T \del{\X_{\A_{k-1}}^T \X_{\A_{k-1}}}^{-1} s_{\A_{k-1}}} \cdot \mathbb{1} \cbr{\frac{e_j^T \X_{\A_{k-1}}^+ \y}{e_j^T \del{\X_{\A_{k-1}}^T \X_{\A_{k-1}}}^{-1} s_{\A_{k-1}}} \leq \lambda_{k-1}} \label{eq:post_29}
+j_k^\text{del} = \argmax_{j \in \A_{k-1} \backslash \cbr{j_{k-1}}} \frac{e_j^T \X_{\A_{k-1}}^+ \y}{e_j^T \del{\X_{\A_{k-1}}^T \X_{\A_{k-1}}}^{-1} s_{\A_{k-1}}} \cdot \mathbb{1} \cbr{\frac{e_j^T \X_{\A_{k-1}}^+ \y}{e_j^T \del{\X_{\A_{k-1}}^T \X_{\A_{k-1}}}^{-1} s_{\A_{k-1}}} \leq \lambda_{k-1}}, \label{eq:post_29}
 \end{align}
-og værdien af \(\lambda\) som forlader modellen
+og værdien af \(\lambda\) for hvilket variablen forlader modellen
 \begin{align*}
 \lambda_k^\text{del} = \frac{e_{j_k^\text{del}}^T \X_{\A_{k-1}}^+ \y}{e_{j_k^\text{del}}^T \del{\X_{\A_{k-1}}^T \X_{\A_{k-1}}}^{-1} s_{\A_{k-1}}}.
 \end{align*}
+Stien for lasso er givet ved at udføre, enten medtagelse af en variabel eller fratagelse af en variabel, som sker først, hvis \(\lambda\) aftages.
+Vi opdaterer i \(k\)'te knot \(\lambda_k = \max \cbr{\lambda_k^\text{add},\lambda_k^\text{del}}\), og konstruerer \(\A_k\) og \(s_{\A_k}\) ved enten af tilføje \(j_k^\text{add}\) og \(s_k^\text{add}\) til \(\A_{k-1}\) og \(s_{\A_{k-1}}\) hvis \(\lambda_k = \lambda_k^\text{add}\) eller fjerne \(j_k^\text{del}\) og \(s_k^\text{del}\) fra \(\A_{k-1}\) og \(s_{\A_{k-1}}\)  hvis \(\lambda_k = \lambda_k^\text{del}\).
 
-Vi opdager i \(k\)'te knot \(\lambda_k = \max \cbr{\lambda_k^\text{add},\lambda_k^\text{del}}\), og konstruerer \(\A_k\) og \(s_{\A_k}\) ved enten af tilføje \(j_k^\text{add}\) og \(s_k^\text{add}\) til \(\A_{k-1}\) og \(s_{\A_{k-1}}\) hvis \(\lambda_k = \lambda_k^\text{add}\) eller fjerne \(j_k^\text{del}\) og \(s_k^\text{del}\) fra \(\A_{k-1}\) og \(s_{\A_{k-1}}\)  hvis \(\lambda_k = \lambda_k^\text{del}\).
-Vi viser herefter at lasso udvælgelseshændelsen
+Vi viser at lasso modeludvælgelsen
 \begin{align}
-\mathcal{P} = \cbr{y: \ \hat{\A}_\ell \del{\y} = \A_\ell, \ \hat{s}_{\A_\ell} \del{\y} = s_{\A_\ell}, \ \hat{S}^\text{add}_\ell \del{\y} = S^\text{add}_\ell, \ \hat{S}^\text{del}_\ell \del{\y} = S^\text{del}_\ell, \ \ell = 1, \ldots, k} \label{eq:post_31}
+\mathcal{P} = \cbr{y: \ \hat{\A}_\ell \del{\y} = \A_\ell, \ \hat{s}_{\A_\ell} \del{\y} = s_{\A_\ell}, \ \hat{S}^\text{add}_\ell \del{\y} = S^\text{add}_\ell, \ \hat{S}^\text{del}_\ell \del{\y} = S^\text{del}_\ell, \ \ell = 1, \ldots, k}, \label{eq:post_31}
 \end{align}
 kan udtrykkes på polyhedron form \(\mathcal{P} = \cbr{\y : \ \Gamma \y \geq 0}\).
 
 For at konstruere \(\Gamma\) matricen svarende til \eqref{eq:post_31}, anvendes samme konstruktion som for LARS, og tilføjer blot flere rækker.
-I step \(k>1\), da karakterisere rækker vi beskrev tilfæjet til \(\Gamma\) for LARS...
-For at karakterisere variablen \(j_k^\text{del}\) som fjernes fra modellen, udtrykkes dens optimalitet i \eqref{eq:post_29} som
+I et step \(k>1\), da karakteriseres rækker vi beskrev tilføjet til \(\Gamma\) for LARS er nu blot karakteriserer variabel-fortegns parret \(\del{j_k^\text{add}, s_k^\text{add}}\) som medtages i modellen næste gang, og mængden \(S_k^\text{add}\).
+For at karakterisere variablen \(j_k^\text{del}\) som fjernes fra modellen næste gang, udtrykkes dens optimalitet i \eqref{eq:post_29} som
 \begin{align*}
-d \del{j_k^\text{del}, \A_{k-1}, s_{\A_{k-1}}}^T \y &\geq d \del{j, \A_{k-1}, s_{\A_{k-1}}}^T \y \ \forall j \in S_k^\text{del} \backslash \cbr{j_k^\text{del}}, \\
+d \del{j_k^\text{del}, \A_{k-1}, s_{\A_{k-1}}}^T \y &\geq d \del{j, \A_{k-1}, s_{\A_{k-1}}}^T \y, \ \forall j \in S_k^\text{del} \backslash \cbr{j_k^\text{del}}, \\
 d \del{j_k^\text{del}, \A_{k-1}, s_{\A_{k-1}}}^T \y &\geq 0
 \end{align*}
 hvor \(d \del{j, \A_{k-1}, s_{\A_{k-1}}} = \frac{\del{\X_{\A_{k-1}}^+}^T e_j}{e_j^T \del{\X_{\A_{k-1}}^T \X_{\A_{k-1}}}^{-1} s_{\A_{k-1}}}\) og \(S_k^\text{del}\) er karakteriseret ved
@@ -33,12 +34,12 @@ Af induktionshypotesen er \(\lambda_{k-1}=b^T_{k-1} \y\) en lineær funktion af 
 Hvis en variabel er tilføjet i step \(k-1\), da er \(b_{k-1}=c \del{j_{k-1}, s_{k-1},\A_{k-2}, s_{\A_{k-2}}}\).
 Hvis en variabel istedet er fjernet fra step \(k-1\), da er \(b_{k-1}=d \del{j_{k-1}, \A_{k-2}, s_{\A_{k-2}}}\).
 Step \(k\) må karakteriseres som vidne til en tilføjelse af variabel \(c \del{j_k^\text{add}, s_k^\text{add}, \A_{k-1}, s_{/A_{k-1}}}^T \y \geq d \del{j_k^\text{del}, \A_{k-1}, s_{/A_{k-1}}}^T \y\) eller fjernelse af en variabel, hvis uligheden vender omvendt.
-
-
-Udover tilføjelserne i afsnittet ovenfor tilføjer vi følgende \(\vert S_k^\text{del} \vert + \vert \A_{k-1} \vert + 1\) rækker til \(\Gamma\):
+%
+Udover tilføjelserne i underafsnittet ovenfor for LARS modeludvælgelse tilføjer vi følgende \(\vert S_k^\text{del} \vert + \vert \A_{k-1} \vert + 1\) rækker til \(\Gamma\):
 \(d \del{j_k^\text{del}, \A_{k-1}, s_{\A_{k-1}}} - d \del{j, \A_{k-1}, s_{\A_{k-1}}}\) for \(\del{j,s} \in S_k^\text{del} \backslash \cbr{\del{j_k^\text{del}}}\) \\
 \(d \del{j_k^\text{del}, \A_{k-1}, s_{\A_{k-1}}}\) \\
 \(b_{k-1} - d \del{j, \A_{k-1}, s_{\A_{k-1}}}\) for \(\del{j,s} \in S_k^\text{del}\) \\
 \(d \del{j, \A_{k-1}, s_{\A_{k-1}}} - b_{k-1}\) for \(\del{j,s} \in \A_{k-1} \backslash S_k^\text{del}\) \\
-og enten \(c \del{j_k^\text{add}, s_k^\text{add}, \A_{k-1}, s_{\A_{k-1}}} - d \del{j_k^\text{del}, \A_{k-1}, s_{\A_{k-1}}}\) eller det negative af denne mængde, afhængigt af om en variabel er tilføjet eller slettet i step \(k\) \\
-Det totale antal af rækker i \(\Gamma\) i step \(k\) er opadtil begrænset af \(\sum_{\ell=1}^k \del{\vert S_\ell^\text{add} \vert + \vert S_\ell^\text{del} \vert + 2 \vert \A_{\ell-2}^c \vert + \vert \A_{\ell-1} \vert + 1} \leq 3 pk + k\).
+og enten \(c \del{j_k^\text{add}, s_k^\text{add}, \A_{k-1}, s_{\A_{k-1}}} - d \del{j_k^\text{del}, \A_{k-1}, s_{\A_{k-1}}}\) eller det negative af denne mængde, afhængigt af om en variabel er tilføjet eller slettet i step \(k\). \\
+Det totale antal af rækker i \(\Gamma\) i step \(k\) er opadtil begrænset af \\
+\(\sum_{\ell=1}^k \del{\vert S_\ell^\text{add} \vert + \vert S_\ell^\text{del} \vert + 2 \vert \A_{\ell-2}^c \vert + \vert \A_{\ell-1} \vert + 1} \leq 3 pk + k\).

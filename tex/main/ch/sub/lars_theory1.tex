@@ -154,7 +154,7 @@ aftager med \(k\) som forventet.
 I hvert step tilføjes en ny variabel \(j\) til den aktive mængde, derfor har vi, at \(\abs{\widehat{c}_{kj}} = \widehat{C}_k\).
 Fortegnet \(s_j\) af hver \(\x_j\) i \eqref{eq:lars_2.4} forbliver konstant, da den aktive mængde kun stiger.
 
-\subsection{Lasso modifikation}
+\subsection{Lasso modifikation} \label{subsec:lasso_modifikation}
 I dette afsnit beskrives simple modifikationer af LARS algoritmen således at den giver lasso estimater.
 Lad \(\widehat{\beta}^\text{lasso}\) være løsningen til lasso problemet \eqref{eq:2.5} med \(\widehat{\tmu} = \X \widehat{\beta}^\text{lasso}\).
 Da kan det vises, at fortegnet af enhver ikke-nul koefficient \(\widehat{\beta}_j\) og fortegnet \(s_j\) af den nuværende korrelation \(\widehat{c}_j = \x_j^T \del{\y - \widehat{\tmu}}\) må stemmes overens

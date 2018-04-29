@@ -2,20 +2,20 @@
 Klassisk statistisk inferens kan ikke anvendes for adaptive procedurer.
 I dette afsnit beskrives teste til inferens efter variabeludvælgelse med en adaptiv metode.
 Teorien omkring post-selection inferens er udviklet i nyere tid og er stadig under udvikling.
-\texttt{R}-pakkerne \texttt{covTest} og \texttt{selectiveInference} understøtter testene som beskrives i dette afsnit.
+\texttt{R}-pakkerne \texttt{covTest} og \texttt{selectiveInference} understøtter testene, som beskrives i dette afsnit.
 
 \input{main/ch/sub/covarians_test}
 
 \subsection{Teste baseret på polyhedral lemmaet}
-I dette afsnit introduceres \textit{TG testen}, hvor TG står for "truncated gaussian" som er baseret på polyhedral lemmaet. 
+I dette afsnit introduceres \textit{TG testen}, hvor TG står for ``truncated gaussian`` som er baseret på polyhedral lemmaet. 
 Afsnit er baseret på \citep{post_inference}.
 
-Indledningsvis introduceres notation som anvendes i dette afsnit.
-For en matrix \(M \in \R^{n \times p}\) og liste \(S = \sbr{s_1, \ldots, s_r} \subseteq \sbr{1, \ldots, p}\), skriver vi \(M_S \in \R^{n \times \vert S \vert}\) for submatricen som findes ved at udtrække tilhørende kolonner af \(M\).
+Indledningsvis introduceres notation, som anvendes i dette afsnit.
+For en matrix \(M \in \R^{n \times p}\) og liste \(S = \sbr{s_1, \ldots, s_r} \subseteq \sbr{1, \ldots, p}\), skriver vi \(M_S \in \R^{n \times \vert S \vert}\) for submatricen, som findes ved at udtrække de tilhørende kolonner af \(M\) i den givne rækkefølge.
 Tilsvarende for en vektor \(x \in \R^p\), betegnes \(x_S\) for subvektoren.
-Vi skriver \(\del{M^T M}^+\) for Moore Penrose pseudoinverse af den kvadratiske matrix \(M\) og \(M^+ = \del{M^T M}^+ M^T\) for pseudoinverse af en rektangulær matrix \(M\).
+Vi skriver \(\del{M^T M}^+\) for Moore Penrose pseudoinverse af den kvadratiske matrix \(M^T M\) og \(M^+ = \del{M^T M}^+ M^T\) for pseudoinverse af en rektangulær matrix \(M\).
 Vi anvender \(P_L\) for projektions operatoren på det lineære underrum \(L\).
-\(\mathbb{P}_{\teta^T \tmu = 0} \del{\cdot \given y \in \mathcal{P}} \) er sandsynligheds målet under \(\tmu\) for hvilket \(\teta^T \tmu =0 \) betinget \(\y \in \mathcal{P}\). 
+Lad \(\mathbb{P}_{\teta^T \tmu = 0} \del{\cdot \given \y \in \mathcal{P}} \) være sandsynlighedsmålet under \(\tmu\) for hvilket \(\teta^T \tmu =0 \) betinget \(\y \in \mathcal{P}\). 
 
 Antag \(\y \sim N(\tmu, \Sigma)\), hvor \(\tmu \in \R^{n}\) er ukendt, men \(\Sigma \in \R^{n \times n}\) er kendt.
 Dette generaliserer vores setup i \eqref{eq:set-up}.
@@ -52,7 +52,7 @@ Nedenfor gives en alternativ repræsentation af \(\mathcal{P}\).
 %
 \begin{lem}[Polyhedral lemma] \label{lem:polyhedral}
 %Lad \(\mathbf{z}\) være defineret som i \eqref{eq:z} og \(\mathbf{c}\) som i \eqref{eq:c}. 
-For ethvert \(\Sigma\) og \(\teta\) således at \(\teta^T \Sigma \teta \neq 0\), da gælder, at
+For ethvert \(\Sigma\) og \(\teta\), således at \(\teta^T \Sigma \teta \neq 0\), gælder, at
 \begin{align}
 \Gamma \y \geq u \ \Longleftrightarrow \ \mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}, \  \mathcal{V}^0 \del{\y} \leq 0, \label{eq:post_8}
 \end{align}
@@ -83,10 +83,9 @@ Resultatet i \eqref{eq:post_8} hvor \(\mathcal{V}^-\), \(\mathcal{V}^+\) og \(\m
 Blot uafhængighedsresultatet afhænger af normaliteten af \(\y\).
 Se figur \ref{fig:polyhedron} for en geometrisk illustration af lemmaet.
 Intuitivt kan resultatet forklares som følgende, hvor vi antager, at \(\Sigma= \mathbf{I}\).
-Først dekomponeres \(\y=P_{\boldsymbol{\eta}} \y + P_{\boldsymbol{\eta}^\perp} \y\), hvor \(P_{\boldsymbol{\eta}} \y = \frac{\boldsymbol{\eta} \boldsymbol{\eta}^T \y}{\Vert \boldsymbol{\eta} \Vert_2^2}\) er projektionen af \(\y\) langs \(\boldsymbol{\eta}\) og  \(P_{\boldsymbol{\eta}^\perp} \y = \y - P_{\boldsymbol{\eta}} \y\) er projektionen på ortokomplementet af \(\boldsymbol{\eta}\).
-Vi kan betragte \(\y\) som en afvigelse fra \(P_{\boldsymbol{\eta}^\perp} \y\) af en mængde \(\boldsymbol{\eta}^T \y\), langs linjen bestemt af \(\boldsymbol{\eta}\).
-Mængderne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) betegner hvor langt vi kan afvige fra hver side af \(P_{\boldsymbol{\eta}^\perp} \y\) inden \(\y\) forlader polyhedronen.
-Dette giver anledning til uligheden \(\mathcal{V}^- \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+\).
+Først dekomponeres \(\y=P_{\boldsymbol{\eta}} \y + P_{\boldsymbol{\eta}^\perp} \y\), hvor \(P_{\boldsymbol{\eta}} \y = \frac{\boldsymbol{\eta} \boldsymbol{\eta}^T \y}{\Vert \boldsymbol{\eta} \Vert_2^2}\) er projektionen af \(\y\) langs \(\boldsymbol{\eta}\) og \(P_{\boldsymbol{\eta}^\perp} \y = \y - P_{\boldsymbol{\eta}} \y\) er projektionen på det ortogonale komplement af \(\boldsymbol{\eta}\).
+Vi kan betragte \(\y\) som en afvigelse fra \(P_{\boldsymbol{\eta}^\perp} \y\) af størrelsen \(\boldsymbol{\eta}^T \y\), langs linjen bestemt af \(\boldsymbol{\eta}\).
+Mængderne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) bestemmer, hvor langt vi kan afvige på hver side af \(P_{\boldsymbol{\eta}^\perp} \y\), inden \(\y\) forlader polyhedronen, hvoraf vi får uligheden \(\mathcal{V}^- \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+\).
 Nogle flader af polyhedronen kan være perfekt justeret med \(\boldsymbol{\eta}\), dvs deres normal vektorer kan være ortogonale med \(\boldsymbol{\eta}\).
 Dette kan tjekkes udfra \(\mathcal{V}^0\) ved at \(\y\) ligger på den rigtige side af disse flader.  
 %--
@@ -108,39 +107,39 @@ Af lemma \ref{lem:polyhedral} kan fordelingen af enhver lineær funktion \(\bold
 \boldsymbol{\eta}^T \y \given \mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}, \ \mathcal{V}^0 \del{\y} \leq 0.
 \end{align*}
 Da \(\boldsymbol{\eta}^T \y\) er normalfordelt, er overstående trunkeret normalfordelt.
-En simpel transformation fører til pivotal statistic, som er kritisk for inferens af \(\boldsymbol{\eta}^T \tmu\).
+%En simpel transformation fører til pivotal statistic, som er kritisk for inferens af \(\boldsymbol{\eta}^T \tmu\).
 
 \begin{lem}  \label{lem:lem2}
 Lad \(\Phi \del{x}\) betegne fordelingsfunktionen af en standard normalfordeling, da er fordelingsfunktionen for en normalfordeling med middelværdi \(\mu\) og varians \(\sigma^2\) af en stokastisk variable indenfor intervallet \(\sbr{a,b}\) givet ved
 \begin{align*}
 F_{\mu, \sigma^2}^{\sbr{a,b}} \del{x} = \frac{\Phi\del{\frac{x-\mu}{\sigma}} - \Phi\del{\frac{a-\mu}{\sigma}}}{\Phi\del{\frac{b-\mu}{\sigma}} - \Phi\del{\frac{a-\mu}{\sigma}}}.
 \end{align*}
-For \(\boldsymbol{\eta}^T \Sigma \boldsymbol{\eta} \neq 0\), da følger teststørrelsen \(F_{\boldsymbol{\eta}^T \tmu, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^-,\mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} \) betinget \(\Gamma \y \geq u\) en standard uniform fordeling. Dvs
+For \(\boldsymbol{\eta}^T \Sigma \boldsymbol{\eta} \neq 0\), da følger  \(F_{\boldsymbol{\eta}^T \tmu, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^-,\mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} \) betinget \(\Gamma \y \geq u\) en standard uniform fordeling, dvs
 \begin{align*}
 \mathbb{P} \del{F_{\boldsymbol{\eta}^T \tmu, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^-,\mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} \leq \alpha \given \Gamma \y \geq u} = \alpha, 
 \end{align*}
 for ethvert \(0 \leq \alpha \leq 1\), hvor \(\mathcal{V}^-\) og \(\mathcal{V}^+\) er defineret i \eqref{eq:V-} samt \eqref{eq:V+}. 
 \end{lem}
 %
-Denne pivotal statistic i lemmaet fører til gyldige betinget \(p\)-værdier for at teste nulhypotesen \(H_0: \boldsymbol{\eta}^T \boldsymbol{\mu}=0\) og tilhørende betinget konfidensintervaller for \(\boldsymbol{\eta}^T \tmu\).
+Dette fører til gyldige betinget \(p\)-værdier for at teste nulhypotesen \(\hyp_0: \boldsymbol{\eta}^T \boldsymbol{\mu}=0\) og tilhørende betinget konfidensintervaller for \(\boldsymbol{\eta}^T \tmu\).
 Herefter betragtes one-sided inferens efterfulgt af two-sided inferens.
 %
 \begin{lem} \label{lem:lem3}
 Givet \(\boldsymbol{\eta}^T \Sigma \boldsymbol{\eta} \neq 0\), antag at vi vil teste
 \begin{align*}
-H_0: \boldsymbol{\eta}^T \tmu=0 \quad \text{imod} \quad H_1: \boldsymbol{\eta}^T \tmu > 0.
+\hyp_0: \boldsymbol{\eta}^T \tmu=0 \quad \text{imod} \quad \hyp_1: \boldsymbol{\eta}^T \tmu > 0.
 \end{align*}
 Definer teststørrelsen
 \begin{align}
 T=1- F_{0, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^-, \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y}, \label{eq:post_1.14}
 \end{align}
 hvor fordelingsfunktionen af \(\boldsymbol{\eta}^T \y \sim N \del{0,  \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}\) i intervallet \(\sbr{\mathcal{V}^-, \mathcal{V}^+}\) er givet i lemma \ref{lem:lem2}.
-Da er \(T\) en gyldig \(p\)-værdi for \(H_0\) betinget \(\Gamma \y \geq u\)
+Da er \(T\) en gyldig \(p\)-værdi for \(\hyp_0\) betinget \(\Gamma \y \geq u\)
 \begin{align}
 \mathbb{P}_{\boldsymbol{\eta}^T \tmu=0} \del{T \leq \alpha \given \Gamma \y \geq u} = \alpha, \label{eq:post_1.15}
 \end{align}
 for ethvert \(0 \leq \alpha \leq 1\). 
-Definer \(\delta_{\alpha}\) som opfylder, at
+Definer \(\delta_{\alpha}\), som opfylder, at
 \begin{align*}
 1-F_{\delta_{\alpha}, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= \alpha.
 \end{align*}
@@ -156,14 +155,14 @@ Herefter betragtes two-sided inferens.
 \begin{lem} \label{lem:lem4}
 Givet \(\boldsymbol{\eta}^T \Sigma \boldsymbol{\eta} \neq 0\), antag at vi vil teste
 \begin{align*}
-H_0: \boldsymbol{\eta}^T \tmu=0 \quad \text{imod} \quad H_1: \boldsymbol{\eta}^T \tmu \neq 0.
+\hyp_0: \boldsymbol{\eta}^T \tmu=0 \quad \text{imod} \quad \hyp_1: \boldsymbol{\eta}^T \tmu \neq 0.
 \end{align*}
 Definer teststørrelsen
 \begin{align}
 T=2 \cdot \min\cbr{F_{0, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^-, \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y}, 1 - F_{0, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^-, \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y}}, \label{eq:post_1.18}
 \end{align}
 hvor fordelingsfunktionen af \(\boldsymbol{\eta}^T \y \sim N \del{0,  \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}\) i intervallet \(\sbr{\mathcal{V}^-, \mathcal{V}^+}\) er givet i lemma \ref{lem:lem2}.
-Da er \(T\) en gyldig \(p\)-værdi for \(H_0\) betinget \(\Gamma \y \geq u\)
+Da er \(T\) en gyldig \(p\)-værdi for \(\hyp_0\) betinget \(\Gamma \y \geq u\)
 \begin{align}
 \mathbb{P}_{\boldsymbol{\eta}^T \tmu=0} \del{T \leq \alpha \given \Gamma \y \geq u} = \alpha, \label{eq:post_1.19}
 \end{align}
@@ -179,32 +178,33 @@ Da gælder, at
 \end{align}
 \end{lem}
 %
-Teststørrelsen i \eqref{eq:post_1.18} defineret som minimum af den trunkerede fordelingsfunktion af normalfordelingen og overlevelsesfunktionen, har magt imod den alternative hypotese \(H_1: \boldsymbol{\eta}^T \tmu \neq 0\).
-Beviset for dens nulhypotese i \eqref{eq:post_1.19} kommer af, at hvis \(U\) følger en standard uniform fordelingen, da gør \(2 \cdot \min \cbr{U,1-U}\) også.
-Konstruktionen af konfidensintervallet i \eqref{eq:post_20}, \eqref{eq:post_21} og \eqref{eq:post_22} anvendes igen monotonicitet af en trunkeret normal overlevelsesfunktion i den underliggende middelværdi parameter.
+Teststørrelsen i \eqref{eq:post_1.18}, defineret som minimum af den trunkerede normal fordelingsfunktion og overlevelsesfunktionen, har magt imod den alternative hypotese \(H_1: \boldsymbol{\eta}^T \tmu \neq 0\).
+Beviset for dens nulhypotese i \eqref{eq:post_1.19} kommer af, at hvis \(U\) følger en standard uniform fordeling, da gør \(2 \cdot \min \cbr{U,1-U}\) også.
+Konstruktionen af konfidensintervallet i \eqref{eq:post_20}, \eqref{eq:post_21} og \eqref{eq:post_22} anvender igen monotonicitet af en trunkeret normal overlevelsesfunktion i den underliggende middelværdi parameter.
 
 
-Herefter vil vi vise at modeludvælgelses hændelsen for LARS og lasso kan karakteriseres som et polyhedron (dvs kegler) på formen \(\cbr{\y : \ \Gamma \y \geq u}\).
+Herefter vil vi vise at modeludvælgelsen for LARS og lasso kan karakteriseres som et polyhedron (dvs kegler) på formen \(\cbr{\y : \ \Gamma \y \geq 0}\).
+Efter dette beskrives formene af de eksakte betinget tests og intervaller, som er givet i lemma \ref{lem:polyhedral}-\ref{lem:lem4} for LARS og lasso.
 \input{main/ch/sub/polyhedral_sets_LARS}
 \input{main/ch/sub/polyhedral_sets_lasso}
 
-Givet antallet af steps \(k\) og matricen \(\Gamma\) for henholdsvis LARS eller lasso, da kan \(p\)-værdierne og konfidensintervallerne nemt udregnes.
-Lad os teste nulhypotesen \(H_0: \ \teta^T \tmu = 0\), hvor \(\teta\) er vilkårlig.
+Givet antallet af steps \(k\), efter vi har konstrueret matricen \(\Gamma\) for henholdsvis LARS eller lasso, da er udregninger af betinget \(p\)-værdier og konfidensintervaller ligetil.
+Lad os teste nulhypotesen \(\hyp_0: \ \teta^T \tmu = 0\), hvor \(\teta\) er vilkårlig.
 
-Som specificeret af lemma \ref{lem:polyhedral}, udregnes først mængderne
+Som specificeret i lemma \ref{lem:polyhedral} udregnes først mængderne
 \begin{align*}
 \mathcal{V}^- \del{\y} &= \max_{j: \del{\Gamma \teta}_j > 0} - \del{\Gamma \y}_j \cdot \frac{\Vert \teta \Vert_2^2}{\del{\Gamma \teta}_j} + \teta^T \y, \\
 \mathcal{V}^+ \del{\y} &= \min_{j: \del{\Gamma \teta}_j < 0} - \del{\Gamma \y}_j \cdot \frac{\Vert \teta \Vert_2^2}{\del{\Gamma \teta}_j} + \teta^T \y.
 \end{align*}
-Bemærk at antallet af operationer for at udregne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) er \(O \del{mn}\), hvor \(m\) er antallet af rækker i \(\Gamma\).
-
-For at teste imod en one-sided alternativ \(H_1: \ \teta^T \tmu > 0\),  defineres teststørrelsen
+Antallet af operationer som kræves for at udregne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) er \(O \del{mn}\), hvor \(m\) er antallet af rækker i \(\Gamma\).
+%
+For at teste imod en one-sided alternativ hypotese \(\hyp_1: \ \teta^T \tmu > 0\),  defineres teststørrelsen
 \begin{align*}
 T_k^\text{tg}=1- F_{0, \sigma^2 \Vert \boldsymbol{\eta} \Vert_2^2}^{\sbr{\mathcal{V}^-, \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} = \frac{\Phi \del{\frac{\mathcal{V}^+}{\sigma \Vert \boldsymbol{\eta} \Vert_2}}-\Phi \del{\frac{\boldsymbol{\eta}^T \y}{\sigma  \Vert \boldsymbol{\eta} \Vert_2}}}{\Phi \del{\frac{\mathcal{V}^+}{\sigma  \Vert \boldsymbol{\eta} \Vert_2}}-\Phi \del{\frac{\mathcal{V}^-}{\sigma \Vert \boldsymbol{\eta} \Vert_2}}}.
 \end{align*}
-Af lemma \ref{lem:lem3}, giver dette en gyldig \(p\)-værdi betinget udvælgelsen, dvs
+Af lemma \ref{lem:lem3} giver dette en gyldig \(p\)-værdi betinget udvælgelsen, dvs
 \begin{align}
-\mathbb{P}_{\boldsymbol{\eta}^T \theta = 0} \del{T_k^\text{tg} \leq \alpha \given \hat{\A}_k \del{\y} = \A_k, \hat{s}_{\A_k} \del{y} = s_{\A_k}} = \alpha, \label{eq:post_32}
+\mathbb{P}_{\boldsymbol{\eta}^T \tmu = 0} \del{T_k^\text{tg} \leq \alpha \given \hat{\A}_k \del{\y} = \A_k, \hat{s}_{\A_k} \del{y} = s_{\A_k}} = \alpha, \label{eq:post_32}
 \end{align}
 for ethvert \(0 \leq \alpha \leq 1\).
 Lemma \ref{lem:lem3} giver også at et betinget konfidensinterval udledes ved først at udregne \(\delta_\alpha\) som opfylder
@@ -213,7 +213,7 @@ Lemma \ref{lem:lem3} giver også at et betinget konfidensinterval udledes ved f�
 \end{align*}
 Da lader vi \(I_k = [\delta_\alpha, \infty)\), som er en passende betinget coverage, da
 \begin{align}
-\mathbb{P} \del{\boldsymbol{\eta}^T \theta \in I_k \given \hat{\A}_k \del{\y} = \A_k, \hat{s}_{\A_k} \del{\y} = s_{\A_k}} = 1-\alpha. \label{eq:post_33}
+\mathbb{P} \del{\boldsymbol{\eta}^T \tmu \in I_k \given \hat{\A}_k \del{\y} = \A_k, \hat{s}_{\A_k} \del{\y} = s_{\A_k}} = 1-\alpha. \label{eq:post_33}
 \end{align}
 
 For at teste imod en two-sided alternative \(H_1: \ \teta^T \tmu \neq 0\), anvendes istedet teststørrelsen

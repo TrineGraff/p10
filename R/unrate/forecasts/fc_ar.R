@@ -1,19 +1,16 @@
-source("../data/setup_data.R")
-
+source("data_unrate.R")
 library(Metrics)
 library(ggplot2)
 library(gridExtra)
 library(grid)
 
-y = scale(data[, "UNRATE"], scale = FALSE)
-
 # Forecast - AR -----------------------------------------------------------
-forecast = function(data, p, idx = idx) {
+forecast_ar = function(data, p, idx = idx) {
   fc = c(NA)
-  for(k in 0:length(data[-c(1:idx)])) {
-    y = data[(p + 1):(length(data[1:idx]) + k)] #y bliver opdateret med den sande værdi for hvert k
+  for(k in 0:length(data[-c(1:idx)]) - 1) {
+    y = data[(p + k):(length(data[1:idx]) + k)] #y bliver opdateret med den sande værdi for hvert k
     n = length(y) 
-
+    print(y)
     x_lag = matrix(nrow = n, ncol = p)
     for (j in 1:p){
       for (i in 1:n){
@@ -26,34 +23,29 @@ forecast = function(data, p, idx = idx) {
   print(list("fc" = fc))
   }
 
-fit = forecast(y, 1, idx)
+fit = forecast_ar(y, 11, idx)
 
-# Analyse -----------------------------------------------------------------
-loss = function(fc, y_test){
-  print(list("MAE" = mae(y_test, fc)))
-  print(list("RMSE" = rmse(y_test, fc)))
-}
-
-loss(fit$fc, y = c(y[idx], y[-c(1:idx)]))
+plot(fit$fc, type = "l", col = "red", xlim = c(0,140), ylim = c(-0.4, 0.4))
+par(new = TRUE)
+plot(y_test, type = "l", xlim = c(0,140), ylim = c(-0.5, 0.5))
 
 # plot --------------------------------------------------------------------
 
-as.character(test_dato)
-dato = c(as.character(data_raw$dato[idx][1]), as.character(test_dato))
+dato = c(as.character(test_dato))
 
-df = data.frame(date = as.Date(dato), fc = fit$fc, y = c(y[idx], y[-c(1:idx)]))
+df = data.frame(date = as.Date(dato), fc = fit$fc, y =  y[-c(1:idx)])
 
 ggplot(df, aes(x = date ))  +
   geom_line(aes(y = y, colour = "Arbejdsløshed")) +
-  geom_line(aes(y = fc, colour = "AR(1)")) +
+  geom_line(aes(y = fc, colour = "AR(11)")) +
   ylab("Rate") + xlab("Dato") +
   scale_colour_manual(values = c("red", "gray")) +
   theme(legend.title=element_blank()) +
-  ggtitle("One-step-ahead forecast") 
+  ggtitle("Rolling forecast") 
 
 # Plot residualer ---------------------------------------------------------
 
-res = scale(fit$fc - c(y[idx], y[-c(1:idx)]))
+res = scale(fit$fc - y[-c(1:idx)])
 tmp = data.frame(Date = as.Date(dato), y = res)
 
 qqnorm.plot = function(y){

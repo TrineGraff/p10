@@ -3,9 +3,10 @@ I den empiriske del anvendes data fra FRED, som er hentet fra Federal Reserve Ba
 Datasættet består af månedlige data for 128 makroøkonomiske variable i perioden 1. januar 1959 til 1. november 2017 svarende til 707 observationer.
 
 Tidsrækkerne for variablerne transformeres således at de bliver stationære.
-Hvilken transformation der anvendes til tidsrækkerne kan ses i appendiks \ref{app_data}. 
+Hvilken transformation der anvendes til tidsrækkerne kan ses i appendiks \ref{app:app_data}.
+Transformationerne er forslået af Michael McCracken fra Federal Reserve Bank of St. Louis.  
 Som følge at disse transformationer introduceres nogle NA's i starten af hver tidsrække.
-Derudover observeres at 5 variable har et stort antal NA's derfor fjernes disse fra datasættet.
+Derudover observeres at 5 variable har et stort antal NA's derfor fjernes disse fra datasættet, disse variabler er markeret i appendiks \ref{app:app_data}.
 Yderligere fjernes de første 12 samt de sidste 5 observationer således at datasættet er renset for NAs.
 Det transformerede datasæt består hermed af 123 variable i perioden 1. januar 1960 til 1. juli 2017 svarende til 691 observationer.
 %
@@ -34,8 +35,10 @@ Herefter opdeles datasættet i en træningsmængde, som består af 552 observati
 
 En betydningsfuld makroøkonomisk variable er arbejdsløshed, som vi betragter som responsvariabel.  
 Arbejdsløshed er inkluderet i gruppen arbejdsmarked.
-Hernæst har vi standardiseret vores data, således at variablerne er centreret omkring 0 og har en varians 1, således vi undgår skæringen i vores regression.
- 
+For at få et bedre overblik over resultaterne deler vi analysen op således hver responsvariabler har et kapitel. 
+Formålet ved analysen er at finde hvilken model er den bedste til forecaste. For at måle dette bruger vi 
 
 
-
+\section{Forecasting}
+Målet med forecasting er, at vi gerne vil prædikterer fremtidige værdier af vores respons variable. 
+For at prædikterer opdeles vores datasæt i en initialtræningsmængde, som består 552 observationer fra 1. januar 1960 til 1. december 2005 

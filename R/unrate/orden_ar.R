@@ -1,7 +1,6 @@
 # orden p -----------------------------------------------------------------
 #Vi bestemmer orden af vores træningsmængde 
-train = scale(data_train$UNRATE, scale = FALSE)
-source("../data/setup_data.R")
+source("data_unrate.R")
 
 x.lag = function(x, p.max){
   BIC.vektor = rep(NA, p.max)
@@ -24,7 +23,7 @@ x.lag = function(x, p.max){
   #print(BIC.vektor)
 }
 
-test = x.lag(y_train, 24)
+test = x.lag(y_train, 12)
 
 
 #x.lag_beta =  [2,]  0.17571061

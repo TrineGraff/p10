@@ -1,6 +1,18 @@
 \section{Udregning og valg af tuning parametre}
 For alle lasso-baseret shrinkage metoder, findes der ikke en direkte løsning.
-Dog viste \citep{zou_hastie} og --- at elastisk net -- og group lasso -- kan transformeres til et lasso problem på formen ---.
-Bemærk at styrken af shrinkage i -- og -- afhænger af én tuning parameter \(\lambda\), men --- afhænger af to tuning parametre \(\lambda\) og \(\alpha\).
+Dog viste \citep{zou_hastie} og \citep{group_lasso} at elastisk net -- og group lasso -- kan transformeres til et lasso problem på formen \eqref{eq:2.5}.
+Bemærk at styrken af shrinkage i \eqref{eq:2.5} og \eqref{eq:4.5} afhænger af én tuning parameter \(\lambda\), mens \eqref{eq:4.2} afhænger af to tuning parametre \(\lambda\) og \(\alpha\).
 Nedenfor beskrives hvordan disse tuningsparametre bestemmes udfra krydsvalidering, som forventes at stabilisere modellens in-sample fit med out-of-sample prædiktions performance.
+
+For en given kombination af faste værdier af \(\lambda\) og \(\alpha\), opdeldes tilfælde in-sample data i 10 dele af samme størrelse.
+For hver del, for del \(k\), estimeres modellen med \(\alpha = \alpha^{(1)}\) og \(\lambda = \lambda^{(1)}\) udfra al data som ikke er indkluderet i del \(k\).
+Antag at de estimere regressions koefficienter er \(\hat{\phi}^{(k)}\); da går vi tilbage til del \(k\) og laver forecasts vha predictive regression med de ukendte parametre \(\phi\) erstattet med \(\hat{\phi}^{(k)}\).
+Da \(\hat{\phi}^{(k)}\) er estimeret med data som ikke er del \(k\), kan forecatene af denne del af data betragtes som out-of-sample forecasts.
+Proceduren gentages for \(k=1,\ldots,10\), således at hver observation i hver af de 10 dele får deres egen out-of-sample forecast.
+Vi udregner mean squared prediction error (MSPE) som er betinget på \(\del{\alpha^{(1)}, \lambda^{(1)}}\).
+Endelig gentages hele proceduren for forskellige værdier af \(\alpha\) og \(\lambda\), og kombinationen som giver den mindste MSPE anvendes.
+(Følgen af hver tuning parameter er specificeret ved at tage 100 tuning parameter mellem 0 og en øvre grænse, hvor den øvre grænse er den mindste tuning parameter værdi hvor alle regressions koefficienter er shrunk til nul, og findes by trial and error.
+Empirically, the impact of the upper bound on the estimate is negligible)
+
+For at prædiktere responsvariablen næste måned, sammenes al in-sample-data ovenfor, og vi anvender de valgte tuning parametre.
 

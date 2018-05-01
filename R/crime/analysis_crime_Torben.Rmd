@@ -1,0 +1,67 @@
+---
+title: "analysis_crime_Torben"
+author: "Louise Nygaard Christensen"
+date: "18/1/2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+library(MASS)
+library(tidyverse)
+```
+
+```{r}
+crime <- read_csv("crime.csv", col_types = cols()) %>% 
+  rename(rate = `crime rate`, not_hs = `not-hs`)
+```
+
+# `lm`
+
+```{r}
+crime_lm <- lm(rate ~ ., data = crime)
+coef(crime_lm)
+```
+
+# ridge
+
+```{r}
+crime.ridge_ <- lm.ridge(rate ~ ., data = crime, lambda = seq(0, 100, 0.1))
+crime.lambda <- crime.ridge_$lambda[which.min(crime.ridge_$GCV)]
+crime.ridge <- lm.ridge(rate ~ ., data = crime, lambda = crime.lambda)
+coef(crime.ridge)
+```
+
+```{r}
+## library(glmnet)
+library(glmnetUtils)
+
+plot(glmnet(rate ~ ., data = crime, alpha = 0))
+       
+(crime_ridge_cv <- cv.glmnet(rate ~ ., data = crime, alpha = 0)) ## alpha = 0 (Ridge)
+plot(crime_ridge_cv)
+```
+
+```{r}
+crime_ridge <- glmnet(rate ~ ., data = crime, alpha = 0, lambda = crime_ridge_cv$lambda.min)
+coef(crime_ridge)
+```
+
+# LASSO
+
+```{r}
+plot(glmnet(rate ~ ., data = crime, alpha = 1))
+
+(crime_lasso_cv <- cv.glmnet(rate ~ ., data = crime, alpha = 1)) ## alpha = 1 (LASSO)
+plot(crime_lasso_cv)
+```
+
+```{r}
+crime_lasso <- glmnet(rate ~ ., data = crime, alpha = 1, ## alpha = 0: LASSO
+                             lambda = unlist(crime_lasso_cv[c("lambda.min", "lambda.1se")]))
+(lasso_coef <- coef(crime_lasso))
+```
+
+```{r}
+lasso_coef %>% as.matrix() %>% abs() %>% colSums()
+```

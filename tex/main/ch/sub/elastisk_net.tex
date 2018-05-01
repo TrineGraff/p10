@@ -41,17 +41,22 @@ Dette ses tydeligt på figur \ref{fig:elastisk}.
 \caption[optional short text]{To dimensional illustration af betingelsesområderne for shrinkage metoderne: ridge regression (\tikz[baseline]{\draw[dashed] (0,.5ex)--++(.5,0) ;}), lasso (\tikz[baseline]{\draw[dotted] (0,.5ex)--++(.5,0) ;}) og elastisk net med \(\alpha = 0.5\) (\tikz[baseline]{\draw (0,.5ex)--++(.5,0) ;}). Vi observerer, at singulariteter i hjørnerne og kanterne er streng konveks. Styrken af konveksitet varierer med \(\alpha\).} \label{fig:elastisk}
 \end{figure}
 %
-\begin{figure}[H]
-\centering
-\begin{minipage}{0.4\linewidth}
-\scalebox{0.32}{\includegraphics{fig/crime_lasso.png}}
-\end{minipage}
-\hspace{0.2cm}
-\begin{minipage}{0.4\linewidth}
-\scalebox{0.32}{\includegraphics{fig/crime_EN.png}}
-\end{minipage}
-\caption{Koefficientstierne for henholdsvis lasso (ventre) og elastisk net med \(\alpha=0.3\) (højre) plottet imod \(\ell_1\)-normen for crime data.} \label{fig:crime_koef_EN}
-\end{figure}
+
+%\imgfigh{crime_el_lasso.pdf}{0.7}{Koefficientstierne for henholdsvis lasso og elastisk net med \(\alpha=0.3\) plottet imod log af $\lambda$ for crime data.}{crime_el_lasso}
+
+
+%
+%\begin{figure}[H]
+%\centering
+%\begin{minipage}{0.4\linewidth}
+%\scalebox{0.32}{\includegraphics{fig/img/crime_lasso.png}}
+%\end{minipage}
+%\hspace{0.2cm}
+%\begin{minipage}{0.4\linewidth}
+%\scalebox{0.32}{\includegraphics{fig/crime_EN.png}}
+%\end{minipage}
+%\caption{Koefficientstierne for henholdsvis lasso (ventre) og elastisk net med \(\alpha=0.3\) (højre) plottet imod \(\ell_1\)-normen for crime data.} \label{fig:crime_koef_EN}
+%\end{figure}
 %
 %En tre dimensionel illustration af betingelsesområderne for det elastiske net og standard lasso er givet på figur \ref{fig:elastisk_net}.
 %Heraf ses at det elastiske net har egenskaberne af både $\ell_1$ kuglen og $\ell_2$ kuglen: de skarpe hjørner og kanter opfordrer til variable udvælgelse, mens de kurvede konturer opfordrer stærk korreleret variable til at dele koefficienter.

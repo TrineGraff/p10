@@ -60,17 +60,21 @@ Datasættet, som vi betegner crime data, er inkluderet for at underbygge teorien
 Ridge regression shrinks koefficienter mod nul, men lasso også udfører variabeludvælgelse ved at nogle koefficienter sættes lig 0.
 På figur \ref{fig:crime_koef} anvendes crime data til at illustrere koefficientstierne for henholdsvis ridge regression og lasso.
 %
-\begin{figure}[H]
-\centering
-\begin{minipage}{0.4\linewidth}
-\scalebox{0.32}{\includegraphics{fig/crime_ridge.png}}
-\end{minipage}
-\hspace{0.2cm}
-\begin{minipage}{0.4\linewidth}
-\scalebox{0.32}{\includegraphics{fig/crime_lasso.png}}
-\end{minipage}
-\caption{Koefficientstierne for ridge regression (venstre) og lasso (højre) plottet imod \(\ell_1\)-normen.} \label{fig:crime_koef}
-\end{figure}
+%\begin{figure}[H]
+%\centering
+%\begin{minipage}{0.4\linewidth}
+%\scalebox{0.32}{\includegraphics{fig/crime_ridge.png}}
+%\end{minipage}
+%\hspace{0.2cm}
+%\begin{minipage}{0.4\linewidth}
+%\scalebox{0.32}{\includegraphics{fig/crime_lasso.png}}
+%\end{minipage}
+%\caption{Koefficientstierne for ridge regression (venstre) og lasso (højre) plottet imod \(\ell_1\)-normen.} \label{fig:crime_koef}
+%\end{figure}
+
+\imgfigh{crime_lasso_ridge.pdf}{0.7}{Koefficientstierne for ridge regression og lasso plottet imod log af $\lambda$}{crime_koef}
+
+
 %
 Variabel udvælgelsen for ridge regression og lasso illustreres på figur \ref{fig:LassoRig}.
 %

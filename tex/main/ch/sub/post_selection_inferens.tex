@@ -6,7 +6,7 @@ Teorien omkring post-selection inferens er udviklet i nyere tid og er stadig und
 
 \input{main/ch/sub/covarians_test}
 
-\subsection{Teste baseret på polyhedral lemmaet}
+\subsection{Teste baseret på polyhedral lemmaet} \label{subsec:teste_polyhedron}
 I dette afsnit introduceres \textit{TG testen}, hvor TG står for ``truncated gaussian`` som er baseret på polyhedral lemmaet. 
 Afsnit er baseret på \citep{post_inference}.
 
@@ -140,16 +140,17 @@ Da er \(T\) en gyldig \(p\)-værdi for \(\hyp_0\) betinget \(\Gamma \y \geq u\)
 \end{align}
 for ethvert \(0 \leq \alpha \leq 1\). 
 Definer \(\delta_{\alpha}\), som opfylder, at
-\begin{align*}
-1-F_{\delta_{\alpha}, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= \alpha.
-\end{align*}
+\begin{align}
+1-F_{\delta_{\alpha}, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= \alpha. \label{eq:post_1.16}
+\end{align}
 Da er \(I= [\delta_\alpha, \infty )\) et gyldig one-sided konfidensinterval for \(\teta^T \tmu\) betinget \(\Gamma \y \geq u\)
-\begin{align*}
-\mathbb{P} \del{\boldsymbol{\eta}^T \tmu \geq \delta_\alpha \given \Gamma \y \geq u} = 1- \alpha.
-\end{align*}
+\begin{align}
+\mathbb{P} \del{\boldsymbol{\eta}^T \tmu \geq \delta_\alpha \given \Gamma \y \geq u} = 1- \alpha. \label{eq:post_1.17}
+\end{align}
 \end{lem}
 %
-Bemærk-----
+Af teststørrelsen i \eqref{eq:post_1.14} har vi magt imod one-sided alternativ hypotese \(\hyp_1 : \teta^T \tmu > 0\), da den trunkerede normal overlevelsesfunktion \(1-F_{\mu, \sigma^2}^{\sbr{a,b}} \del{x}\), evalueret i ethvert fast punkt \(x\), er monoton stigende i \(\mu\) (se ).
+Dette gælder også for konfidensintervallet i \eqref{eq:post_1.16} og \eqref{eq:post_1.17}.
 Herefter betragtes two-sided inferens.
 %
 \begin{lem} \label{lem:lem4}
@@ -182,22 +183,22 @@ Teststørrelsen i \eqref{eq:post_1.18}, defineret som minimum af den trunkerede 
 Beviset for dens nulhypotese i \eqref{eq:post_1.19} kommer af, at hvis \(U\) følger en standard uniform fordeling, da gør \(2 \cdot \min \cbr{U,1-U}\) også.
 Konstruktionen af konfidensintervallet i \eqref{eq:post_20}, \eqref{eq:post_21} og \eqref{eq:post_22} anvender igen monotonicitet af en trunkeret normal overlevelsesfunktion i den underliggende middelværdi parameter.
 
-
+Vi antager, at kolonnerne af \(\X\) er i general position (se definition \ref{defn:general_position}), hvilket medfører at løsningsstierne for LARS og lasso er entydige \citep{lasso_unique}. 
 Herefter vil vi vise at modeludvælgelsen for LARS og lasso kan karakteriseres som et polyhedron (dvs kegler) på formen \(\cbr{\y : \ \Gamma \y \geq 0}\).
 Efter dette beskrives formene af de eksakte betinget tests og intervaller, som er givet i lemma \ref{lem:polyhedral}-\ref{lem:lem4} for LARS og lasso.
 \input{main/ch/sub/polyhedral_sets_LARS}
-\input{main/ch/sub/polyhedral_sets_lasso}
+%\input{main/ch/sub/polyhedral_sets_lasso}
 
-Givet antallet af steps \(k\), efter vi har konstrueret matricen \(\Gamma\) for henholdsvis LARS eller lasso, da er udregninger af betinget \(p\)-værdier og konfidensintervaller ligetil.
+Givet antallet af steps \(k\), da kan vi let udregne betinget \(p\)-værdier og konfidensintervaller, efter vi har konstrueret matricen \(\Gamma\) for henholdsvis LARS eller lasso.
 Lad os teste nulhypotesen \(\hyp_0: \ \teta^T \tmu = 0\), hvor \(\teta\) er vilkårlig.
 
 Som specificeret i lemma \ref{lem:polyhedral} udregnes først mængderne
 \begin{align*}
-\mathcal{V}^- \del{\y} &= \max_{j: \del{\Gamma \teta}_j > 0} - \del{\Gamma \y}_j \cdot \frac{\Vert \teta \Vert_2^2}{\del{\Gamma \teta}_j} + \teta^T \y, \\
-\mathcal{V}^+ \del{\y} &= \min_{j: \del{\Gamma \teta}_j < 0} - \del{\Gamma \y}_j \cdot \frac{\Vert \teta \Vert_2^2}{\del{\Gamma \teta}_j} + \teta^T \y.
+\mathcal{V}^- \del{\y} &=  \max_{j: \rho_j > 0} \frac{- \del{\Gamma \y}_j}{\rho_j} + \boldsymbol{\eta}^T \y = \max_{j: \del{\Gamma \teta}_j > 0} - \del{\Gamma \y}_j \cdot \frac{\Vert \teta \Vert_2^2}{\del{\Gamma \teta}_j} + \teta^T \y, \\
+\mathcal{V}^+ \del{\y} &=\min_{j: \del{\Gamma \teta}_j < 0} - \del{\Gamma \y}_j \cdot \frac{\Vert \teta \Vert_2^2}{\del{\Gamma \teta}_j} + \teta^T \y.
 \end{align*}
 Antallet af operationer som kræves for at udregne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) er \(O \del{mn}\), hvor \(m\) er antallet af rækker i \(\Gamma\).
-%
+
 For at teste imod en one-sided alternativ hypotese \(\hyp_1: \ \teta^T \tmu > 0\),  defineres teststørrelsen
 \begin{align*}
 T_k^\text{tg}=1- F_{0, \sigma^2 \Vert \boldsymbol{\eta} \Vert_2^2}^{\sbr{\mathcal{V}^-, \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} = \frac{\Phi \del{\frac{\mathcal{V}^+}{\sigma \Vert \boldsymbol{\eta} \Vert_2}}-\Phi \del{\frac{\boldsymbol{\eta}^T \y}{\sigma  \Vert \boldsymbol{\eta} \Vert_2}}}{\Phi \del{\frac{\mathcal{V}^+}{\sigma  \Vert \boldsymbol{\eta} \Vert_2}}-\Phi \del{\frac{\mathcal{V}^-}{\sigma \Vert \boldsymbol{\eta} \Vert_2}}}.
@@ -207,28 +208,29 @@ Af lemma \ref{lem:lem3} giver dette en gyldig \(p\)-værdi betinget udvælgelsen
 \mathbb{P}_{\boldsymbol{\eta}^T \tmu = 0} \del{T_k^\text{tg} \leq \alpha \given \hat{\A}_k \del{\y} = \A_k, \hat{s}_{\A_k} \del{y} = s_{\A_k}} = \alpha, \label{eq:post_32}
 \end{align}
 for ethvert \(0 \leq \alpha \leq 1\).
-Lemma \ref{lem:lem3} giver også at et betinget konfidensinterval udledes ved først at udregne \(\delta_\alpha\) som opfylder
-\begin{align*}
-1-F_{\delta_{\alpha}, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= \alpha.
-\end{align*}
-Da lader vi \(I_k = [\delta_\alpha, \infty)\), som er en passende betinget coverage, da
+Vi definer  \(\delta_\alpha\), som opfylder, at \(1-F_{\delta_{\alpha}, \sigma^2 \Vert \boldsymbol{\eta} \Vert_2^2}^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} = \alpha\).
+Vi lader \(I_k = [\delta_\alpha, \infty)\), hvoraf vi får et gyldigt one-sided konfidensinterval
 \begin{align}
 \mathbb{P} \del{\boldsymbol{\eta}^T \tmu \in I_k \given \hat{\A}_k \del{\y} = \A_k, \hat{s}_{\A_k} \del{\y} = s_{\A_k}} = 1-\alpha. \label{eq:post_33}
 \end{align}
 
-For at teste imod en two-sided alternative \(H_1: \ \teta^T \tmu \neq 0\), anvendes istedet teststørrelsen
+For at teste imod en two-sided alternativ hypotese \(\hyp_1: \ \teta^T \tmu \neq 0\), betragtes teststørrelsen
 \begin{align*}
 T_k^\text{TG}= 2 \cdot \min \cbr{T_k^{\text{tg}}, 1-T_k^{\text{tg}}}.
 \end{align*}
-Af lemma \ref{lem:lem4}, fås de samme resultaterne i \eqref{eq:post_32} og \eqref{eq:post_33} men hvor \(T_k^\text{tg}\) erstattes med \(T_k^\text{TG}\) og \(I_k\) erstattes med \(I_k'= \sbr{\delta_{\frac{\alpha}{2}}, \delta_{1-\frac{\alpha}{2}}}\).
+Af lemma \ref{lem:lem4} fås samme resultaterne i \eqref{eq:post_32} og \eqref{eq:post_33}, men hvor \(T_k^\text{tg}\) erstattes med \(T_k^\text{TG}\) og \(I_k\) erstattes med \(I_k'= \sbr{\delta_{\frac{\alpha}{2}}, \delta_{1-\frac{\alpha}{2}}}\).
 
-%For et signifikant niveau $\alpha$ afvises nulhypotesen hvis \(T^{\text{TG}} \leq \alpha\).
-
-Hvis \(\teta = \del{\X_{A_k}^+}^T e_k\), hvor \(e_k\) er den \(k\)'te enhedsvektor, da kan nulhypotesen \(H_0: \ \teta^T \tmu =0\) omskrives til
+Hvis \(\teta = \del{\X_{\A_k}^+}^T e_k\), hvor \(e_k\) er den \(k\)'te enhedsvektor, da kan nulhypotesen \(\hyp_0: \ \teta^T \tmu =0\) omskrives til
 \begin{align*}
-\boldsymbol{\eta}^T \boldsymbol{\mu} = \mathbf{e}_k^T \X_{A_k}^+ \boldsymbol{\mu} = \mathbf{e}_k^T \del{\X^T \X}^{-1} \X^T \X \boldsymbol{\beta} = \beta_k
+\boldsymbol{\eta}^T \boldsymbol{\mu} = \mathbf{e}_k^T \X_{\A_k}^+ \boldsymbol{\mu} = \mathbf{e}_k^T \del{\X^T \X}^{-1} \X^T \X \boldsymbol{\beta} = \beta_k,
 \end{align*}
-Dvs da svarer nulhypotesen til at teste om \(k\)'te variabel er signifikant.
+dvs nulhypotesen svarer til at teste om \(k\)'te variabel er signifikant.
+%Da testes om koefficienten af dem sidste valgte variabel, i regressionen af \(tmu\) på \(\X_{\A_k}\), er lig 0.
+
+For at bestemme om vi kan betragte en one-sided eller two-sided nulhypotesen.
+For \(\teta = \del{\X_{\A_k}^+}^T e_k\), er one sided setup \(\hyp_0: \eta^T \tmu = 0\) og  \(\hyp_0: \eta^T \tmu > 0\), som ikke giver mening, da der ikke er grund til at tro at \(k\)'te regressions koefficient \(\mathbf{e}_k^T \X_{\A_k}^+ \boldsymbol{\mu}\) skal være positiv.
+Hvis istedet \(\teta = s_k \del{\X_{\A_k}^+}^T e_k\), hvor \(s_k\) er fortegnet af \(k\)'te variabel som den medtages i LARS eller lasso modellen, da er nulhypotesen \(\hyp_0: s_k e_k^T \X_{\A_k}^+ \tmu = 0\) uændret, men den alternative hypotese \(\hyp_0: s_k e_k^T \X_{\A_k}^+ \tmu > 0\) har nu en konkret fortolkning.
+Den siger at regressions koefficienten af den sidst valgte variabel er ikke-nul og har samme fortegn som koefficienten i den fittede model.
 
 
 Nulhypotesen for TG testen er stokastisk, da \(\mathcal{V}^-\) og \(\mathcal{V}^+\) er stokastiske variable ...

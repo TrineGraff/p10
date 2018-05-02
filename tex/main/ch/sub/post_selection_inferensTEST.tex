@@ -1,0 +1,73 @@
+\subsection{Teste baseret på polyhedral lemmaet}
+I dette afsnit introduceres \textit{TG testen}, hvor TG står for ``truncated gaussian`` som er baseret på polyhedral lemmaet. 
+Afsnit er baseret på \citep{post_inference}.
+
+Indledningsvis introduceres notation, som anvendes i dette afsnit.
+For en matrix \(M \in \R^{n \times p}\) og liste \(S = \sbr{s_1, \ldots, s_r} \subseteq \sbr{1, \ldots, p}\), skriver vi \(M_S \in \R^{n \times \vert S \vert}\) for submatricen, som findes ved at udtrække de tilhørende kolonner af \(M\) i den givne rækkefølge.
+Tilsvarende for en vektor \(x \in \R^p\), betegnes \(x_S\) for subvektoren.
+Vi skriver \(\del{M^T M}^+\) for Moore Penrose pseudoinverse af den kvadratiske matrix \(M^T M\) og \(M^+ = \del{M^T M}^+ M^T\) for pseudoinverse af en rektangulær matrix \(M\).
+Vi anvender \(P_L\) for projektions operatoren på det lineære underrum \(L\).
+Lad \(\mathbb{P}_{\teta^T \tmu = 0} \del{\cdot \given \y \in \mathcal{P}} \) være sandsynlighedsmålet under \(\tmu\) for hvilket \(\teta^T \tmu =0 \) betinget \(\y \in \mathcal{P}\). 
+
+Antag \(\y \sim N(\tmu, \Sigma)\), hvor \(\tmu \in \R^{n}\) er ukendt, men \(\Sigma \in \R^{n \times n}\) er kendt.
+Dette generaliserer vores setup i \eqref{eq:set-up}.
+Vi betragter polyhedronen \(\mathcal{P} = \cbr{\y : \ \Gamma \y \geq u}\), hvor \(\Gamma \in \mathbb{R}^{m \times n}\) og \(u \in \mathbb{R}^m\) er faste og uligheden skal fortolkes elementvis.
+For et fast \(\teta \in \R^n\) ønsker vi at lave inferens af \(\teta^T \tmu\) betinget \(\y \in \mathcal{P}\).
+Nedenfor gives en alternativ repræsentation af \(\mathcal{P}\).
+
+
+
+Antag \(\y \sim N\del{\boldsymbol{\mu}, \sigma^2 \mathbf{I}_{n \times n}}\) og at vi ønsker at lave inferens betinget på hændelsen \(\cbr{\mathbf{A} \y \leq b}\).
+Mere præcis ønsker vi at lave inferens om \(\boldsymbol{\eta}^T \boldsymbol{\mu}\), hvor \(\boldsymbol{\eta}\) muligvis afhænger af udvægelsen.
+Hvis lasso, LARS .. har udvalgt denne mængde, da kan vi udføre inferens  af de udvalgte variable.
+Vi kunne eventuelt være interesseret i regressions koefficienterne af \(\y\) på \(\X_\mathcal{A}\), dvs \(\hat{\theta}= \del{\X_\mathcal{A}^T \X_\mathcal{A}}^{-1} \X_\mathcal{A}^T \y\).
+Disse svarer til populations parametrene \(\theta= \del{\X_\mathcal{A}^T \X_\mathcal{A}}^{-1} \X_\mathcal{A}^T \boldsymbol{\mu}\), koefficienterne af projectionen af \(\boldsymbol{\mu}\) på \(\X_\mathcal{A}\).
+Dermed kunne \(\boldsymbol{\eta}^T \boldsymbol{\mu}\) svarer til én af disse koefficienter, og dermed er \(\boldsymbol{\eta}\) en af kolonnerne af \(\X_\mathcal{A} \del{\X_\mathcal{A}^T \X_\mathcal{A}}^{-1}\). Dette eksempel fortsættes senere.
+
+%\subsubsection{Conditioning on a single polyhedron}
+Antag \(\y \sim N \del{\boldsymbol{\mu}, \Sigma}\) og \(\boldsymbol{\eta} \in \mathbb{R}^n\) er en potential retning.
+For at forstå fordelingen af
+\begin{align*}
+\boldsymbol{\eta}^T \y \given \cbr{ \mathbf{A} \y \leq b},
+\end{align*}
+kan vi omskrive \(\cbr{\mathbf{A} \y \leq b}\) udfra \(\boldsymbol{\eta}^T \y\) og en komponent \(\mathbf{z}\) som er uafhængig af \(\boldsymbol{\eta}^T \y\). Denne komponent er givet ved
+\begin{align}
+\mathbf{z} = \del{\mathbf{I} - \mathbf{c} \boldsymbol{\eta}^T} \y, \label{eq:z}
+\end{align}
+hvor 
+\begin{align}
+\mathbf{c} = \Sigma \boldsymbol{\eta} \del{\boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{-1}. \label{eq:c}
+\end{align}
+Det ses let, at \(\mathbf{z}\) er ukorreleret og dermed uafhængig af \(\boldsymbol{\eta}^T \y\).
+Hvis \(\Sigma = \sigma^2 \mathbf{I}\), da er \(\mathbf{z}\) blot residualen \(\del{\mathbf{I} - P_{\boldsymbol{\eta}}} \y \) fra projektionen \(\y\) på \(\boldsymbol{\eta}\).
+Vi kan nu omskrive \(\cbr{\mathbf{A} \y \leq b}\) udfra \(\boldsymbol{\eta}^T \y\) og \(\mathbf{z}\).
+
+\begin{lem}[Polyhedral lemma] \label{lem:polyhedral}
+Lad \(\mathbf{z}\) være defineret som i \eqref{eq:z} og \(\mathbf{c}\) som i \eqref{eq:c}. 
+For ethvert \(\Sigma\) og \(\teta\), således at \(\teta^T \Sigma \teta \neq 0\), gælder, at
+\begin{align}
+\Gamma \y \geq u \ \Longleftrightarrow \ \mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}, \  \mathcal{V}^0 \del{\y} \leq 0, \label{eq:post_8}
+\end{align}
+hvor
+\begin{align}
+\mathcal{V}^- \del{\y} &= \max_{j: \rho_j > 0} \frac{u_j - \del{\Gamma \y}_j + \rho_j \boldsymbol{\eta}^T \y}{\rho_j}, \label{eq:V-} \\
+\mathcal{V}^+ \del{\y} &= \min_{j: \rho_j < 0} \frac{u_j - \del{\Gamma \y}_j + \rho_j \boldsymbol{\eta}^T \y}{\rho_j}, \label{eq:V+} \\
+\mathcal{V}^0 \del{\y} &= \max_{j: \rho_j = 0} \del{u_j - \del{\Gamma \y}_j}, \label{eq:V0} 
+\end{align}
+og \(\rho=\frac{\Gamma \Sigma \boldsymbol{\eta}}{\teta^T \Sigma \teta}\).
+Yderligere  er \(\boldsymbol{\eta}^T \y\) og \(\del{\mathcal{V}^-\del{\y}, \mathcal{V}^+\del{\y},\mathcal{V}^0\del{\y}}\) uafhængige. 
+\end{lem}
+\begin{proof}
+Vi kan dekomponere \(\y = \mathbf{c} \del{\boldsymbol{\eta}^T \y} + \mathbf{z}\) og opskrive polyhedronet som følgende
+\begin{align*}
+\cbr{\mathbf{A} \y \leq b} &= \cbr{\mathbf{A} \del{\mathbf{c} \del{\boldsymbol{\eta}^T \y} + \mathbf{z}} \leq b} \\
+&= \cbr{\mathbf{A} \mathbf{c} \del{\boldsymbol{\eta}^T \y} \leq b - \mathbf{A} \mathbf{z} } \\
+&= \cbr{\del{\mathbf{A} \mathbf{c}}_j \del{\boldsymbol{\eta}^T \y} \leq b_j - \del{\mathbf{A} \mathbf{z}}_j \text{ for alle } j} \\
+&= \begin{cases}
+\boldsymbol{\eta}^T \y \leq \frac{b_j - \del{\mathbf{A} \mathbf{z}}_j}{\del{\mathbf{A} \mathbf{c}}_j}, \quad j:\del{\mathbf{A} \mathbf{c}}_j > 0 \\
+\boldsymbol{\eta}^T \y \geq \frac{b_j - \del{\mathbf{A} \mathbf{z}}_j}{\del{\mathbf{A} \mathbf{c}}_j}, \quad j:\del{\mathbf{A} \mathbf{c}}_j < 0 \\
+0 \leq b_j - \del{\mathbf{A} \mathbf{z}}_j, \quad j:\del{\mathbf{A} \mathbf{c}}_j = 0
+\end{cases}.
+\end{align*}
+Da \(\boldsymbol{\eta}^T \y \) er den samme mængde for alle \(j\), må det mindste være maksimum af de nedre grænser, som er \(\mathcal{V}^- \del{\mathbf{z}}\), og ikke mere end minimum af de øvre grænser, som er \(\mathcal{V}^+ \del{\mathbf{z}}\).
+\end{proof}

@@ -16,7 +16,7 @@ For mange optimeringsproblemer kan objektfunktionen opskrives på formen
 \begin{align}
 f(\beta_1, \dots, \beta_p) = g(\beta_1, \dots, \beta_p) + \sum_{j = 1}^p h_j \del{\beta_j}, \label{eq:5.37}
 \end{align}
-svarende til \eqref{eq:opdeling_fkt}, hvor \(g \del{\beta} = \frac{1}{2n} \Vert \y - \X \beta \Vert_2^2\) og \(h_j \del{\beta_j} = \lambda \vert \beta_j \vert\) for lasso.
+svarende til \eqref{eq:opdeling_fkt}, hvor \(g \del{\beta} =\Vert \y - \X \beta \Vert_2^2\) og \(h_j \del{\beta_j} = \lambda \vert \beta_j \vert\) for lasso.
 Hvis \(g: \ \R^p \rightarrow \R\) er konveks og differentialbel og $h_j: \ \R \rightarrow \R$ er konveks, men ikke nødvendigvis differentialbel, da viste \citep{Tseng_coordinate}, at for enhver konveks funktion som kan opdeles som \eqref{eq:5.37}, konvergerer coordinate descent algoritmen \eqref{eq:5.36} til det globale minimum. 
 %
 \begin{alg} [Coordinate descent for lasso problemet]

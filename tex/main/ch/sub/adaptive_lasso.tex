@@ -21,7 +21,7 @@ Adaptive lasso blev introduceret i \citep{adaptive_lasso} og er endnu en udvidel
 Ideen bag adaptive lasso er at tildele koefficienterne individuelle strafvægte istedet for at staffe koefficienterne ligeligt som i standard lasso.
 Den vægtede lasso er givet ved
 \begin{align*}
-\argmin_{\beta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p w_j \vert \beta_j \vert},
+\argmin_{\beta \in \R^p} \cbr{\Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p w_j \vert \beta_j \vert},
 \end{align*}
 hvor \(\mathbf{w} \in \mathbb{R}^p\) er en kendt vektor og \(w_j \geq 0\).
 
@@ -30,7 +30,7 @@ Antag \(\tilde{\beta}\) er rod-n konsistent til \(\beta^*\), hvor \(\hat{\beta}^
 Vælg \(\gamma>0\) og definer \(w_j = \frac{1}{\vert \tilde{\beta}_j \vert^\gamma}\), da er adaptive lasso givet ved
 %Lad \(\tilde{\beta}\) være et pilot estimat og definer $w_j = \frac{1}{\vert \tilde{\beta}_j \vert^\gamma}$ hvor \(\gamma>0\), da er adaptive lasso givet ved
 \begin{align}
-\hat{\beta}^\text{AL} = \argmin_{\beta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{1}{\vert \tilde{\beta}_j \vert^\gamma} \vert \beta_j \vert}. \label{eq:4.76}
+\hat{\beta}^\text{AL} = \argmin_{\beta \in \R^p} \cbr{ \Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{1}{\vert \tilde{\beta}_j \vert^\gamma} \vert \beta_j \vert}. \label{eq:4.76}
 \end{align}
 Den aktive mængde for adaptive lasso estimatet betegnes \(\mathcal{A}_n^\text{AL} = \cbr{j \ : \hat{\beta}^{\text{AL}} \neq 0 }\).
 %Strafleddet for adaptive lasso kan ses som en approksimation til $\ell_q$ strafleddene med $q=1-\gamma$.
@@ -171,11 +171,11 @@ Når stikprøve størrelsen stiger, da øges vægtene for nul koefficient prædi
 Den ikke-negative garotte er et special tilfælde af adaptive lasso.
 Antag \(\gamma=1\) og vælg \(\hat{\mathbf{w}}=\frac{1}{\vert \hat{\beta}^{\text{OLS}} \vert}\), da løser adaptive lasso følgende optimeringsproblem
 \begin{align}
-\hat{\beta}^\text{AL} = \argmin_{\beta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \frac{\vert \beta_j \vert}{\vert \hat{\beta}_j^\text{OLS} \vert}} \label{eq:AL8}
+\hat{\beta}^\text{AL} = \argmin_{\beta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \frac{\vert \beta_j \vert}{\vert \hat{\beta}_j^\text{OLS} \vert}} \label{eq:AL8}
 \end{align}
 Da \(c_j = \frac{\hat{\beta}_j^\text{garotte}}{\hat{\beta}_j^\text{OLS}}\), kan \eqref{eq:2.19} omskrives til
 \begin{align*}
-\hat{\beta}^\text{garotte} =\argmin_{c \in \mathbb{R}^p}  \cbr{\frac{1}{2} \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p  \frac{\vert \beta_j\vert}{\vert\hat{\beta}_j^\text{OLS}\vert}}, \ \text{underlagt at } \beta_j \hat{\beta}_j^\text{OLS} \geq 0 \text{ for alle } j.
+\hat{\beta}^\text{garotte} =\argmin_{c \in \mathbb{R}^p}  \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p  \frac{\vert \beta_j\vert}{\vert\hat{\beta}_j^\text{OLS}\vert}}, \ \text{underlagt at } \beta_j \hat{\beta}_j^\text{OLS} \geq 0 \text{ for alle } j.
 \end{align*}
 Dermed kan ikke-negative garotte betragtes som adaptive lasso, hvor \(\gamma=1\) og med en ekstra fortegns betingelse.
 %

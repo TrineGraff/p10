@@ -4,7 +4,7 @@
 \textit{The Least Absolute Shrinkage Selection Operator}, som forkortes lasso, blev introduceret i \citep{lasso}. 
 Lasso finder løsningen til optimeringsproblemet
 \begin{align}
-\hat{\beta}^\text{lasso} = \argmin_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t, \label{eq:2.3}
+\hat{\beta}^\text{lasso} = \argmin_{\beta} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t, \label{eq:2.3}
 \end{align} 
 hvor vi bemærker, at betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt som en \(\ell_1\)-norm betingelse $\Vert \beta \Vert_1 \leq t$.
 Værdi af \(t\) begrænser summen af de absolutte værdier af parameter estimaterne.
@@ -14,25 +14,25 @@ Værdien af \(t\) skal specificeres ved en ekstern procedure kaldet \textit{kryd
 
 Lasso problemet kan omskrives til et Lagrange problem
 \begin{align}
-\hat{\beta}^\text{lasso} = \argmin_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_1}, \label{eq:2.5}
+\hat{\beta}^\text{lasso} = \argmin_{\beta} \cbr{ \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_1}, \label{eq:2.5}
 \end{align}
 hvor $\lambda \geq 0$ er en såkaldt strafparameter, som også bestemmes udfra krydsvalidering. 
 Der er en en-til-en korrespondance mellem det betingede problem \eqref{eq:2.3} og Lagrange problemet \eqref{eq:2.5}. 
 For hver værdi af \(t\) hvor \(\Vert \beta \Vert_1 \leq t\) er opfyldt, da findes en tilhørende værdi af $\lambda$ som giver den samme løsning for \eqref{eq:2.5}.
 Omvendt gælder der, at løsningen $\hat{\beta}_\lambda$ til \eqref{eq:2.5} løser grænseproblemet med $t=\Vert \hat{\beta}_\lambda \Vert_1$.
 
-I andre beskrivelser af lasso estimatoren ses det, at faktoren \(\frac{1}{2n}\) i \eqref{eq:2.3} og \eqref{eq:2.5} erstattes med \(\frac{1}{2}\) eller \(1\).
-Dette gør ingen forskel i \eqref{eq:2.3} og svarer blot til en simpel reparametrisering af \(\lambda\) i \eqref{eq:2.5}.
-Dette gør værdierne for \(\lambda\) sammenlignelige for stikprøver af forskellige størrelse, som er brugbart i krydsvalidering.
+I andre beskrivelser af lasso estimatoren kan en faktor indsættes foran summeringen \eqref{eq:2.3} eller den euklidiske norm \eqref{eq:2.5} givet ved \(\frac{1}{2n}\) eller \(\frac{1}{2}\).
+%Dette gør ingen forskel i \eqref{eq:2.3} og svarer blot til en simpel reparametrisering af \(\lambda\) i \eqref{eq:2.5}.
+%Dette gør værdierne for \(\lambda\) sammenlignelige for stikprøver af forskellige størrelse, som er brugbart i krydsvalidering.
 
 \textit{Ridge regression} estimatoren findes udfra 
 \begin{align} 
-\hat{\beta}^\text{ridge} = \argmin_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
+\hat{\beta}^\text{ridge} = \argmin_{\beta} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
 \end{align} 
 hvor betingelsen $\sum_{j=1}^p \beta_j^2 \leq t$ kan skrives mere kompakt som en \(\ell_2\)-norm betingelse $\Vert \beta \Vert_2^2 \leq t$.
 Ridge regression problemet kan også omskrives til et Lagrange problem
 \begin{align*}
-\hat{\beta}^\text{ridge} = \argmin_{\beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_2^2},
+\hat{\beta}^\text{ridge} = \argmin_{\beta} \cbr{ \Vert \y - \X \beta \Vert_2^2 + \lambda \Vert \beta \Vert_2^2},
 \end{align*}
 hvor $\lambda \geq 0$.
 Heraf kan ridge regression estimatoren findes ved at differentiere \(\del{\y - \X \beta}^T \del{\y - \X \beta} + \lambda \beta^T \beta\) mht. $\beta$, sætte dette lig 0 og isolere for $\beta$. Hvoraf vi finder, at
@@ -57,25 +57,12 @@ For 50 byer i USA er kriminalitetsraten per 1 million indbyggere givet og følge
 %
 Datasættet, som vi betegner crime data, er inkluderet for at underbygge teorien og vi vil løbende i rapporten referere til det.
 \end{exmp}
-Ridge regression shrinks koefficienter mod nul, men lasso også udfører variabeludvælgelse ved at nogle koefficienter sættes lig 0.
+Ridge regression shrinks koefficienter mod nul, mens lasso også udfører variabeludvælgelse ved at nogle koefficienter sættes lig 0.
 På figur \ref{fig:crime_koef} anvendes crime data til at illustrere koefficientstierne for henholdsvis ridge regression og lasso.
 %
-%\begin{figure}[H]
-%\centering
-%\begin{minipage}{0.4\linewidth}
-%\scalebox{0.32}{\includegraphics{fig/crime_ridge.png}}
-%\end{minipage}
-%\hspace{0.2cm}
-%\begin{minipage}{0.4\linewidth}
-%\scalebox{0.32}{\includegraphics{fig/crime_lasso.png}}
-%\end{minipage}
-%\caption{Koefficientstierne for ridge regression (venstre) og lasso (højre) plottet imod \(\ell_1\)-normen.} \label{fig:crime_koef}
-%\end{figure}
-
-\imgfigh{crime_lasso_ridge.pdf}{0.7}{Koefficientstierne for ridge regression og lasso plottet imod log af $\lambda$}{crime_koef}
-
-
+\imgfigh{crime_lasso_ridge.pdf}{0.7}{Koefficientstierne for ridge regression og lasso plottet imod $\log \del{\lambda}$.}{crime_koef}
 %
+
 Variabel udvælgelsen for ridge regression og lasso illustreres på figur \ref{fig:LassoRig}.
 %
 \begin{figure}[H]
@@ -115,26 +102,26 @@ Givet data \(\del{\y, \X}\), defineres et augmented datasæt
 hvor \(\X^* \in \mathbb{R}^{\del{n+p} \times p}\) og \(\y^* \in \mathbb{R}^{n+p}\). Da kan estimatoren for ridge regression udledes udfra mindste kvadraters metode.
 \end{lem}
 %
-Beviset følger af simpel algebra og er derfor undladt.
-%\begin{proof}
-%Vi har, at
-%\begin{align*}
-%\del{\X^{*^T} \X^*}^{-1} \X^{*^T} \y^* &= \left( \begin{bmatrix}
-%\mathbf{X} & \sqrt{\lambda} \mathbf{I}
-%\end{bmatrix}
-%\begin{bmatrix}
-%\mathbf{X} \\ \sqrt{\lambda} \mathbf{I}
-%\end{bmatrix} \right)^{-1}
-%\begin{bmatrix}
-%\mathbf{X} & \sqrt{\lambda} \mathbf{I}
-%\end{bmatrix}
-%\begin{bmatrix}
-%\mathbf{y} \\ \mathbf{0}
-%\end{bmatrix} \\
-%&= \left( \mathbf{X}^T \mathbf{X} + \lambda \mathbf{I} \right)^{-1} \mathbf{X}^T \mathbf{y}.
-%\end{align*}
-%\end{proof}
-%
+%Beviset følger af simpel algebra og er derfor undladt.
+\begin{proof}
+Vi har, at
+\begin{align*}
+\del{\X^{*^T} \X^*}^{-1} \X^{*^T} \y^* &= \left( \begin{bmatrix}
+\mathbf{X} & \sqrt{\lambda} \mathbf{I}
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{X} \\ \sqrt{\lambda} \mathbf{I}
+\end{bmatrix} \right)^{-1}
+\begin{bmatrix}
+\mathbf{X} & \sqrt{\lambda} \mathbf{I}
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{y} \\ \mathbf{0}
+\end{bmatrix} \\
+&= \left( \mathbf{X}^T \mathbf{X} + \lambda \mathbf{I} \right)^{-1} \mathbf{X}^T \mathbf{y}.
+\end{align*}
+\end{proof}
+
 \subsection{Udregning af lasso} \label{subsec:udregning_lasso}
 Da lasso strafleddet ikke er differentialbel, findes der ikke en eksplicit løsning til optimeringsproblemet for lasso.
 En simpel procedure kaldet \textit{coordinate descent} kan udfra Lagrange problemet udregne en numerisk løsning. 
@@ -143,26 +130,26 @@ En simpel procedure kaldet \textit{coordinate descent} kan udfra Lagrange proble
 Vi betragter blot en enkelt prædiktor \(z_i\). 
 Problemet, som vi skal løse, er da
 \begin{align*}
-\argmin_{\beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}.
+\argmin_{\beta} \cbr{\sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}.
 \end{align*}
 Som bekendt er standard proceduren at finde den første ordens afledede mht $\beta$, sætte denne lig 0 og isolere for $\beta$. 
 Men vi bemærker, at \(\vert \beta \vert \) ikke er differentialbel i $\beta=0$.
 Dette betegnes som en såkaldt \textit{subgradient}, hvilket vi vil beskrive nærmere i kapitel \ref{kap:optimeringsmetoder}.
 Vi finder, at
 \begin{align*}
-\frac{\partial}{\partial \beta} \del{\frac{1}{2n} \sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}
-&= -\frac{1}{n} \sum_{i=1}^n \del{y_i - z_{i} \beta} z_i + \begin{cases}
+\frac{\partial}{\partial \beta} \del{\sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}
+&= -2\sum_{i=1}^n \del{y_i - z_{i} \beta} z_i + \begin{cases}
 -\lambda \quad &\beta < 0 \\
 [-\lambda, \lambda] & \beta = 0 \\
 \lambda & \beta >0 
 \end{cases}  \\
-&= -\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle + \beta + \begin{cases}
+&= -2 \left\langle \mathbf{z}, \mathbf{y} \right\rangle + n\beta + \begin{cases}
 -\lambda \quad &\beta < 0 \\
 [-\lambda, \lambda] & \beta = 0 \\
 \lambda & \beta >0 
 \end{cases},
 \end{align*}
-da $\frac{1}{n} \sum_{i=1}^n z_i^2=1$. Dette sættes lig 0 og vi isolerer $\beta$, hvoraf vi finder, at
+da $\sum_{i=1}^n z_i^2=n$. Dette sættes lig 0 og vi isolerer $\beta$, hvoraf vi finder, at
 \begin{align}
 \hat{\beta} = \begin{cases}
 \frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle - \lambda, \quad &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle > \lambda, \\
@@ -192,7 +179,7 @@ Herefter kan vi betragte multivariate prædiktorer.
 %Gentagne cycle gennem prædiktorerne i en fast, men vilkårlig orden $j=1, 2, \ldots, p$, hvor koefficienten $\beta_j$ opdateres i det $j$'te step, ved at minimere objektfunktionen i dens koordinat, mens de resterende koefficienter $\cbr{\hat{\beta}_k, k \neq j}$ fastholdes deres nuværende værdier. 
 Vi kan opskrive objektfunktionen i \eqref{eq:2.5} som
 \begin{align*}
-\frac{1}{2n} \sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \beta_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert
+\sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \beta_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert
 \end{align*}
 Definer den partialle residual $r_i^{(j)}=y_i - \sum_{k \neq j} x_{ik} \hat{\beta}_k$, som fjerner nuværende fit fra den $j$'te prædiktor.
 Da er den j'te koefficient opdateret ved

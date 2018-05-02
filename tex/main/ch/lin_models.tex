@@ -6,7 +6,7 @@ Betragt \(n\) observationer \(\{x_i, y_i\}_{i=1}^n \), hvor $x_i=(x_{i1}, \ldots
 
 Den velkendte estimator for mindste kvadraters metode (OLS) findes ved at minimere summen af kvadrerede residualer (SSR)
 \begin{align}
-\argmin_{\beta_0, \beta} \cbr{\frac{1}{2n} \sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}. \label{eq:OLS}
+\argmin_{\beta_0, \beta} \cbr{\sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}. \label{eq:OLS}
 \end{align}
 
 Ofte standardiseres prædiktorerne, således at de er centreret (\(\frac{1}{n} \sum_{i=1}^n x_{ij} = 0\)) og har unit varians (\(\frac{1}{n} \sum_{i=1}^n x_{ij}^2=1\).).
@@ -19,7 +19,7 @@ Derfor ser vi bort fra skæringen i resten af kapitlet samt kapitel \ref{ch:gene
 
 Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og lad \(\X\) være en $n \times p$ matrix med $x_i \in \R^p$ som den i'te række, da kan \eqref{eq:OLS} omskrives til matrix-vektor form
 \begin{align*}
-\argmin_{ \beta} \cbr{\frac{1}{2n} \Vert \y - \X \beta \Vert_2^2},
+\argmin_{ \beta} \cbr{ \Vert \y - \X \beta \Vert_2^2},
 \end{align*}
 hvor \(\Vert \cdot \Vert_2\) betegner den Euklidiske norm.
 Som bekendt er løsningen hertil givet ved

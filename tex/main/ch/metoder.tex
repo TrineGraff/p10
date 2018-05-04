@@ -71,16 +71,18 @@ med samme notation som i definition  \ref{def:bic}.
 
 \section{Out of sample metoder}
 Målet med prædiktion er at prædiktere fremtidige værdier af en tidsrække. 
-Vi prædikterer one step ahead med et rolling window, således at vi vælger et window størrelse $m$. 
-Den første rolling window indeholder altså observationer fra tiden 1 til $m$, og den næste rolling window indeholder observationer fra periode 2 til $m+1$ og sådan fortsætter det. 
+Vi prædikterer one step ahead med et expanding window. 
+Det første window indeholder altså observationer fra tiden 1 til tid $t$, og den næste window indeholder observationer fra tiden 1 til $t+1$
 
-Herpå måler vi prædiktions evnen via to funktioner nemlig den gennemsnitlige kvadrede fejl (RMSE) og den gennemsnitlige absolutte fejl (MAE).  
+
+%Den første rolling window indeholder altså observationer fra tiden 1 til $m$, og den næste rolling window indeholder observationer fra periode 2 til $m+1$ og sådan fortsætter det. 
+
+Herpå måler vi prædiktions evnen via den gennemsnitlige kvadrede fejl (MSE). 
 \begin{align}
-\text{RMSE} & = \sqrt{\frac{1}{T_0} \sum_{t=t_0 +1 }^{T} \del{y_t - \widehat{y}_t}} \\
-\text{MAE} & = \frac{1}{T_0} \sum_{t=t_0 + 1}^{T} \abs{y_t - \widehat{y}_t}, 
+\text{MSE} & =  \frac{1}{T_0} \sum_{t=t_0 +1 }^{T} \del{y_t - \widehat{y}_t}^2 
 \end{align} 
 hvor $T_0$ er antallet af observationer i testsættet, $y_t$ er observationen til tiden $t$ og $\widehat{y}_t$ er prædiktionen af $y_t$.
-Begge tabs funktioner vil have en værdi på 0, hvis et perfekt prædiktion, og ellers vil vi havde positive værdier. Så derfor er vi interesseret i de laveste værdier af RMSE og MAE. 
+Funktionen vil have en værdi på 0, hvis et perfekt prædiktion, og ellers vil vi havde positive værdier. Så derfor er vi interesseret i den lavest værdi af MSE. 
 
 En måde at vurdere to konkurrerende prædiktioner i forhold til hinanden er ved anvendelse af Diebold-Mariano testen. 
 Vi lader $\widehat{y}_t^1$ og  $\widehat{y}_t^2$ være to konkurrerende prædiktioner af $y_t$, hvor $t = t_0 + 1, \dots, T$. 

@@ -6,16 +6,14 @@ Arbejdsløshed er målt i procent.
 Vi har standardiseret vores forklarende variabler, således at variablerne er centreret omkring 0 og har en varians 1, således vi undgår skæringen i vores regression.
 Derudover har vi centreret vores respons variable. 
 \section{Benchmark}
-Vi har valgt en autoregressiv model, som vores benchmarkmodel. 
-Den er defineret i  definition \ref{def:ar}.  
-%Vi har valgt at anvende to modeller, som vores benchmarkmodel. 
-%Den første er en autoregressiv model, som er defineret  i definition \ref{def:ar}.  
+Vi har valgt at anvende to modeller, som vores benchmarkmodel. 
+Den første er en autoregressiv model, som er defineret  i definition \ref{def:ar}.
 Vi har valgt at inkluderer den, da den er simpel og kun anvender tidligere lags af vores responsvariable. 
 Derudover har vi med tidsrække data at gøre. 
-Vi vil også bruge modellen til belæg for hvor mange lags der skal tilføjes til vores forklarende variabler. 
-%Derudover har vi valgt en faktor model, da det er den første selektions metode der blev introduceret. 
-%Vi deler derfor kapitlet op i to dele. 
+Vi vil også bruge modellen til belæg for hvor mange lags der senere skal tilføjes til vores forklarende variabler. 
+Derudover har vi valgt en faktor model, da det er den første selektions metode der blev introduceret. 
 
+\subsection{Autoregressive model}
 AR($p$) modellen estimeres med mindste kvadraters metode (OLS), hvor vi lader $p_{\text{max}} = 12$. 
 Den maksimale orden på 12, betyder at modellen kun betinger med højst et års tidligere data. 
 Dette begrænsning har vi valgt at pålægge modellen fordi vi mener, at en model af højere orden ikke er realistisk for vores data. 
@@ -39,5 +37,8 @@ LB-testen ved lag $10$ afviser også null hypotesen af afhængighed af både de 
 
 \imgfigh{resid_ar.pdf}{1}{Analyse af de standardiserede residualer for AR(11). }{resid_ar}
 \input{fig/tab/ar_jb_lb}
+
+\input{main/ch/faktor_model}
+
 
 

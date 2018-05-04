@@ -4,10 +4,8 @@ library(glmnet)
 # Uden reestimering -------------------------------------------------------
 
 pred_test = x_test %*% lasso_fit$beta
-x_test
 pred = predict(lasso_fit, x_test)
 identical(as.vector(pred), as.vector(pred_test)) #true
-
 
 # Rolling Window forecast -------------------------------------------------
 
@@ -30,7 +28,7 @@ rolling_window_fc = function(y, x, alpha, w_size, lambda ){
 }
 print(fc)
 }
-
+rolling_window_fc(y, x, alpha = 1, w_size = 10, lambda = 0.02)
 
 # Expanding window forecast -----------------------------------------------
 

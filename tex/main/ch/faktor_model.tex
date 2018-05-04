@@ -1,2 +1,26 @@
-\section{Faktor model}
+\clearpage
+\subsection{Faktor model}
 For at få et bedre overblik beskriver vi fremgangsmåden i punkter. 
+\begin{enumerate}
+\item Estimer $r$ faktorer for $r = 1, \dots, r_{\max}$ ud fra vores forklarende variabler, hvor $r_{\max} = 20$  
+\item Vælg bedste $r$ ud fra ét af informationskriterierne givet i ... 
+\item Vi har, at $\textbf{Z} = \del{\textbf{F}, \boldsymbol{\omega}}$. Antal laggede værdier bestemmes ud fra $r$. 
+\item Estimer parameterne $\widehat{\beta}_F$ og $\widehat{\beta}_\omega$ med OLS
+\item Forecast $\widehat{y}_{t+1}$ fra forecast-ligningen givet i ....
+\end{enumerate}
+For at bestemme, hvilken informationskriterie vi vil bruge til at finde $r$ i modellen, ser vi på, hvilken af dem der giver det laveste MSE. 
+
+\input{fig/tab/factor_mse}
+
+I Tabel \ref{tab:factor_mse_tab} er for hvert af kriterierne vise deres MSE af forecastet.
+Antallet af faktorer og antallet af lags er defineret til at være ens, såsom vist. Vi ser at $IC_1$ har færrest faktorer, hvor $IC_2$ har lidt flere og $IC_3$ har flest. 
+Vi ser at $IC_3$ giver den med mindst MSE, og derfor anvender vi den som vores benchmark for Faktormodellen. 
+Figur \ref{fig:fc_factor} voser forecast for faktor modellen, hvor $r$ er bestemt udfra $IC_3$
+
+\imgfigh{fc_factor.pdf}{0.7}{Viser forecast, hvor den røde linje er faktor modellen. Hvor den grå linje er de observerede arbejdsløsheds observationer}{fc_factor}
+
+
+
+
+
+

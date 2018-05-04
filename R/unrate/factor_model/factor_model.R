@@ -66,7 +66,8 @@ factors.IC.3 = estFactors(x.f, ic = 3, trace = TRUE)
 
 # Design matrice ----------------------------------------------------------
 ## Vores nye designmatrice består af faktorerne og m laggede værdier af responsvariablen,
-## dvs Z = (F, omega)
+## dvs Z = (F, omega). 
+## Vi har en designmatrice for hver IC
 ## Vi tror m = 1, ..., r ? 
 
 ## Design matricen IC 1

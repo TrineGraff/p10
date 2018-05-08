@@ -1,67 +1,46 @@
 \chapter{Lasso i lineære modeller}
 \textit{I dette kapital introduceres lasso estimatoren for lineær regression. 
-Først beskrives standard lasso og dens relation til ridge regression, hvorefter vi skitser en simple udregning af lasso.} \\[4mm]
+Først beskrives standard lasso og dens relation til ridge regression, hvorefter vi skitser en simple udregning af lasso.
+Til slut introduceres teori for entydighed og konsistens af lasso estimatoren.} \\[4mm]
 %
-Betragt \(n\) observationer \(\{x_i, y_i\}_{i=1}^n \), hvor $x_i=(x_{i1}, \ldots, x_{ip})$ er en $p$ dimensional vektor af forklarende variable eller prædiktorer og $y_i \in \R$ er den tilhørende responsvariabel.
+Betragt \(n\) observationer \(\{\tx_i, y_i\}_{i=1}^n \), hvor $\tx_i=(x_{i1}, \ldots, x_{ip})$ er en $p$ dimensional vektor af forklarende variable eller prædiktorer og $y_i \in \R$ er den tilhørende responsvariabel.
 
 Den velkendte estimator for mindste kvadraters metode (OLS) findes ved at minimere summen af kvadrerede residualer (SSR)
 \begin{align}
-\argmin_{\beta_0, \beta} \cbr{\sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}. \label{eq:OLS}
+\argmin_{\beta_0, \tbeta} \cbr{\sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}. \label{eq:OLS}
 \end{align}
 
 Ofte standardiseres prædiktorerne, således at de er centreret (\(\frac{1}{n} \sum_{i=1}^n x_{ij} = 0\)) og har unit varians (\(\frac{1}{n} \sum_{i=1}^n x_{ij}^2=1\).).
 Hvis ikke prædiktorerne standardiseres, da vil estimaterne afhænge af enhederne, som prædiktorerne er målt i.
 For fuldstændighed centreres responsvariablen også (\(\frac{1}{n} \sum_{i=1}^n y_{i} = 0\)).
 Hermed kan vi se bort fra skæringen $\beta_0$ i det givne optimeringsproblem.
-Givet en optimal løsning \(\hat{\beta}\) på det centreret data, kan vi finde løsningen for det ikke-centreret data: der gælder, at \(\hat{\beta}\) er den samme og 
+Givet en optimal løsning \(\hat{\tbeta}\) på det centreret data, kan vi finde løsningen for det ikke-centreret data: der gælder, at \(\hat{\tbeta}\) er den samme og 
 \(\hat{\beta}_0 = \bar{y} - \sum_{j=1}^p \bar{x}_j \hat{\beta}_j\), hvor \(\bar{y}\) og \(\cbr{\bar{x}_j}_{j=1}^p\) er gennemsnittene for det ikke-centreret data.
-Derfor ser vi bort fra skæringen i resten af kapitlet samt kapitel \ref{ch:generalisering_lasso}.
+Derfor ser vi bort fra skæringen i resten af dette kapitel samt kapitel \ref{ch:generalisering_lasso}, hvor generaliseringer af lasso estimatoren introduceres.
 
-Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og lad \(\X\) være en $n \times p$ matrix med $x_i \in \R^p$ som den i'te række, da kan \eqref{eq:OLS} omskrives til matrix-vektor form
+Lad \(\y=(y_1, \ldots, y_n)\) være en \(n\) dimensional vektor med responsvariable og lad \(\X\) være en $n \times p$ matrix med $\tx_i \in \R^p$ som den i'te række, da kan \eqref{eq:OLS} omskrives til matrix-vektor form
 \begin{align*}
-\argmin_{ \beta} \cbr{ \Vert \y - \X \beta \Vert_2^2},
+\argmin_{ \tbeta} \cbr{ \Vert \y - \X \tbeta \Vert_2^2},
 \end{align*}
 hvor \(\Vert \cdot \Vert_2\) betegner den Euklidiske norm.
 Som bekendt er løsningen hertil givet ved
 \begin{align*}
-\hat{\beta}^{\text{OLS}} = (\X^T \X)^{-1} \X^T \y.
+\hat{\tbeta}^{\text{OLS}} = (\X^T \X)^{-1} \X^T \y.
 \end{align*}
-Estimatoren er unbiased, men har ofte høj varians. 
+OLS estimatoren er unbiased, men har ofte høj varians. 
 Prædiktions performance kan ofte forbedres, hvis koefficienterne mindskes eller sættes direkte lig 0.
 Dette vil give estimatoren lidt bias, men reducerer variansen, hvilket forbedrer bias-variance tradeoff og dermed  prædiktions performance.
-En anden årsag til, at vi leder efter alternative til mindste kvadraters metode er, at med et højt antal prediktorer ønsker vi, at bestemme en mindre delmængde af disse som siger mest om prædiktiorerne, dvs forbedre fortolkning.\\[4mm]
+En anden årsag til, at vi leder efter alternativer til mindste kvadraters metode er, at med et højt antal prædiktorer ønsker vi, at bestemme en mindre delmængde af disse, som siger mest om responsvariablen, dvs forbedre fortolkning.\\[4mm]
 
-Hvis \(p > n\) da vil prediktorerne være kollineære og dermed har \(\X\) ikke fuld rang.
+Hvis \(p > n\) da vil prædiktorerne være kollineære og dermed har \(\X\) ikke fuld rang.
 Det betyder, at $\X^T \X$ er singulær og der findes derfor ikke en entydig estimator for mindste kvadraters metode. \\[4mm]
 %
-Nedenfor introduceres \textit{lasso} som kombinerer objektfunktionen i \eqref{eq:OLS} med en $\ell_1$-norm betingelse eller øvre grænse for summen af de absolutte værdier af koefficienterne.
+Nedenfor introduceres \textit{lasso estimatoren}, som kombinerer objektfunktionen i \eqref{eq:OLS} med en $\ell_1$-norm betingelse eller øvre grænse for summen af de absolutte værdier af koefficienterne.
 Denne betingelse mindsker koefficienterne og sætter endda nogle lig 0. 
-Dermed udfører metoden model udvælgelse i lineær regression.
+Dermed udfører metoden modeludvælgelse i lineær regression.
 Det resulterende optimeringsproblem er konveks, og kan løses effektivt som beskrives nærmere i kapitel \ref{kap:optimeringsmetoder}.
-
-
 %
-%Vi betragter et sædvanligt lineær regression set-up. Lad $\textbf{y} = \del{y_1, \dots, y_n}^T$ være respons variablen og lad $\textbf{X} = \del{\textbf{x}_1, \dots, \textbf{x}_n}$ være en $n \times p$ matrix af prædiktorer, hvor $\textbf{x}_j = \del{x_{1,j}, \dots, x_{n,j}}^T$, $j = 1, \dots, p$ er vektorer af prædiktorer. 
-%Vi antager en lineær funktion af prædiktorer, som har normal fordelte fejl. 
-%\begin{align*}
-%\textbf{y} = \textbf{X} \mathcal{\beta} + \epsilon, \quad \epsilon \sim N \del{0, \sigma^2 \text{\textbf{I}}_n},
-%\end{align*}
-%hvor $\mathcal{\beta} = \del{\beta_1, \dots, \beta_p}^T$ er en vektor af ukendte parameter og $\text{\textbf{I}}_n$ er $n \times n$ identitetsmatricen. 
-%For nu antager vi, at $p<n$ og at første kolonne i $\X$ er alle elementer 1'taller. 
-%Vi angiver $\widehat{\boldsymbol{\beta}}^{OLS}$ til at være den mindste kvadraters estimat;
-%\begin{align*}
-%\widehat{\boldsymbol{\beta}}^{OLS} = \underset{\boldsymbol\beta \in \R^p}{\argmin} \norm{ \textbf{y} - \textbf{X}\boldsymbol\beta}^2_2
-%\end{align*}
-%Den velkendte løsning er givet ved 
-%\begin{align*}
-%\widehat{\boldsymbol\beta}^{\text{OLS}} = \del{\X^T \X}^{-1} \X^T \y.
-%\end{align*}
-%For at inverterer $\X^T \X$ skal $\X$ have fuld rang ellers er $\widehat{\boldsymbol\beta}^{\text{OLS}}$ ikke unik. 
-%Men når  \(p \gg n\) vil prædiktorerne være kollineære og dermed har \(\X\) ikke fuld rang.
-%Det betyder, at $\X^T \X$ er singulær og der findes derfor en ikke entydig estimator for mindste kvadraters metode.
-
-
-
 \input{main/ch/sub/lasso}
 \input{main/ch/sub/uniqueness_lasso}
 \input{main/ch/sub/consistency_lasso}
+%

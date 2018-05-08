@@ -1,9 +1,10 @@
 \section{Konsistens af lasso estimatoren}
-I dette afsnit ser vi nærmere på lasso estimatorens asymptotiske egenskaber.
+I dette afsnit ser vi nærmere på lasso estimatorens asymptotiske egenskaber. 
+Afsnittet er baseret på \citep{zou_hastie}.
 
-For en estimator som udfører variabeludvælgelse, findes nogle såkaldte \textit{oracle egenskaber}.
-En estimator som opfylder disse egenskaber, udvælger de sande kieffcienter!?! og de estimerede koefficienter følger asymptotisk en normal fordelingen.
-Nedenfor defineres oracle egenskaberne.
+For en estimator som udfører variabeludvælgelse, findes nogle såkaldte \textit{orakelegenskaber}.
+En estimator, som opfylder disse egenskaber, er konsistent i variabeludvælgelse og de estimerede koefficienter følger asymptotisk en normalfordelingen.
+Nedenfor defineres orakelegenskaberne.
 
 \subsection{Orakelegenskaberne} 
 Lad $\mathcal{A} =\{j:\beta_j^* \neq 0\}$, hvor $\beta_j^*$ betegner koefficienten af $x_j$ i den sande model og antag at $\vert \mathcal{A} \vert=p_0 <p$, således at den sande model afhænger af en delmængde af prædiktorerne. 
@@ -22,15 +23,15 @@ gælder der, at $\lim_{n \rightarrow \infty }P(\mathcal{A}_n=\mathcal{A})=1$.
 hvor $\boldsymbol{\beta}^*_\mathcal{A}=\{ \beta_j^*, j \in \mathcal{A} \}$ og $\boldsymbol{\Sigma}^*_I$ er kovariansmatricen, hvor vi antager, at vi kender den sande model.
 \end{itemize}
 \end{defn}
-Det er argumenteret for at en god procedure bør have disse orakel egenskaber.
-Dog børe procedure have nogle ekstra betingelser udover orakel egenskaberne for at være optimal, såsom kontinuert shrinkage.
-Derfor er det vigtigt at understrege at orakelegenskaber ikke alene resultere i en optimal prædiktion performance.
+En god procedure bør have disse orakelegenskaber.
+Dog bør proceduren have nogle ekstra betingelser udover orakelegenskaberne for at være optimal, såsom kontinuert shrinkage.
+Derfor er det vigtigt at understrege, at orakelegenskaber ikke alene resulterer i en optimal procedure.
 
-Lad os antage følgende
+Lad os antage
 \begin{align*}
-y_i = \x_i \beta^* + \epsilon_i, 
+y_i = \x_i \tbeta^* + \epsilon_i, \quad \epsilon_i \sim \text{idd} \del{0, \sigma^2}
 \end{align*}
-hvor \(\epsilon_1, \ldots, \epsilon_n\)
+for \(i=1, \ldots, n\).
 Derudover antages det, at \(\frac{1}{n} \X^T \X \rightarrow \textbf{C}\), hvor
 \begin{align*}
 \textbf{C} = 
@@ -40,20 +41,17 @@ Derudover antages det, at \(\frac{1}{n} \X^T \X \rightarrow \textbf{C}\), hvor
 \end{bmatrix},
 \end{align*}
 er en positiv definit matrix, hvor $\textbf{C}_{11}$ er en $p_0 \times p_0$ matrix. 
-Lad os betragte lasso estimatet
+Lad os betragte lasso estimatoren
 \begin{align*}
-\hat{\beta}^\text{lasso} = \argmin_\beta \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert,
+\hat{\tbeta}^\text{lasso} = \argmin_{\tbeta} \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert,
 \end{align*}
 hvor \(\lambda_n\) varierer med \(n\).
+Lad \(\A_n^\text{lasso} = \cbr{j : \hat{\beta}_j^\text{lasso} \neq 0}\), da er lasso variabeludvælgelse konsistens hvis og kun hvis \(\lim_{n \rightarrow \infty} P \del{\A_n^\text{lasso} - \A} = 1\).
 
-
-
-%Så kan det udledes af proposition \ref{lem:lasso_consistency1}, at lasso ikke er konsistent i variabel udvælgelse i alle tilfælde og dermed ikke opfylder orakelegenskaberne.
-%
 \begin{lem}\label{lem:lasso_consistency1}
-Hvis $\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0$, da vil $\hat{\beta}^\text{lasso} \overset{p}{\rightarrow} \argmin V_1$, hvor
+Hvis $\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0$, da vil $\hat{\tbeta}^\text{lasso} \overset{p}{\rightarrow} \argmin V_1$, hvor
 \begin{align*}
-V_1 \del{\mathbf{u}} = \del{\mathbf{u} - \beta^*}^T \mathbf{C} \del{\mathbf{u} - \beta^*} + \lambda_0 \sum_{j=1}^p \vert u_j \vert.
+V_1 \del{\mathbf{u}} = \del{\mathbf{u} - \tbeta^*}^T \mathbf{C} \del{\mathbf{u} - \tbeta^*} + \lambda_0 \sum_{j=1}^p \vert u_j \vert.
 \end{align*}
 \end{lem}
 \begin{proof}
@@ -61,7 +59,7 @@ Beviset undlades, men der henvises til s. 1358 i \citep{adaptive_lasso_knight}.
 \end{proof}
 %
 \begin{lem}\label{lem:lasso_consistency2}
-Hvis $\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0$, da vil \(\sqrt{n} \del{\hat{\beta}^\text{lasso} - \beta^*} \overset{d}{\rightarrow} \argmin V_2\), hvor
+Hvis $\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0$, da vil \(\sqrt{n} \del{\hat{\tbeta}^\text{lasso} - \tbeta^*} \overset{d}{\rightarrow} \argmin V_2\), hvor
 \begin{align*}
 V_2 \del{\mathbf{u}} = -2 \mathbf{u}^T \mathbf{W} + \mathbf{u}^T \mathbf{C} \mathbf{u} + \lambda_0 \sum_{j=1}^p \sbr{u_j \text{sign} \del{\beta^*_j} \mathbb{1} \del{\beta_j^* \neq 0} + \vert u_j \vert \mathbb{1} \del{\beta_j^* = 0}},
 \end{align*}
@@ -70,23 +68,31 @@ og \(\mathbf{W} \sim N\del{\mathbf{0}, \sigma^2 \mathbf{C}}\).
 %
 Af lemma \ref{lem:lasso_consistency2} har vi, at lasso estimatet er rod-n konsistent.
 
-Hvis $\lambda_0=0$, da gælder ifølge lemma \ref{lem:lasso_consistency1}, at $\hat{\boldsymbol{\beta}}^\text{lasso} \overset{p}{\rightarrow} \hat{\boldsymbol{\beta}}^{*}$, da strafleddet forsvinder og $\mathbf{C}$ er en positiv definit matrix, og dermed er $\hat{\boldsymbol{\beta}}^\text{lasso}$ svagt konsistent. Men da strafleddet forsvinder, medfører det også, at lasso asymptotisk ingen variabeludvælgelse har. Hvis $\lambda_0>0$ kan det ikke udledes fra proposition \ref{prop:lasso_no_vs}, om estimatoren er konsistent. Det angives i \citep{adaptive_lasso}, at dette kun vil være tilfældet, når en given betingelse er opfyldt. En metode, der konsekvent udfører konsistent variabeludvælgelse, kan dog opnås med en simpel tilføjelse til lasso estimatet. Denne metode kaldes adaptive lasso.
-
-
-%I cite(Zou) vises det at udvælgelsen af variable ved hjælp af lasso ikke er konsistent i alle tilfælde. Lasso kan dermed ikke være en orakel procedure.
+Hvis $\lambda_0=0$, da gælder ifølge lemma \ref{lem:lasso_consistency1}, at $\hat{\boldsymbol{\beta}}^\text{lasso} \overset{p}{\rightarrow} \boldsymbol{\beta}^{*}$, da strafleddet forsvinder og $\mathbf{C}$ er en positiv definit matrix, og dermed er $\hat{\boldsymbol{\beta}}^\text{lasso}$ svagt konsistent. Men da strafleddet forsvinder, medfører det også, at lasso asymptotisk ingen variabeludvælgelse har. Hvis $\lambda_0>0$ kan det ikke udledes fra lemma \ref{lem:lasso_consistency1}, om estimatoren er konsistent. Det angives i \citep{adaptive_lasso}, at dette kun vil være tilfældet, når en given betingelse er opfyldt. 
 %
-
+%En metode, der konsekvent udfører konsistent variabeludvælgelse, kan dog opnås med en simpel tilføjelse til lasso estimatet. Denne metode kaldes adaptive lasso.
+%
 \begin{thm}[Nødvendig betingelse]
-Antag at \(\lim_{n \rightarrow \infty} P \del{\A_n = \A}=1\).
-Da eksisterer en fortegns vektor \(\mathbf{s} = \del{s_1, \ldots, s_{p_0}}\), hvor \(s_j=1\) eller \(-1\), således at
+Antag at \(\lim_{n \rightarrow \infty} P \del{\A_n^\text{lasso} = \A}=1\), da eksisterer en fortegnsvektor \(\mathbf{s} = \del{s_1, \ldots, s_{p_0}}\), hvor \(s_j\) er lig \(1\) eller \(-1\), således at
 \begin{align}
-\vert \mathbf{C}_{21} \mathbf{C}_{11}^{-1} \mathbf{s} \vert \leq 1. \label{eq:betingelse_konsistent}
+\left\vert \mathbf{C}_{21} \mathbf{C}_{11}^{-1} \mathbf{s} \right\vert \leq 1. \label{eq:betingelse_konsistent}
 \end{align}
 \end{thm}
+%
+\begin{proof}
 Beviset undlades, men vi referer til s. 1426 i \citep{adaptive_lasso}.
+\end{proof}
+%
 Hvis betingelse \eqref{eq:betingelse_konsistent} ikke er opfyldt, da er lasso variabeludvælgelsen ikke konsistent.
+Den nødvendige betingelse i \eqref{eq:betingelse_konsistent} er ikke triviel.
+
+\begin{cor}
+Antag \(p_0 = 2m+1 \geq 3\) og \(p=p_0+1\), således at én prædiktor er irrelevant.
+Lad \(\mathbf{C}_{11} = \del{1- \rho_1} \mathbf{I} + \rho_1 \mathbf{J}_1\), hvor \(\mathbf{J}_1\) er en matrix bestående af 1-taller og  \(\mathbf{C}_{12} =  \rho_2 \mathbf{1}\) og \(\mathbf{C}_{22}= 1\). Hvis \(-\frac{1}{p_0 - 1} < \rho_1 < -\frac{1}{p_0}\) og \(1 + \del{p_0 -1} \rho_1 < \vert \rho_2 \vert < \sqrt{\frac{1 + \del{p_0-1}\rho_1}{p_0}}\), da kan betingelse \eqref{eq:betingelse_konsistent} ikke være opfyldt.
+Derfor er lasso variabeludvælgelsen ikke konsistens.
+\end{cor}
 
 Hvis modelmatricen \(\X\) er ortogonal, da er den nødvendige betingelse \eqref{eq:betingelse_konsistent} og konsistens af lasso udvælgelsen garanteret.
-Derudover hvis \(p=2\), er den nødvendige betingelse altid opfyldt, da \(\vert \mathbf{C}_{21} \mathbf{C}_{11}^{-1} \text{sign} \del{\beta^*_\A}\) reduceres til \(\rho\), som er korrelationen imellem prædiktorerne.
+Derudover hvis \(p=2\), er den nødvendige betingelse altid opfyldt, da \(\left\vert \mathbf{C}_{21} \mathbf{C}_{11}^{-1} \text{sign} \del{\beta^*_\A} \right\vert\) reduceres til \(\vert \rho \vert\), som er korrelationen imellem prædiktorerne.
 
-Vi har vist at lasso ikke kan opfylde orakel egenskaberne.
+Vi har vist, at lasso ikke kan opfylde orakelegenskaberne.

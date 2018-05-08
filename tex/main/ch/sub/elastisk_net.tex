@@ -11,24 +11,22 @@ Selvom lasso har vist succes i mange tilfælde, har den også nogle begrænsning
 \end{enumerate}
 %
 Målet er at finde en metode, som overkommer ovenstående begrænsninger.
-Ridge regression kan håndtere multikollinaritet, da den averages effekten af mutually korrelerede variable.
-Men somsagt giver ridge regression ikke en sparse løsning.
 %
 \begin{defn}[Naiv elastisk net]
 Antag responsvariablen er centreret og prædiktorerne er standardiseret, da er det naive elastiske net givet ved
 \begin{align}
-\hat{\beta}^\text{naivEN} = \argmin_{\beta} \cbr{\Vert \y - \X \beta \Vert_2^2 + \lambda_2 \Vert \beta \Vert_2^2 + \lambda_1 \Vert \beta \Vert_1}, \label{eq:naivEN}
+\hat{\tbeta}^\text{naivEN} = \argmin_{\tbeta} \cbr{\Vert \y - \X \tbeta \Vert_2^2 + \lambda_2 \Vert \tbeta \Vert_2^2 + \lambda_1 \Vert \tbeta \Vert_1}, \label{eq:naivEN}
 \end{align}
 for \(\lambda_1, \lambda_2 \geq 0\).
 \end{defn}
 %
 Lad \(\alpha = \frac{\lambda_1}{\lambda_1 + \lambda_2}?????\), da er \eqref{eq:naivEN} ækvivalent med optimeringsproblemet
 \begin{align*}
-\hat{\beta}^\text{naivEN} = \argmin_{\beta} \cbr{\Vert \y - \X \beta \Vert_2^2}, \ \text{underlagt at } \frac{1}{2}\del{1-\alpha} \Vert \beta \Vert_2^2 + \alpha \Vert \beta \Vert_1 \leq t,
+\hat{\tbeta}^\text{naivEN} = \argmin_{\tbeta} \cbr{\Vert \y - \X \tbeta \Vert_2^2}, \ \text{underlagt at } \frac{1}{2}\del{1-\alpha} \Vert \tbeta \Vert_2^2 + \alpha \Vert \tbeta \Vert_1 \leq t,
 \end{align*}
 som kan omskrives til et Lagrange problem
 \begin{align}
-\hat{\beta}^\text{naivEN} =\argmin_{\beta} \cbr{ \Vert \y - \X \beta \Vert_2^2 + \lambda \sbr{\frac{1}{2}(1- \alpha) \Vert \beta \Vert_2^2 + \alpha \Vert \beta \Vert_1}}. \label{eq:4.2}
+\hat{\tbeta}^\text{naivEN} =\argmin_{\tbeta} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \sbr{\frac{1}{2}(1- \alpha) \Vert \tbeta \Vert_2^2 + \alpha \Vert \tbeta \Vert_1}}. \label{eq:4.2}
 \end{align}
 Hvis $\alpha=0$, da reduceres det til den kvadrerede $\ell_2$-norm svarende til strafleddet for ridge regression og hvis $\alpha=1$ reduceres strafleddet til $\ell_1$-normen svarende til strafleddet for lasso.
 Optimeringsproblemet  \eqref{eq:4.2} er streng konveks for \(\alpha \in [0,1)\), hvilket betyder, at der eksisterer en entydig løsning uafhængigt af korrelationsstrukturen af $\X$.
@@ -70,50 +68,50 @@ Det viser sig, at optimeringsproblemet for naiv elastisk net kan transformeres t
 \begin{lem} \label{lem:elastisk_net}
 Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), defineres et augmented datasæt 
 \begin{align*}
-\X^* = \del{1 + \lambda_2}^{-1/2} \begin{bmatrix}
-\X \\ \sqrt{\lambda_2} \mathbf{I}
-\end{bmatrix}, \quad \y^* = \begin{bmatrix}
+\X^* = \del{1 + \lambda_2}^{-1/2} \begin{pmatrix}
+\X \\ \sqrt{\lambda_2} \mathbf{I}_p
+\end{pmatrix}, \quad \y^* = \begin{pmatrix}
 \y \\ \mathbf{0}
-\end{bmatrix},
+\end{pmatrix},
 \end{align*}
 hvor \(\X^* \in \mathbb{R}^{\del{n+p} \times p}\) og \(\y^* \in \mathbb{R}^{n+p}\).
-Lad \(\gamma = \frac{\lambda_1}{\sqrt{1+\lambda_2}}\) og \(\beta^* = \sqrt{1+\lambda_2} \beta^\text{naivEN}\), da kan \eqref{eq:naivEN} omskrives til
+Lad \(\gamma = \frac{\lambda_1}{\sqrt{1+\lambda_2}}\) og \(\tbeta^* = \sqrt{1+\lambda_2} \tbeta^\text{naivEN}\), da kan \eqref{eq:naivEN} omskrives til
 \begin{align}
-\hat{\beta}^* = \argmin_{\beta^*} \cbr{ \Vert \y^* - \X^* \beta^* \Vert_2^2 +\gamma \Vert \beta^* \Vert_1}, \label{eq:EN11}
+\hat{\tbeta}^* = \argmin_{\tbeta^*} \cbr{ \Vert \y^* - \X^* \tbeta^* \Vert_2^2 +\gamma \Vert \tbeta^* \Vert_1}, \label{eq:EN11}
 \end{align}
 hvor
 \begin{align*}
-\hat{\beta}^\text{naivEN} = \frac{1}{\sqrt{1+\lambda_2}} \hat{\beta}^*.
+\hat{\tbeta}^\text{naivEN} = \frac{1}{\sqrt{1+\lambda_2}} \hat{\tbeta}^*.
 \end{align*}
 \end{lem}
 %
 \begin{proof}
 Vi har, at
 \begin{align*}
-\hat{\beta}^\text{naivEN} = \frac{1}{\sqrt{1+\lambda_2}} \hat{\beta}^*,
+\hat{\tbeta}^\text{naivEN} = \frac{1}{\sqrt{1+\lambda_2}} \hat{\tbeta}^*,
 \end{align*}
-hvor \(\hat{\beta}^*\) er givet i \eqref{eq:EN11}, således får vi, at
+hvor \(\hat{\tbeta}^*\) er givet i \eqref{eq:EN11}, således får vi, at
 \begin{align*}
-\hat{\beta}^\text{naivEN} &= \argmin_{\beta} \cbr{ \left\Vert \begin{bmatrix}
+\hat{\tbeta}^\text{naivEN} &= \argmin_{\tbeta} \cbr{ \left\Vert \begin{pmatrix}
 \y \\ \mathbf{0}
-\end{bmatrix} -  \del{1 + \lambda_2}^{-1/2} \begin{bmatrix}
-\X \\ \sqrt{\lambda_2} \mathbf{I}
-\end{bmatrix} \sqrt{1+\lambda_2} \beta \right\Vert_2^2 + \frac{\lambda_1}{\sqrt{1+\lambda_2}} \left\Vert \sqrt{1+\lambda_2} \beta \right\Vert_1} \\
-&= \argmin_{\beta} \cbr{ \left\Vert \begin{bmatrix}
+\end{pmatrix} -  \del{1 + \lambda_2}^{-1/2} \begin{pmatrix}
+\X \\ \sqrt{\lambda_2} \mathbf{I}_p
+\end{pmatrix} \sqrt{1+\lambda_2} \tbeta \right\Vert_2^2 + \frac{\lambda_1}{\sqrt{1+\lambda_2}} \left\Vert \sqrt{1+\lambda_2} \tbeta \right\Vert_1} \\
+&= \argmin_{\tbeta} \cbr{ \left\Vert \begin{pmatrix}
 \y \\ \mathbf{0}
-\end{bmatrix} -  \begin{bmatrix}
-\X \\ \sqrt{\lambda_2} \mathbf{I}
-\end{bmatrix} \beta \right\Vert_2^2 + \lambda_1 \left\Vert \beta \right\Vert_1} \\
-&= \argmin_{\beta} \cbr{ \left\Vert \begin{bmatrix}
-\y - \X \beta \\ - \sqrt{\lambda_2}  \beta 
-\end{bmatrix} \right\Vert_2^2 + \lambda_1 \left\Vert \beta \right\Vert_1} \\
- &= \argmin_{\beta} \cbr{ \Vert \y - \X \beta \Vert_2^2 + \lambda_2 \Vert \beta \Vert_2^2 + \lambda_1 \Vert \beta \Vert_1}.
+\end{pmatrix} -  \begin{pmatrix}
+\X \\ \sqrt{\lambda_2} \mathbf{I}_p
+\end{pmatrix} \tbeta \right\Vert_2^2 + \lambda_1 \left\Vert \tbeta \right\Vert_1} \\
+&= \argmin_{\tbeta} \cbr{ \left\Vert \begin{pmatrix}
+\y - \X \tbeta \\ - \sqrt{\lambda_2} \tbeta 
+\end{pmatrix} \right\Vert_2^2 + \lambda_1 \left\Vert \tbeta \right\Vert_1} \\
+ &= \argmin_{\tbeta} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda_2 \Vert \tbeta \Vert_2^2 + \lambda_1 \Vert \tbeta \Vert_1}.
 \end{align*}
 \end{proof}
 %Beviset følger af simpel algebra og er derfor undladt.
 Da \(\X^*\) har rang \(p\), kan metoden i princippet altid vælge alle \(p\) prædiktorer.
 Dermed er naiv elastisk net ikke begrænset til blot at vælge \(n\) prædiktorer hvis \(p > n\), som er tilfældet for lasso som beskrevet i punkt \ref{itm:1}.
-Lemma \ref{lem:elastisk_net} viser også, at naiv  elastisk net udfører variabel udvælgelse svarende til lasso.
+Lemma \ref{lem:elastisk_net} viser også, at naiv  elastisk net udfører variabeludvælgelse svarende til lasso.
 %
 \begin{lem}
 Hvis \(\X\) er ortogonal, da gælder, at
@@ -133,12 +131,12 @@ Figur \ref{fig:elastisk2} viser de operationelle egenskaber af ridge regression,
 \end{lem}
 %
 \begin{proof}
-Ridge estimatoren i det ortogonale tilfælde \eqref{eq:orto_ridge} følger direkte udfra ridge estimatoren \eqref{eq:ridge_estimator}, da \(\X^T \X = \mathbf{I}\) og \(\hat{\beta}^\text{OLS} = \X^T \y\).
+Ridge estimatoren i det ortogonale tilfælde \eqref{eq:orto_ridge} følger direkte udfra ridge estimatoren \eqref{eq:ridge_estimator}, da \(\X^T \X = \mathbf{I}_p\) og \(\hat{\tbeta}^\text{OLS} = \X^T \y\).
 For at bevise lasso estimatoren i det ortogonale tilfælde \eqref{eq:orto_lasso}, omskrives lasso problemet \eqref{eq:2.5} til følgende
 \begin{align*}
-\hat{\beta}^\text{lasso} &= \argmin_{\beta} \cbr{\del{\y - \X \beta}^T \del{\y - \X \beta} + \lambda_1 \Vert \beta \Vert_1} \\
-&= \argmin_{\beta} \cbr{ \del{\y^T \y - 2 \beta^T \X^T \y + \beta^T \X^T \X \beta} + \lambda_1 \Vert \beta \Vert_1} \\
-&= \argmin_{\beta} \cbr{- 2 \beta^T \hat{\beta}^\text{OLS} + \beta^T \beta + \lambda_1 \Vert \beta \Vert_1}.
+\hat{\tbeta}^\text{lasso} &= \argmin_{\tbeta} \cbr{\del{\y - \X \tbeta}^T \del{\y - \X \tbeta} + \lambda_1 \Vert \tbeta \Vert_1} \\
+&= \argmin_{\tbeta} \cbr{ \y^T \y - 2 \tbeta^T \X^T \y + \tbeta^T \X^T \X \tbeta + \lambda_1 \Vert \tbeta \Vert_1} \\
+&= \argmin_{\tbeta} \cbr{- 2 \tbeta^T \hat{\tbeta}^\text{OLS} + \tbeta^T \tbeta + \lambda_1 \Vert \tbeta \Vert_1}.
 \end{align*}
 Lad os blot betragte indeks \(j\) af lasso estimatoren
 \begin{align*}
@@ -162,7 +160,7 @@ dette sættes lig \(0\) og isolerer for \(\hat{\beta}_j\)
 \end{cases} \\
 &= \begin{cases}
 \hat{\beta}_j^\text{OLS} + \frac{\lambda_1,}{2} \quad &\hat{\beta}_j^\text{OLS} < - \frac{\lambda_1}{2} \\
-0, &\hat{\beta}_j^\text{OLS} \leq \frac{\lambda_1}{2} \\
+0, &\left\vert\hat{\beta}_j^\text{OLS} \right\vert \leq \frac{\lambda_1}{2} \\
 \hat{\beta}_j^\text{OLS} - \frac{\lambda_1}{2}, \quad &\hat{\beta}_j^\text{OLS} > \frac{\lambda_1}{2}
 \end{cases}. 
 \end{align*}
@@ -177,13 +175,13 @@ En regression metode udviser denne evne, hvis regressions koeffcienterne af en g
 \begin{lem} \label{lem:elastisk_net2}
 Lad os betragte
 \begin{align}
-\hat{\beta} = \argmin_\beta \Vert \y - \X \beta \Vert_2^2 + \lambda J \del{\beta}, \label{eq:EN10}
+\hat{\tbeta} = \argmin_{\tbeta} \Vert \y - \X \tbeta \Vert_2^2 + \lambda J \del{\tbeta}, \label{eq:EN10}
 \end{align}
-hvor \(J \del{\cdot}\) er positiv for \(\beta \neq 0\).
+hvor \(J \del{\cdot}\) er positiv for \(\tbeta \neq 0\).
 Antag \(\x_i = \x_j\), for \(i, j = 1, \ldots, p\).
 \begin{enumerate}[label=\alph*)]
 \item Hvis \(J \del{\cdot}\) er streng konveks, da er \(\hat{\beta}_i = \hat{\beta}_j\), for alle \(\lambda \geq 0\).
-\item Hvis \(J \del{\beta} = \Vert \beta \Vert_1\), da er \(\hat{\beta}_i \hat{\beta}_j \geq 0\) og \(\hat{\beta}^*\) er optimum af \eqref{eq:EN10}, hvor
+\item Hvis \(J \del{\tbeta} = \Vert \tbeta \Vert_1\), da er \(\hat{\beta}_i \hat{\beta}_j \geq 0\) og \(\hat{\tbeta}^*\) er optimum af \eqref{eq:EN10}, hvor
 \begin{align*}
 \hat{\beta}_k^* = \begin{cases}
 \hat{\beta}_k & k \neq i \text{ og } k \neq j, \\
@@ -198,21 +196,21 @@ for ethvert \(s \in \sbr{0,1}\).
 \begin{proof}
 Først bevises a).
 Fasthold \(\lambda > 0\).
-Hvis \(\hat{\beta}_i \neq \hat{\beta}_j\), lad os betragte \(\hat{\beta}^*\) som
+Hvis \(\hat{\beta}_i \neq \hat{\beta}_j\), lad os betragte \(\hat{\tbeta}^*\) som
 \begin{align*}
 \hat{\beta}_k^* = \begin{cases}
 \hat{\beta}_k & k \neq i \text{ og } k \neq j, \\
 \frac{1}{2} \del{\hat{\beta}_i + \hat{\beta}_j} & k = i \text{ eller } k = j.
 \end{cases}
 \end{align*}
-Da \(\x_i = \x_j\), må vi have at \(\X \hat{\beta}^* = \X \hat{\beta}\) og dermed \(\Vert \y - \X \hat{\beta}^* \Vert_2^2 = \Vert \y - \X \hat{\beta} \Vert_2^2\).
-Men da \(J \del{\cdot}\) er streng konveks, må vi have, at \(J \del{\hat{\beta}^*} < J \del{\hat{\beta}}\).
-Dermed kan \(\hat{\beta}\) ikke være optimum af \eqref{eq:EN10}, som er en modstrid.
+Da \(\x_i = \x_j\), må vi have at \(\X \hat{\tbeta}^* = \X \hat{\tbeta}\) og dermed \(\Vert \y - \X \hat{\tbeta}^* \Vert_2^2 = \Vert \y - \X \hat{\tbeta} \Vert_2^2\).
+Men da \(J \del{\cdot}\) er streng konveks, må vi have, at \(J \del{\hat{\tbeta}^*} < J \del{\hat{\tbeta}}\).
+Dermed kan \(\hat{\tbeta}\) ikke være optimum af \eqref{eq:EN10}, som er en modstrid.
 Derfor må vi have at \(\hat{\beta}_i = \hat{\beta}_j\).
 
 Herefter bevises b).
-Hvis \(\hat{\beta}_i \hat{\beta}_j < 0\), lad os igen betragte \(\hat{\beta}^*\) som ovenfor.
-Da ser vi, at \(\vert \hat{\beta}^* \vert < \vert \hat{\beta} \vert\), så \(\hat{\beta}\) kan ikke være en lasso løsning, altså må \(\hat{\beta}_i \hat{\beta}_j \geq 0\).
+Hvis \(\hat{\beta}_i \hat{\beta}_j < 0\), lad os igen betragte \(\hat{\tbeta}^*\) som ovenfor.
+Da ser vi, at \(\vert \hat{\tbeta}^* \vert < \vert \hat{\tbeta} \vert\), så \(\hat{\tbeta}\) kan ikke være en lasso løsning, altså må \(\hat{\beta}_i \hat{\beta}_j \geq 0\).
 MANGLER NOGET!
 \end{proof}
 Lemma \ref{lem:elastisk_net2} giver altså at streng konveksitet sikrer denne gruppe effekt, hvis vi har identiske prædiktorer, mens lasso ikke engang har en entydig løsning.
@@ -220,7 +218,7 @@ Elastisk net med \(\lambda_2 > 0\) er streng konveks, og har dermed denne effekt
 %
 \begin{thm} \label{thm:elastisk_net}
 Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), hvor responsvariablen er centreret og prædiktorerne er standardiseret.
-Lad \(\hat{\beta} \del{\lambda_1, \lambda_2}\) være estimatet for naiv elastisk net.
+Lad \(\hat{\tbeta} \del{\lambda_1, \lambda_2}\) være estimatet for naiv elastisk net.
 Antag \(\hat{\beta}_i \del{\lambda_1, \lambda_2} \hat{\beta}_j \del{\lambda_1, \lambda_2} > 0\).
 Definer
 \begin{align*}
@@ -235,44 +233,44 @@ hvor \(\rho = \mathbf{x}_i^T \mathbf{x}_j\) er den empiriske korrelation.
 %
 \begin{proof}
 Hvis \(\hat{\beta}_i \del{\lambda_1, \lambda_2} \hat{\beta}_j \del{\lambda_1, \lambda_2} > 0\), da er både \(\hat{\beta}_i \del{\lambda_1, \lambda_2}\) og \(\hat{\beta}_j \del{\lambda_1, \lambda_2}\) ikke-nul og der må gælder, at \(\text{sign} \cbr{\hat{\beta}_i \del{\lambda_1, \lambda_2}} = \text{sign} \cbr{\hat{\beta}_j \del{\lambda_1, \lambda_2}}\).
-Lad \(L \del{\lambda_1,\lambda_2, \beta} = \Vert \y - \X \beta \Vert_2^2 + \lambda_2 \Vert \beta \Vert_2^2 + \lambda_1 \Vert \beta \Vert_1\), således at  \(\arg \min_{\beta} \cbr{L \del{\lambda_1,\lambda_2, \beta}}\) svarer til \eqref{eq:naivEN}.
-Da må \(\hat{\beta} \del{\lambda_1, \lambda_2}\) opfylde, at
+Lad \(L \del{\lambda_1,\lambda_2, \tbeta} = \Vert \y - \X \tbeta \Vert_2^2 + \lambda_2 \Vert \tbeta \Vert_2^2 + \lambda_1 \Vert \tbeta \Vert_1\), således at \(\arg \min_{\tbeta} \cbr{L \del{\lambda_1,\lambda_2, \tbeta}}\) svarer til \eqref{eq:naivEN}.
+Da må \(\hat{\tbeta} \del{\lambda_1, \lambda_2}\) opfylde, at
 \begin{align*}
-\frac{\partial L \del{\lambda_1,\lambda_2, \beta} }{\partial \beta_k} \Bigr|_{\beta = \hat{\beta} \del{\lambda_1, \lambda_2}}=0, \text{ hvis } \hat{\beta}_k \del{\lambda_1, \lambda_2} \neq 0.
+\frac{\partial L \del{\lambda_1,\lambda_2, \tbeta} }{\partial \beta_k} \Bigr|_{\tbeta = \hat{\tbeta} \del{\lambda_1, \lambda_2}}=0, \text{ hvis } \hat{\beta}_k \del{\lambda_1, \lambda_2} \neq 0.
 \end{align*}
 Derfor har vi, at
 \begin{align}
--2 \mathbf{x}_i^T \del{\y - \X \hat{\beta} \del{\lambda_1, \lambda_2}} +  2 \lambda_2 \hat{\beta}_i \del{\lambda_1, \lambda_2} + \lambda_1 \text{sign} \cbr{\hat{\beta}_i \del{\lambda_1, \lambda_2}} &= 0, \label{eq:EN2}\\
--2 \mathbf{x}_j^T \del{\y - \X \hat{\beta} \del{\lambda_1, \lambda_2}} + 2 \lambda_2 \hat{\beta}_j \del{\lambda_1, \lambda_2} + \lambda_1 \text{sign} \cbr{\hat{\beta}_j \del{\lambda_1, \lambda_2}} &= 0. \label{eq:EN3}
+-2 \mathbf{x}_i^T \del{\y - \X \hat{\tbeta} \del{\lambda_1, \lambda_2}} +  2 \lambda_2 \hat{\beta}_i \del{\lambda_1, \lambda_2} + \lambda_1 \text{sign} \cbr{\hat{\beta}_i \del{\lambda_1, \lambda_2}} &= 0, \label{eq:EN2}\\
+-2 \mathbf{x}_j^T \del{\y - \X \hat{\tbeta} \del{\lambda_1, \lambda_2}} + 2 \lambda_2 \hat{\beta}_j \del{\lambda_1, \lambda_2} + \lambda_1 \text{sign} \cbr{\hat{\beta}_j \del{\lambda_1, \lambda_2}} &= 0. \label{eq:EN3}
 \end{align}
 Vi subtraherer \eqref{eq:EN3} fra \eqref{eq:EN2} og finder, at
 \begin{align*}
-\del{\mathbf{x}_j^T-\mathbf{x}_i^T} \del{\y - \X \hat{\beta} \del{\lambda_1, \lambda_2}} + \lambda_2 \del{\hat{\beta}_i \del{\lambda_1, \lambda_2} - \hat{\beta}_j \del{\lambda_1, \lambda_2}} =0,
+\del{\mathbf{x}_j^T-\mathbf{x}_i^T} \del{\y - \X \hat{\tbeta} \del{\lambda_1, \lambda_2}} + \lambda_2 \del{\hat{\beta}_i \del{\lambda_1, \lambda_2} - \hat{\beta}_j \del{\lambda_1, \lambda_2}} =0,
 \end{align*}
 som er ækvivalent med
 \begin{align}
-\hat{\beta}_i \del{\lambda_1, \lambda_2} - \hat{\beta}_j \del{\lambda_1, \lambda_2} = \frac{1}{\lambda_2} \del{\mathbf{x}_i^T-\mathbf{x}_j^T} \hat{r}\del{\lambda_1, \lambda_2}, \label{eq:EN4}
+\hat{\beta}_i \del{\lambda_1, \lambda_2} - \hat{\beta}_j \del{\lambda_1, \lambda_2} = \frac{1}{\lambda_2} \del{\mathbf{x}_i^T-\mathbf{x}_j^T} \hat{\mathbf{r}}\del{\lambda_1, \lambda_2}, \label{eq:EN4}
 \end{align}
-hvor \(\hat{r}\del{\lambda_1, \lambda_2} = \y - \X  \hat{\beta} \del{\lambda_1, \lambda_2}\) er en vektor af residualer.
+hvor \(\hat{\mathbf{r}}\del{\lambda_1, \lambda_2} = \y - \X  \hat{\tbeta} \del{\lambda_1, \lambda_2}\) er en vektor af residualer.
 Da \(\X\) er standardiseret, har vi, at \(\Vert \mathbf{x}_i - \mathbf{x}_j \Vert_2^2=2 \del{1-\rho}\), hvor \(\rho = \mathbf{x}_i^T \mathbf{x}_j\).
 Af \eqref{eq:naivEN} må vi have, at
 \begin{align*}
-L \del{\lambda_1,\lambda_2, \hat{\beta}\del{\lambda_1, \lambda_2}} \leq L \del{\lambda_1,\lambda_2, \beta = 0},  
+L \del{\lambda_1,\lambda_2, \hat{\tbeta}\del{\lambda_1, \lambda_2}} \leq L \del{\lambda_1,\lambda_2, \tbeta = 0},  
 \end{align*}
 dvs
 \begin{align*}
-\Vert \hat{r} \del{\lambda_1, \lambda_2} \Vert_2^2 + \lambda_2 \Vert \hat{\beta} \del{\lambda_1, \lambda_2} \Vert_2^2 + \lambda_1 \Vert \hat{\beta} \del{\lambda_1, \lambda_2} \Vert_1 \leq \Vert \y \Vert_2^2.  
+\Vert \hat{\mathbf{r}} \del{\lambda_1, \lambda_2} \Vert_2^2 + \lambda_2 \Vert \hat{\tbeta} \del{\lambda_1, \lambda_2} \Vert_2^2 + \lambda_1 \Vert \hat{\tbeta} \del{\lambda_1, \lambda_2} \Vert_1 \leq \Vert \y \Vert_2^2.  
 \end{align*}
-Dermed er \(\Vert \hat{r} \del{\lambda_1, \lambda_2} \Vert_2 \leq \Vert \y \Vert_2\) og \eqref{eq:EN4} medfører, at
+Dermed er \(\Vert \hat{\mathbf{r}} \del{\lambda_1, \lambda_2} \Vert_2 \leq \Vert \y \Vert_2\) og \eqref{eq:EN4} medfører, at
 \begin{align*}
-D_{\lambda_1, \lambda_2} \del{i,j} &= \frac{1}{\Vert \y \Vert_1} \left\vert \frac{1}{\lambda_2} \del{\mathbf{x}_i^T-\mathbf{x}_j^T} \hat{r}\del{\lambda_1, \lambda_2} \right\vert \\ 
+D_{\lambda_1, \lambda_2} \del{i,j} &= \frac{1}{\Vert \y \Vert_1} \left\vert \frac{1}{\lambda_2} \del{\mathbf{x}_i^T-\mathbf{x}_j^T} \hat{\mathbf{r}}\del{\lambda_1, \lambda_2} \right\vert \\ 
 &\leq \frac{1}{\lambda_2} \left\Vert \del{\mathbf{x}_i^T-\mathbf{x}_j^T} \right\Vert_2 \\ 
 &= \frac{1}{\lambda_2} \sqrt{2 \del{1-\rho}}.
 \end{align*}
 \end{proof}
 %
-Mængden \(D_{\lambda_1, \lambda_2} \del{i,j}\) betegner differensen mellem koefficient stierne af prædiktor \(i\) og \(j\).
-Hvis \(\mathbf{x}_i\) og \(\mathbf{x}_j\) er højt korreleret, dvs \(\rho \approx 1\), giver sætning \ref{thm:elastisk_net}, at differensen mellem koefficient stierne af prædiktor \(i\) og \(j\) er næsten 0.
+Mængden \(D_{\lambda_1, \lambda_2} \del{i,j}\) betegner differensen mellem koefficientstierne af prædiktor \(i\) og \(j\).
+Hvis \(\mathbf{x}_i\) og \(\mathbf{x}_j\) er højt korreleret, dvs \(\rho \approx 1\), giver sætning \ref{thm:elastisk_net}, at differensen mellem koefficientstierne af prædiktor \(i\) og \(j\) er næsten 0.
 Den øvre grænse i \eqref{eq:EN5} giver en kvantitativ beskrivelse af denne gruppering effekt som naiv elastisk net har.
 
 Empiriske resultater har vist, at naiv elastisk net ikke er tilfredsstillende, medmindre den er tæt på enten ridge regression eller lasso.
@@ -284,15 +282,15 @@ Derfor introduceres blot elastisk net, som korrigerer for denne dobbelt skrinkag
 
 I lemma \ref{lem:elastisk_net} fandt vi, at naiv elastisk net løser følgende 
 \begin{align}
-\hat{\beta}^* = \argmin_{\beta^*} \cbr{ \Vert \y^* - \X^* \beta^* \Vert_2^2 + \frac{\lambda_1}{\sqrt{1+\lambda_2}} \Vert \beta^* \Vert_1}. \label{eq:EN8}
+\hat{\tbeta}^* = \argmin_{\tbeta^*} \cbr{ \Vert \y^* - \X^* \tbeta^* \Vert_2^2 + \frac{\lambda_1}{\sqrt{1+\lambda_2}} \Vert \tbeta^* \Vert_1}. \label{eq:EN8}
 \end{align}
 Estimaterne for elastisk net (korrigeret) er defineret ved
 \begin{align*}
-\hat{\beta}^\text{EN} = \sqrt{1+\lambda_2} \hat{\beta}^*.
+\hat{\tbeta}^\text{EN} = \sqrt{1+\lambda_2} \hat{\tbeta}^*.
 \end{align*}
-Da \(\hat{\beta}^\text{naivEN} = \frac{1}{\sqrt{1+\lambda_2}} \hat{\beta}^*\), har vi, at
+Da \(\hat{\tbeta}^\text{naivEN} = \frac{1}{\sqrt{1+\lambda_2}} \hat{\tbeta}^*\), har vi, at
 \begin{align*}
-\hat{\beta}^\text{EN} = \del{1+\lambda_2} \hat{\beta}^\text{naivEN}.
+\hat{\tbeta}^\text{EN} = \del{1+\lambda_2} \hat{\tbeta}^\text{naivEN}.
 \end{align*}
 Dermed er elastisk net koefficienterne faktisk reskaleret naiv elastisk net koefficienter.
 Denne transformation bevarer variabel udvælgelsen af naiv elastisk net og er den simpleste måde at annullere det ekstra shrinkage.
@@ -301,18 +299,18 @@ Derfor er egenskaberne for naiv elastiske net, som er beskrevet i dette afsnit, 
 \begin{thm} \label{thm:elastisk_net2}
 Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), da er estimaterne for elastisk net givet ved
 \begin{align}
-\hat{\beta}^\text{EN} = \argmin_\beta \cbr{ \del{\beta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}}{1 + \lambda_2}} \beta - 2 \y^T \X \beta} + \lambda_1 \Vert \beta \Vert_1}. \label{eq:EN6}
+\hat{\tbeta}^\text{EN} = \argmin_{\tbeta} \cbr{ \del{\tbeta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}_p}{1 + \lambda_2}} \tbeta - 2 \y^T \X \tbeta} + \lambda_1 \Vert \tbeta \Vert_1}. \label{eq:EN6}
 \end{align}
 \end{thm}
 \begin{proof}
 Vi har, at
 \begin{align*}
-\hat{\beta}^\text{EN} = \sqrt{1+\lambda_2} \hat{\beta}^*,
+\hat{\tbeta}^\text{EN} = \sqrt{1+\lambda_2} \hat{\tbeta}^*,
 \end{align*}
-hvor \(\hat{\beta}^*\) er givet i \eqref{eq:EN8}, således får vi, at
+hvor \(\hat{\tbeta}^*\) er givet i \eqref{eq:EN8}, således får vi, at
 \begin{align}
-\hat{\beta}^\text{EN} &= \argmin_{\beta} \cbr{\left\Vert \y^* - \X^* \frac{\beta}{\sqrt{1+\lambda_2}} \right\Vert_2^2 + \frac{\lambda_1}{\sqrt{1+\lambda_2}} \left\Vert \frac{\beta}{\sqrt{1+\lambda_2}} \right\Vert_1} \nonumber \\
-&=\argmin_{\beta} \cbr{ \y^{*^T} \y^* - 2 \frac{\y^{*^T} \X^* \beta}{\sqrt{1+\lambda_2}} + \beta^T \del{\frac{\X^{*^T} \X^*}{1+\lambda_2}} \beta + \frac{\lambda_1 \Vert \beta \Vert_1}{1+\lambda_2}}. \label{eq:EN9}
+\hat{\tbeta}^\text{EN} &= \argmin_{\tbeta} \cbr{\left\Vert \y^* - \X^* \frac{\tbeta}{\sqrt{1+\lambda_2}} \right\Vert_2^2 + \frac{\lambda_1}{\sqrt{1+\lambda_2}} \left\Vert \frac{\tbeta}{\sqrt{1+\lambda_2}} \right\Vert_1} \nonumber \\
+&=\argmin_{\tbeta} \cbr{ \y^{*^T} \y^* - 2 \frac{\y^{*^T} \X^* \tbeta}{\sqrt{1+\lambda_2}} + \tbeta^T \del{\frac{\X^{*^T} \X^*}{1+\lambda_2}} \tbeta + \frac{\lambda_1 \Vert \tbeta \Vert_1}{1+\lambda_2}}. \label{eq:EN9}
 \end{align}
 Følgende identiteter
 \begin{align*}
@@ -320,37 +318,37 @@ Følgende identiteter
 \end{align*}
 indsættes i \eqref{eq:EN9}, og vi får, at
 \begin{align*}
-\hat{\beta}^\text{EN} &= \argmin_{\beta} \cbr{\y^T \y - 2 \frac{\y^T \X \beta}{1+\lambda_2} + \beta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}}{\del{1+\lambda_2}^2}} \beta + \frac{\lambda_1 \Vert \beta \Vert_1}{1+\lambda_2}} \\ 
-&= \argmin_{\beta} \cbr{\frac{1}{1+\lambda_2} \del{- 2 \y^T \X \beta + \beta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}}{1+ \lambda_2}} \beta + \lambda_1 \Vert \beta \Vert_1} + \y^T \y} \\
-&= \argmin_{\beta} \cbr{  - 2 \y^T \X \beta + \beta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}}{1+ \lambda_2}} \beta + \lambda_1 \Vert \beta \Vert_1}.
+\hat{\tbeta}^\text{EN} &= \argmin_{\tbeta} \cbr{\y^T \y - 2 \frac{\y^T \X \tbeta}{1+\lambda_2} + \tbeta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}_p}{\del{1+\lambda_2}^2}} \tbeta + \frac{\lambda_1 \Vert \tbeta \Vert_1}{1+\lambda_2}} \\ 
+&= \argmin_{\tbeta} \cbr{\frac{1}{1+\lambda_2} \del{- 2 \y^T \X \tbeta + \tbeta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}_p}{1+ \lambda_2}} \tbeta + \lambda_1 \Vert \tbeta \Vert_1} + \y^T \y} \\
+&= \argmin_{\tbeta} \cbr{- 2 \y^T \X \tbeta + \tbeta^T \del{\frac{\X^T \X + \lambda_2 \mathbf{I}_p}{1+ \lambda_2}} \tbeta + \lambda_1 \Vert \tbeta \Vert_1}.
 \end{align*}
 \end{proof}
 %
 Estimatoren for lasso kan omskrives til
 \begin{align}
-\hat{\beta}^\text{lasso} = \argmin_\beta \cbr{ - 2 \y^T \X \beta + \beta^T \del{\X^T \X} \beta  + \lambda_1 \Vert \beta \Vert_1}, \label{eq:EN7}
+\hat{\tbeta}^\text{lasso} = \argmin_{\tbeta} \cbr{ - 2 \y^T \X \tbeta + \tbeta^T \del{\X^T \X} \tbeta  + \lambda_1 \Vert \tbeta \Vert_1}, \label{eq:EN7}
 \end{align}
 derfor fortolker sætning \ref{thm:elastisk_net2} elastisk net som en stabil version af lasso.
-Lad \(\hat{\Sigma} = \X^T \X\) være den empiriske korrelationsmatrix og
+Lad \(\hat{\boldsymbol{\Sigma}} = \X^T \X\) være den empiriske korrelationsmatrix og
 \begin{align*}
-\frac{\X^T \X + \lambda_2 \mathbf{I}}{1 + \lambda_2} = (1-\gamma) \hat{\Sigma} + \gamma \mathbf{I},
+\frac{\X^T \X + \lambda_2 \mathbf{I}_p}{1 + \lambda_2} = (1-\gamma) \hat{\Sigma} + \gamma \mathbf{I},
 \end{align*}
-hvor \(\gamma=\frac{\lambda_2}{1+\lambda_2}\) shrinks \(\hat{\Sigma}\) mod identitetsmatricen.
-Ligning \eqref{eq:EN6} og \eqref{eq:EN7} viser, at reskalere elastisk net er ækvivalent med at erstatte \(\hat{\Sigma}\) med dens shrunken version i lasso.
+hvor \(\gamma=\frac{\lambda_2}{1+\lambda_2}\) shrinks \(\hat{\boldsymbol{\Sigma}}\) mod identitetsmatricen.
+Ligning \eqref{eq:EN6} og \eqref{eq:EN7} viser, at reskalere elastisk net er ækvivalent med at erstatte \(\hat{\boldsymbol{\Sigma}}\) med dens shrunken version i lasso.
 
 
 Somsagt er lasso et specialtilfælde af elastisk net med \(\lambda_2=0\). 
 Et andet interessant specialtilfælde er når \(\lambda_2 \rightarrow \infty\).
-Af sætning \ref{thm:elastisk_net2} gælder, at \(\hat{\beta}^\text{EN} \rightarrow \hat{\beta} \del{\infty}\) når \(\lambda_2 \rightarrow \infty\), hvor
+Af sætning \ref{thm:elastisk_net2} gælder, at \(\hat{\tbeta}^\text{EN} \rightarrow \hat{\tbeta} \del{\infty}\) når \(\lambda_2 \rightarrow \infty\), hvor
 \begin{align*}
-\hat{\beta} \del{\infty} = \argmin_\beta \cbr{ \del{\beta^T \beta - 2 \y^T \X \beta} + \lambda_1 \Vert \beta \Vert_1}.
+\hat{\tbeta} \del{\infty} = \argmin_{\tbeta} \cbr{ \del{\tbeta^T \tbeta - 2 \y^T \X \tbeta} + \lambda_1 \Vert \tbeta \Vert_1}.
 \end{align*}
-\(\hat{\beta} \del{\infty}\) har en simpel lukket løsning, som er givet ved
+\(\hat{\tbeta} \del{\infty}\) har en simpel lukket løsning, som er givet ved
 \begin{align*}
 \hat{\beta} \del{\infty}_i = S_{\lambda_1} \del{\y^T \mathbf{x}_i}=\text{sign} \del{\y^T \mathbf{x}_i} \del{\left\vert \y^T \mathbf{x}_i \right\vert - \lambda_1}_+
 \end{align*}
 for \(i = 1, \ldots, p\).
-Vi har, at \(\y^T \mathbf{x}_i\) er en univariat regressions koefficient af den \(i\)'te prædiktor og \(\hat{\beta} \del{\infty}\) er estimaterne som fås udfra soft thresholding på univariater regressions koefficienter.
+Vi har, at \(\y^T \mathbf{x}_i\) er en univariat regressions koefficient af den \(i\)'te prædiktor og \(\hat{\tbeta} \del{\infty}\) er estimaterne som fås udfra soft thresholding på univariater regressions koefficienter.
 En univariat soft thresholding ignorerer afhængighedsstrukturen mellem prædiktorerne og behandler dem som uafhængige variable.
 %
 \subsection{Udregning af elastisk net}

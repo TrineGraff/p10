@@ -1,8 +1,8 @@
 \chapter{Generelle statistiske begreber}
 I dette appendiks defineres generelle statistiske begreber, som anvendes igennem rapporten.
 
-Løst sagt, siges en estimator at være konsistent, hvis følgen $\boldsymbol{\theta}_n(\mathbf{Y})$ af estimatorer for parameteren $\boldsymbol{\theta}$ konvergerer i sandsynlighed mod den sande værdi $\boldsymbol{\theta}$. Ellers siges estimatoren at være inkonsistent.
-Konsistens er altså en asymptopisk egenskab. 
+Løst sagt, siges en estimator at være konsistent, hvis følgen $\boldsymbol{\theta}_n(\mathbf{Y})$ af estimatorer for parameteren $\boldsymbol{\theta}$ konvergerer i sandsynlighed mod den sande værdi $\boldsymbol{\theta}$. 
+% 
 \begin{defn}[Svag konsistens] \label{def:konsistent}
 Lad $\{ \boldsymbol{\hat{\theta}}_n \}$ være en følge af estimatorer. Da siges $ \{ \boldsymbol {\hat{\theta}}_n \}$ at være konsistens for $\boldsymbol{\theta}$ hvis
 \begin{align*}
@@ -10,7 +10,7 @@ Lad $\{ \boldsymbol{\hat{\theta}}_n \}$ være en følge af estimatorer. Da siges
 %\underset{n \rightarrow \infty}{\lim} P \left( \vert \boldsymbol{\hat{\theta}}_n - \boldsymbol{\theta} \vert \leq \epsilon \right) =1
 \end{align*}
 \end{defn}
-
+%
 \begin{defn}[Rod-n-konsistent estimator] \label{def:rodn}
 En estimator $  \boldsymbol {\hat{\theta}}_n $ for $\boldsymbol{\theta}$ er rod-n-konsistent hvis
 \begin{align*}
@@ -26,7 +26,7 @@ Hvis $X_n \overset{d}{\rightarrow} X$ og $Y_n \overset{p}{\rightarrow} c$, hvor 
 & \frac{X_n}{Y_n} \overset{d}{\rightarrow} \frac{X}{c}, \quad \text{forudsat at } P(c=0)=0.
 \end{align*}
 \end{thm}
-Sætning \ref{thm:sluktsky} tillader at finde grænsefordelingen af $X_n$ og sandsynlighedsgrænsen af $Y_n$ separat.
+Sætning \ref{thm:slutsky} tillader at finde grænsefordelingen af $X_n$ og sandsynlighedsgrænsen af $Y_n$ separat.
 
 
 \begin{defn}[General position] \label{defn:general_position}
@@ -43,7 +43,7 @@ f \del{\beta \del{s}} = f \del{s \beta + \del{1-s} \beta'} \leq s f\del{\beta} +
 \end{align*}
 \end{defn}
 Geometrisk medfører uligheden at akkorden mellem \(f \del{\beta}\) og  \(f \del{\beta'}\) ligger over grafen af \(f\), som illustreres på figur \ref{fig:konveks}.
-Uligheden sikrer, at en konveks funktion ikke kan have et lokalt minimum som ikke også er et globalt minimum.
+Uligheden sikrer, at en konveks funktion ikke kan have et lokalt minimum, som ikke også er et globalt minimum.
 %
 \begin{figure}[H]
 \centering
@@ -51,26 +51,3 @@ Uligheden sikrer, at en konveks funktion ikke kan have et lokalt minimum som ikk
 \caption{For en konveks funktion ligger linjen \(s f \del{\beta} + \del{1-s} f \del{\beta'}\) altid over funktionsværdien \(f \del{s \beta + \del{1-s} \beta'}\).} \label{fig:konveks}
 \end{figure}
 %
-%
-\begin{figure}[H]
-\centering
-\scalebox{1.2}{\input{fig/subgradients.tikz}}
-\caption{En konveks funktion \(f : \ \R \rightarrow \R\) med nogle eksempler på subgradienter i \(\beta_1\) og \(\beta_2\).} \label{fig:subgradients}
-\end{figure}
-%
-%\section{Diebold Mariano test}
-%Diebold Mariano testen kan anvendes til at vurdere to konkurrerende prædiktioner i forhold til hinanden.
-%
-%
-%Diebold-Mariano testen er baseret på differensen af tabsfunktionerne
-%\begin{align*}
-%d_t = L \del{\epsilon_{t+h \given t}^1} - L \del{\epsilon_{t+h \given t}^2}
-%\end{align*}
-%%
-%\begin{defn}[Diebold-Mariano test (DM)]
-%Betragt $\mathcal{H}_0: \ \E{d_t}=0$.
-%Diebold-Mariano testen er defineret som følgende
-%\begin{align*}
-%\text{DM}=\frac{1}{1}
-%\end{align*}
-%\end{defn}

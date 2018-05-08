@@ -122,18 +122,40 @@ Når \(p>2\) da vil betingelsesområdet for lasso være en polydron med mange hj
 %\end{proof}
 %
 \subsection{Udregning af lasso} \label{subsec:udregning_lasso}
-Da lasso strafleddet ikke er differentialbel, findes der ikke en eksplicit løsning til optimeringsproblemet for lasso.
-En simpel procedure kaldet \textit{coordinate descent} kan udfra Lagrange problemet udregne en numerisk løsning. 
+Lasso problemet er konveks, hvilket nemt kan vises ved at opskrive objektfunktionen i lagrange problemet \eqref{eq:2.5} som
+\begin{align}
+f \del{\tbeta} = g \del{\tbeta} + h \del{\tbeta}, \label{eq:opdeling_fkt}
+\end{align}
+hvor \(g \del{\tbeta} =\Vert \y - \X \tbeta \Vert_2^2\) og \(h \del{\tbeta} = \lambda \Vert \tbeta \Vert_1\).
+For \(g \del{\tbeta}\) udregnes Hessematricen
+\begin{align*}
+\frac{\partial^2 g \del{\tbeta}}{\partial \tbeta^T \tbeta}  = 2\X^T \X.
+\end{align*} 
+For enhver vektor \(\boldsymbol{\ell} \in \R^p\) gælder, at \(\boldsymbol{\ell}^T \X^T \X \boldsymbol{\ell} > 0\), dvs \( \X^T \X \) er positiv semidefinit, hvilket medfører at \(g \del{\tbeta}\) er konveks.
+For ethvert \(\alpha \in \del{0,1}\) og \(\tbeta\), \(\tbeta'\) har vi at
+\begin{align*}
+h \del{\alpha \tbeta + \del{1-\alpha}\tbeta'} &= \lambda \Vert \alpha \tbeta + \del{1-\alpha} \tbeta' \Vert_1 \\
+&\leq \lambda \Vert \alpha \tbeta \Vert_1 + \lambda \Vert \del{1-\alpha} \tbeta' \Vert_1 \\
+&= \lambda \alpha \Vert \tbeta \Vert_1 + \lambda \del{1-\alpha} \Vert \tbeta' \Vert_1 \\
+&= \alpha h \del{\tbeta} + \del{1-\alpha} h \del{\tbeta'},
+\end{align*}
+hvilket medfører, at \(h \del{\tbeta}\) er konveks af definition \ref{defn:konveks}.
+Da summen af to konvekse funktioner er konveks, medfører dette konveksiteten af \(f \del{\tbeta}\). 
 
-\subsubsection{Single prædiktor: soft tresholding}
+Strafleddet for lasso problemet er ikke differentiabel, og derfor findes der ikke en eksplicit løsning til optimeringsproblemet.
+Men konveksiteten betyder, at vi kan finde en numerisk løsning blandt andet udfra en simpel procedure kaldet \textit{coordinate descent}.
+
+%
+%Som bekendt er standard proceduren at finde den første ordens afledede mht $\beta$, sætte denne lig 0 og isolere for $\beta$. 
+%Men vi bemærker, at \(\vert \beta \vert \) ikke er differentialbel i $\beta=0$.
+%Dette betegnes som en såkaldt \textit{subgradient}, hvilket vi vil beskrive nærmere i kapitel \ref{kap:optimeringsmetoder}.
+
+\subsubsection{En prædiktor: soft tresholding}
 Vi betragter blot en enkelt prædiktor \(z_i\). 
 Problemet, som vi skal løse, er da
 \begin{align*}
 \argmin_{\beta} \cbr{\sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}.
 \end{align*}
-Som bekendt er standard proceduren at finde den første ordens afledede mht $\beta$, sætte denne lig 0 og isolere for $\beta$. 
-Men vi bemærker, at \(\vert \beta \vert \) ikke er differentialbel i $\beta=0$.
-Dette betegnes som en såkaldt \textit{subgradient}, hvilket vi vil beskrive nærmere i kapitel \ref{kap:optimeringsmetoder}.
 Vi finder, at
 \begin{align*}
 \frac{\partial}{\partial \beta} \del{\sum_{i=1}^n \del{y_i - z_{i} \beta}^2 + \lambda \vert \beta \vert}
@@ -142,7 +164,7 @@ Vi finder, at
 [-\lambda, \lambda] & \beta = 0 \\
 \lambda & \beta >0 
 \end{cases}  \\
-&= -2 \left\langle \mathbf{z}, \mathbf{y} \right\rangle + n\beta + \begin{cases}
+&= -2 \left\langle \mathbf{z}, \mathbf{y} \right\rangle + 2n\beta + \begin{cases}
 -\lambda \quad &\beta < 0 \\
 [-\lambda, \lambda] & \beta = 0 \\
 \lambda & \beta >0 
@@ -151,9 +173,9 @@ Vi finder, at
 da $\sum_{i=1}^n z_i^2=n$. Dette sættes lig 0 og vi isolerer $\beta$, hvoraf vi finder, at
 \begin{align}
 \hat{\beta} = \begin{cases}
-\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle - \lambda, \quad &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle > \lambda, \\
-0 &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle \leq \lambda, \\
-\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle + \lambda, &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle < -\lambda.
+\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle + \frac{\lambda}{2n}, &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle < -\frac{\lambda}{2n}, \\
+0 &\frac{1}{n} \left\vert \left\langle \mathbf{z}, \mathbf{y} \right\rangle \right\vert \leq \frac{\lambda}{2n}, \\
+\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle - \frac{\lambda}{2n}, \quad &\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle > \frac{\lambda}{2n}.
 \end{cases} \label{eq:2.10}
 \end{align}
 Definer \textit{soft-threshold operatoren}
@@ -164,7 +186,7 @@ som trækker argumentet $x$ mod 0 med $\lambda$, og sætter den lig med 0 hvis $
 Figur \ref{fig:soft_thresholding_fct} illustrerer operatoren.
 Da kan vi omskrive \eqref{eq:2.10} til
 \begin{align*}
-\hat{\beta} = S_\lambda \del{\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle}.
+\hat{\beta} = S_{\frac{\lambda}{2n}} \del{\frac{1}{n} \left\langle \mathbf{z}, \mathbf{y} \right\rangle}.
 \end{align*}
 %
 \begin{figure}[H]
@@ -173,35 +195,35 @@ Da kan vi omskrive \eqref{eq:2.10} til
 \caption[optional short text]{Soft thresholding funktionen $S_\lambda\del{x}=\text{sign}\del{x} \del{\vert x \vert - \lambda}_+$.} \label{fig:soft_thresholding_fct}
 \end{figure}
 %
-\subsubsection{Multiple prædiktorer: cyclic coordinate descent}
-Herefter kan vi betragte multivariate prædiktorer. 
+\subsubsection{Flere prædiktorer: cyclic coordinate descent}
+Herefter kan vi betragte flere prædiktorer. 
 %Gentagne cycle gennem prædiktorerne i en fast, men vilkårlig orden $j=1, 2, \ldots, p$, hvor koefficienten $\beta_j$ opdateres i det $j$'te step, ved at minimere objektfunktionen i dens koordinat, mens de resterende koefficienter $\cbr{\hat{\beta}_k, k \neq j}$ fastholdes deres nuværende værdier. 
 Vi kan opskrive objektfunktionen i \eqref{eq:2.5} som
 \begin{align*}
 \sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \beta_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert
 \end{align*}
 Definer den partialle residual $r_i^{(j)}=y_i - \sum_{k \neq j} x_{ik} \hat{\beta}_k$, som fjerner nuværende fit fra den $j$'te prædiktor.
-Da er den j'te koefficient opdateret ved
+Den j'te koefficient opdateret ved
 \begin{align}
-\hat{\beta}_j = S_\lambda \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{r}^{(j)} \right\rangle}, \label{eq:2.14}
+\hat{\beta}_j = S_{\frac{\lambda}{2n}} \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{r}^{(j)} \right\rangle}, \label{eq:2.14}
 \end{align}
 hvor \(r_i = y_i - \sum_{j = 1}^p x_{ij} \hat{\beta}_j \) er de fulde residualer.
 Den beskrevne algoritme svarer til metoden \textit{cyclical coordinate descent}, som separat minimerer en konveks objektfunktion langs hver koordinat.
 Under milde regularitetsbetingelser konvergerer løsningen til et global optimum.
 Fra opdateringen \eqref{eq:2.14} ser vi, at algoritmen foretager en univariat regression af den partial residual på hver prædiktor, cycling gennem prædiktorerne indtil konvergens.
 
-Hvis prædiktorerne er ortogonale, dvs $\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{x}_k \right\rangle = 0$ for alle $j \neq k$.
-Da reduceres opdateringen \eqref{eq:2.14} til
+Hvis prædiktorerne er ortogonale, dvs $\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{x}_k \right\rangle = 0$ for alle $j \neq k$, da reduceres opdateringen \eqref{eq:2.14} til
 \begin{align}
-\hat{\beta}_j = S_\lambda \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle}, \label{eq:ortogonal_lasso}
+\hat{\beta}_j = S_\frac{\lambda}{2n} \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle}, \label{eq:ortogonal_lasso}
 \end{align}
-dermed er $\hat{\beta}_j$ blot soft-thresholded version af det univariate mindste kvadraters estimat af $\mathbf{y}$ regresseret imod $\mathbf{x}_j$. Således har vi en lukket løsning og ingen iterationer er påkrævet.
+dermed er $\hat{\beta}_j$ blot soft-thresholded version af det univariate mindste kvadraters estimat af $\mathbf{y}$ regresseret imod $\mathbf{x}_j$, som bevises i ---. Således har vi en lukket løsning og ingen iterationer er påkrævet.
 
-Ofte er vi interesseret i, at finde lasso løsningen for en mængde af \(\lambda\) værdier og ikke blot én fast lambda.
-Metoden \textit{pathwise coordinate descent} kan anvendes hertil, ved at begynde med en værdi af \(\lambda\) som præcis er høj nok således at den optimale løsning er vektor bestående af \(0\).
+Ofte er vi interesseret i, at finde lasso løsningen for en mængde af \(\lambda\) værdier og ikke blot én fast \(\lambda\).
+Metoden \textit{pathwise coordinate descent} kan anvendes hertil.
+Man starter med en værdi af \(\lambda\), som præcis er stor nok til, at den optimale løsning er vektor bestående af \(0\).
 Denne værdi er lig \(\lambda_{\max}=\max_j \left\vert \frac{1}{2} \left\langle \mathbf{x}_j, \y \right\rangle \right\vert\).
-Da kan vi aftage \(\lambda\) med en lille mængde og køre coordinate descent undtil konvergens.
-Aftage \(\lambda\) igen og anvende den tidligere løsning som en warm start, da kan vi kører coordinate descent indtil konvergens.
+Da kan vi mindske \(\lambda\) lidt og køre coordinate descent indtil konvergens.
+Vi mindsker \(\lambda\) igen og anvende den tidligere løsning som en warm start, da kan vi køre coordinate descent indtil konvergens.
 Hermed kan vi udregne løsningen over en grid af \(\lambda\) værdier. \\
 
 Coordinate descent er særlig hurtig til at løse lasso problemet, da den koordinatvis minimizers er tilgængelig \eqref{eq:2.14}, og dermed er en iterativ søgning langs hver koordinat ikke nødvendig.
@@ -214,18 +236,18 @@ Algoritmen kaldet \textit{least angle regression} (LARS) er en homotopy metode s
 En mere teoretisk gennemgang af coordinate descent og LARS algoritmen er givet i kapitel \ref{kap:optimeringsmetoder}.
 %
 \subsection{Frihedsgrader}
-Antag vi har \(p\) prædiktorer og tilpasser en lineær regressions model udfra \(k\) af disse prædiktorer.
-Hvis disse \(k\) prædiktorer vælges uafhængigt af responsvariablen, da "anvender" fitting proceduren \(k\) frihedsgrader.
-Dette svarer til, at teststørrelsen for at teste hypotesen om at alle \(k\) koefficienter er 0, har en Chi-squared fordeling med \(k\) frihedsgrader.
-%
-Hvis valget af de \(k\) prædiktorer afhænger af responsvariablen, da forventes det at fitting proceduren anvender mere end \(k\) frihedsgrader. 
-Sådan en fitting procedure kaldes \textit{adaptiv}, og tydeligvis er lasso et eksempel herpå.
-Ligeledes er forward-stepwise proceduren adaptiv, hvor vi sekventiel tilføjer prædiktorer, som mindsker fejlen mest.
-Her forventes det at modellen anvender mere end \(k\) frihedsgrader efter \(k\) step.
-Derfor er antallet af frihedsgrader ikke nødvendigvis lig med antallet af ikke-nul koefficienter.
-Men for lasso er antallet af frihedsgrader faktisk lig antallet af ikke-nul koefficienter, som vi nu vil beskrive.
+Antag vi har \(p\) prædiktorer, og fitter en lineær regressions model udfra \(k\) af disse prædiktorer, hvor \(k <p\).
+Hvis disse \(k\) prædiktorer vælges uafhængigt af responsvariablen, da kan man sige, at fitting proceduren anvender \(k\) frihedsgrader.
+Dette svarer løst sagt til, at teststørrelsen for at teste nulhypotesen om at alle \(k\) koefficienter er 0, har en \(\chi^2\) fordeling med \(k\) frihedsgrader.
 
-Lad os først definerer hvad vi mener med frihedsgrader for en adaptiv fitted model. 
+Men hvis valget af de \(k\) prædiktorer afhænger af responsvariablen, da forventes det, at fitting proceduren anvender mere end \(k\) frihedsgrader. 
+Sådan en fitting procedure kaldes \textit{adaptiv}, og tydeligvis er lasso et eksempel herpå.
+%Ligeledes er forward-stepwise proceduren adaptiv, hvor vi sekventiel tilføjer prædiktorer, som mindsker fejlen mest.
+%Her forventes det at modellen anvender mere end \(k\) frihedsgrader efter \(k\) step.
+%Derfor er antallet af frihedsgrader ikke nødvendigvis lig med antallet af ikke-nul koefficienter.
+Men for lasso gælder, at antallet af frihedsgrader er lig antallet af ikke-nul koefficienter, som vi nu vil beskrive.
+
+Lad os først definere hvad vi mener med frihedsgrader for en adaptiv fitted model. 
 Antag at, vi har en additive-error model
 \begin{align*}
 y_i = f \del{x_i} + \epsilon_i, \quad i = 1, \ldots, n,

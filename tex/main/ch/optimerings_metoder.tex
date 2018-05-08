@@ -5,26 +5,6 @@ I dette kapitel beskrives to af disse algoritmer kaldet coordinate descent og Le
 %
 For en model matrix i general position (se definition \ref{defn:general_position}) findes der ikke en eksplicit løsning for lasso estimatoren.
 
-Men som sagt er objektfunktionen af lasso problemet \eqref{eq:2.5} konveks, hvilket nemt kan vises ved at opskrive objektfunktionen
-\begin{align}
-f \del{\beta} = g \del{\beta} + h \del{\beta}, \label{eq:opdeling_fkt}
-\end{align}
-hvor \(g \del{\beta} =\Vert \y - \X \beta \Vert_2^2\) og \(h \del{\beta} = \lambda \Vert \beta \Vert_1\).
-For \(g \del{\beta}\) udregnes Hessematricen
-\begin{align*}
-\Delta^2 g \del{\beta} = \X^T \X.
-\end{align*} 
-For enhver vektor \(\ell \in \R^p\) gælder, at \(\ell^T \X^T \X \ell > 0\), dvs \( \X^T \X \) er positiv semidefinit, hvilket medfører at \(g \del{\beta}\) er konveks.
-For ethvert \(\alpha \in \del{0,1}\) og \(\beta\), \(\beta'\) har vi at
-\begin{align*}
-h \del{\alpha \beta + \del{1-\alpha}\beta'} &= \lambda \Vert \alpha \beta + \del{1-\alpha} \beta' \Vert_1 \\
-&\leq \lambda \Vert \alpha \beta \Vert_1 + \lambda \Vert \del{1-\alpha} \beta' \Vert_1 \\
-&= \lambda \alpha \Vert \beta \Vert_1 + \lambda \del{1-\alpha} \Vert \beta' \Vert_1 \\
-&= \alpha h \del{\beta} + \del{1-\alpha} h \del{\beta'},
-\end{align*}
-hvilket medfører, at \(h \del{\beta}\) er konveks af definition \ref{defn:konveks}.
-Da summen af to konvekse funktioner er konveks, medfører dette konveksiteten af \(f \del{\beta}\). 
-
 Som nævnt i underafsnittet \ref{subsec:udregning_lasso} er \(\ell_1\)-normen \(\sum_{j=1}^p \vert \beta_j \vert\) ikke differentialbel i \(\beta = 0\).
 En general egenskab af differentialble konvekse funktioner er, at en første ordens tangent approksimation altid giver en nedre grænse.
 Begrebet subgradient er baseret på en generalisering af dette.
@@ -38,6 +18,11 @@ Mængden af alle subgradienter af \(f\) i \(\beta\) kaldes \textit{subdifferenti
 Når \(f\) er differentialble i \(\beta\), da reduceres subdifferentialet til én vektor, givet ved \(\partial f \del{\beta} = \cbr{\nabla f \del{\beta}}\).
 I punkter hvor \(f\) ikke er differentialble, da er subdifferentialet en konveks mængde bestående af alle mulige subgradienter.
 
+\begin{figure}[H]
+\centering
+\scalebox{1.2}{\input{fig/subgradients.tikz}}
+\caption{En konveks funktion \(f : \ \R \rightarrow \R\) med nogle eksempler på subgradienter i \(\beta_1\) og \(\beta_2\).} \label{fig:subgradients}
+\end{figure}
 
 
 

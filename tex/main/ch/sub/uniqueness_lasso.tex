@@ -1,16 +1,19 @@
 \section{Entydighed af lasso estimatoren}
+Løsningen til lasso problemet er entydig, hvis kolonnerne af \(\X\) er i general position (se definition \ref{defn:general_position}) jævnfør \citep{lasso_unique}.
+Dette gælder også, når \(p \geq n\), selvom antallet af ikke-nul koefficienter er højst \(n\).
+Hvis \(\X\) ikke har fuld rang, da er de fittede værdier entydige, mens parameter estimaterne ikke er.
+Dette ikke-fuld rang tilfælde sker, når \(p \leq n\) grundet kollinaritet og sker altid når \(p>n\).
+ 
 
-Af konveks dualiteten kan det vises at løsningen til lasso problemet \eqref{eq:2.5} er entydig, hvis kolonnerne af \(\X\) er i general position (se definition \ref{defn:general_position}).
-Dette gælder også når \(p \geq n\), selvom antallet af ikke-nul koefficienter er højst \(n\).
 
 Derfor kan lasso kun være ikke-entydig for diskret data, som kommer af dummy-værdi kodning eller kategorisk prædiktorer.
 
 Numeriske algoritmer for at løse lasso problemet vil typisk give gyldig løsninger i det ikke-entydige tilfælde.
-For coordinat descent, har valget af begyndelsesværdier indflydelse på den endelige løsning.
+Men løsningerne vil afhænge af algoritmen, f.eks. har valget af begyndelsesværdier indflydelse på den endelige løsning for coordinate descent.
 
-
-Lasso løsningen er entydige når \(\text{rank} \del{X}=p\), da lasso da er streng konveks.
-Men ikke streng konveks når \(\text{rank} \del{X} < p\) og der findes multiple minimizers af lasso problemet.
-Når antallet af variabler er større end antallet af observationer, \(p>n\), da må vi have at  \(\text{rank} \del{X} < p\).
+%
+%Lasso løsningen er entydige når \(\text{rank} \del{X}=p\), da lasso da er streng konveks.
+%Men ikke streng konveks når \(\text{rank} \del{X} < p\) og der findes multiple minimizers af lasso problemet.
+%Når antallet af variabler er større end antallet af observationer, \(p>n\), da må vi have at  \(\text{rank} \del{X} < p\).
 
 

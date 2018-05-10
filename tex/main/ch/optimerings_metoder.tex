@@ -3,6 +3,20 @@
 Flere algoritmer kan løse dette problem grundet konveksiteten.  
 I dette kapitel beskrives to af disse algoritmer kaldet coordinate descent og Least Angle Regression (LARS).} \\[4mm]
 %
+På trods af at strafleddet for lasso ikke er differentiabel, findes 
+Heriblandt subgradient metoder, least-angle regression (LARS) og proximal gradient metoder.
+
+
+Subgradient metoder er en naturlig generalisering af traditionelle metider såsom gradient descent og stokastisk gradient descent i tilfældet hvor objekt funktionen ikke er differentiabel i alle punkter.
+LARS er en metode som er tæt forbundet med lasso modeller, som i mange tilfælde tillader den at fitte effektiv, selvom den ikke performer godt i alle omstændigheder.
+Proximal metoder er blevet populært pga dens fleksibilitet og performance.
+Valget af metoder vil afhænge af hvilket lasso variant som anvendes, data osv.
+Dog vil proximal metoder generelt performe godt i de fleste tilfælde.
+
+
+Foruden at fitte parameterne er valg af tuning parameter også en fundamental del af at bruge lasso.
+At vælge diss godt er essentielt for performance af lasso, da den kontrollere styrken af shrinkage og variabeludvælgelse, som kan forbedre både prædiktionen og fortolkning
+
 For en model matrix i general position (se definition \ref{defn:general_position}) findes der ikke en eksplicit løsning for lasso estimatoren.
 
 Som nævnt i underafsnittet \ref{subsec:udregning_lasso} er \(\ell_1\)-normen \(\sum_{j=1}^p \vert \beta_j \vert\) ikke differentialbel i \(\beta = 0\).

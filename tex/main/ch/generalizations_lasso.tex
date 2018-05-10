@@ -6,41 +6,4 @@ Disse procedurer har alle de to essentielle egenskaber af standard lasso: shrink
 
 \input{main/ch/sub/group_lasso}
 
-\section{Ikke-negative garrote}
-\textit{Ikke-negative garrote}, introduceret i \citep{nonnegative_garrote}, er en two-stage procedure. 
-Givet et initial estimat af regression koefficienterne \(\tilde{\beta} \in \mathbb{R}^p\), kan vi løse optimeringsproblemet
-\begin{align}
-\hat{\beta}_j^\text{garotte} = \argmin_{c \in \mathbb{R}^p}  \cbr{ \sum_{i=1}^n \del{y_i - \sum_{j=1}^p c_j x_{ij} \tilde{\beta}_j}^2}, \ \text{underlagt at } c_j \geq 0 \text{ og } \Vert c \Vert_1 \leq t. \label{eq:2.19}
-\end{align}
-Lad \(\hat{\beta}_j^\text{garotte} = \hat{c}_j \cdot \tilde{\beta}_j\), for \(j = 1, \ldots, p\).
-Der er et ækvivalent Lagrange problem for denne procedure
-\begin{align}
-\hat{\beta}_j^\text{garotte} = \argmin_{c \in \mathbb{R}^p}  \cbr{\Vert \y - \X \beta \Vert_2^2 + \lambda \Vert c \Vert_1}, \ \text{underlagt at } c_j \geq 0, \label{eq:nonnegative_garrote}
-\end{align}
-hvor \(\lambda \geq 0\).
-Et tilstrækkelig høj \(\lambda\) shrinks nogle \(c_j\) til præcis nul.
-I den originale artikel \citep{nonnegative_garrote}, er initial estimatet \(\tilde{\beta}\) valgt til at være \(\hat{\beta}_j^\text{OLS}\).
-
-Antag \(\X\) er ortogonal og \(t\) er således at betingelsen \(\Vert c \Vert_1 = t\) er opfyldt, da er
-\begin{align*}
-\hat{c}_j = \del{1 - \frac{\lambda}{\tilde{\beta}_j^2}}_+, \ j = 1, \ldots, p,
-\end{align*}
-hvor \(\lambda\) er valgt således at \(\Vert \hat{c} \Vert_1 = t\).
-Hvis koefficienten \(\tilde{\beta}_j\) er stor, da vil shrinkage faktoren være tæt på 1, dvs ingen shrinkage, men hvis den er lille, da vil estimatet blive shrunkage mod 0.
-Af figur \ref{fig:nonnegative_garrote} ses det, at garrote shrinker lave værdier af \(\beta\) hårdere end lasso, og omvendt for høje værdier.
-%
-\begin{figure}[H]
-\centering
-\scalebox{0.8}{\input{fig/nonnegative_garrote.tikz}}
-\caption[optional short text]{Eksakte løsninger for lasso (\tikz[baseline]{\draw[dashed] (0,.5ex)--++(.5,0) ;}) og nonnegative garrote (\tikz[baseline]{\draw[dotted] (0,.5ex)--++(.5,0) ;}).} \label{fig:nonnegative_garrote}
-\end{figure}
-%
-Nonnegaitve garrote er tæt relateret med adaptive lasso, som vi vil diskutere nærmere i underafsnittet \ref{subsec:konsistentAL}.
-
--- viste at nonnegative garrote er path-konsistent under mindre strenge betingelser end lasso.
-Dette gælder, hvis initial estimaterne er \(\sqrt{n}\)-konsistent, som inkluderer mindste kvadraters metoder (når \(p < n\)), lasso og elastisk net.
-Path-konsistent betyder, at løsningsstien inkluderer den sande model.
-Dog er konvergensen af parameter estimaterne for nonnegative garrote langsommere end den er for initial estimatet.
-
-
 \input{main/ch/sub/adaptive_lasso}

@@ -1,5 +1,9 @@
 \section{Coordinate descent}
-Ideen bag coordinat descent er somsagt at optimere over hver parameter separat, mens de resterende parametre fastholdes.
+Ideen bag coordinat descent er, at optimere en target funktion mht én parameter mens de resterende parametre fastholdes, cycling iterativ gennem alle parametre indtil konvergens.
+Coordinate descent er specielt anvendelig for problemer som lasso, som har en simpel lukket løsning for en dimension men ikke for flere dimensioner.
+
+
+
 Coordinate descent er en første ordens iterativ algoritme, og derfor er det blot gradienten som betragtes.
 Algoritmen opdaterer fra \(\beta^t\) til \(\beta^{t+1}\) ved at vælge én koordinat som skal opdateres, og da udføres en univariat minimering over dette koordinat.
 Dvs hvis koordinat $k$ er valgt i iteration $t$, da er opdateringen givet ved
@@ -43,4 +47,6 @@ Coordinate descent kan være hurtigere end LARS algoritmen særligt for store pr
 Dette skyldes at \eqref{eq:update_coordinate} hurtigt kan opdateres som \(j\) varierer, og ofte er opdateringen at lade \(\beta_j = 0\).
 Coordinate descent algoritmen for lasso giver ikke den fulde lasso løsningsstil som LARS algoritmen, men kan bruges til at udregne lasso løsningerne for \(\Lambda\).
 
+Den beskrevne coordinate descent algoritmen er implementeret i \texttt{R} pakken \texttt{glmnet}.
+Figur \ref{fig:crime_koef} ...
 \newpage

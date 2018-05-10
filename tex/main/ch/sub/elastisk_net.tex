@@ -212,6 +212,7 @@ Herefter bevises b).
 Hvis \(\hat{\beta}_i \hat{\beta}_j < 0\), lad os igen betragte \(\hat{\tbeta}^*\) som ovenfor.
 Da ser vi, at \(\vert \hat{\tbeta}^* \vert < \vert \hat{\tbeta} \vert\), så \(\hat{\tbeta}\) kan ikke være en lasso løsning, altså må \(\hat{\beta}_i \hat{\beta}_j \geq 0\).
 MANGLER NOGET!
+fra wiki: hvis der er en løsning \(\hat{\tbeta}\) hvor \(\hat{\beta}_j \hat{\beta}_k \geq 0\), da hvis \(s \in \sbr{0,1}\) erstatter \(\hat{\beta}_j\) med \(s (\hat{\beta}_j + \hat{\beta}_k)\) og \(\hat{\beta}_k\) med \( (1-s)(\hat{\beta}_j + \hat{\beta}_k)\), men de resterende \(\hat{\beta}_i\) fastholdes, giver en ny løsn, således at lasso objektfunktion har en række gyldige minimeringer, dvs ikke entydig!!   
 \end{proof}
 Lemma \ref{lem:elastisk_net2} giver altså at streng konveksitet sikrer denne gruppe effekt, hvis vi har identiske prædiktorer, mens lasso ikke engang har en entydig løsning.
 Elastisk net med \(\lambda_2 > 0\) er streng konveks, og har dermed denne effekt, som ønsket.

@@ -6,8 +6,8 @@ Faktor modellen er motiveret af følgende argument: antag variablerne kan opdele
 Da vil hver gruppe af variable repræsenter én underliggende faktor.
 Nedenfor introduceres den generelle definition af faktor modellen.
 %
-\begin{defn}[Faktor model]
-Lad \(\X_t\) være en stokastisk \(p \times 1\) vektor af observeret forklarende variable til tid \(t\) med middelværdi \(\mathbf{0}\) og kovariansmatrix \(\boldsymbol{\Sigma}\).
+\begin{defn}[Faktor model] \label{def:faktor_model}
+Lad \(\X_t\) være en stokastisk \(p \times 1\) vektor af observeret forklarende variable til tid \(t\) med middelværdi \(\mathbf{0}\) og kovariansmatrix \(\boldsymbol{\Sigma}_{\X \X}\).
 Faktor modellen er givet ved
 \begin{align}
 \X_t = \tLambda \tF_t + \te_t, \label{eq:factor_model}
@@ -21,12 +21,12 @@ Der antages, at
 \end{align*}
 \end{defn}
 %
-I kapitlet betragter vi også faktor modellen på formen
+I kapitlet betragter vi også følgende notation for faktor modellen
 \begin{align*}
-x_{jt} = \boldsymbol{\lambda}_j \tF_t + e_{jt} = \lambda_{jm}F_{jt} + e_{jt}, \quad j = 1, \ldots, p,
+x_{jt} = \boldsymbol{\lambda}_j \tF_t + e_{jt} = \lambda_{jm}F_{jt} + e_{jt}, \quad j = 1, \ldots, p, \text{ og } m = 1, \ldots, r,
 \end{align*} 
 hvor \(x_{jt}\), \( e_{jt}\) og \(F_{jt}\) er \(j\)'te element af henholdsvis \(\X_t\), \(\te_t\) og \(\tF_t\), \(\boldsymbol{\lambda}_j \) er \(j\)'te række af \(\tLambda\), mens \(\lambda_{jm}\) betegner \(m\)'te element af \(\boldsymbol{\lambda}_j \).
-Vi betragter også faktor modellen på matrix form
+Faktor modellen på matrix form opskrives ved
 \begin{align*}
 \X = \tF \tLambda^T + \mathbf{e},
 \end{align*}
@@ -39,14 +39,9 @@ hvor \(\tbeta_{\tF}\) og \(\tbeta_{\tw}\) er henholdsvis \(r \times 1\) og \(m \
 Lad \(y_t, \X_t, \tw_t\) være givet for \(t = 1, \ldots, T\), så ønsker vi at prædiktere \(y_{T+h}\).
 
 \section{Estimation af faktorer}
-%Flere metoder kan anvendes til at estimere faktorerne, herunder kan vi nævne gaussian maksimum likelihood estimation i forbindelse med Kalman filteret, ikke-parametrisk estimation med averaging metoder samt hybrid principal komponenter og state space metoder.
-%Vi foretager en ikke-parametrisk estimation af faktorerne vha metoden for principal komponenter, som er en averaging metoden.
-Hvis antallet af variable er relativt lavt, kan maksimum likelihood estimation anvendes til at estimere faktorerne, men i dette tilfælde hvor vi betragter et stort antal variable foretrækkes proceduren \textit{principal components}.
-%Hvis data er normalfordelt, da kan estimaterne af \(\tLambda\) og \(\boldsymbol{\Psi}\) findes vha maksimum likelihood.
-%Hvis \(p\) er stort, kræves estimation af mange parametre vha interative ikke-lineære metoder, som kan være svært at udregne???
-%
-%Faktorerne estimeres udfra proceduren \textit{principal components}.
-Det er statistisk procedure, der anvender en ortogonal transformation til at konvertere en mængde observationer af korrelerede variable til en mængde værdier af ukorrelerede variable, som kaldes principale komponenter.
+Hvis antallet af variable er relativt lavt, vil man ofte anvende maksimum likelihood estimation til at estimere faktorerne, men i dette tilfælde hvor vi betragter et stort antal variable, skal mange parametre estimeres, hvilket kan være udfordring, derfor anvendes istedet \textit{principal component estimation}.
+----
+ der anvender en ortogonal transformation til at konvertere en mængde observationer af korrelerede variable til en mængde værdier af ukorrelerede variable, som kaldes principale komponenter.
 Denne transformation defineres således at første komponent har den størst mulige varians, og hver efterfølgende komponent har igen den størst mulige varians givet de foregående komponenter er ortogonale.
 %Vi antager, at data er stationært, og at variablerne er standardiseret samt responsvariablen centreret.
 
@@ -90,8 +85,8 @@ Hvorefter vi kan udregne \(\widehat{\tF} = p^{-1} \X \widehat{\tLambda}\), som a
 %Dvs den nye tidsrækker er ukorreleret og den første principal komponenter i tidsrækkerne har det største variantion i den originale tidsrækker.
 
 \subsection{Entydighed af estimatorer}
-I dette underafsnit introduceres nogle antagelser, som sikrer at estimatoren er entydig.
-Der gælder, at faktor loadings ikke er entydige, som vi først vil beskrive. 
+I dette underafsnit introduceres nogle antagelser, som sikrer at estimatorerne er entydige.
+Der gælder, at faktorer og faktor loadings ikke er entydige, som vi først vil beskrive. 
 Hertil udregnes kovariansmatricen af \(\X_t\), hvor vi betragter
 \begin{align*}
 \X_t \X_t^T &= \del{ \tLambda \tF_t + \te_t} \del{ \tLambda \tF_t + \te_t}^T \\
@@ -99,12 +94,10 @@ Hertil udregnes kovariansmatricen af \(\X_t\), hvor vi betragter
 \end{align*}
 og finder, at
 \begin{align*}
-\boldsymbol{\Sigma}_{\X \X} &= \text{cov} \sbr{\X_t} = \E{\X_t \X_t^T} \\
+\boldsymbol{\Sigma}_{\X \X} &=  \E{\X_t \X_t^T} \\
 &= \tLambda \E{\tF_t \tF_t^T} \tLambda^T + \E{\te_t \tF_t^T} \tLambda^T + \tLambda \E{\tF_t \te_t^T} + \E{\te_t \te_t^T} \\
 &= \tLambda \tLambda^T + \boldsymbol{\Psi}.
 \end{align*}
-%
-%Hvis faktor modellen gælder, da gælder den også hvis faktorerne roteres.
 Lad \(\tR\) være en \(r \times r\) ortogonal matrix, således at \(\tR \tR^T = \tR^T \tR = \mathbf{I}_r\), da kan \eqref{eq:factor_model} skrives som
 \begin{align*}
 \X_t = \tLambda \tR \tR^T \tF_t + \te_t = \tLambda^* \tF_t^* + \te_t,
@@ -129,15 +122,25 @@ Nedenfor introduceres nogle modelantagelser, som er nødvendige til at identific
 \end{enumerate}
 \end{ass}
 %
-%Der gælder  \(\Lambda F_t = \Lambda R R^{-1} F_t\) for enhver invertibel matrix \(R\), derfor skal der anvendes en normalisering for entydigt at definere faktorerne.
-%Dvs at modellen med faktor loadings \(\Lambda R\) og faktorer \(R^{-1} F_t\) er ækvivalent med modellen med faktor loadings \(\Lambda\) og faktorer \(F_t\).
-Antagelse \ref{ass:faktor}.a) restringerer \(\tR\) til at være en ortonormal matrix, mens antagelse \ref{ass:faktor}.b) yderligere restringerer \(\tR\) til at være en diagonal matrix med diagonal elementerne \(\pm 1\).
-Herfra vil vi kunne bestemme faktorerne op til fortegnsfejl.
+Antagelse \ref{ass:faktor}.a) medfører, at \(\lim_{p \rightarrow \infty} p^{-1} \tLambda^{*^T} \tLambda^* = \mathbf{I}_r\) og dermed at \(\lim_{p \rightarrow \infty} p^{-1} \tR^T \tLambda{^T} \tLambda \tR = \tR^T \tR = \mathbf{I}_r\), som restringerer \(\tR\) til at være en ortonormal matrix.
+Af antagelse \ref{ass:faktor}.b) har vi, at
+\begin{align*}
+\boldsymbol{\Sigma}_{\X \X} &=  \tLambda  \boldsymbol{\Sigma}_{\tF\tF} \tLambda^T + \boldsymbol{\Psi} \\
+&= \tLambda^* \boldsymbol{\Sigma}_{\tF\tF} \tLambda^{*^T} + \boldsymbol{\Psi} \\
+&= \tLambda \tR \boldsymbol{\Sigma}_{\tF\tF} \tR^T \tLambda^T +  \boldsymbol{\Psi},
+\end{align*}
+hvilket betyder, at \(\boldsymbol{\Sigma}_{\tF\tF} = R \boldsymbol{\Sigma}_{\tF\tF} R^T\) og dermed restringerer antagelse \ref{ass:faktor}.b) yderligere \(\tR\) til at være en diagonal matrix med diagonal elementerne \(\pm 1\).
+Dette identificerer faktorerne op til en fortegnsfejl.
 Antagelse \ref{ass:faktor}.b) tillader også faktorerne at være korreleret.
-Antagelse \ref{ass:faktor} giver en normalisering asymptotisk ved at forbinde \(\tLambda\) med de ordnede ortonormal egenvektorer af \(\del{p T}^{-1} \sum_{t=1}^T \tLambda \tF_t \tF_t^T \tLambda^T\) og \(\tF_t\) med de principale komponenter af \(\tLambda \tF_t\) for \(j=1, \ldots, T\).
-Diagonal elementerne af \(\boldsymbol{\Sigma}_{\tF \tF}\) svarer til grænsende egenværdier af \(\del{p T}^{-1} \sum_{t=1}^T \tLambda \tF_t \tF_t^T \tLambda^T\).
 
-Makroøkonomiske tidsrækker har sjældent i.i.d. og normalfordelte fejlled, da tidsrækkerne er autokorreleret og nogle forklarende variable kan være krydskorreleret. 
+Lad os betragte \(\del{pT}^{-1} \sum_{t=1}^T \tLambda \tF_t \tF_t^T \tLambda^T\), som vi tager middelværdien af og lader \(T \rightarrow \infty\), da får vi, at
+\(\lim_{T \rightarrow \infty} p^{-1} \tLambda \del{T^{-1} \sum_{t=1}^T \E{\tF_t \tF_t^T}} \tLambda^T = p^{-1} \tLambda \boldsymbol{\Sigma}_{\tF\tF} \tLambda^T\).
+Spektral dekomposition sætningen giver, så at diagonal elementerne i \(\boldsymbol{\Sigma}_{\tF\tF}\) er egenværdierne for \(p^{-1} \tLambda \boldsymbol{\Sigma}_{\tF\tF} \tLambda^T\) og søjlerne i \(\tLambda\) er de tilsvarende egenvektorer.
+%
+%Antagelse \ref{ass:faktor} giver en normalisering asymptotisk ved at forbinde \(\tLambda\) med de ordnede ortonormal egenvektorer af \(\del{p T}^{-1} \sum_{t=1}^T \tLambda \tF_t \tF_t^T \tLambda^T\) og \(\tF_t\) med de principale komponenter af \(\tLambda \tF_t\) for \(j=1, \ldots, T\).
+%Diagonal elementerne af \(\boldsymbol{\Sigma}_{\tF \tF}\) svarer til grænsende egenværdier af \(\del{p T}^{-1} \sum_{t=1}^T \tLambda \tF_t \tF_t^T \tLambda^T\).
+
+I den klassiske faktor model \ref{def:faktor_model} antages fejlleddene at være iid, men for makroøkonomiske tidsrækker er dette urealistisk, da tidsrækkerne er autokorreleret og nogle forklarende variable kan være krydskorreleret. 
 Derfor har vi følgende antagelser for fejlleddene.
 %
 \begin{ass}[Momenter af fejlene \(\te_t\)] \label{ass:momenter_fejl}
@@ -272,25 +275,25 @@ Vi har, at
 T^{-1} \sum_{t=1}^T \widehat{\tF}_t \widehat{\tF}_t^T & T^{-1} \mathbf{S} \sum_{t=1}^T \widehat{\tF}_t \tw_t^T \\
 T^{-1} \sum_{t=1}^T \tw_t \widehat{\tF}_t^T \mathbf{S} & T^{-1} \sum_{t=1}^T \tw_t \tw_t^T
 \end{pmatrix}^{-1} 
-\begin{pmatrix}
+\del{ \begin{pmatrix}
 T^{-1} \sum_{t=1}^T \mathbf{S} \widehat{\tF}_t \del{\tbeta_{\tF}^T \tF_t + \tbeta_{\tw}^T \tw_t} \\  T^{-1} \sum_{t=1}^T \tw_t \del{\tbeta_{\tF}^T \tF_t + \tbeta_{\tw}^T \tw_t}
 \end{pmatrix}
 + \begin{pmatrix}
-T^{-1} \sum_{t=1}^T \mathbf{S} \widehat{\tF}_t \epsilon_{t+h} \\ T^{-1} \sum_{t=1}^T \tw_t \epsilon_{t+h}
-\end{pmatrix}\\
+T^{-1} \mathbf{S} \sum_{t=1}^T \widehat{\tF}_t \epsilon_{t+h} \\ T^{-1} \sum_{t=1}^T \tw_t \epsilon_{t+h}
+\end{pmatrix} }\\
 &= \begin{pmatrix}
 T^{-1} \sum_{t=1}^T \widehat{\tF}_t \widehat{\tF}_t^T & T^{-1} \mathbf{S} \sum_{t=1}^T \widehat{\tF}_t \tw_t^T \\
 T^{-1} \sum_{t=1}^T \tw_t \widehat{\tF}_t^T \mathbf{S} & T^{-1} \sum_{t=1}^T \tw_t \tw_t^T
 \end{pmatrix}^{-1} \\
 &\qquad
-\del{\begin{pmatrix}
+\del{ \begin{pmatrix}
 T^{-1} \sum_{t=1}^T \mathbf{S} \widehat{\tF}_t \tF_t^T & T^{-1} \mathbf{S} \sum_{t=1}^T \widehat{\tF}_t \tw_t^T \\
 T^{-1} \sum_{t=1}^T \tw_t \tF_t^T & T^{-1} \sum_{t=1}^T \tw_t \tw_t^T
 \end{pmatrix} 
 \begin{pmatrix}
 \tbeta_{\tF} \\ \tbeta_{\tw}
 \end{pmatrix}  + \begin{pmatrix}
-T^{-1} \sum_{t=1}^T \mathbf{S} \widehat{\tF}_t \epsilon_{t+h} \\ T^{-1} \sum_{t=1}^T \tw_t \epsilon_{t+h},
+T^{-1} \mathbf{S} \sum_{t=1}^T\widehat{\tF}_t \epsilon_{t+h} \\ T^{-1} \sum_{t=1}^T \tw_t \epsilon_{t+h},
 \end{pmatrix} }
 \end{align*}
 som omskrives til

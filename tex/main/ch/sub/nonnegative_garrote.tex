@@ -1,0 +1,38 @@
+\section{Nonnegative garrote}
+\textit{Nonnegative garrote}, introduceret i \citep{nonnegative_garrote}, er en two-stage procedure. 
+Givet et initial estimat af regression koefficienterne \(\tilde{\tbeta} \in \mathbb{R}^p\), kan vi løse optimeringsproblemet
+\begin{align}
+\argmin_{\mathbf{c} \in \mathbb{R}^p}  \cbr{ \sum_{i=1}^n \del{y_i - \sum_{j=1}^p c_j x_{ij} \tilde{\beta}_j}^2}, \ \text{underlagt at } c_j \geq 0 \text{ og } \Vert \mathbf{c} \Vert_1 \leq t. \label{eq:2.19}
+\end{align}
+Lad \(\hat{\beta}_j^\text{NG} = \hat{c}_j \cdot \tilde{\beta}_j\), for \(j = 1, \ldots, p\).
+Der er et ækvivalent Lagrange problem for denne procedure
+\begin{align}
+\argmin_{\mathbf{c} \in \mathbb{R}^p}  \cbr{\Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \mathbf{c} \Vert_1}, \ \text{underlagt at } c_j \geq 0, \label{eq:nonnegative_garrote}
+\end{align}
+hvor \(\lambda \geq 0\).
+I den originale artikel \citep{nonnegative_garrote}, er initial estimatet \(\tilde{\tbeta}\) valgt til at være \(\hat{\tbeta}^\text{OLS}\).
+ 
+Antag \(\X\) er ortogonal og \(t\) er valgt således at betingelsen \(\Vert \mathbf{c} \Vert_1 = t\) er opfyldt, da er
+\begin{align*}
+\hat{c}_j = \del{1 - \frac{\lambda}{\tilde{\beta}_j^2}}_+, \ j = 1, \ldots, p,
+\end{align*}
+hvor \(\lambda\) er valgt, således at \(\Vert \hat{\mathbf{c}} \Vert_1 = t\).
+Hvis koefficienten \(\tilde{\beta}_j\) er høj, da vil shrinkage faktoren \(\hat{c}_j\) være tæt på 1, dvs ingen shrinkage.
+Omvendt hvis koefficienten \(\tilde{\beta}_j\) er lav, da vil estimatet \(\hat{c}_j\) blive trukket mod 0.
+På figur \ref{fig:nonnegative_garrote} ses det, at nonnegative garrote shrinker lave værdier af \(\beta\) hårdere end lasso, og omvendt for høje værdier.
+%
+\begin{figure}[H]
+\centering
+\scalebox{0.8}{\input{fig/nonnegative_garrote.tikz}}
+\caption[optional short text]{Eksakte løsninger for lasso (\tikz[baseline]{\draw[dashed] (0,.5ex)--++(.5,0) ;}) og nonnegative garrote (\tikz[baseline]{\draw[dotted] (0,.5ex)--++(.5,0) ;}).} \label{fig:nonnegative_garrote}
+\end{figure}
+%
+Nonnegative garrote er tæt relateret med adaptive lasso, som vi vil diskutere nærmere i underafsnittet \ref{subsec:konsistentAL}.
+
+\citep{nonnegative_garrote_2007} og \citep{zou_hastie} viste, at nonnegative garrote er path-konsistent under mindre strenge betingelser end lasso.
+Dette gælder, hvis initial estimaterne er \(\sqrt{n}\)-konsistent, som inkluderer mindste kvadraters metode (når \(p < n\)), lasso og elastisk net.
+Path-konsistent betyder, at løsningsstien inkluderer den sande model.
+Dog er konvergensen af parameter estimaterne for nonnegative garrote langsommere end den er for initial estimatet.
+
+
+KILDE beviste at hvis initial estimatet er konsistent i estimation, da er nonnegative garotte estimatet konsistent i estimation mens også variabeludvælgelse.

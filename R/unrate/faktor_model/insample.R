@@ -56,7 +56,10 @@ estFactors <- function(X.df, ic = 1, trace = FALSE) {
   return(df.out)
 }
 
+
+# Fittede residualer ------------------------------------------------------
 m = 4 #valgt fra en AR
+
 #Laver omega_t
 df.y.lags = foreach(i = 1:m, .combine = cbind) %do%{
   lag(y_train, i) 
@@ -64,9 +67,9 @@ df.y.lags = foreach(i = 1:m, .combine = cbind) %do%{
 colnames(df.y.lags) = c("lag1", "lag2", "lag3", "lag4")
 
 #Faktorerne for de forskelle IC
-factors.IC.1 = estFactors(xf_train, ic = 1, trace = F) #6 faktorer
-factors.IC.2 = estFactors(xf_train, ic = 2, trace = F) #11 faktorer
-factors.IC.3 = estFactors(xf_train, ic = 3, trace = F) #20 faktorer
+factors.IC.1 = estFactors(xf_train, ic = 1, trace = T) #6 faktorer
+factors.IC.2 = estFactors(xf_train, ic = 2, trace = T) #11 faktorer
+factors.IC.3 = estFactors(xf_train, ic = 3, trace = T) #20 faktorer
 
 #Finder de fittede værdier og residulerne
 fit = function(F.t, w.t, y_train) {
@@ -84,7 +87,7 @@ fit = function(F.t, w.t, y_train) {
   SS.res = sum((resid)^2)
   SS.tot = sum((y.res - mean(y.res))^2)
   R.sqrd = 1 - (SS.res / SS.tot)
-  adj.R.sqrt = 1 - (1 - R.sqrd) * ((n.obs - 1) / (n.obs - (m + r) - 1))
+  adj.R.sqrt = 1 - (1 - R.sqrd) * ((n.obs - 1) / (n.obs - (m + r) - 1)) 
   
   
   return(list("beta.hat" = beta.hat, "fit" = fit, "residuals" = resid, 
@@ -186,10 +189,11 @@ Box.test(res.IC.3, lag = 10, "Ljung-Box")
 Box.test(res.IC.3^2, lag = 10, "Ljung-Box")
 
 
-## Ser på loadings
+
+# Loadings ----------------------------------------------------------------
+
 loadings = getFactors(xf_train, 6)$loading %>% as.data.frame()
 loadings = cbind(colnames(x_train), loadings)
-
 
 plot(loadings$V1, loadings$V3)
 

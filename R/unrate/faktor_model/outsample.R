@@ -50,7 +50,8 @@ fc.IC.3 = factorForecast(y, xf, idx = idx, m = 4, r = 20)
 
 
 
-## plot
+# Analyse -----------------------------------------------------------------
+
 dato = c(as.character(test_dato))
 
 df = data.frame(date = as.Date(dato), fc.IC.1, fc.IC.2, fc.IC.3, y_test)

@@ -94,3 +94,5 @@ adap_lasso_fit = lars(x_scale_las, y, intercept = FALSE, type = "lasso", normali
 lambda.adap.l = getmin(cv.adap.l$index, cv.adap.l$cv, cv.adap.l$cv.error)
 predict(adap_lasso_fit, s = lambda.adap.l$lambda.min, mode = "fraction", type = "coefficients")$coefficients
 
+
+

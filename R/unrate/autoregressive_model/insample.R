@@ -2,10 +2,12 @@ source("data_unrate.R")
 library(ggplot2)
 library(gridExtra)
 library(grid)
-
+library(e1071)
+library(tseries)
+library(stats)
 ## Vi anvender ols til at fitte med
 ## Bestemmer orden i x.lag. Lader p_max = 12, og anvender træningsdata
-x.lag = function(x, p.max){
+opt.orden = function(x, p.max){
   BIC.vektor = rep(NA, p.max)
   
   for (p in 1:p.max){
@@ -25,7 +27,7 @@ x.lag = function(x, p.max){
   print(which.min(BIC.vektor))
 }
 
-x.lag(y_train, 12)
+opt.orden(y_train, 12)
 
 # Udfra overstående funktion er p bestemt.
 
@@ -34,14 +36,15 @@ beta = function(x, p, summary = F, fit = F) {
   y = x[(p + 1):length(x)]
   n.obs = length(y)
   
-  #designmatricen
   x.lag = matrix(nrow = n.obs, ncol = p)
   for (j in 1 : p){
     for (i in 1 : n.obs){
       x.lag[i, j] = x[p + i - j]
     }
   }
+  
   beta.hat = solve(crossprod(x.lag), crossprod(x.lag, y))
+  
   if(fit){
   fit = x.lag %*% beta.hat
   resid = y - fit
@@ -63,13 +66,10 @@ beta = function(x, p, summary = F, fit = F) {
     fit = x.lag %*% beta.hat
     loglike = sum(log(dnorm(y, mean = fit, sd = ml.sigma)))
   
-    return(cbind.data.frame(beta.hat, std.error, t.value, p.value,
-                           sigma2.hat, BIC, R.sqrd, adj.R.sqrt, loglike
-                           ))
+    return(cbind.data.frame(round(beta.hat, digits = 4), std.error, t.value, p.value,
+                           sigma2.hat, BIC, R.sqrd, adj.R.sqrt, loglike))
 
   }
-  
-
 }
 
 beta(y_train, 4, summary = T, fit = F)
@@ -95,12 +95,16 @@ summary(lm)
 logLik(lm)
 
 
+# Residualer --------------------------------------------------------------
+
 ## Ser på residualerne
 # ens med lm$resid
 fit = beta(y_train, 4, summary = F, fit = T) 
-res = fit$residuals
+res = scale(fit$residuals)
 
-tmp = data.frame(Date = as.Date(train_dato[5:length(y_train)]), y = fit$residuals)
+mean(fit$residuals)
+sd(fit$residuals)
+tmp = data.frame(Date = as.Date(train_dato[5:length(y_train)]), y = res)
 
 qqnorm.plot = function(y){
   q.sample_l = quantile(y)[["25%"]]
@@ -158,5 +162,10 @@ grid.arrange(top=textGrob('', gp=gpar(fontsize=20)), hist, qqnorm, resid, acf,
              layout_matrix = matrix(c(1,2,3,4), ncol = 2, byrow = 2))
 
 
-
+#teste 
+skewness(res)
+kurtosis(res)
+jarque.bera.test(res)
+Box.test(y, lag = 10, "Ljung-Box")
+Box.test(y^2, lag = 10, "Ljung-Box")
 

@@ -1,23 +1,51 @@
 \clearpage
-\subsection{Faktor model}
-For at få et bedre overblik beskriver vi fremgangsmåden i punkter. 
+\section{Faktor model}
+For at få et bedre overblik beskriver vi fremgangsmåden, for in sample data, i punkter. 
 \begin{enumerate}
-\item Estimer $r$ faktorer for $r = 1, \dots, r_{\max}$ ud fra vores forklarende variabler, hvor $r_{\max} = 20$  
-\item Vælg bedste $r$ ud fra ét af informationskriterierne givet i ... 
-\item Vi har, at $\textbf{Z} = \del{\textbf{F}, \boldsymbol{\omega}}$. Antal laggede værdier bestemmes ud fra $r$. 
-\item Estimer parameterne $\widehat{\beta}_F$ og $\widehat{\beta}_\omega$ med OLS
-\item Forecast $\widehat{y}_{t+1}$ fra forecast-ligningen givet i ....
+\item Estimer $r$ faktorer for $r = 1, \dots, r_{\max}$ på træningsmængden, hvor $r_{\max} = 20$.  
+\item Vælg $\widehat{r}$ ud fra ét af informationskriterierne givet i \eqref{eq:ic1} -  \eqref{eq:ic3}. Vi noterer $\widehat{r}_1$, $\widehat{r}_2$ og $\widehat{r}_3$ til at være antallet af faktorer bestemt ud fra informationskriterierne IC$_1$, IC$_2$ og IC$_3$.
+\item Vi har, at $\widehat{\textbf{Z}}^T = \del{\widehat{{\textbf{F}}}^T, \boldsymbol{\omega}^T}$, hvor $ \boldsymbol{\omega}$ er en $m \times T $ matrix bestående af laggede værdier af responsvariablen og $\widehat{\textbf{F}}$ er en $\widehat{r} \times T$ matrix, bestående af faktorer. Vi lader $m = 4$, som er bestemt ud fra vores autoregressive model. 
+\item Estimer parameterne $\widehat{\boldsymbol{\beta}} = \del{ \widehat{\boldsymbol{\beta}}_{\textbf{F}}, \widehat{\boldsymbol{\beta}}_{\boldsymbol{\omega}}}$ med OLS.
 \end{enumerate}
-For at bestemme, hvilken informationskriterie vi vil bruge til at finde $r$ i modellen, ser vi på, hvilken af dem der giver det laveste MSE. 
+
+Tabel \ref{tab:est_faktor} viser antallet af faktorer, $\widehat{r}$, samt adjusted R squared for hver af de tre informations kriterier. 
+
+\input{fig/tab/est_faktor}
+Vi observerer, at IC$_1$ er modellen med mindst kompleksitet, da den vælger færreste faktorer, hvor IC$_3$ er den model der vælger flest faktorer. Derudover er IC$_3$ modellen med den højeste adjusted R$^2$ værdi og IC$_1$ er den med den mindste adjusted R$^2$.
+
+Figurerne \ref{fig:ic1_res}, \ref{fig:ic3_res} og \ref{fig:ic3_res} viser en analyse af de standardiserede residualer. Vi ser, at der en lille smule tunge haler i QQ plottet for faktor modellerne valgt ud fra IC$_1$ og IC$_2$. Men for faktor modellen valgt ud fra IC$_3$ ses kun en enkelt outliers. 
+Derudover ser vi næsten ingen signifikante autokorrelation for de tre faktor modeller. 
+
+\input{fig/tab/tab_faktor}
+
+I tabel  \ref{tab:test_faktor} ser vi for alle tre modeller, at vi har en meget lille skewness, samt en lille kurtosis, hvor faktor modellen valgt ud fra IC$_3$ har mindst værdi af både skewness og kurtosis. 
+Vi ser også, at vores null hypotese omkring normalitet for modellerne med informationskriterierne IC$_2$, IC$_3$ ikke kan afvises, men den bliver dog afvist for IC$_1$. uafhængighed ????? how so 
+ 
+
+Tabel \ref{tab:factor_mse_tab} viser MSE og MAE, som er målt ud fra vores forecasts. Vi kan se, at modellen valgt ud fra IC$_3$ har både mindst MSE og MAE, men den er dog også den mest komplekse model. 
 
 \input{fig/tab/factor_mse}
 
-I Tabel \ref{tab:factor_mse_tab} er for hvert af kriterierne vise deres MSE af forecastet.
-Antallet af faktorer og antallet af lags er defineret til at være ens, såsom vist. Vi ser at $IC_1$ har færrest faktorer, hvor $IC_2$ har lidt flere og $IC_3$ har flest. 
-Vi ser at $IC_3$ giver den med mindst MSE, og derfor anvender vi den som vores benchmark for Faktormodellen. 
-Figur \ref{fig:fc_factor} voser forecast for faktor modellen, hvor $r$ er bestemt udfra $IC_3$
+Vi kan derudover også se, at vores faktor modeller har bedre forecasts performance i forhold til den autoregressive model. 
+For in sample ser vi at adjusted R$^2$ er markant bedre for faktor modellerne end den autoregressive model og derudover tyder, det at standardiserede residualer er iid og normalfordelte for faktor modellerne valgt ud fra IC$_2$ og IC$_3$. 
 
-\imgfigh{fc_factor.pdf}{0.7}{Viser forecast, hvor den røde linje er faktor modellen. Hvor den grå linje er de observerede arbejdsløsheds observationer}{fc_factor}
+Taget dette i betragtning vil vores faktor model valgt ud fra IC$_3$ være vores benchmark model i det den performer bedst i insample og out of sample. Figur \ref{fig:fc_benchmark} viser de prædikterede værdier for vores benchmark model og de sande observationer.. 
+
+\imgfigh{fc_benchmark.pdf}{0.7}{Viser prædiktionen af benchmark modellen mod de sande observationer.}{fc_benchmark}
+
+
+
+%\item Forecast $\widehat{y}_{t+1}$ fra forecast-ligningen givet i ....
+%For at bestemme, hvilken informationskriterie vi vil bruge til at finde $r$ i modellen, ser vi på, hvilken af dem der giver det laveste MSE. 
+%
+%\input{fig/tab/factor_mse}
+%
+%I Tabel \ref{tab:factor_mse_tab} er for hvert af kriterierne vise deres MSE af forecastet.
+%Antallet af faktorer og antallet af lags er defineret til at være ens, såsom vist. Vi ser at $IC_1$ har færrest faktorer, hvor $IC_2$ har lidt flere og $IC_3$ har flest. 
+%Vi ser at $IC_3$ giver den med mindst MSE, og derfor anvender vi den som vores benchmark for Faktormodellen. 
+%Figur \ref{fig:fc_factor} voser forecast for faktor modellen, hvor $r$ er bestemt udfra $IC_3$
+%
+%\imgfigh{fc_factor.pdf}{0.7}{Viser forecast, hvor den røde linje er faktor modellen. Hvor den grå linje er de observerede arbejdsløsheds observationer}{fc_factor}
 
 
 

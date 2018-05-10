@@ -1,0 +1,21 @@
+\chapter{R koder} \label{app:r_koder}
+I dette appendiks er de mest relevante R-koder inkluderet. 
+
+\section{Autoregressive model} \label{sec:auto}
+Nedenstående funktion anvender vi til at bestemme orden $p$ i insample for en autoregressive model.  
+\rfile[firstline=10,lastline=28]{../R/unrate/autoregressive_model/insample.R}
+
+Vi anvender den følgende funktion til at få estimerings resultater af insample. 
+\rfile[firstline=35,lastline=74]{../R/unrate/autoregressive_model/insample.R}
+
+Den næste funktionen anvender vi til at forecaste med. 
+\rfile[firstline=5,lastline=20]{../R/unrate/autoregressive_model/outsample.R}
+
+\section{Faktor model} \label{sec:faktor}
+Vi anvender to følgende funktioner til at estimerer og identificer faktorerne. 
+
+\rfile[firstline=6,lastline=21]{../R/unrate/faktor_model/insample.R}
+\rfile[firstline=23,lastline=57]{../R/unrate/faktor_model/insample.R}
+
+Vi bruger følgende funktion til at forecasting.
+\rfile[firstline=20,lastline=44]{../R/unrate/faktor_model/outsample.R}

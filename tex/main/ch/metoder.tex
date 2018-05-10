@@ -2,7 +2,7 @@
 I det her kapitel vil vi redegøre for nogle metoder, således at vi kan finde den optimale model.
 Vi er interesseret i en model der er god til at prædikterer, men uden at være for kompleks.  
 
-For at prædikterer opdeles datasættet i et træningssæt med $t_0$ observationer og en testmængde med $T_0 = T - (t_0 +1)$ observationer, hvor $T$ er antallet af observationer af hele datasættet. 
+For at prædikterer opdeles datasættet i et træningssæt med $t_0$ observationer og en testmængde med $T_0 = T - t_0 $ observationer, hvor $T$ er antallet af observationer af hele datasættet. 
 Observationerne i træningsættet betragtes som in-sample observationer og anvendes primært til at identificerer modellen og estimere parametrene. 
 Observationerne i testsættet betragtes som out-of sample observationer og fungerer som en referenceramme, når man vil vide hvor meget de prædikterede værdier afviger fra sande værdier 
  
@@ -53,14 +53,14 @@ BIC bestemmes ud fra fittet og kompleksiteten af modellen.
 \begin{defn}[Bayesian informationskriterium (BIC)]\label{def:bic}
 BIC er givet ved
 \begin{align*}
-\text{BIC} = \ln\del{t_0}p - 2 \ln\del{\widehat{L)}}, 
+\text{BIC} = \ln\del{t_0}p - 2 \ln\del{\widehat{L}}, 
 \end{align*}
 hvor $\widehat{L}$ er den maksimerede værdi af likelihood funktion, $t_0$ er antallet observationer i træningssættet og $p$ er antallet af parameter.
 \end{defn} 
 Modellen med den laveste BIC vælges, da det indikerer, at modellen giver en god tilnærmelse af data i forhold til modellens kompleksitet. 
 Hvis vi betagter en regressions model med normalfordelte residualer, så er maksimum likelihood estimatoren for variansen defineret som
 \begin{align*}
-\widehat{\sigma_p} = \frac{1}{t_0} \sum_{i=1}^{t_0} \del{y_i + \sum_{j=1}^p x_{ij}\beta_j}^2,
+\widehat{\sigma}_p = \frac{1}{t_0} \sum_{i=1}^{t_0} \del{y_i + \sum_{j=1}^p x_{ij}\beta_j}^2,
 \end{align*}
 Derfor har vi, at BIC 
 \begin{align*}
@@ -69,39 +69,73 @@ Derfor har vi, at BIC
 med samme notation som i definition  \ref{def:bic}.
 
 \section{Out of sample metoder}
-Målet med prædiktion er at prædiktere fremtidige værdier af en tidsrække. 
-Vi prædikterer one step ahead med et expanding window. 
-Det første window indeholder altså observationer fra tiden 1 til tid $t$, og den næste window indeholder observationer fra tiden 1 til $t+1$
-
-
+Målet ved out of sample er, at evaluerer vores forecast. 
+Vi anvender et rolling scheme forecast med expanding estimerings windows. 
+Dvs at det første estimerings window indeholder altså de sande observationer fra tiden 1 til tid $t$, og den næste estimerings window indeholderde sande observationer fra tiden 1 til $t+1$.
 %Den første rolling window indeholder altså observationer fra tiden 1 til $m$, og den næste rolling window indeholder observationer fra periode 2 til $m+1$ og sådan fortsætter det. 
 
-Herpå måler vi prædiktions evnen via den gennemsnitlige kvadrede fejl (MSE). 
+Herpå måler vi prædiktions evnen via den gennemsnitlige kvadrede fejl (MSE) og den gennemsnitlige absolutte fejl (MAE).
 \begin{align}
-\text{MSE} & =  \frac{1}{T_0} \sum_{t=t_0 +1 }^{T} \del{y_t - \widehat{y}_t}^2 
+\text{MSE} & =  \frac{1}{T_0} \sum_{t=t_0 }^{T} \del{y_{t+1} - \widehat{y}_{t +1}}^2, \label{eq:mse}  \\
+\text{MAE} & =  \frac{1}{T_0} \sum_{t=t_0}^{T}  \abs{y_{t+1} - \widehat{y}_{t+1}}, \label{eq:mae} 
 \end{align} 
-hvor $T_0$ er antallet af observationer i testsættet, $y_t$ er observationen til tiden $t$ og $\widehat{y}_t$ er prædiktionen af $y_t$.
-Funktionen vil have en værdi på 0, hvis et perfekt prædiktion, og ellers vil vi havde positive værdier. Så derfor er vi interesseret i den lavest værdi af MSE. 
+hvor $T_0$ er antallet af observationer i testsættet, $y_{t +1}$ er observationen til tiden $t +1$ og $\widehat{y}_{t+1}$ er prædiktionen af $y_{t+1}$.
+Disse funktioner kaldes tabs funktioner og noteres som $L\del{\cdot}$.
+Tabs funktioner vil have en værdi på 0, hvis et perfekt prædiktion, og ellers vil vi havde positive værdier. Så derfor er vi interesseret i de laveste værdier af tabsfunktionerne . 
 
+---- 
+
+\section{Valg af antal faktorer}
+%Antallet af faktorer kan bestemmes udfra et såkaldt \textit{scree plot}.
+%Her er egenværdierne ordnede fra den største til den mindste.
+%For at bestemme antallet af faktorer ser vi efter en bøjning i scree plottet.
+%Antallet af komponenter er givet ved punktet hvori de resterende egenværdier er relativ lav og approksimativ samme størrelse.
+%
+Valg af antal faktorer kan baseres på informationskriterier.
+Informationskriterierne betragter tradeoff mellem at inkludere en ekstra faktor, dvs en ekstra parameter i modellen, mod omkostningen af at øge variabiliteten, som kommer af at estimere en ekstra parameter.
+AIC kan anvendes til at udvælge antallet af faktorer, men \citep{Bai_Ng} beviset at dette ikke giver et konsistent estimat.
+Istedet foreslås at betragtet funktionen i \eqref{eq:dfm11}, som en funktion af \(\widehat{\tF}\) og \(k\), hvor \(0<k<k_\text{max}\) er antallet af faktorer, dvs
+\begin{align*}
+V \del{k, \widehat{\tF}} = \del{pT}^{-1} \sum_{j=1}^p \sum_{t=1}^T \del{x_{jt} -\boldsymbol{\lambda}_j \widehat{\tF}_t}^2
+\end{align*}
+som i fællesskab med en straffunktion \(g \del{p,T}\) giver informationskriteriet
+\begin{align*}
+\text{IC} \del{k} = \ln V \del{k, \widehat{\tF}} + k g \del{N,T}.
+\end{align*}
+\citep{Bai_Ng} foreslår følgende straffunktioner
+\begin{align}
+g_1 \del{p,T} &= \frac{p + T}{p T} \ln \del{\frac{pT}{p + T}}, \label{eq:ic1} \\
+g_2 \del{p,T} &= \frac{p + T}{p T} \ln \del{ \min \cbr{p, T}}, \label{eq:ic2} \\
+g_3 \del{p,T} &= \frac{\ln \del{\min \cbr{p, T}}}{\min \cbr{p, T}},\label{eq:ic3}
+\end{align}
+som resulterer i konsistente kriterierne, der betegnes henholdsvis \(\text{IC}_1 \del{k}\), \(\text{IC}_2 \del{k}\) samt \(\text{IC}_3 \del{k}\).
+
+For \(p = T\) fås at \(g_2 \del{T,T} = 2T^{-1} \ln \del{T}\), som bekendt er \(2\) gange BIC straffaktoren.
+
+
+\subsection{Diebold Mariano}
 En måde at vurdere to konkurrerende prædiktioner i forhold til hinanden er ved anvendelse af Diebold-Mariano testen. 
-Vi lader $\widehat{y}_t^1$ og  $\widehat{y}_t^2$ være to konkurrerende prædiktioner af $y_t$, hvor $t = t_0 + 1, \dots, T$. 
-De tilsvarende prædiktionsfejl er defineret ved $\epsilon^i_t = y_t - \widehat{y}^i_t $,  hvor $i = 1, 2$. 
-Vi anvender en tabs funktion til at bestemme nøjagtigheden. Tabs funktionerne kan eksempelvis være $ L\del{\epsilon^i_t} = \del{\epsilon^i_t }^2 $ eller $L\del{\epsilon^i_t}  = \abs{\epsilon^i_t }$
+Vi lader $\widehat{y}_{t+1}^1$ og  $\widehat{y}_{t +1}^2$ være to konkurrerende prædiktioner af $y_t$, hvor $t = 1, \dots, T$. 
+De tilsvarende prædiktionsfejl er defineret ved $\epsilon^i_{t +1} = y_{t +1} - \widehat{y}^i_{t +1} $,  hvor $i = 1, 2$. 
+Vi anvender de defineret tabs funktion til at bestemme nøjagtigheden. 
+%Tabs funktionerne kan eksempelvis være $ L\del{\epsilon^i_t} = \del{\epsilon^i_t }^2 $ eller $L\del{\epsilon^i_t}  = \abs{\epsilon^i_t }$
 %
 Diebold Maraino testen er baseret på differensen af tabsfunktionerne
 %
 \begin{align*}
-d_t = L\del{\epsilon^1_t} - L\del{\epsilon^2_t}
+d_{t +1} = L\del{\epsilon^1_{t +1}} - L\del{\epsilon^2_{t +1}}
 \end{align*}
 %
 %
 \begin{defn}[Diebold-Mariano test (DM)]
-Betragt $\hyp_0 : E[d_t] = 0$ imod  $\hyp_A : E[d_t] \neq 0$. 
+Betragt $\hyp_0 : E[d_{t +1}] = 0$ imod  $\hyp_A : E[d_{t +1} ] \neq 0$. 
 Diebold-Mariano testen er defineret som følgende 
 \begin{align*}
 \text{DM} = \frac{\bar{d}}{\del{\widehat{\text{avar}}\del{\bar{d}}}^{\frac{1}{2}}} =  \frac{\bar{d}}{\del{\frac{\widehat{\text{LRV}}_{\bar{d}}}{n}}^{\frac{1}{2}}},
 \end{align*}
-hvor $\bar{d} = \frac{1}{T_0} \sum^{T}_{t = t_0 +1} d_t$ og $\text{LRV}_{\bar{d}} = \gamma_0 + 2\sum_{j = 1}^{\infty} \gamma_j$, hvor $\gamma_j = \Cov{d_t}{d_{t-j}}$. 
+hvor $\bar{d} = \frac{1}{T_0} \sum^{T}_{t = t_0} d_{t +1} $ og $\text{LRV}_{\bar{d}} = \gamma_0 + 2\sum_{j = 1}^{\infty} \gamma_j$, hvor $\gamma_j = \Cov{d_t +1 }{d_{t +1 -j}}$. 
 \end{defn}
 %
 Det kan vises, at teststørrelsen DM er asymptotisk standard normalfordelt under nulhypotesen. Derfor afvises nulhypotesen ved niveau $5 \%$, hvis $\abs{\text{DM}} > 1.96$
+
+\subsection{Model confidence set}

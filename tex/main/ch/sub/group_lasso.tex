@@ -8,14 +8,14 @@ Betragt en lineær regressions model med $J$ grupper af prædiktorer, hvor vekto
 Formålet er da, at prædiktere responsvariablen $y \in \R$ baseret på en samling af prædiktorer $(\mathbf{Z}_1,\ldots, \mathbf{Z}_J)$.
 %En lineær model for regressions funktionen $\E{Y \vert Z}$ er givet ved \(\theta_0 + \sum_{j=1}^J Z_j^T \theta_j\), hvor $\theta_j \in \R^{p_j}$ repræsenterer en gruppe af $p_j$ regressions koefficienter. 
 
-Givet \(n\) observationer \(\cbr{ \del{y_i, z_{i,1}, z_{i,2}, \ldots, z_{i,J}}}_{i=1}^n\) løser group lasso følgende optimeringsproblem
+Givet \(n\) observationer \(\cbr{ \del{y_i, z_{i,1}, z_{i,2}, \ldots, z_{i,J}}}_{i=1}^n\), da løser group lasso følgende optimeringsproblem
 \begin{align}
-\hat{\beta}_j^{\text{group lasso}} = \argmin_{\ttheta_j \in \R^{p_j}} \cbr{\frac{1}{2} \sum_{i=1}^n \del{y_i - \sum_{j=1}^J z_{ij}^T \ttheta_j}^2 + \lambda \sum_{j=1}^J \Vert \ttheta_j \Vert_2}. \label{eq:4.5}
+\hat{\beta}_j^{\text{group lasso}} = \argmin_{\ttheta_j \in \R^{p_j}} \cbr{\frac{1}{2} \sum_{i=1}^n \del{y_i - \sum_{j=1}^J z_{ij}^T \ttheta_j}^2 + \lambda \sum_{j=1}^J \Vert \ttheta_j \Vert_2}, \label{eq:4.5}
 \end{align}
-Dette er en grupperet generalisering af lasso, som har følgende egenskaber:
+som har følgende egenskaber:
 \begin{itemize}
 \item Afhængig af $\lambda$, vil enten alle indgange i vektoren $\hat{\ttheta}_j$ være nul eller ikke-nul
-\item Når $p_j=1$, da har vi at $\Vert \ttheta_j \Vert_2 = \vert \ttheta_j \vert$, således at alle grupper er singletons, dermed reduceres optimeringsproblemet \eqref{eq:4.5} til standard lasso.
+\item Når $p_j=1$, da har vi, at $\Vert \ttheta_j \Vert_2 = \vert \ttheta_j \vert$, således at alle grupper er singletons, dermed reduceres optimeringsproblemet \eqref{eq:4.5} til standard lasso.
 \end{itemize}
 Figur \ref{fig:group_lasso} viser betingelsesområderne for henholdsvis group lasso og standard lasso for tre variable.
 %Vi ser at den grupperet lasso deler egenskaber med både $\ell_1$ og $\ell_2$ kuglen.
@@ -28,8 +28,8 @@ I dette tilfælde har vi to grupper med koefficienter \(\ttheta_1 = \del{\beta_1
 \label{fig:group_lasso}
 \end{figure}
 %
-I \eqref{eq:4.5} straffes alle grupper ligeligt, hvilket betyder at større grupper vil have en tendens til at blive valgt.
-\citep{group_lasso} anbefalede at vægte strafleddene for hver gruppe i forhold til gruppens størrelse med en factor \(\sqrt{p_j}\).
+I \eqref{eq:4.5} straffes alle grupper ligeligt, hvilket betyder, at større grupper vil have en tendens til at blive valgt.
+\citep{group_lasso} anbefalede at vægte strafleddene for hver gruppe i forhold til gruppens størrelse med en faktor \(\sqrt{p_j}\).
 
 \subsection{Udregning af group lasso}
 
@@ -42,7 +42,7 @@ For dette problem er nul subgradient ligningerne givet ved
 - \mathbf{Z}_{j}^T \del{\y - \sum_{\ell=1}^J \mathbf{Z}_\ell \hat{\ttheta}_\ell} + \lambda \hat{\ts}_j = 0, \quad j=1,\ldots, J,
 \end{align*} 
 hvor $\hat{\ts}_j \in \R^{p_j}$ er et element af subdifferentialet af normen $\Vert \cdot \Vert_2$ evalueret i $\hat{\ttheta}_j$.
-Når $\hat{\ttheta}_j \neq 0$, har vi, at $\hat{\ts}_j = \frac{\hat{\ttheta}_j}{\Vert \hat{\ttheta}_j \Vert_2}$, og når $\hat{\ttheta}_j=0$, har vi, at $\hat{\ts}_j$ er enhver vektor hvor $\Vert \hat{\ts}_j \Vert_2 \leq 1$.
+Når $\hat{\ttheta}_j \neq 0$, har vi, at $\hat{\ts}_j = \frac{\hat{\ttheta}_j}{\Vert \hat{\ttheta}_j \Vert_2}$, og når $\hat{\ttheta}_j=0$, har vi, at $\hat{\ts}_j$ er enhver vektor, hvor $\Vert \hat{\ts}_j \Vert_2 \leq 1$.
 En metode til at løse nul subgradient ligningerne er ved at fastholde alle block vektorer $\cbr{\hat{\ttheta}_k, k \neq j}$, og da løse for $\hat{\ttheta}_j$.
 Hermed udføres block coordinate descent på objektfunktionen af group lasso.
 Da problemet er konveks, og strafleddet kan separeres efter block, er det garanteret at konvergere til en optimal løsning.
@@ -72,7 +72,7 @@ Nedenfor beskrives kort nogle udvidelser af group lasso nemlig sparse group lass
 Sparse group lasso udfører variabeludvælgelse indenfor de valgte grupper, hvorimod group lasso blot udvælger grupperne.
 For at opnå denne sparsity indenfor grupperne tilføjes en \(\ell_1\) norm til standard group lasso \eqref{eq:4.11} 
 \begin{align*}
-\argmin_{\cbr{\ttheta_j \in \R^{p_j}}_j=1^J} \cbr{\frac{1}{2} \Vert \y - \sum_{j=1}^J \mathbf{Z}_{j} \ttheta_j \Vert_2^2 + \lambda \sum_{j=1}^J \sbr{ \del{1-\alpha} \Vert \ttheta_j \Vert_2 + \alpha \Vert \ttheta_j \Vert_1}},
+\argmin_{\cbr{\ttheta_j \in \R^{p_j}}_{j=1}^J} \cbr{\frac{1}{2} \Vert \y - \sum_{j=1}^J \mathbf{Z}_{j} \ttheta_j \Vert_2^2 + \lambda \sum_{j=1}^J \sbr{ \del{1-\alpha} \Vert \ttheta_j \Vert_2 + \alpha \Vert \ttheta_j \Vert_1}},
 \end{align*}
 hvor \(\alpha \in \sbr{0,1}\).
 For \(\alpha = 0 \) fås group lasso og for \(\alpha = 1\) fås standard lasso.
@@ -85,13 +85,11 @@ Bemærk at for de to horisontale akser, da ligner betingelsesområdet det for el
  \scalebox{0.5}{\includegraphics{fig/group_lasso.jpg}}
 \caption{Til venstre ses kuglen for group lasso i \(\R^3\) og til højre sparse group lasso kuglen med \(\alpha = 0.5\).
 Igen har vi to grupper med koefficienter \(\ttheta_1 = \del{\beta_1, \beta_2} \in \R^2\) og \(\theta_2 = \beta_3 \in \R\).}
-\label{fig:group_lasso}
+\label{fig:sparse_group_lasso}
 \end{figure}
 %
 
 
-
-udvide group lasso til sparse group lasso, som kan vælge individuelle kovaraiter indenfor en gruppe, ved at tilføje en ekstra \(\ell_1\) penalty to hver gruppe underrum.
 
 
 \subsection{Overlap group lasso}

@@ -1,52 +1,84 @@
 \section{Coordinate descent}
-Ideen bag coordinat descent er, at optimere en target funktion mht én parameter mens de resterende parametre fastholdes, cycling iterativ gennem alle parametre indtil konvergens.
-Coordinate descent er specielt anvendelig for problemer som lasso, som har en simpel lukket løsning for en dimension men ikke for flere dimensioner.
-
-
-
-Coordinate descent er en første ordens iterativ algoritme, og derfor er det blot gradienten som betragtes.
-Algoritmen opdaterer fra \(\beta^t\) til \(\beta^{t+1}\) ved at vælge én koordinat som skal opdateres, og da udføres en univariat minimering over dette koordinat.
-Dvs hvis koordinat $k$ er valgt i iteration $t$, da er opdateringen givet ved
+%Ideen bag coordinat descent er, at optimere en target funktion mht én parameter mens de resterende parametre fastholdes. 
+%Vi gennemløber alle parametre iterativ indtil konvergens.
+%Coordinate descent er specielt attraktiv for problemer som lasso, som har en simpel lukket løsning for en dimension, men ikke for flere dimensioner.
+%
+Coordinate descent er en første ordens algoritme.
+Algoritmen opdaterer fra \(\tbeta^t\) til \(\tbeta^{t+1}\) ved at vælge én koordinat som opdateres, og da udføres en univariat minimering over dette koordinat.
+Hvis koordinat $k$ er valgt i iteration $t$, da er opdateringen givet ved
 \begin{align}
 \beta_k^{t+1} =\underset{ \beta_k}{\arg \min}  f\del{ \beta_1^t, \beta_2^t, \dots, \beta_{k-1}^t, \beta_k, \beta_{k+1}^t, \dots, \beta_p^t  }, \label{eq:5.36}
 \end{align}
 hvor $\beta_j^{t+1} = \beta_j^t$ for $j \neq k$. 
-%For at algoritmen konvergerer til det globale minimum af en konveks funktion, skal funktionen være kontinuert differentiabel og streng konveks i hver koordinat.
-%
-%Der er to basale modeller for coordinate algoritmer i forhold til den måde de opdaterer parametrene. Den første er cyclic coordinate og den anden kaldes greedy coordinate. 
-%Cyclic opdaterer en parameter i hvert loop og den greedy opdaterer parameteren, som giver den største ændring i funktionen. 
+Typisk gennemløbes koordinaterne i en forudbestemt rækkefølge.
+Dette kan generaliseres til \textit{block coordinate descent}, som anvendes for group lasso, hvor prædiktorerne er opdelt i ikke-overlappende blocks, og da udføres en minimering over en enkelt block for hvert koordinat.
 
-For mange optimeringsproblemer kan objektfunktionen opskrives på formen
+For at algoritmen konvergerer til det globale minimum af en konveks funktion, skal funktionen være kontinuert differentiabel og streng konveks i hver koordinat. 
+Men som nævnt er strafleddet for lasso ikke differentiabel.
+
+For mange optimeringsproblemer kan objektfunktionen dekomponeres
 \begin{align}
 f(\beta_1, \dots, \beta_p) = g(\beta_1, \dots, \beta_p) + \sum_{j = 1}^p h_j \del{\beta_j}, \label{eq:5.37}
 \end{align}
-svarende til \eqref{eq:opdeling_fkt}, hvor \(g \del{\beta} =\Vert \y - \X \beta \Vert_2^2\) og \(h_j \del{\beta_j} = \lambda \vert \beta_j \vert\) for lasso.
-Hvis \(g: \ \R^p \rightarrow \R\) er konveks og differentialbel og $h_j: \ \R \rightarrow \R$ er konveks, men ikke nødvendigvis differentialbel, da viste \citep{Tseng_coordinate}, at for enhver konveks funktion som kan opdeles som \eqref{eq:5.37}, konvergerer coordinate descent algoritmen \eqref{eq:5.36} til det globale minimum. 
+hvor \(g: \R^p \rightarrow \R\) er differentiabel og konveks og \(h_j: \R \rightarrow \R\) er konveks, men ikke nødvendigvis differentiabel.
+Bemærk at lasso problemet \eqref{eq:2.5} kan dekomponeres som \eqref{eq:5.37} med \(g \del{\tbeta} =\Vert \y - \X \tbeta \Vert_2^2\) og \(h_j \del{\beta_j} = \lambda \vert \beta_j \vert\).
+\citep{Tseng_coordinate} viste, at for enhver konveks funktion \(f\) som kan opdeles som \eqref{eq:5.37}, vil coordinate descent algoritmen \eqref{eq:5.36} konvergere til det globale minimum. 
+Nøgleegenskaben bag dette resultat er, at den ikke-differentiabel komponent \(h \del{\beta} = \sum_{j=1}^p h_j \del{\beta_j}\), kan adskilles som summen af funktioner af hver individuel parameter.
+Resultatet betyder, at coordinate descent kan bruges til at løse lasso og dens generaliseringer, som beskrives senere i rapporten.
+Hvis den ikke-differentiable komponent \(h\) ikke kan adskilles, da kan det ikke garanteres at coordinate descent konvergerer.
+
+%\subsubsection{Lineær regression og lasso}
+%Optimalitets betingelserne for lasso problemet \eqref{eq:2.5} er
+%\begin{align*}
+%-2 \sum_{i=1}^n \del{y_i - \sum_{k=1}^p x_{ik} \beta_k} x_{ij} + \lambda s_j = 0,
+%\end{align*}
+%hvor \(s_j =\text{sign} \del{\beta_j^*}\) hvis \(\beta_j^* \neq 0\) og \(s_j \in \sbr{-1,1}\) hvis \(\beta_j^* = 0\) for \(j=1, \ldots, p\).
+%Coordinate descent algoritmen løser disse ligninger og itererer over \(j=1,2,\ldots,p,1,2, \ldots\).
+%Lad os definer det partielle residual \(r_i^{(j)} = y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}_k\), som fjerner nuværende fit fra alle undtaget \(j\)'te prædiktor.
+%Da er opdateringen givet ved
+%\begin{align*}
+%\widehat{\beta}_j = S_\lambda \del{\tilde{\beta}_j},
+%\end{align*}
+%hvor \(\tilde{\beta}_j\) er koefficienten af en simpel lineær regression af det partial residual på variabel \(j\).
 %
 \begin{alg} [Coordinate descent for lasso problemet]
 \begin{enumerate}
 \item Standardisere prædiktorerne \(\x_1, \ldots, \x_p\) og centre responsvariablen.
-Sæt alle \(\beta_j = 0\).
-Definer et gitter af værdier \(\lambda_1 > \lambda_2 > \ldots\), hvor \(\lambda_1\) vælges således at \(\hat{\beta}^\text{lasso} \del{\lambda_1} =\mathbf{0}\).
-\item For hvert \(\Lambda \in \cbr{\lambda_1, \lambda_2, \ldots}\), gentages følgende steps over \(j = 1, \ldots, p\) indtil konvergens:
+Definer et gitter af værdier \(\lambda_0 > \lambda_1 > \ldots > \lambda_L\), hvor \(\lambda_0\) vælges, således at \(\hat{\tbeta} \del{\lambda_0} =\mathbf{0}\).
+\item For hvert \(\lambda \in \cbr{\lambda_0, \ldots, \lambda_L}\), gentages følgende steps over \(j = 1, \ldots, p\) indtil konvergens:
 \begin{itemize}
-\item Udregn de partielle residualer \(r_{ij} = y_i - \sum_{k \neq j} x_{ik} \beta_k\)
-\item Udregn simple mindste kvadraters koefficienter af disse residualer på \(j\)'te prædiktor: \(\beta_j^* = \frac{1}{n} \sum_{i=1}^n x_{ij} r_{ij}\) 
-\item Opdater \(\beta_j\) udfra soft-thresholding
+\item Opskriv lasso problemet \eqref{eq:2.5}
+\begin{align*}
+\sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \hat{\beta}_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert
+\end{align*}
+hvor \(\hat{\beta}_k \del{\lambda}\) er det nuværende estimat for \(\beta_k\) for et given \(\lambda\), hvor \(k \neq j\).
+\item Udregn de partielle residualer: \(r_{i}^{(j)} = y_i - \sum_{k \neq j} x_{ik} \hat{\beta}_k \del{\lambda}\) for alle \(i\)
+\item Udregn koefficienten af en simpel lineær regression af det partial residual på \(j\)'te prædiktor: \(\tilde{\beta}_j = \frac{1}{n} \sum_{i=1}^n r_{i}^{(j)} x_{ij}\) 
+\item Opdater det nuværende estimat \(\hat{\beta}_j\) udfra soft-thresholding operatoren
 \begin{align}
-\beta_j \rightarrow S_\lambda \del{\beta_j^*}. \label{eq:update_coordinate}
+\hat{\beta}_j \del{\lambda}= S_\lambda \del{\tilde{\beta}_j}. \label{eq:update_coordinate}
 \end{align}
 \end{itemize}
 \end{enumerate}
 \end{alg}
 %
-Vi starter dermed med den mindste værdi \(\lambda_1\) for hvilket \(\hat{\beta}^\text{lasso} \del{\lambda_1} = 0\), herefter mindskes \(\lambda\) og cycle igennem variablerne indtil konvergens.
-Derefter aftages \(\lambda\) igen og processen gentages hvor vi anvender den tidligere løsning som begyndelsesværdi for den nye værdi af \(\lambda\).
+Løsningerne udregnes for en aftagende følge af værdier \(\cbr{\lambda_{\ell}}_{\ell = 0}^L\), hvor \(\lambda_0\) vælges således at \(\hat{\tbeta}^\text{lasso} \del{\lambda_0} =\mathbf{0}\). 
+Algoritmen udnytter \textit{warm start}, hvilket betyder, at \(\widehat{\beta} \del{\lambda_\ell}\) anvendes som begyndelsesværdi for løsningen \(\widehat{\beta} \del{\lambda_{\ell + 1}}\), dette fører til en mere stabil algoritme. 
+
+Når \(\widehat{\tbeta} = \mathbf{0}\), har vi af -- at \(\hat{\beta}_j\) vil forblive nul hvis \(\frac{1}{n} \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert < \lambda\). Derfor er \( \lambda_0 = \frac{1}{n} \max_j \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert\).
+Strategien er at vælge en minimum værdi \(\lambda_L = \epsilon \lambda_0\) og konstruerer en følge af \(K\) værdier af \(\lambda\) som aftager fra \(\lambda_0\) til \(\lambda_L\) på logskalaen.
+Typiske værdier er \(\epsilon = 0.001\) og \(K =100\).
+%
+%Den største værdi som betragtes er givet ved \(\lambda_0 = \frac{1}{n} \max_j \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert\), da enhver værdi større end \(\lambda_0\) vil give en tom model.
+%I \texttt{glmnet} bestemmes en aftagende følgen af værdier \(\cbr{\lambda_{\ell}}_{\ell = 0}^L\) fra \(\lambda_0\) til \(\lambda_L = \epsilon \lambda_0 \sim 0\) på en log skala.
+%Løsningen \(\widehat{\beta} \del{\lambda_\ell}\) er typisk en god \textit{warm start}  for løsningen \(\widehat{\beta} \del{\lambda_{\ell + 1}}\), som fører til en mere stabil algoritme. 
+%Antallet af ikke-nul element vil stige i takt med \(\ell\), og er lig med nul for \(\ell = 0\).
+%Hvis for fordobler antallet \(L=100\) til \(2L\), vil ikke fordobles beregningstiden, da disse warm starts er meget bedre og færre iterationer kræves hver gang.
+%
 
 Coordinate descent kan være hurtigere end LARS algoritmen særligt for store problemer.
 Dette skyldes at \eqref{eq:update_coordinate} hurtigt kan opdateres som \(j\) varierer, og ofte er opdateringen at lade \(\beta_j = 0\).
 Coordinate descent algoritmen for lasso giver ikke den fulde lasso løsningsstil som LARS algoritmen, men kan bruges til at udregne lasso løsningerne for \(\Lambda\).
 
-Den beskrevne coordinate descent algoritmen er implementeret i \texttt{R} pakken \texttt{glmnet}.
-Figur \ref{fig:crime_koef} ...
-\newpage
+%Den beskrevne coordinate descent algoritmen er implementeret i \texttt{R} pakken \texttt{glmnet}.
+%Koefficientstierne i figur \ref{fig:crime_koef} er f

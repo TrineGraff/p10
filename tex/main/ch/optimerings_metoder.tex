@@ -1,44 +1,95 @@
 \chapter{Optimeringsmetoder} \label{kap:optimeringsmetoder}
-\textit{Lasso problemet er et quadratic programming problem med lineære uligheder. 
-Flere algoritmer kan løse dette problem grundet konveksiteten.  
-I dette kapitel beskrives to af disse algoritmer kaldet coordinate descent og Least Angle Regression (LARS).} \\[4mm]
+\textit{I dette kapitel præsenteres optimeringsalgoritmerne coordinate descent og Least Angle Regression (LARS) for konvekse problemer.
+Kapitel er baseret på kapitel 5 i \citep{hastie}, \citep{glmnet1} og \citep{efron}.} 
 %
-På trods af at strafleddet for lasso ikke er differentiabel, findes 
-Heriblandt subgradient metoder, least-angle regression (LARS) og proximal gradient metoder.
-
-
-Subgradient metoder er en naturlig generalisering af traditionelle metider såsom gradient descent og stokastisk gradient descent i tilfældet hvor objekt funktionen ikke er differentiabel i alle punkter.
-LARS er en metode som er tæt forbundet med lasso modeller, som i mange tilfælde tillader den at fitte effektiv, selvom den ikke performer godt i alle omstændigheder.
-Proximal metoder er blevet populært pga dens fleksibilitet og performance.
-Valget af metoder vil afhænge af hvilket lasso variant som anvendes, data osv.
-Dog vil proximal metoder generelt performe godt i de fleste tilfælde.
-
-
-Foruden at fitte parameterne er valg af tuning parameter også en fundamental del af at bruge lasso.
-At vælge diss godt er essentielt for performance af lasso, da den kontrollere styrken af shrinkage og variabeludvælgelse, som kan forbedre både prædiktionen og fortolkning
-
-For en model matrix i general position (se definition \ref{defn:general_position}) findes der ikke en eksplicit løsning for lasso estimatoren.
-
-Som nævnt i underafsnittet \ref{subsec:udregning_lasso} er \(\ell_1\)-normen \(\sum_{j=1}^p \vert \beta_j \vert\) ikke differentialbel i \(\beta = 0\).
-En general egenskab af differentialble konvekse funktioner er, at en første ordens tangent approksimation altid giver en nedre grænse.
-Begrebet subgradient er baseret på en generalisering af dette.
-Givet en konveks funktion \(f: \ \R^p \rightarrow \R\), siges \(z \in \R^p\) at være en subgradient af \(f\) i \(\beta\) hvis
+\section{Konvekse optimeringsbetingelser}
+Betragt optimeringsproblemet
+\begin{align}
+\argmin_{\tbeta \in \R^p} f \del{\tbeta}, \text{ underlagt at } \tbeta \in \mathcal{C}, \label{eq:5.2}
+\end{align}
+hvor \(f: \R^p \rightarrow \R\) er en konveks funktion og \(\mathcal{C}\) er en konveks mængde (se definition \ref{defn:konveksm} og \ref{defn:konveksfkt}).
+Hvis \(f\) er differentiabel, da er en nødvendig og tilstrækkelig betingelse for, at en vektor \(\tbeta^* \in \mathcal{C}\) er et globalt optimum, at
+\begin{align}
+\nabla f \del{\tbeta^*}^T \del{ \tbeta - \tbeta^*} \geq 0 \label{eq:5.3}
+\end{align}
+for alle \(\tbeta \in \mathcal{C}\). 
+Hvis \(\mathcal{C} = \R^p\), da er optimeringsproblemet \eqref{eq:5.2} ikke begrænset, og første ordens betingelsen reduceres til \(\nabla f \del{\tbeta^*} = \mathbf{0}\).
+Ofte kan betingelsesmængden \(\mathcal{C}\) beskrives ved nogle konvekse betingelsesfunktioner, således at optimeringsproblemet \eqref{eq:5.2} kan omskrives til
+\begin{align}
+\argmin_{\tbeta \in \R^p} f \del{\tbeta}, \text{ underlagt at } g_j \del{\tbeta} \leq \mathbf{0} \text{ for } j = 1, \ldots, m, \label{eq:5.5}
+\end{align}
+hvor \(g_j\) for \(j=1, \ldots, m\) er konvekse funktioner, som betegner betingelserne, der skal være opfyldt.
+Lad \(f^*\) betegne den optimale værdi af optimeringsproblemet \eqref{eq:5.5}.
+Lagrange funktionen \(L: \R^p \times \R^m_+ \rightarrow \R\) for problem \eqref{eq:5.5} er defineret ved
 \begin{align*}
-f \del{\beta'} \geq f \del{\beta} + \left\langle z, \beta' - \beta \right\rangle, 
+L \del{\tbeta, \lambda} = f \del{\tbeta} + \sum_{j=1}^m \lambda_j g_j \del{\tbeta}.
 \end{align*}
-for alle \(\beta' \in \R^p\).
-Geometrisk er subgradient vektoren \(z\) normal til et hyperplan som understøtter ---.
-Mængden af alle subgradienter af \(f\) i \(\beta\) kaldes \textit{subdifferential} og betegnes \(\partial f \del{\beta}\).
-Når \(f\) er differentialble i \(\beta\), da reduceres subdifferentialet til én vektor, givet ved \(\partial f \del{\beta} = \cbr{\nabla f \del{\beta}}\).
-I punkter hvor \(f\) ikke er differentialble, da er subdifferentialet en konveks mængde bestående af alle mulige subgradienter.
+Vægtene \(\lambda \geq 0\) kaldes Lagrange multipliers.
+Hvis betingelsen \(g_j \del{\tbeta} \leq \mathbf{0}\) ikke er opfyldt, da vil multiplieren \(\lambda_j\) pålægger en straf.
+Af teorien for Lagrange dualiteten garanteres, at der eksisterer en optimal vektor \(\boldsymbol{\lambda}^* \geq 0\) af Lagrange multipliers, således at 
+\(f^* = \argmin_{\tbeta \in \R^p} L \del{\tbeta^*; \boldsymbol{\lambda}^*}\).
+Derfor må ethvert optimum \(\tbeta^*\) af \eqref{eq:5.5}, også være et nulgradient punkt af Lagrange funktionen, og dermed opfylde ligningen 
+\begin{align}
+0 = \nabla_{\tbeta} L \del{\tbeta^*; \boldsymbol{\lambda}^*} = \nabla f \del{\tbeta^*} + \sum_{j=1}^m \lambda_j^* \nabla g_j \del{\tbeta^*}. \label{eq:5.8}
+\end{align}
+Hvis der blot er en enkelt betingelsesfunktion \(g\), da reduceres denne betingelse til \(\nabla f \del{\tbeta^*} = - \lambda^* \nabla g \del{\tbeta^*}\).
 
+Karush-Kuhn-Tucker (KKT) betingelserne relaterer den optimale Lagrange multiplier vektor \(\boldsymbol{\lambda}^* \geq 0\) til den optimale vektor \(\tbeta^* \in \R^p\):
+\begin{itemize}
+\item \(g_j \del{\tbeta^*} \leq 0\) for alle \(j = 1, \ldots, m\)
+\item \(\lambda_j^* g_j \del{\tbeta} = 0\) for alle \(j = 1, \ldots, m\)
+\item \(\del{\tbeta^*, \boldsymbol{\lambda}^*}\) opfylder betingelse \eqref{eq:5.8}
+\end{itemize}
+Disse KKT betingelser er nødvendige og tilstrækkelige for at \(\tbeta^*\) er et globalt optimum, når optimeringsproblemet opfylder en regularitetsbetingelse kaldet strong duality.
+%
+\subsection{Subgradienter}
+Som nævnt i underafsnittet \ref{subsec:udregning_lasso} er \(\ell_1\)-normen \(g \del{\tbeta} = \sum_{j=1}^p \vert \beta_j \vert\) konveks, men ikke differentialbel i ethvert punkt, hvor mindst et koordinat \(\beta_j = 0\).
+For sådan et problem er optimalitetsbetingelserne, første ordens betingelsen \eqref{eq:5.3} og Lagrange betingelsen \eqref{eq:5.8}, ikke gældende, da de betragter gradienter af \(f\) og \(g\).
+Heldigvis findes der en naturlig generalisering af begrebet gradient for konvekse funktioner, som tillader mere generel optimeringsteori.
+
+For konvekse funktioner, giver tangent approksimationen af første ordens en nedre grænse.
+%Begrebet subgradient er baseret på en generalisering af dette.
+Givet en konveks funktion \(f: \ \R^p \rightarrow \R\), siges \(\tz \in \R^p\) at være en subgradient af \(f\) i \(\tbeta\) hvis
+\begin{align*}
+f \del{\tbeta'} \geq f \del{\tbeta} + \tz^T \del{ \tbeta' - \tbeta}, 
+\end{align*}
+for alle \(\tbeta' \in \R^p\).
+%Geometrisk er subgradient vektoren \(\tz\) normal til et hyperplan som understøtter ---.
+Mængden af alle subgradienter af \(f\) i \(\tbeta\) kaldes \textit{subdifferentialet} og betegnes \(\partial f \del{\tbeta}\).
+Når \(f\) er differentialble i \(\tbeta\), da reduceres subdifferentialet til én vektor, givet ved \(\partial f \del{\tbeta} = \cbr{\nabla f \del{\tbeta}}\).
+I punkter hvor \(f\) ikke er differentialbel, da er subdifferentialet en konveks mængde bestående af alle mulige subgradienter.
+
+Figur \ref{fig:subgradients} viser en funktion \(f : \R \rightarrow \R\) og nogle eksempler på subgradienter i punkterne \(\beta_1\) og \(\beta_2\).
+I punktet \(\beta_1\) er funktionen differentiabel og derfor har vi blot en subgradient, givet ved \(f' \del{\beta_1}\). I punktet \(\beta_2\) er funktionen ikke differentiabel og derfor har vi flere subgradienter, som hver specificerer et tangentplan, som giver en nedre grænse på \(f\).
+%
 \begin{figure}[H]
 \centering
 \scalebox{1.2}{\input{fig/subgradients.tikz}}
 \caption{En konveks funktion \(f : \ \R \rightarrow \R\) med nogle eksempler på subgradienter i \(\beta_1\) og \(\beta_2\).} \label{fig:subgradients}
 \end{figure}
+%
+Antag mindst en af funktionerne \(\cbr{f, g_j}\) er konvekse men ikke differentiable. Da giver Lagrange betingelsen \eqref{eq:5.8} ikke mening, men under milde betingelser for funktionerne, da kan KKT betingelserne modificeres til følgende
+\begin{align}
+\mathbf{0} \in \partial f \del{\tbeta^*} + \sum_{j=1}^m \lambda_j^* \partial g_j \del{\tbeta^*}, \label{eq:5.11}
+\end{align}
+hvor gradienterne i KKT betingelsen \eqref{eq:5.8} erstattes med subdifferentialerne.
+Da subdifferentialet er en mængde, betyder \eqref{eq:5.11}, at alle nul vektorer tilhører summen af subdifferentialerne.
 
-
+\begin{exmp}[Lasso og subgradienter]
+Betragt lasso problemet
+\begin{align*}
+\argmin_{\tbeta} \cbr{ \Vert \y - \X \tbeta \Vert_2^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert - R \leq 0,
+\end{align*}
+hvor \(R\) er en positiv konstant.
+Betingelsen \( \sum_{j=1}^p \vert \beta_j \vert - R \leq 0\) er ækvivalent med at kræve at \(\tbeta\) tilhører en \(\ell_1\) kugle med radius \(R\).
+Betingelse \eqref{eq:5.11} er da
+\begin{align*}
+\nabla f \del{\tbeta^*} + \lambda^* \tz^* = 0,
+\end{align*}
+hvor 
+%subgradient vektoren opfylder, at \(z_j^* \in \text{sign} \del{\beta_j^*}\) for \(j = 1, \ldots, p\).
+\(z_j =\text{sign} \del{\beta_j^*}\) hvis \(\beta_j^* \neq 0\) og \(z_j \in \sbr{-1,1}\) hvis \(\beta_j^* = 0\).
+\end{exmp}
 
 \input{main/ch/sub/coordinate_descent}
 \input{main/ch/sub/lars_theory1}

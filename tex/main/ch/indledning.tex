@@ -1,18 +1,17 @@
 \chapter{Indledning}
+Prædiktion af makroøkonomiske variable 
 
-big data, hvor antallet af variable er større end antallet af observationer.
+Vi beskæftiger os med datasæt med et stort antal forklarende variable, og ofte er antallet af variable større end antallet af observationer.
 
-prædikterer makroøkonomiske nøgletal
-
-Generelt er lasso baseret metoder og faktor modellen dimension reducerende metoder til at forecaste når vi har et stort antal tidsrækker.
-Men måden hvorpå dimensionen reduceres er ikke ens.
-Mens lasso baseret metoder forsøger at identificere og aggregrere individuelle prædiktorer som er relevante for variablen som prædikteres, opsumerer faktor modellen al information i nogle principale komponenter inden prædiktionen.
+Til at håndtere variablerne betragtes faktor modellen samt shrinkage metoder, som alle er dimension reducerende metoder.
+Faktor modellen opsummerer al information i nogle principale komponenter inden prædiktion.
+Shrinkage metoderne identificerer og aggrerer individuelle prædiktorer som har størst indflydelse på variablen som prædikteres.
 Hvis kun få prædiktorer omfatter information til prædiktionen, da vil lasso baseret metoder eliminere irrelevante prædiktorer.
 Hvis istedet at variablen som prædikteres påvirkes af mange tidsrækker, da forventes faktor modellen at finde og karakterisere de underliggende faktorer og outperforme lasso baseret metoder.
 
 
 Vi vil betragte lasso-baseret approach som generaliserer standard lasso regression.
-\citep{zou_hastie} viste at ustabiliteten for variabeludvægelse af lasso kommer af parameter usikkerheden i at estimere en stor kovariansmatrix.
+\citep{zou_hastie} viste at ustabiliteten for variabeludvælgelse af lasso kommer af parameter usikkerheden i at estimere en stor kovariansmatrix.
 Ved at erstatte den empiriske estimator af kovariansmatricen med en skrinkage estimator, viste de at de resulterende regressions koefficienter og variabeludvælgelses proces er mere stabil.
 Dette er ækvivalent med at pålægge en ekstra \(\ell_2\) norm betingelse på lasso problemet.
 Denne metoden er kendt som \textit{elastisk net}, eftersom det er som et net der fanger alle "store fisk" til bedre forecasts.
@@ -27,12 +26,6 @@ Som det kan ses i den empiriske del, har lasso varianterne tilsvarende out-of-sa
 Teori for lasso er baseret på tværsnitsdata, men anvendes på tidsrækker.
 
 
-I kaptiel -- introduceres faktor modellen.
-Herefter standard lasso,
-Hernæst teori for optimeringsmetoderne som anvendes.
-Herefter coordinate descent samt least angle regression.
-Generaliseringerne for standard lasso præsenteres herefter, elastisk net, group lasso samt adaptive lasso.
-Herefter introduceres statiske inferens for lasso.
 
 Shrinkage metoder teori er baseret på tværsnitdata, hvor faktor modeller er baseret på tidsrækkedata. 
 

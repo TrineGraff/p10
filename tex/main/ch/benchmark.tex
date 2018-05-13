@@ -4,33 +4,40 @@
 %Arbejdsløshed er målt i procent. 
 %Vi har standardiseret vores forklarende variabler, således at variablerne er centreret omkring 0 og har en varians 1, således vi undgår skæringen i vores regression.
 %Derudover har vi centreret voreariable. s respons v
-\chapter{Benchmark}
-Til valg af vores benchmark model har vi valgt, at se på flere modeller. 
-Den første er en autoregressiv model, som er defineret  i definition \ref{def:ar}.
-Vi har valgt at inkluderer den, da den er simpel og kun anvender tidligere lags af vores responsvariable. 
-Derudover har vi med tidsrække data at gøre. 
-Vi vil også senere bruge modellen til belæg for hvor mange lags der skal tilføjes til vores forklarende variabler. 
-Derudover har vi valgt en faktor model, da det er den første selektions metode der blev introduceret. 
-R-koderne, som er anvendt i dette kapitel, er givet i sektionerne \ref{sec:auto} og \ref{sec:faktor} i appendiks .
+\chapter{Benchmarks}
+Som benchmarks har vi valgt at betragte to modeller. 
+Den første er en autoregressiv model, som er defineret i definition \ref{def:ar}.
+Vi har valgt at inkludere denne, da den er simpel og kun anvender tidligere lags af responsvariablen. 
+%Derudover har vi med tidsrække data at gøre. 
+Vi vil også senere bruge modellen som belæg for hvor mange lags, der skal tilføjes som forklarende variable udover de resterende 122 variable. 
+Derudover har vi valgt en faktor model som benchmark, da det er den første selektions metode der blev introduceret??
+\texttt{R}-koderne, som er anvendt i dette kapitel, er givet i sektion \ref{sec:auto} og \ref{sec:faktor} i appendiks.
 
 \section{Autoregressive model}
-Den autoregressive model med orden $p$ estimeres med mindste kvadraters metode (OLS) på vores træningsdata, hvor vi lader $p \in \del{1, p_{\max}}$.
-Den maksimale orden på 12, betyder at modellen kun betinger med højst et års tidligere data. 
-Dette begrænsning har vi valgt at pålægge modellen fordi vi mener, at en model af højere orden ikke er realistisk for vores data. 
-Vi estimerer $\widehat{p}$ ved BIC, og får at den mindste BIC er når $p = 4$. 
-Derfor ser vi på en AR(4), hvor estimerings resultaterne ses i tabel \ref{tab:est_ar} 
+Den autoregressive model af orden \(p\) estimeres med OLS, og ordenen bestemmes udfra BIC.
+Vi lader $p = 1, \ldots, p_{\max}$, hvor \(p_\text{max}=12\), da vi mener, at arbejdsløsheden ikke vil påvirkes mere end et år tilbage.
+BIC vælger \(p=4\) og tabel \ref{tab:est_ar} giver estimeringsresultaterne for en \(\text{AR} \del{4}\).
+%Den autoregressive model med orden $p$ estimeres med OLS på træningsmængden, hvor vi lader $p = 1, \ldots, p_{\max}$.
+%Den maksimale orden på 12, betyder at modellen kun betinger med højst et års tidligere data. 
+%Denne begrænsning har vi valgt at pålægge modellen, fordi vi mener, at en model af højere orden ikke er realistisk for vores data. 
+%Vi estimerer $\widehat{p}$ ved BIC, og finder at den mindste BIC er når $p = 4$. 
+%Derfor ser vi på en AR(4), hvor estimerings resultaterne ses i tabel \ref{tab:est_ar}.
 %
 \input{fig/tab/est_ar}
-%
-Alle koefficienterne på nær $\widehat\phi_1$ er signifikante ved et 0.1 \% niveau. Vi ser også at den adjusted $R^2$ kun er 12.30 \%, hvilket indikerer på at det ikke er den helt korrekte model for insample data. 
 
-Figur \ref{fig:resid_ar} viser en analyse af de standardiserede residualer for AR(4). 
-Vi observerer, at de standardiserede residualer har tunge haler, få signifikante autokorrelationer samt en lille asymmetri i histogrammet sammenlignet med en normal fordeling.
-Tabel \ref{tab:test_ar} viser skewness, excess kurtosis og p-værdier for Jarque-Bera og Ljung-Box test for de standardiserede residualer. Vi ser at skewness og kurtosis er positive og at JB test afviser nul hypotesen omkring normalitet. LB testen i lag 10 afviser også nul hypotesen omkring uafhængighed for både de standardiserede residualer samt de kvadrerede standardiserede residualer. 
-%
- \input{fig/tab/test_ar}
+Alle koefficienterne med undtagelse af $\widehat\phi_1$ er signifikante ved et 0.1 \% niveau. 
+Vi ser også, at adjusted $R^2$ kun er 12.30\%, hvilket indikerer, at det ikke er den helt korrekte model for dette data. 
 
+Figur \ref{fig:resid_ar} viser en analyse af de standardiserede residualer for \(\text{AR} \del{4}\). 
+Histogrammet og QQ-plottet indikerer, at residualerne har tungere haler end normalfordelingen. 
+Derudover observeres få signifikante autokorrelationer.
+%Vi observerer, at de standardiserede residualer har tunge haler, få signifikante autokorrelationer samt en lille asymmetri i histogrammet sammenlignet med en normal fordeling.
+Dette bekræftes i tabel \ref{tab:test_ar}, som viser skewness, excess kurtosis og \(p\)-værdier for Jarque-Bera og Ljung-Box testen for de standardiserede residualer. 
+Vi ser, at skewness og kurtosis er positive og at JB testen afviser nulhypotesen om normalitet. 
+LB testen i lag 10 afviser også nulhypotesen omkring uafhængighed for både de standardiserede residualer samt de kvadrerede standardiserede residualer. 
 %
+\input{fig/tab/test_ar}
+
 Vi vil hernæst performe en out of sample evaluering, dvs vi vil se på forecast performance.
 Forecast er som nævnt opnået ved et rolling scheme med expanding estimerings window. 
 Figur \ref{fig:fc_ar} viser de prædikterede værdier og de sande observationer. Vi kan se, at en AR(4) ikke fanger udsvingende, hvilket igen tyder på at det ikke er en særlig god model til vores data. 
@@ -38,12 +45,7 @@ Vi ser på forecast performance ved anvendelse af tabsfunktionerne, som er defin
 
 \input{fig/tab/ar_rmse_mae}
 
-\imgfigh{fc_ar.pdf}{0.7}{Viser prædiktionen af AR(4) og de sande observationer af responsvariablen.}{fc_ar}
-
-
-
-
-
+\imgfigh{fc_ar.pdf}{0.7}{Prædiktion af arbejdsløshed med en \(\text{AR} \del{4}\) og arbejdsløsheden i testmængden.}{fc_ar}
 
 
 %Vi bestemmer orden på vores træningssæt, og vi får at den mindste BIC er når $p=11$.
@@ -70,7 +72,7 @@ Vi ser på forecast performance ved anvendelse af tabsfunktionerne, som er defin
 %
 %\imgfigh{resid_ar.pdf}{1}{Analyse af de standardiserede residualer for AR(11). }{resid_ar}
 %\input{fig/tab/ar_jb_lb}
-%
+
 \input{main/ch/faktor_model}
 
 

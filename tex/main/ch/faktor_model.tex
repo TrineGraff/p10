@@ -1,9 +1,10 @@
 \clearpage
 \section{Faktor model}
-For at få et bedre overblik beskriver vi fremgangsmåden, for in sample data, i punkter. 
+For faktor modellen estimeres parametrene som følgende:
+%For at få et bedre overblik beskriver vi fremgangsmåden, for in sample data, i punkter. 
 \begin{enumerate}
 \item Estimer $r$ faktorer for $r = 1, \dots, r_{\max}$ på træningsmængden, hvor $r_{\max} = 20$.  
-\item Vælg $\widehat{r}$ ud fra ét af informationskriterierne givet i \eqref{eq:ic1} -  \eqref{eq:ic3}. Vi noterer $\widehat{r}_1$, $\widehat{r}_2$ og $\widehat{r}_3$ til at være antallet af faktorer bestemt ud fra informationskriterierne IC$_1$, IC$_2$ og IC$_3$.
+\item Vælg $\widehat{r}$ udfra informationskriterierne givet i \eqref{eq:ic1} -  \eqref{eq:ic3}, hvor $\widehat{r}_1$, $\widehat{r}_2$ og $\widehat{r}_3$ betegner antallet af faktorer bestemt udfra informationskriterierne IC$_1$, IC$_2$ og IC$_3$.
 \item Vi har, at $\widehat{\textbf{Z}}^T = \del{\widehat{{\textbf{F}}}^T, \boldsymbol{\omega}^T}$, hvor $ \boldsymbol{\omega}$ er en $m \times T $ matrix bestående af laggede værdier af responsvariablen og $\widehat{\textbf{F}}$ er en $\widehat{r} \times T$ matrix, bestående af faktorer. Vi lader $m = 4$, som er bestemt ud fra vores autoregressive model. 
 \item Estimer parameterne $\widehat{\boldsymbol{\beta}} = \del{ \widehat{\boldsymbol{\beta}}_{\textbf{F}}, \widehat{\boldsymbol{\beta}}_{\boldsymbol{\omega}}}$ med OLS.
 \end{enumerate}
@@ -31,7 +32,7 @@ For in sample ser vi at adjusted R$^2$ er markant bedre for faktor modellerne en
 
 Taget dette i betragtning vil vores faktor model valgt ud fra IC$_3$ være vores benchmark model i det den performer bedst i insample og out of sample. Figur \ref{fig:fc_benchmark} viser de prædikterede værdier for vores benchmark model og de sande observationer.. 
 
-\imgfigh{fc_benchmark.pdf}{0.7}{Viser prædiktionen af benchmark modellen mod de sande observationer.}{fc_benchmark}
+\imgfigh{fc_benchmark.pdf}{0.7}{Prædiktion af arbejdsløshed med faktor modellen og arbejdsløsheden i testmængden.}{fc_benchmark}
 
 
 

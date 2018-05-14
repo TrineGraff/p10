@@ -1,0 +1,20 @@
+\section{Statistisk inferens}
+I dette afsnit vil vi udføre inferens omkring ...
+
+\subsection{Bootstrap}
+På figur \ref{fig:bootstrap_lasso} ses bootstrap resultater af variable valgt af lasso udfra krydsvalidering.
+
+\imgfigh{bootstrap_lasso.pdf}{1}{Til venstre ses et boxplot af 1000 bootstrap realisationer af \(\widehat{\tbeta}^\text{lasso} \del{\widehat{\lambda}_\text{CV}}\), mens plottet til højre illustrerer andel af gange hvor hver koefficient er nul i bootstrap fordelingen.}{bootstrap_lasso}
+
+\imgfigh{bootstrap_alassoOLS.pdf}{1}{-.}{bootstrap_alassoOLS}
+
+\imgfigh{bootstrap_alassoRidge.pdf}{1}{-.}{bootstrap_alassoRidge}
+
+\imgfigh{bootstrap_grouplasso.pdf}{1}{-.}{bootstrap_grouplasso}
+
+\imgfigh{bootstrap_EN.pdf}{1}{-.}{bootstrap_EN}
+
+\subsection{Kovarians test}
+\input{fig/tab/cov_test_lasso}
+
+\subsection{Teste baseret på polyhedral lemmaet}

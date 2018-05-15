@@ -4,9 +4,18 @@ I dette afsnit vil vi udføre inferens omkring ...
 \subsection{Bootstrap}
 På figur \ref{fig:bootstrap_lasso} ses bootstrap resultater af variable valgt af lasso udfra krydsvalidering.
 
-\imgfigh{bootstrap_lasso.pdf}{1}{Til venstre ses et boxplot af 1000 bootstrap realisationer af \(\widehat{\tbeta}^\text{lasso} \del{\widehat{\lambda}_\text{CV}}\), mens plottet til højre illustrerer andel af gange hvor hver koefficient er nul i bootstrap fordelingen.}{bootstrap_lasso}
 
-\imgfigh{bootstrap_alassoOLS.pdf}{1}{-.}{bootstrap_alassoOLS}
+\begin{figure}
+\includegraphics[scale=0.75, clip, trim=0 2.5cm 0 0]{fig/img/bootstrap_lasso.pdf}
+\caption{Til venstre ses et boxplot af 1000 bootstrap realisationer af \(\widehat{\tbeta}^\text{lasso} \del{\widehat{\lambda}_\text{CV}}\), mens plottet til højre illustrerer andel af gange hvor hver koefficient er nul i bootstrap fordelingen}
+\label{fig:bootstrap_lasso}
+\end{figure}
+%\fbox{\includegraphics[scale=0.8, trim=0 2.5cm 0 0]{fig/img/bootstrap_lasso.pdf}}
+
+
+
+
+\imgfigh{bootstrap_alassoOLS.pdf}{1}{-.}{Bootstrap_alasso_OLS}
 
 \imgfigh{bootstrap_alassoRidge.pdf}{1}{-.}{bootstrap_alassoRidge}
 
@@ -14,7 +23,23 @@ På figur \ref{fig:bootstrap_lasso} ses bootstrap resultater af variable valgt a
 
 \imgfigh{bootstrap_EN.pdf}{1}{-.}{bootstrap_EN}
 
+\newpage
 \subsection{Kovarians test}
+Som nævnt udfører LARS med lasso modifikationen 192 steps, hvori variablerne tilføjes og nogle fjernes igen.
+
+
+
+Af tabel \ref{tab:covTest} ses at for prædiktor 27, 25, 23 og 22 afvises nulhypotesen.
 \input{fig/tab/cov_test_lasso}
 
+\newpage
 \subsection{Teste baseret på polyhedral lemmaet}
+
+
+
+
+
+
+\input{fig/tab/fixedLassoInf}
+
+Den estimeres stanard afvigelse er \(0.043\), og resultaterne er for \(\lambda = 1.823\) med \(\alpha = 0.1\).

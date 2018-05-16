@@ -1,0 +1,65 @@
+Vi vil også betragte \textit{model confidence set} (MCS) for testmængden.
+Mens MAE og RMSE kan bruges til at identificere den bedste model til at prædiktere, kan MCS identificere en mængde af modeller, som er signifikant bedre end andre modeller, men ikke signifikant forskellige fra hinanden.
+Nedenfor introduceres kort general teori for MCS.
+
+\section{Model Confidence Set}
+Dette afsnit er baseret på \citep{mcs2011}.
+
+MCS proceduren identificerer en mængde af modeller, hvori den ``bedste'' model er indeholdt, givet et niveau af confidence.
+I modsætning til andre modeludvælgelses kriterier, vælger MCS proceduren en mængde af modeller.
+Hvis mængden blot indeholder én model, da er modellen signifikant bedre end de øvrige modeller.
+Proceduren kræver ikke en benchmark model, da alle modellerne testes imod hinanden.
+
+Vi betragter en endelig mængde af indekser \(\mathcal{M}_0 = \cbr{1, \ldots, m_0}\), hvor hvert indeks svarer til en model.
+Lad \(y_t\) være den observerede værdi til tid \(t\) og lad \(\widehat{y}_{i,t}\) være \(i\)'te models prædiktion af \(y_t\).  
+
+Tabet for model \(i\) til tid \(t\) betragtes ved en givet tabsfunktion \(L \del{y_t, \widehat{y}_{i,t}}\). 
+Som tabsfunktioner betragtes den absolutte og kvadrede fejl, der er givet i -- og ---.
+Differencen mellem tabsfunktionerne af model \(i\) og \(j\) er givet ved
+\begin{align*}
+d_{ij,t} = L \del{y_t, \widehat{y}_{i,t}} - L \del{y_t, \widehat{y}_{j,t}}, \quad i, j \in \mathcal{M}_0, \quad t = 1, \ldots, N.
+\end{align*}
+Vi antager, at \(\mu_{ij} = \E{d_{ij,t}}\) er endelig og uafhængig af \(t\) for alle \( i, j \in \mathcal{M}_0\).
+Modellerne rangeres efter forventet tab, således at model \(i\) foretrækkes frem for model \(j\) hvis \(\mu_{ij} < 0\).
+%
+\begin{defn}[Mængden af superior modeller]
+Mængden af superior modeller defineres som
+\begin{align*}
+\mathcal{M}^* \equiv \cbr{i \in \mathcal{M}_0 : \mu_{ij} \leq 0, \quad \forall j \in \mathcal{M}_0}. 
+\end{align*}
+\end{defn}
+%
+MCS estimeres ved sekventielt at trimme mængden af potentielle modeller, \(\mathcal{M}_0\).
+I hvert step tester proceduren følgende nulhypotese
+\begin{align*}
+\hyp_0: \mu_{ij} = 0, \quad \forall i,j \in \mathcal{M},
+\end{align*}
+for en mængde af modeller \(\mathcal{M} \subset \mathcal{M}_0\).
+Nulhypotesen testes imod den alternative hypotese, som er givet ved \(\hyp_A: \mu_{ij} \neq 0\) for nogle \(i, j \in \mathcal{M}\).
+Den første test er for den fulde mængde af modeller, dvs \(\mathcal{M} = \mathcal{M}_0\), hvis \(\hyp_0\) afvises, da elimineres den dårligste model fra \(\mathcal{M}\).
+Testen gentages indtil første gang nulhypotesen ikke kan afvises, og den resterende mængde af modeller er da den estimerede MCS, \(\widehat{\mathcal{M}}^*\).
+Med et fast \(\alpha\), da konstrueres et \(\del{1-\alpha}\)-confidence mængd,e \(\widehat{M}^*_{1-\alpha}\), for de bedste modeller i \(\mathcal{M}_0\).
+
+\subsection{Teste konstrueret fra bootstrap}
+I dette afsnit introduceres to teste, som er baseret på multiple \(t\)-teststørrelser, som findes udfra bootstrap.
+Definer relative empiriske tabs teststørrelser \(\bar{d}_{ij} = \frac{1}{N} \sum_{t = 1}^N d_{ij,t}\) og \(\bar{d_{i.}} = \frac{1}{m} \sum_{j \in \mathcal{M}} \bar{d}_{ij}\) for \(i,j \in \mathcal{M}\), hvor \(\bar{d}_{ij}\) måler det relative empiriske tab mellem model \(i\) og \(j\) og \(\bar{d_{i.}}\) er det empirisk tab af model \(i\) relativ til gennemsnittet af modellerne i \(\mathcal{M}\). 
+Fra disse teststørrelser konstrueres \(t\)-teststørrelserne
+\begin{align}
+t_{ij} = \frac{\bar{d}_{ij}}{\sqrt{\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{ij}}}} \quad \text{og} \quad t_{i.} = \frac{\bar{d}_{i.}}{\sqrt{\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{i.}}}}, \quad \text{for } i,j \in \mathcal{M}, \label{eq:t_statistics}
+\end{align}
+hvor \(\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{ij}}\) and \(\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{i.}}\) er estimater af henholdsvis \(\Var{\bar{d}_{ij}}\) og \(\Var{\bar{d}_{i.}}\), som findes udfra bootstrap.
+%----
+%For at udregne disse bootstraped varianser\(\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{i.}}\), udfører vi en block-bootstrap procedure af \(B\) resamples (for some large integer \(B\)), where the block length \(p\) is the max number of significants parameters obtained by fitting an AR\((p)\) process on all the \(d_{ij}\) terms. ----
+
+Teststørrelserne er da givet ved
+\begin{align} 
+T_R = \max_{i,j \in \mathcal{M}} \abs{t_{ij}} \quad \text{og} \quad T_{\text{max}} = \max_{i \in \mathcal{M}} t_i. \label{eq:test_statistics}
+\end{align}
+hvor \(t_i.\) and \(t_{ij}\) er givet i \eqref{eq:t_statistics}.
+Teststørrelserne i \eqref{eq:test_statistics} anvendes til at teste følgende hypoteser
+\begin{align*}
+\mathcal{H}_{ij}:\mu_{ij}&=0, \\
+\mathcal{H}_{i.} : \mu_{i.}&=0,
+\end{align*}
+hvor \(\mu_{ij} = \E{\bar{d}_{ij}}\) og \(\mu_{i.} = \E{\bar{d}_{i.}}\).
+De asymptotiske fordelinger af disse teststørrelser er ikke-standard, da de afhænger af nuisance parametre under både nulhypotesen og den alternative hypotese.

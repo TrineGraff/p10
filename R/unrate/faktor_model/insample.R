@@ -195,15 +195,46 @@ Box.test(res.IC.3^2, lag = 10, "Ljung-Box")
 loadings = getFactors(xf_train, 6)$loading %>% as.data.frame()
 loadings = cbind(colnames(x_train), loadings)
 
-plot(loadings$V1, loadings$V3)
+pairs(loadings[,2:7]) 
 
-load <- loadings[,4:3] 
-plot(load, type="n") # set up plot 
-text(load,labels=loadings$`colnames(x_train)`,cex=.7) # add variable names
+load_test = loadings[, 2:7] 
+load_test[abs(load_test) < 0.5] <- NA
+
+load_test = cbind(colnames(x_train), load_test)
 
 
-factor.plot(loadings[,2:7], cluster = NULL, cut = 0, labels=NULL) 
+grp <- c(1, 1, rep(4, 3), rep(1, 14), rep(2, 27), rep(3, 10), rep(4, 4),
+         rep(5, 10), rep(8, 4), rep(6, 21), rep(7, 20), rep(2, 3), rep(5, 4)) 
 
-?pairs
-pairs(loadings[,2:7])
-text(load,labels=loadings$`colnames(x_train)`,cex=.7) # add variable names
+plot(load_test$V1, load_test$V2, type = "n") # set up plot 
+text(load_test[,2:3], labels = load_test$`colnames(x_train)`, cex=.7, col = grp) # add variable names
+
+plot(load_test$V2, load_test$V3, type = "n") # set up plot 
+text(load_test[,3:4], labels = load_test$`colnames(x_train)`, cex=.7, col = grp) # add variable names
+
+plot(load_test$V5, load_test$V4, type = "n") # set up plot 
+text(load_test[,2:3], labels = load_test$`colnames(x_train)`, cex=.7, col = grp) # add variable names
+
+plot(load_test[,2:5], type="n") # set up plot 
+text(load,labels=load_test$`colnames(x_train)`,cex=.7, col = grp) # add variable names
+plot(load_test[,2:6], type="n") # set up plot 
+text(load,labels=load_test$`colnames(x_train)`,cex=.7, col = grp) # add variable names
+plot(load_test[,2:7], type="n") # set up plot 
+text(load,labels=load_test$`colnames(x_train)`,cex=.7, col = grp) # add variable names
+plot(load_test[,2:8], type="n") # set up plot 
+text(load,labels=load_test$`colnames(x_train)`,cex=.7, col = grp) # add variable names
+
+
+df = data.frame(colnames(x_train), grp, load_test)
+
+df %>% group_by(grp)
+df %>% filter(grp == 1)
+df %>% filter(grp == 2)
+df %>% filter(grp == 3)
+df %>% filter(grp == 4)
+df %>% filter(grp == 5)
+df %>% filter(grp == 6)
+df %>% filter(grp == 7)
+df %>% filter(grp == 8)
+
+

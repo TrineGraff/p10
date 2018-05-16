@@ -1,13 +1,14 @@
-\section{Selektions metoder}
+\chapter{Selektions metoder}
+Udover de 122 forklarende variabler, som er blevet introduceret i kapitel \ref{ch:data} tilføjer vi, som tidligere nævnt, fire laggede værdier af responsvariablen.  
+Vi har derfor 126 forklarende variabler i vores datasæt, hvor vi fjerner de første fire rækker for at undgå NA's. 
+Derfor indeholder vores træningsmængde nu 448 observationer fra 1. maj 1960 til 1. december 2005. 
+De laggede værdier bliver inkluderet i samme gruppe, som arbejdsløshed. 
+
 I dette kapitel vil vi finde $\widehat\lambda$, som giver den bedste model for de forskellige shrinking metoder. 
 Vi har introduceret to algoritmer til at løse vores optimeringsproblemer, som vi vil anvende.
 Vi deler derfor vores analyse op i to dele  hhv. coordinate descent og LARS algoritmen.
 Herunder finder vi så  $\widehat\lambda$ ved hjælp af 10-fold krydsvalidering og BIC. 
-Krydsvalidering bliver målt  i gennemsnitlige kvadrerede fejl, hvor vi er interesseret den model med mindst gennemsnitlige kvadrerede fejl, men hvor kompleksiteten også spiller en rolle.
-Idet vi ikke kun ser på den $\lambda$ der giver mindst mulige krydsvaliderings fejl (der betegnes $\lambda_{\min}$), men også den største værdi således at fejlen er indenfor en standard afvigelse af minimum, som vi betegner $\lambda_{\text{1sd}}$.  
-
-BIC er defineret i definition \ref{def:bic}, hvor i kompleksiteten er inkluderet i et strafparameter. Så vi er kun interesseret i den model med mindst BIC. 
-
+For $\widehat\lambda$ estimeret ud fra krydsvalidering, ser vi ikke kun på den der giver mindst mulige krydsvaliderings fejl, der betegnes $\lambda_{\min}$, men også den største værdi således at fejlen er indenfor en standard afvigelse af minimum, som vi betegner $\lambda_{\text{1sd}}$.  
 \input{main/ch/sub/coordinate}
 \input{main/ch/sub/lars}
 

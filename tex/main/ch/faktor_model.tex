@@ -5,8 +5,8 @@ For faktor modellen estimeres parametrene som følgende:
 \begin{enumerate}
 \item Estimer $r$ faktorer for $r = 1, \dots, r_{\max}$ på træningsmængden, hvor $r_{\max} = 20$.  
 \item Vælg $\widehat{r}$ udfra informationskriterierne givet i \eqref{eq:ic1} -  \eqref{eq:ic3}, hvor $\widehat{r}_1$, $\widehat{r}_2$ og $\widehat{r}_3$ betegner antallet af faktorer bestemt udfra informationskriterierne IC$_1$, IC$_2$ og IC$_3$.
-\item Vi har, at $\widehat{\textbf{Z}}^T = \del{\widehat{{\textbf{F}}}^T, \boldsymbol{\omega}^T}$, hvor $ \boldsymbol{\omega}$ er en $m \times T $ matrix bestående af laggede værdier af responsvariablen og $\widehat{\textbf{F}}$ er en $\widehat{r} \times T$ matrix, bestående af faktorer. Vi lader $m = 4$, som er bestemt ud fra vores autoregressive model. 
-\item Estimer parameterne $\widehat{\boldsymbol{\beta}} = \del{ \widehat{\boldsymbol{\beta}}_{\textbf{F}}, \widehat{\boldsymbol{\beta}}_{\boldsymbol{\omega}}}$ med OLS.
+\item Vi har, at $\widehat{\textbf{Z}} = \del{\widehat{{\textbf{F}}}^T\boldsymbol{\omega}^T}^T$, hvor $ \boldsymbol{\omega}$ består af laggede værdier af responsvariablen og $\widehat{\textbf{F}}$ består af faktorer. Vi lader $m = 4$, som er bestemt ud fra vores autoregressive model. For at undgå NA's i $\textbf{Z}$, som kommer fra de laggede værdier, fjerner vi de første 4 rækker i $\textbf{Z}$. 
+\item Estimer parameterne $\widehat{\boldsymbol{\beta}} = \del{ \widehat{\boldsymbol{\beta}}^T_{\textbf{F}} \widehat{\boldsymbol{\beta}}^T_{\boldsymbol{\omega}}}^T$ med OLS.
 \end{enumerate}
 
 Tabel \ref{tab:est_faktor} viser antallet af faktorer, $\widehat{r}$, samt adjusted R squared for hver af de tre informations kriterier. 

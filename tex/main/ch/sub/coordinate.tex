@@ -4,6 +4,7 @@ Ud fra dette anvender vi så 10-fold-krydsvalidering og BIC til at vælge $\wide
 Det skal lige bemærkes, at for elastisk net har vi to turning parameter vi skal estimerer nemlig $\alpha$ og $\lambda$.  Så her har vi valgt 10 værdier af  $\alpha$, hvor $\alpha \in [0,1]$. 
 For group lasso har vi anvendt \texttt{gglasso} fra R-pakken også med samme navn til at estimerer group lasso. Denne funktion generer også en følge på 100 $\lambda$-værdier men anvender i stedet algoritmen black-wise descent.  Funktionen kræver også en gruppering af de forklarende variabler. 
 Vi anvender grupperne som er forslået af Michael McCracken, som ses i appendiks \ref{app:app_data}. Derudover har kvadratroden af gruppens størrelse som penality faktor. 
+For adaptive lasso med lasso vægte, anvender vi kun de forklarende variable, som lasso har udvalgt til at estimerer turning parameteren $\lambda$. 
 
 \subsection{Krydsvalidering}
 I denne sektion anvender vi funktionen \texttt{cv.glmnet} og \texttt{cv.gglasso} i pakkerne \texttt{glmnet} og \texttt{gglasso} . 
@@ -15,40 +16,42 @@ Den mindste krydsvaliderings fejl for $\lambda_{\min}$ er når $\alpha =0.89$.
 
 \input{fig/tab/cv_tab}
 
-For at få et bedre overblik viser tabel  \ref{tab:cv_tab} værdierne af vores $\lambda$, antallet af koefficienter og deres krydvaliderings fejl. 
-Vi ser for lasso og elastisk net, at der sker en reducering af antallet af parameter når $\lambda_{1\text{sd}}$ anvendes i forhold til $\lambda_{\min}$ og hvor deres MSE ikke er signifikant forskellig.  
-Derfor lader vi den $\widehat{\lambda}$, for lasso og elastisk net være $\lambda_{1\text{sd}}$.
-Vi ser dog også, at $\lambda_{1\text{sd}}$ er ens i tabel \ref{tab:cv_tab}. 
-De afviger fra hinanden i 5. decimal.  
-
-For ridge regression vil der ikke ske reducering af antallet af parameter, men derimod en reducering af værdierne af koefficienterne og derfor lader vi den $\widehat{\lambda}$, være den med mindst krydsvaliderings fejl og anvender $\lambda_{\min}$, som vores optimale $\lambda$. 
+For at få et bedre overblik viser tabel  \ref{tab:cv_tab} værdierne af $\log \lambda_{\min}$ og $\log \lambda_{1\text{sd}}$ , antallet af koefficienter og deres krydsvaliderings fejl.  
+Vi ser for lasso og elastisk net, at der sker en reducering af antallet af parameter når $\lambda_{1\text{sd}}$ anvendes i forhold til $\lambda_{\min}$, men hvor deres MSE ikke er signifikant forskellig.  
+Derfor lader vi den $\widehat{\lambda}_{1\text{sd}}$ være vores turning parameter for elastik net og lasso. 
+For ridge regression vil der ikke ske reducering af antallet af parameter, men som nævnt tidligere en reducering af værdierne af koefficienterne. 
+Vi lader derfor $\widehat{\lambda}_{\min}$ være vores optimale turning parameter, da den har mindst krydsvaliderings fejl.
 %
-Men group lasso opfører sig anderledes end hvad vi havde forventet. 
-Den fejler i reducering af parameter. 
-Det indikerer lidt på, at group lasso ikke er en god model for vores data. (??)
-Men vi lader $\widehat{\lambda}$, være $\lambda_{\min}$, da den har mindst krydsvaliderings fejl. 
+For group lasso kan vi se, at  $\lambda_{1\text{sd}}$ ikke reducerer antallet af parameter meget, men kun sætter 7 variabler til nul. 
+Disse variabler stammer alle fra gruppe 5, altså penge og kredit. 
+Det indikerer, at group lasso måske ikke er den bedste selektions model til vores data. 
+V lader $\widehat{\lambda}_{1\text{sd}}$ være den optimale $\lambda$ for group lasso, da den stadig har færrest parameter. 
 
-Adaptive lasso m. OLS vægte vælger det færreste antal forklarende variabler. 
-Den udvælger kun 2 for både  $\lambda_{\min}$ og $\lambda_{1\text{sd}}$. 
-Derfor lader vi $\widehat{\lambda}$ være $\lambda_{\min}$. 
+Adaptive lasso m. OLS vægte og adaptive lasso med lasso vægte vælger de færreste antal forklarende variabler. 
+Den udvælger kun 2 for både  $\lambda_{\min}$ og $\lambda_{1\text{sd}}$, det er tale om variablerne \textit{Civilian Labor Force} og \textit{Civilian Employment} begge fra gruppe to. 
+Vi lader  $\widehat{\lambda}_{\min}$ være de optimale  $\lambda$ for både adaptive lasso med OLS vægte og adaptive lasso med lasso vægte. 
 
-Det skal bemærkes, at når vi anvender adaptive lasso med lasso vægte anvender vi kun de forklarende variable, som lasso har udvalgt. 
-Vi giver altså ikke alle 122 forklarende variable, men kun de 15, som $\widehat{\lambda}$ udvælger for lasso.
-For adaptive lasso med lasso vægte lader vi $\widehat{\lambda}$ være $\lambda_{\min}$.  
 Vi har markeret $\widehat{\lambda}$ for hver model med tykt i tabel  \ref{tab:cv_tab}. 
 
-Tabel \ref{tab: lasso_ud} viser hvilke koefficienter elastisk net, lasso og adaptive lasso med ols og lasso vægte udvælger. 
-Vi får at lasso og elastisk net udvælger de samme variable, dog er værdierne af koefficienterne forskellige. 
-Det kan skyldes, at deres $\widehat{\lambda}$ værdi er tæt på den samme. 
-Derudover har vi jo, at $\alpha = 1$ for lasso og $\alpha = 0.9$ for elastisk net, så der er altså ikke stor forskel på de to modeller. 
+Tabel \ref{tab: lasso_ud} viser hvilke koefficienter elastisk net og lasso udvælger. 
+Vi ser, at elastik net udvælger de samme variabler som lasso, men vælger yderligere tre variabler. 
 Derudover ses, at de fleste variabler de to metoder udvælger stammer fra samme gruppe, som vores responsvariable.  
 For de to adaptive lasso modeller udvælger metoderne kun variable fra gruppen arbejdsmarked. 
 Variablerne Civilian Labor Force og Civilian Employment bliver valgt af alle metoderne. 
-
 \input{fig/tab/lasso_ud}
 
+Tabel  \ref{tab:adj_r2_shrinkage_tab} viser værdierne af adjusted R$^2$, vi ser at modellerne med de højeste procent er de to adaptive funktioner, hvilket er også dem med færreste estimerede koefficienter. Ridge regression er den med den laveste adjusted R$^2$ men også den med flest koefficienter. 
+\input{fig/tab/adj_r2_shrinkage}
+
+Figurerne \ref{fig:resid_lasso_coord_kryds} - \ref{fig:resid_adap_ols_coord_kryds} viser en an analyse af de standaridserede residualer. 
+Vi ser, samme tendens for alle shrinkage metoderne. Histogrammet og QQ-plottet indikerer tungere haler end en normalfordeling og autokorrelation i første lag.
+Dette bekræftes i tabel  \ref{tab:res_shrinkage_tab}, som viser skewness, kurtosis og $p$-værdierne fra JB-testen for de standardiserede residualer for alle shrinkage modeller. 
+Vi ser, at alle modellerne har en negativ skewness og en kurtosis forskellige fra nul. 
+Derudover afvises JB testens nul hypotese omkring normalitet for alle modellerne på nær group lasso, hvor vi kan ikke afvises normalitet af de standardiserede residualer. 
+Vi ser også, at group lasso er den model, som har en kurtosis tætteste på nul, samt en meget lille skewness. 
 \newpage
-\subsubsection{BIC}
+
+\subsection{BIC}
 I dette afsnit finder vi $\widehat{\lambda}$ med BIC. 
 Tabel \ref{tab:bic_lambda} viser $\widehat{\lambda}$ værdi, BIC værdien og antallet af parameter. Vi ser igen at de to adaptive modeller udvælger færreste variabler og også den med de højeste værdier af $\widehat{\lambda}$. 
 Igen ser vi at group lasso fejler i reducering af variable. Det tyder bestemt på, at det ikke er en god model til vores data. 
@@ -56,4 +59,5 @@ Tabel \ref{tab:bic_ud} viser hvilken forklarende variabler der bliver udvalgt ud
 Vi kan se, at det er mange af de samme variabler der bliver anvendt for lasso og elastic net og igen ser vi at Civilian Labor Force og Civilian Employment bliver valgt af alle metoderne. 
 
 \input{fig/tab/bic_lambda}
+\input{fig/tab/res_bic_coord_tab}
 \input{fig/tab/bic_ud}

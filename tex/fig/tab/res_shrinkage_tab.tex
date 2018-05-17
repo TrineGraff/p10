@@ -1,0 +1,17 @@
+\begin{table}
+\center
+\begin{tabular}{lrrrrrrrrrr} 
+\toprule
+& \multicolumn{2}{c}{Lasso} && \multicolumn{2}{c}{Ridge } && \multicolumn{2}{c}{Elastik net} \\ \midrule
+Skewness & \multicolumn{2}{c}{$-0.1610$} &&\multicolumn{2}{c}{$-0.1194$} && \multicolumn{2}{c}{$- 0.1613$} \\
+Kurtosis & \multicolumn{2}{c}{$ -0.4633 $} && \multicolumn{2}{c}{0.5568} &&\multicolumn{2}{c}{$-0.4380$} \\
+JB-test & \multicolumn{2}{c}{0.0289} && \multicolumn{2}{c}{0.0128} && \multicolumn{2}{c}{0.0372}  \\
+LB$_{10}$ &  \multicolumn{2}{c}{-} &&  \multicolumn{2}{c}{-} &&  \multicolumn{2}{c}{-} \\  \bottomrule \toprule
+ & \multicolumn{2}{c}{Group lasso} && \multicolumn{2}{c}{Adap. lasso m. ols}  && \multicolumn{2}{c}{Adap. lasso m. lasso} \\ \midrule
+Skewness & \multicolumn{2}{c}{$-0.0943$} &&  \multicolumn{2}{c}{$-0.0913$} && \multicolumn{2}{c}{$-0.0877$} \\
+Kurtosis & \multicolumn{2}{c}{$-0.3725$} &&   \multicolumn{2}{c}{$-0.6050 $} && \multicolumn{2}{c}{$-0.6096$} \\
+JB-test & \multicolumn{2}{c}{0.1478}  &&  \multicolumn{2}{c}{0.0118} &&  \multicolumn{2}{c}{0.0114} \\ 
+LB$_{10}$ &  \multicolumn{2}{c}{-} &&  \multicolumn{2}{c}{-} &&  \multicolumn{2}{c}{-} \\ \bottomrule
+ \end{tabular}
+\caption{Skewness, excess kurtosis, p-værdier for Jarque Bera og Ljung Box teste for de standardiserede residualer fra shrinkage metorderne. Vi lader LB$_{10}$ betegne Ljung-Box test med lag = 10. } \label{tab:res_shrinkage_tab}
+\end{table}

@@ -1,14 +1,17 @@
 \begin{table}
 \center
-\begin{tabular}{llll} 
+\begin{tabular}{lccc} 
 \toprule
-& \multicolumn{1}{c}{${\widehat\lambda}$} & \multicolumn{1}{c}{BIC} & \multicolumn{1}{c}{p} \\ \midrule
-Lasso & 0.0023 & -6.1424 & 14  \\
-Ridge regression & 0.0112 & -4.2931 & 122 \\
-Elastik net, $\alpha = 0.9$ & 0.0019 & -6.1202 &17 \\
-Group lasso & $6.34 \cdot 10^{-5}$ & -5.0744 & 122 \\
-Adaptive lasso med OLS vægte & 0.0599 & -6.3174 & 2 \\
-Adaptive lasso med lasso vægte &  0.1058& -6.3174 & 2\\ \bottomrule
+& \multicolumn{1}{c}{Lasso} & \multicolumn{1}{c}{Ridge} & \multicolumn{1}{c}{Elastik net} \\ \midrule
+$\log \widehat{\lambda}$ & $-6.2639$ & $-4.4730$ & -\\
+$p$ & 17 & 126 & - \\
+BIC & $-6.1608 $& $-3.3230$& - \\
+Adj. R$^2$ & 94.23 \% & 86.98  \%  & -  \\ \bottomrule \toprule
+& Group lasso & Adap. lasso m. ols & Adap. lasso m. lasso \\ \midrule
+$\log \widehat{\lambda}$ & $-7.2876$&  $-2.6212$& $-1.8390$ \\
+$p$ &99 & 2&2 \\
+BIC & $-5.0721$& $-6.3153$&$-6.3142$ \\
+Adj. R$^2$ & 92.11 \% & 94.28 \% &  94.28 \% \\ \bottomrule \
  \end{tabular}
-\caption{Tabellen viser ${\widehat\lambda}$ fundet udfra BIC, samt BIC-værdien og antallet af parameter hver metode udvælger} \label{tab:bic_lambda}
+\caption{Tabellen viser ${\log \widehat\lambda}$, antallet af parameter, samt BIC-værdiet og adjusted R$^2$ for hver model.} \label{tab:bic_lambda}
 \end{table}

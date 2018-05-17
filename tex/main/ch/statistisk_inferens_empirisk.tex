@@ -3,31 +3,17 @@ I dette afsnit vil vi udføre inferens omkring
 
 
 \subsection{Bootstrap}
-På figur \ref{fig:bootstrap_lasso} ses bootstrap resultater af variable valgt af lasso udfra krydsvalidering.
+På figur \ref{fig:bootstrap_lassoEN}-\ref{fig:bootstrap_glasso} ses bootstrap resultater af variablene for hver model, som vælges udfra krydsvalidering.
 
 Flere variable har koefficienter meget tæt på nul og 
 variabler \texttt{CE16OV} og \texttt{CLF16OV} .
 Dette kan bekræftes af figuren til højre, hvor vi ser, at \texttt{lag1}, \texttt{UEMP150V}, \texttt{UEMP5TO14}, \texttt{UEMPLT5}, \texttt{CE16OV} og \texttt{CLF16OV} lader til at være variablerne som vælges ofte af lasso.
 %
-\begin{figure}[h]
-\includegraphics[scale=0.8, clip, trim=0 2.5cm 0 0]{fig/img/bootstrap_lasso.pdf}
-\caption{Til venstre ses et boxplot af 1000 bootstrap realisationer af \(\widehat{\tbeta}^\text{lasso} \del{\widehat{\lambda}_\text{CV}}\), mens plottet til højre figur illustrerer andelen af bootstrap realisationer hvor parameter estimaterne er præcis lig nul.}
-\label{fig:bootstrap_lasso}
-\end{figure}
+\imgfigh{bootstrap_lassoEN}{1}{Til venstre ses et boxplot af 1000 bootstrap realisationer af \(\widehat{\tbeta}^\text{lasso} \del{\widehat{\lambda}_\text{CV}}\), mens plottet til højre figur illustrerer andelen af bootstrap realisationer hvor parameter estimaterne er præcis lig nul..}{Bootstrap_lassoEN}
 %
-%\fbox{\includegraphics[scale=0.8, trim=0 2.5cm 0 0]{fig/img/bootstrap_lasso.pdf}}
-
-
-
+\imgfigh{bootstrap_alasso.pdf}{1}{-.}{bootstrap_alasso}
 %
-%\imgfigh{bootstrap_alassoOLS.pdf}{1}{-.}{Bootstrap_alasso_OLS}
-%
-%\imgfigh{bootstrap_alassoRidge.pdf}{1}{-.}{bootstrap_alassoRidge}
-%
-%\imgfigh{bootstrap_grouplasso.pdf}{1}{-.}{bootstrap_grouplasso}
-%
-%\imgfigh{bootstrap_EN.pdf}{1}{-.}{bootstrap_EN}
-
+\imgfigh{bootstrap_gglasso.pdf}{0.73}{-.}{bootstrap_gglasso}
 
 
 
@@ -41,7 +27,7 @@ Tildeler \(p\)-værdier til hver variablen som variablen tilføjes til modellen.
 
 
 Af tabel \ref{tab:covTest} ses, at for prædiktor \texttt{UEMP15OV} (27), \texttt{UEMPLT5} (25), \texttt{CE16OV} (23) og \texttt{CLF16OV} (22) afvises nulhypotesen.
-\input{fig/tab/cov_test_lasso}
+\input{fig/tab/covTest}
 
 
 
@@ -55,6 +41,7 @@ Tuning parameteren \(\lambda\) vælges udfra krydsvalidering, som vi fandt \(\la
 
 
 
+\input{fig/tab/larInf}
 
 Post-selection intervallerne vises på figur -- for disse 14 variable.
 

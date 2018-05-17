@@ -1,45 +1,73 @@
 \section{Statistisk inferens}
-I dette afsnit vil vi udføre inferens omkring ...
+I dette afsnit vil vi udføre inferens omkring
+
 
 \subsection{Bootstrap}
 På figur \ref{fig:bootstrap_lasso} ses bootstrap resultater af variable valgt af lasso udfra krydsvalidering.
 
-
-\begin{figure}
-\includegraphics[scale=0.75, clip, trim=0 2.5cm 0 0]{fig/img/bootstrap_lasso.pdf}
-\caption{Til venstre ses et boxplot af 1000 bootstrap realisationer af \(\widehat{\tbeta}^\text{lasso} \del{\widehat{\lambda}_\text{CV}}\), mens plottet til højre illustrerer andel af gange hvor hver koefficient er nul i bootstrap fordelingen}
+Flere variable har koefficienter meget tæt på nul og 
+variabler \texttt{CE16OV} og \texttt{CLF16OV} .
+Dette kan bekræftes af figuren til højre, hvor vi ser, at \texttt{lag1}, \texttt{UEMP150V}, \texttt{UEMP5TO14}, \texttt{UEMPLT5}, \texttt{CE16OV} og \texttt{CLF16OV} lader til at være variablerne som vælges ofte af lasso.
+%
+\begin{figure}[h]
+\includegraphics[scale=0.8, clip, trim=0 2.5cm 0 0]{fig/img/bootstrap_lasso.pdf}
+\caption{Til venstre ses et boxplot af 1000 bootstrap realisationer af \(\widehat{\tbeta}^\text{lasso} \del{\widehat{\lambda}_\text{CV}}\), mens plottet til højre figur illustrerer andelen af bootstrap realisationer hvor parameter estimaterne er præcis lig nul.}
 \label{fig:bootstrap_lasso}
 \end{figure}
+%
 %\fbox{\includegraphics[scale=0.8, trim=0 2.5cm 0 0]{fig/img/bootstrap_lasso.pdf}}
 
 
 
+%
+%\imgfigh{bootstrap_alassoOLS.pdf}{1}{-.}{Bootstrap_alasso_OLS}
+%
+%\imgfigh{bootstrap_alassoRidge.pdf}{1}{-.}{bootstrap_alassoRidge}
+%
+%\imgfigh{bootstrap_grouplasso.pdf}{1}{-.}{bootstrap_grouplasso}
+%
+%\imgfigh{bootstrap_EN.pdf}{1}{-.}{bootstrap_EN}
 
-\imgfigh{bootstrap_alassoOLS.pdf}{1}{-.}{Bootstrap_alasso_OLS}
 
-\imgfigh{bootstrap_alassoRidge.pdf}{1}{-.}{bootstrap_alassoRidge}
 
-\imgfigh{bootstrap_grouplasso.pdf}{1}{-.}{bootstrap_grouplasso}
-
-\imgfigh{bootstrap_EN.pdf}{1}{-.}{bootstrap_EN}
 
 \newpage
 \subsection{Kovarians test}
 Som nævnt udfører LARS med lasso modifikationen 192 steps, hvori variablerne tilføjes og nogle fjernes igen.
 
+Kovarians testen gentager LARS med lasso modifikation og tester nulhypotesen om 
+
+Tildeler \(p\)-værdier til hver variablen som variablen tilføjes til modellen.
 
 
-Af tabel \ref{tab:covTest} ses at for prædiktor 27, 25, 23 og 22 afvises nulhypotesen.
+Af tabel \ref{tab:covTest} ses, at for prædiktor \texttt{UEMP15OV} (27), \texttt{UEMPLT5} (25), \texttt{CE16OV} (23) og \texttt{CLF16OV} (22) afvises nulhypotesen.
 \input{fig/tab/cov_test_lasso}
+
+
 
 \newpage
 \subsection{Teste baseret på polyhedral lemmaet}
 
+Da antallet af parametre er mindre end antallet af observationer i træningsmængden, kan \(\sigma^2\) estimeres udfra SSR fra den fulde model med alle prædiktorer.
+Vi finder, at \(\widehat{\sigma} \approx 0.0433\).
+
+Tuning parameteren \(\lambda\) vælges udfra krydsvalidering, som vi fandt \(\lambda \approx 0.0033\), hvorfra lasso valgte 14 variable.
 
 
 
 
+Post-selection intervallerne vises på figur -- for disse 14 variable.
+
+
+\texttt{fixedLassoInf} udregner \(p\)-værdier og konfidens intervaller for lasso estimatet for en fast værdi af tuning parameteren \(\lambda\).
+\texttt{fixedLassoInf} anvender ``standard'' lasso
+\begin{align*}
+\frac{1}{2} \Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \tbeta \Vert_1.
+\end{align*}
+\texttt{glmnet} multiplicerer først led med faktoren \(\frac{1}{n}\).
+Efter vi har kørt \texttt{glmnet} og fundet betaen som svarer til lambda værdien, da skal vi \texttt{beta = coef(obj, s=lambda/n)}, hvor \texttt{obj} er objektet som er returneret af \texttt{glmnet}.
+
+
+Af figur \ref{fig:fixedLassoInf} observeres at nulhypotesen afvises for \texttt{CLF16OV}, \texttt{CE16OV} samt \texttt{lag 1}.
 
 \input{fig/tab/fixedLassoInf}
-
-Den estimeres stanard afvigelse er \(0.043\), og resultaterne er for \(\lambda = 1.823\) med \(\alpha = 0.1\).

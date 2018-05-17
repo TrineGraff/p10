@@ -1,6 +1,6 @@
-\begin{small}
-\begin{table}[ht] 
+\begin{table}[h] 
 \centering 
+\scalebox{0.9}{
 \begin{tabular}{lllllllll}
 %\multicolumn{9}{c}{Lasso} \\
 \toprule
@@ -53,8 +53,9 @@ Step & Prædiktor & Cov test & \(p\)-værdi && Step & Prædiktor & Cov test & \(
   45 & 7 & 0.00 & 1.00 & & 90 & 74 & 0.00 & 1.00 \\ 
 \bottomrule
 \end{tabular}
-\caption{lasso \(p\)-værdier.
+}
+\caption{Kovarians testen for lasso.
 Tallene er afrundet til 2 decimaler.
-Vi viser kun \(p\)-værdier for steps for hvilket en prædiktor medtages og bliver i modellen resten af stien, dvs hvis en prædiktor medtages i et step og senere forlader, vises denne prædiktor ikke.} \label{tab:covTest}
+Vi viser kun \(p\)-værdier for steps af prædiktorer medtages og bliver i modellen resten af stien, dvs hvis en prædiktor medtages i et step og senere forlader modellen, vises denne prædiktor ikke.} \label{tab:covTest}
+
 \end{table} 
-\end{small}

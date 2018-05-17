@@ -1,8 +1,4 @@
-Vi vil også betragte \textit{model confidence set} (MCS) for testmængden.
-Mens MAE og RMSE kan bruges til at identificere den bedste model til at prædiktere, kan MCS identificere en mængde af modeller, som er signifikant bedre end andre modeller, men ikke signifikant forskellige fra hinanden.
-Nedenfor introduceres kort general teori for MCS.
-
-\section{Model Confidence Set}
+\subsection{Model Confidence Set}
 Dette afsnit er baseret på \citep{mcs2011}.
 
 MCS proceduren identificerer en mængde af modeller, hvori den ``bedste'' model er indeholdt, givet et niveau af confidence.
@@ -14,7 +10,7 @@ Vi betragter en endelig mængde af indekser \(\mathcal{M}_0 = \cbr{1, \ldots, m_
 Lad \(y_t\) være den observerede værdi til tid \(t\) og lad \(\widehat{y}_{i,t}\) være \(i\)'te models prædiktion af \(y_t\).  
 
 Tabet for model \(i\) til tid \(t\) betragtes ved en givet tabsfunktion \(L \del{y_t, \widehat{y}_{i,t}}\). 
-Som tabsfunktioner betragtes den absolutte og kvadrede fejl, der er givet i -- og ---.
+Som tabsfunktioner betragtes den absolutte og kvadrede fejl, der er givet i \eqref{eq:lossMAE} og \eqref{eq:lossMSE}.
 Differencen mellem tabsfunktionerne af model \(i\) og \(j\) er givet ved
 \begin{align*}
 d_{ij,t} = L \del{y_t, \widehat{y}_{i,t}} - L \del{y_t, \widehat{y}_{j,t}}, \quad i, j \in \mathcal{M}_0, \quad t = 1, \ldots, N.
@@ -40,7 +36,7 @@ Den første test er for den fulde mængde af modeller, dvs \(\mathcal{M} = \math
 Testen gentages indtil første gang nulhypotesen ikke kan afvises, og den resterende mængde af modeller er da den estimerede MCS, \(\widehat{\mathcal{M}}^*\).
 Med et fast \(\alpha\), da konstrueres et \(\del{1-\alpha}\)-confidence mængd,e \(\widehat{M}^*_{1-\alpha}\), for de bedste modeller i \(\mathcal{M}_0\).
 
-\subsection{Teste konstrueret fra bootstrap}
+\subsubsection{Teste konstrueret fra bootstrap}
 I dette afsnit introduceres to teste, som er baseret på multiple \(t\)-teststørrelser, som findes udfra bootstrap.
 Definer relative empiriske tabs teststørrelser \(\bar{d}_{ij} = \frac{1}{N} \sum_{t = 1}^N d_{ij,t}\) og \(\bar{d_{i.}} = \frac{1}{m} \sum_{j \in \mathcal{M}} \bar{d}_{ij}\) for \(i,j \in \mathcal{M}\), hvor \(\bar{d}_{ij}\) måler det relative empiriske tab mellem model \(i\) og \(j\) og \(\bar{d_{i.}}\) er det empirisk tab af model \(i\) relativ til gennemsnittet af modellerne i \(\mathcal{M}\). 
 Fra disse teststørrelser konstrueres \(t\)-teststørrelserne

@@ -19,29 +19,29 @@ Dette kan bekræftes af figuren til højre, hvor vi ser, at \texttt{lag1}, \text
 
 \newpage
 \subsection{Kovarians test}
-Som nævnt udfører LARS med lasso modifikationen 192 steps, hvori variablerne tilføjes og nogle fjernes igen.
-
-Kovarians testen gentager LARS med lasso modifikation og tester nulhypotesen om 
-
-Tildeler \(p\)-værdier til hver variablen som variablen tilføjes til modellen.
-
-
-Af tabel \ref{tab:covTest} ses, at for prædiktor \texttt{UEMP15OV} (27), \texttt{UEMPLT5} (25), \texttt{CE16OV} (23) og \texttt{CLF16OV} (22) afvises nulhypotesen.
+Som nævnt udfører LARS algoritmen med lasso modifikationen 192 steps, hvori variablerne tilføjes og nogle fjernes igen.
+For \(\lambda_\text{min} = 36\) findes 21 prædiktorer, hvorpå kovarians testen udføres.
+Tabel \ref{tab:covTest} viser resultatet af dette.
+For prædiktorerne valgt i step 1-5 afvises nulhypotesen, hvilket betyder, at ...?
+%
 \input{fig/tab/covTest}
-
+%
 
 
 \newpage
 \subsection{Teste baseret på polyhedral lemmaet}
-
 Da antallet af parametre er mindre end antallet af observationer i træningsmængden, kan \(\sigma^2\) estimeres udfra SSR fra den fulde model med alle prædiktorer.
 Vi finder, at \(\widehat{\sigma} \approx 0.0433\).
 
-Tuning parameteren \(\lambda\) vælges udfra krydsvalidering, som vi fandt \(\lambda \approx 0.0033\), hvorfra lasso valgte 14 variable.
+Tuning parameteren \(\lambda\) vælges udfra krydsvalidering, hvor vi fandt, at \(\lambda \approx 0.0033\), hvorfra lasso valgte 14 variable.
+Figur \ref{fig:fixedLassoInf} viser inferens af disse variable.
 
 
+Af figur \ref{fig:fixedLassoInf} observeres at nulhypotesen afvises for \texttt{CLF16OV}, \texttt{CE16OV} samt \texttt{lag 1}.
+%
+\input{fig/tab/fixedLassoInf}
+%
 
-\input{fig/tab/larInf}
 
 Post-selection intervallerne vises på figur -- for disse 14 variable.
 
@@ -55,6 +55,8 @@ Post-selection intervallerne vises på figur -- for disse 14 variable.
 Efter vi har kørt \texttt{glmnet} og fundet betaen som svarer til lambda værdien, da skal vi \texttt{beta = coef(obj, s=lambda/n)}, hvor \texttt{obj} er objektet som er returneret af \texttt{glmnet}.
 
 
-Af figur \ref{fig:fixedLassoInf} observeres at nulhypotesen afvises for \texttt{CLF16OV}, \texttt{CE16OV} samt \texttt{lag 1}.
 
-\input{fig/tab/fixedLassoInf}
+Lars algoritmen udfører 126 steps, hvor én variabel tilføjes i hvert step.
+%
+\input{fig/tab/larInf}
+%

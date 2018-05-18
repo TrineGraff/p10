@@ -1,46 +1,45 @@
 \chapter{Data} \label{ch:data}
-I den empiriske del anvendes data fra FRED, som er hentet fra Federal Reserve Bank of St. Louis.
+I den empiriske del anvendes et datasæt fra FRED, som er hentet fra Federal Reserve Bank of St. Louis. \footnote{\url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}}
 Datasættet består af månedlige observationer for 128 makroøkonomiske variable i perioden 1. januar 1959 til 1. november 2017 svarende til 707 observationer.
+Datasættet er givet i appendiks \ref{app:app_data}.
 
-Tidsrækkerne for variablerne transformeres således at de bliver stationære.
-Transformationerne, der anvendes på tidsrækkerne, kan ses i appendiks \ref{app:app_data}.
-Transformationerne er forslået af Michael McCracken fra Federal Reserve Bank of St. Louis.  
-Som følge at disse transformationer introduceres nogle NA's i starten af hver tidsrække.
-Derudover observeres at 5 variable har et stort antal NA's derfor fjernes disse fra datasættet, disse variabler er markeret i appendiks \ref{app:app_data}.
-Yderligere fjernes de første 12 samt de sidste 5 observationer således at datasættet er renset for NAs.
+Vi transformerer tidsrækkerne for variablerne, således at tidsrækkerne er stationære.
+Som følge at disse transformationer introduceres nogle ikke-observeret værdier i starten af hver tidsrække.
+Derudover observeres at 5 variable har et stort antal ikke-observeret værdier, som derfor fjernes fra datasættet.
+Yderligere fjernes de første 12 samt de sidste 5 observationer, således at datasættet er fuldstændig renset for ikke-observeret værdier.
 Det transformerede datasæt består hermed af 123 variable i perioden 1. januar 1960 til 1. juli 2017 svarende til 691 observationer.
+Datasættet repræsenterer en bred vifte af makroøkonomiske variable, som Michael McCracken har inddelt i 8 grupper:
 %
-%I vores empiriske analyse anvender vi data fra FRED, som er hentet fra Federal Reserve Bank of St. Louis \url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}.
-%Der anvendes nogle transformationer for at gøre tidsrækkerne stationære, som er noteret mere detaljeret i appendiks \ref{app:app_data}. 
-%Disse transformationer er forslået af Michael McCracken fra Federal Reserve Bank of St. Louis.  
-%Der observeres at 5 af disse variabler har mere end 43 NA's inkluderet og derfor bliver de fjernet fra datasættet. 
-%Derudover ser vi at de resterende NA's opstår kun i de første eller/og sidste observationer, vi fjerner derfor 17 observationer i hver variable for at undgå NA's. 
-%Så vores datasæt inkluderer altså 123 tidsrækker, som indeholder $691$ månedlige observationer og går fra 1. januar 1960 til 1. juli 2017. 
-%Hernæst har vi standardiseret vores data, således at variablerne er centreret omkring 0 og har en varians 1, således vi undgår skæringen i vores regression. 
-Datasættet repræsenterer en stor brede af makroøkonomiske variable, som Michael McCracken har inddelt i 8 kategorier: 
-\begin{enumerate}
-\item \textbf{Output og indkomst:} Indeholder 16 tidsrækker
-\item \textbf{Arbejdsmarked:}  Indeholder 31 tidsrækker
-\item \textbf{Boliger:} Indeholder 10 tidsrækker
-\item \textbf{Forbrug, ordrer og varebeholdninger:} Indeholder 7 tidsrækker
-\item \textbf{Penge og kredit:} Indeholder 14 tidsrækker
-\item\textbf{ Rente og valutakurs:} Indeholder 21 tidsrækker
-\item \textbf{Priser:} Indeholder 20 tidsrækker
-\item \textbf{Aktiemarked:} Indeholder 4 tidsrækker
-\end{enumerate}
+\begin{description}
+\item [Gruppe 1]: Output og indkomst \legendbox{red}
+\item [Gruppe 2]: Arbejdsmarked \legendbox{blue}
+\item [Gruppe 3]: Bolig
+\item [Gruppe 4]: Forbrug, ordrer og varebeholdninger
+\item [Gruppe 5]: Penge og kredit
+\item [Gruppe 6]: Renter og valutakurs
+\item [Gruppe 7]: Priser
+\item [Gruppe 8]: Aktiemarket
+\end{description} 
 %
-%Når vi konstruerer vores model anvender vi 122 forklarende variabler og 1 respons variable og for at validerer vores model deler vi vores fulde datasæt i et træningssæt, som består af 552 observationer fra 1. januar 1960 til 1. december 2005 og et testsæt, som består af 139 observationer fra 1. januar 2006 til 1. Juli 2017. 
-%En betydningsfuld makroøkonomisk variable er arbejdsløshed, som blandt andet vil være vores responsvariable.  Arbejdsløshed er inkluderet i gruppen arbejdsmarked. 
-Herefter opdeles datasættet i en træningsmængde, som består af 552 observationer fra 1. januar 1960 til 1. december 2005 og en testmængde, som består af 139 observationer fra 1. januar 2006 til 1. juli 2017. 
+Farverne, som illustrerer hver gruppe, vil i analysen indikerer hvilken gruppe variablerne er inddelt i.
+Vi opdeler datasættet i en træningsmængde, som består af 552 observationer fra 1. januar 1960 til 1. december 2005 og en testmængde, som består af 139 observationer fra 1. januar 2006 til 1. juli 2017. 
 
 En betydningsfuld makroøkonomisk variable er arbejdsløshed, som vi betragter som responsvariabel.  
 Arbejdsløshed er inkluderet i gruppen arbejdsmarked.
-For at få et bedre overblik over resultaterne deler vi analysen op således hver responsvariabler har et kapitel. 
-Formålet ved analysen er at finde hvilken model er den bedste til forecaste. For at måle dette bruger vi 
+Arbejdsløshedsraten repræsenterer antallet af ledige i procent af den samlede arbejdskraft.
+Arbejdskraften begrænses til personer på 16 år eller derover, som er bosiddende i 1 af de 50 stater eller distriktet af Columbia.
+Dermed er arbejdsløshedsraten en indikation på, hvorvidt ressourcerne udnyttes.
+En stigende arbejdsløshed kan være forbundet med en recession.
 
-På figur \ref{fig:unemployment} illustreres arbejdsløshedsraten for USA samt centreret og stationariseret.
-Mccraken foreslår at tage 1. differensen for at tidsrækken er stationær.
-Tidsrækken centreres da vi da kan se bort fra skæringen.
+Kilden for arbejdsløshedsraten er U.S. Bureau of Labor Statistics.
+Den er sæsonjusteret og givet månedlig.
+
+På figur \ref{fig:unemployment} illustreres arbejdsløshedsraten (til venstre) samt arbejdsløshedsraten stationær og centreret (til højre).
+Mccraken foreslår at tage 1. differensen af tidsrækken for at opnå stationaritet.
+Tidsrækken centreres, således at vi kan se bort fra skæringen.
 %
-\imgfigh{unemployment.pdf}{0.75}{Sæsonjusteret arbejdsløshedsrate for USA.}{unemployment}
-%
+\imgfigh{unemployment.pdf}{0.75}{Månedlig, sæsonjusteret arbejdsløshedsrate for USA.}{unemployment}
+
+Det overordnet formål med analysen er, at prædiktere arbejdsløshedsraten.
+Hertil vil vi betragte de beskrevne modeller i den teoretiske del.
+Som nævnt centreres responsvariabel, mens prædiktorerne standardiseres.

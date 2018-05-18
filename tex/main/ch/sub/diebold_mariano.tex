@@ -1,5 +1,5 @@
 \subsection{Diebold-Mariano testen}
-Prædiktionen af to potentielle modeller kan testes imod hinanden med Diebold-Mariano testen.
+Prædiktionen af to potentielle modeller kan testes imod hinanden med Diebold-Mariano testen \citep{dmtest}.
 Lad \(\widehat{y}_{i,t}\) og \(\widehat{y}_{j,t}\) være \(i\)'te og \(j\)'te models prædiktion af \(y_{t}\).
 Tabet for model \(i\) til tid \(t\) betragtes ved tabsfunktionerne
 \begin{align}
@@ -11,12 +11,10 @@ Differencen mellem tabsfunktionerne af model \(i\) og \(j\) er givet ved
 d_{ij,t} = L \del{y_t, \widehat{y}_{i,t}} - L \del{y_t, \widehat{y}_{j,t}}.
 \end{align*}
 %
-\begin{defn}[Diebold-Mariano test]
 Betragt \(\hyp_0 : \E{d_{ij,t}} = 0\) imod \(\hyp_A: \E{d_{ij,t}} \neq 0\). Teststørrelsen for DM testen er defineret som følgende
 \begin{align*}
-\text{DM} = \frac{\bar{d}_{ij}}{\sqrt{\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{i.}}}} =  \frac{\bar{d}_{ij}}{\sqrt{\frac{\widehat{\text{LRV}}_{\bar{d}_{ij}}}{n}}},
+\text{DM} = \frac{\bar{d}_{ij}}{\sqrt{\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{ij}}}} =  \frac{\bar{d}_{ij}}{\sqrt{\frac{\widehat{\text{LRV}}_{\bar{d}_{ij}}}{n}}},
 \end{align*}
 hvor $\bar{d} = \frac{1}{T_0} \sum^{T}_{t = t_0} d_{t +1} $ og $\text{LRV}_{\bar{d}} = \gamma_0 + 2\sum_{j = 1}^{\infty} \gamma_j$, hvor $\gamma_j = \Cov{d_{t +1}}{d_{t+1-j}}$. 
-\end{defn}
 %
 Det kan vises, at DM teststørrelsen er asymptotisk standard normalfordelt under nulhypotesen. Derfor afvises nulhypotesen ved niveau $5 \%$, hvis $\abs{\text{DM}} > 1.96$

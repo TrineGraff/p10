@@ -6,8 +6,10 @@ set.seed(1)
 
 alpha.grid = round(seq(0, 1, length = 10), digits = 2)
 for (i in alpha.grid) {
-  assign(paste("fit",i , sep=""), cv.glmnet(x_train, y_train, alpha=i, family="gaussian", standardize=FALSE))
+  assign(paste("fit",i , sep=""), cv.glmnet(x_train, y_train, alpha=i, family="gaussian", 
+                                            standardize=FALSE, intercept = FALSE))
 }
+cv_min  = c(lambda = fit_test$lambda.min, cvm = fit_test$cvm[fit_test$lambda == fit_test$lambda.min], alpha = 0.9)
 cv1_min  = c(lambda = fit0$lambda.min, cvm = fit0$cvm[fit0$lambda == fit0$lambda.min], alpha = 0)
 cv2_min  = c(lambda = fit0.11$lambda.min, cvm = fit0.11$cvm[fit0.11$lambda == fit0.11$lambda.min], alpha = 0.11)
 cv3_min  = c(lambda = fit0.22$lambda.min, cvm = fit0.22$cvm[fit0.22$lambda == fit0.22$lambda.min], alpha = 0.22)
@@ -22,7 +24,8 @@ cv10_min  = c(lambda = fit1$lambda.min, cvm = fit1$cvm[fit1$lambda == fit1$lambd
 cv_min = data.frame(cv1_min, cv2_min, cv3_min, cv4_min, cv5_min, cv6_min, cv7_min, cv8_min, cv9_min, cv10_min)
 which.min(cv_min[2,] )
 
-el_fit = glmnet(x_train, y_train, alpha=0.89, family="gaussian", standardize=FALSE, intercept = FALSE)
+el_fit = glmnet(x_train, y_train, alpha=0.89, family="gaussian", 
+                standardize=FALSE, intercept = FALSE)
 
 data.frame(
   lambda = c("min", "1se"), 

@@ -6,14 +6,15 @@
  & log & MSE & $p$ & & log & MSE & $p$ \\
  $\lambda_{\min}$ &$-6.6361$& 0.0019 & 28 &	$\boldsymbol{\lambda_{\min}}$ &  $\mathbf{-4.3800}$ &   $\mathbf{0.0045} $&  $\mathbf{126}$ \\ 
  $\boldsymbol{\lambda}_{\textbf{1sd}}$ & $\mathbf{-5.7057}$ & $\mathbf{0.0020} $& $\mathbf{14}$ & $\lambda_{ \text{1sd}}$& $-4.1939$ & 0.0047 & 126  \\ \bottomrule \toprule
-   \multicolumn{4}{c}{Elastisk net, $\alpha = 0.89$}  &  \multicolumn{4}{c}{Group lasso}  \\ \midrule
- & log & MSE & p && log & MSE &$ p $\\
- $\lambda_{\min}$ & $-6.596$ & 0.0019 & 31 & $\lambda_{\min}$& $-8.2644$ & 0.0022  & 126 \\
-  $\boldsymbol{\lambda_{\textbf{1sd}}}$ & $\mathbf{-5.7754}$ & $\mathbf{0.0020} $& $\mathbf{17}$ &   $\boldsymbol{\lambda}_{\textbf{1sd}}$  & $\mathbf{-7.6365}$ &$ \mathbf{0.0023}$ & $\mathbf{119}$ \\  \bottomrule \toprule
-  \multicolumn{4}{c}{Adaptive lasso m. OLS vægte}  &  \multicolumn{4}{c}{Adaptive lasso m. lasso vægte}  \\ \midrule
-  & log & MSE & $p$ & & log & MSE & p \\
- $\boldsymbol{\lambda_{\min}}$  & $\mathbf{-2.0630}$ &$ \mathbf{0.0018}$ & $\mathbf{2}$ &  $\boldsymbol{\lambda_{\min}}$   &  $ \mathbf{-2.3674}$ & $ \mathbf{0.0018} $& $ \mathbf{2}$   \\
- $\lambda_{1\text{sd}}$ & $-0.3884$ & 0.0019 & 2 & $\lambda_{1\text{sd}}$  & $-0.2276$ & 0.0019 & 2  \\ \bottomrule
+\multicolumn{4}{c}{Group lasso}  &  \multicolumn{4}{c}{Adaptive lasso m. OLS vægte}  \\ \midrule
+& log & MSE &$ p $ && log & MSE & $p$ &  \\
+$\lambda_{\min}$& $-8.2644$ & 0.0022  & 126 & $\boldsymbol{\lambda_{\min}}$  & $\mathbf{-2.0630}$ &$ \mathbf{0.0018}$ & $\mathbf{2}$ \\
+  $\boldsymbol{\lambda}_{\textbf{1sd}}$  & $\mathbf{-7.6365}$ &$ \mathbf{0.0023}$ & $\mathbf{119}$ &  $\lambda_{1\text{sd}}$ & $-0.3884$ & 0.0019 & 2 \\  \bottomrule 
+  \toprule
+  \multicolumn{4}{c}{Adaptive lasso m. lasso vægte}  \\ \cmidrule{1-4}
+& log & MSE & p \\
+$\boldsymbol{\lambda_{\min}}$   &  $ \mathbf{-2.3674}$ & $ \mathbf{0.0018} $& $ \mathbf{2}$   \\
+$\lambda_{1\text{sd}}$  & $-0.2276$ & 0.0019 & 2  \\ \cmidrule{1-4}
  \end{tabular}
 \caption{Tabellen viser logaritmen af $\lambda$, som er  fundet ud fra krydsvalidering, samt det genenmsnitlige krydsvalideringsfejl, som er målt i MSE og antallet af parameter. De rækker der er markeret med tykt er værdierne for vores $\widehat{\lambda}$} \label{tab:cv_tab}
 \end{table}

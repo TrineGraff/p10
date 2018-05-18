@@ -27,7 +27,7 @@ opt.orden = function(x, p.max){
   print(which.min(BIC.vektor))
 }
 
-opt.orden(y_train, 12)
+opt.orden(ya_train, 12)
 
 # Udfra overstående funktion er p bestemt.
 
@@ -76,15 +76,15 @@ beta(y_train, 4, summary = T, fit = F)
 
 ## Vi tjekker om vi får samme resultater, som de indbyggede funktioner
 #Får samme estimater med ar-funktionen
-fit_ar = ar(y_train, method = "ols", order.max = 4, demean = FALSE)
+fit_ar = ar(ya_train, method = "ols", order.max = 4, demean = FALSE)
 
 #Får samme estimater, samt summary resultater. Der er en difference i det 4 decimal. 
-y_lm = y_train[(4 + 1):length(y_train)]
+y_lm = ya_train[(4 + 1):length(ya_train)]
 n = length(y_lm)
 x_lm = matrix(nrow = n, ncol = 4)
 for (j in 1:4){
   for (i in 1:n){
-    x_lm[i,j] = y_train[4+i-j]
+    x_lm[i,j] = ya_train[4+i-j]
   }
 }
 

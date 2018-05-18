@@ -50,4 +50,6 @@ adj.R.sqrt * 100
 # Koefficienter -----------------------------------------------------------
 coef_hat = coef(lasso_fit, s = lasso_cv$lambda.1se)
 idx_hat = which(coef_hat != 0) 
-coef_hat[idx_hat,]
+coef_hat[idx_hat,]     
+
+

@@ -1,30 +1,8 @@
-source("script/script_lars.R")
-library(lars)
-library(ggplot2)
-library(elasticnet)
-
-drops = c("UNRATE")
-x = scale(data_train[ , !(colnames(data_train) %in% drops)]) 
-y = scale(data_train[, "UNRATE"], scale = FALSE)
-
-parm = function(x) {
-  (sum(x != 0))
-}
-
-#getanywhere(getmin) - pakke glmnet. 
-#vi vil gerne minimum og den med én standardafvigelse
-getmin = function (lambda, cvm, cvsd) 
-{
-  cvmin = min(cvm, na.rm = TRUE)
-  idmin = cvm <= cvmin
-  lambda.min = max(lambda[idmin], na.rm = TRUE)
-  idmin = match(lambda.min, lambda)
-  semin = (cvm + cvsd)[idmin]
-  idmin = cvm <= semin
-  lambda.1se = max(lambda[idmin], na.rm = TRUE)
-  list(lambda.min = lambda.min, lambda.1se = lambda.1se,
-       idx_1se = match(lambda.1se, lambda), idx_min = match(lambda.min, lambda))
-}
+source("data_unrate.R")
+source("package.R")
+source("parm.R")
+source("shrinkage_metoder/res_plot.R")
+source("shrinkage_metoder/lars/getmin.R")
 
 
 # lasso -------------------------------------------------------------------
@@ -40,10 +18,12 @@ data.frame(
 )
 
 
-beta_hat = coef(lars_, s = getmin_l$lambda.min, mode = "fraction")
+beta_hat = coef(lasso_fit, s = getmin$lambda.min, mode = "lambda")
+
+
 which(beta_hat != 0)
 predict(lars_, s = getmin_l$lambda.min, mode = "fraction", type = "coefficients")$coefficients
-
+coef.lars(fit.lasso,s=0.5,mode="lambda")
 
 # plot --------------------------------------------------------------------
 

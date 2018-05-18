@@ -12,6 +12,7 @@ lassoBIC <- function(y, x, fit) {
   }
   idx = which.min(BICs)
   beta_hat = fit$beta[,idx]
+  
   #Adjusted r^2
   SS.res = sum((y - x %*% beta_hat)^2)
   SS.tot = sum((y - mean(y))^2)

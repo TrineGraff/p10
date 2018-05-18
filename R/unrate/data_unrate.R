@@ -2,6 +2,7 @@ library(tidyverse)
 data_raw = read.csv("../data/transformed_data.csv") %>% as.data.frame()
 idx =  floor(0.80 * nrow(data_raw)) 
 data = data_raw[, -c(1, 2)]
+drops = c("UNRATE")
 
 y = scale(data[, "UNRATE"], scale = FALSE, center = TRUE)
 
@@ -13,7 +14,6 @@ ya_dato_train = data_raw$dato[1:idx]
 ya_dato_test = data_raw$dato[-c(1:idx)]
 
 ## Anvendes i faktor model
-drops = c("UNRATE")
 xf = scale(data[ , !(colnames(data) %in% drops)], center = TRUE) 
 xf_train = xf[1:idx,]
 xf_test = xf[-c(1:idx),]
@@ -36,4 +36,6 @@ x_test = x[-c(1:(idx - 4)),]
 y_test = y[-c(1:(idx))]
 
 dato_test = data_raw$dato[-(1:idx)]
+
+
 

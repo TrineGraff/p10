@@ -1,7 +1,6 @@
 \subsection{Model Confidence Set}
-Dette afsnit er baseret på \citep{mcs2011}.
-
-MCS proceduren identificerer en mængde af modeller, hvori den ``bedste'' model er indeholdt, givet et niveau af confidence.
+Dette afsnit er baseret på \citep{mcs2011}. 
+MCS proceduren identificerer en mængde af modeller, hvori den ``bedste'' model er indeholdt givet et niveau af confidence.
 I modsætning til andre modeludvælgelses kriterier, vælger MCS proceduren en mængde af modeller.
 Hvis mængden blot indeholder én model, da er modellen signifikant bedre end de øvrige modeller.
 Proceduren kræver ikke en benchmark model, da alle modellerne testes imod hinanden.
@@ -9,11 +8,10 @@ Proceduren kræver ikke en benchmark model, da alle modellerne testes imod hinan
 Vi betragter en endelig mængde af indekser \(\mathcal{M}_0 = \cbr{1, \ldots, m_0}\), hvor hvert indeks svarer til en model.
 Lad \(y_t\) være den observerede værdi til tid \(t\) og lad \(\widehat{y}_{i,t}\) være \(i\)'te models prædiktion af \(y_t\).  
 
-Tabet for model \(i\) til tid \(t\) betragtes ved en givet tabsfunktion \(L \del{y_t, \widehat{y}_{i,t}}\). 
-Som tabsfunktioner betragtes den absolutte og kvadrede fejl, der er givet i \eqref{eq:lossMAE} og \eqref{eq:lossMSE}.
+Tabet for model \(i\) til tid \(t\) betragtes ved en givet tabsfunktion \(L \del{y_t, \widehat{y}_{i,t}}\), hvor den absolutte og kvadrede fejl igen betragtes, som er givet i \eqref{eq:lossMAE} og \eqref{eq:lossMSE}.
 Differencen mellem tabsfunktionerne af model \(i\) og \(j\) er givet ved
 \begin{align*}
-d_{ij,t} = L \del{y_t, \widehat{y}_{i,t}} - L \del{y_t, \widehat{y}_{j,t}}, \quad i, j \in \mathcal{M}_0, \quad t = 1, \ldots, N.
+d_{ij,t} = L \del{y_t, \widehat{y}_{i,t}} - L \del{y_t, \widehat{y}_{j,t}}, \quad i, j \in \mathcal{M}_0, \quad t = 1, \ldots, T.
 \end{align*}
 Vi antager, at \(\mu_{ij} = \E{d_{ij,t}}\) er endelig og uafhængig af \(t\) for alle \( i, j \in \mathcal{M}_0\).
 Modellerne rangeres efter forventet tab, således at model \(i\) foretrækkes frem for model \(j\) hvis \(\mu_{ij} < 0\).
@@ -31,15 +29,15 @@ I hvert step tester proceduren følgende nulhypotese
 \hyp_0: \mu_{ij} = 0, \quad \forall i,j \in \mathcal{M},
 \end{align*}
 for en mængde af modeller \(\mathcal{M} \subset \mathcal{M}_0\).
-Nulhypotesen testes imod den alternative hypotese, som er givet ved \(\hyp_A: \mu_{ij} \neq 0\) for nogle \(i, j \in \mathcal{M}\).
+Nulhypotesen testes imod den alternative hypotese \(\hyp_A: \mu_{ij} \neq 0\) for nogle \(i, j \in \mathcal{M}\).
 Den første test er for den fulde mængde af modeller, dvs \(\mathcal{M} = \mathcal{M}_0\), hvis \(\hyp_0\) afvises, da elimineres den dårligste model fra \(\mathcal{M}\).
 Testen gentages indtil første gang nulhypotesen ikke kan afvises, og den resterende mængde af modeller er da den estimerede MCS, \(\widehat{\mathcal{M}}^*\).
-Med et fast \(\alpha\), da konstrueres et \(\del{1-\alpha}\)-confidence mængd,e \(\widehat{M}^*_{1-\alpha}\), for de bedste modeller i \(\mathcal{M}_0\).
+Med et fast \(\alpha\), da konstrueres et \(\del{1-\alpha}\)-confidence mængde, \(\widehat{M}^*_{1-\alpha}\), for de bedste modeller i \(\mathcal{M}_0\).
 
 \subsubsection{Teste konstrueret fra bootstrap}
 I dette afsnit introduceres to teste, som er baseret på multiple \(t\)-teststørrelser, som findes udfra bootstrap.
-Definer relative empiriske tabs teststørrelser \(\bar{d}_{ij} = \frac{1}{N} \sum_{t = 1}^N d_{ij,t}\) og \(\bar{d_{i.}} = \frac{1}{m} \sum_{j \in \mathcal{M}} \bar{d}_{ij}\) for \(i,j \in \mathcal{M}\), hvor \(\bar{d}_{ij}\) måler det relative empiriske tab mellem model \(i\) og \(j\) og \(\bar{d_{i.}}\) er det empirisk tab af model \(i\) relativ til gennemsnittet af modellerne i \(\mathcal{M}\). 
-Fra disse teststørrelser konstrueres \(t\)-teststørrelserne
+Definer \(\bar{d}_{ij} = \frac{1}{T} \sum_{t = 1}^T d_{ij,t}\) og \(\bar{d_{i.}} = \frac{1}{m} \sum_{j \in \mathcal{M}} \bar{d}_{ij}\) for \(i,j \in \mathcal{M}\), hvor \(\bar{d}_{ij}\) måler det relative empiriske tab mellem model \(i\) og \(j\) og \(\bar{d_{i.}}\) er det empirisk tab af model \(i\) relativ til gennemsnittet af modellerne i \(\mathcal{M}\). 
+Herudfra konstrueres \(t\)-teststørrelserne
 \begin{align}
 t_{ij} = \frac{\bar{d}_{ij}}{\sqrt{\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{ij}}}} \quad \text{og} \quad t_{i.} = \frac{\bar{d}_{i.}}{\sqrt{\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{i.}}}}, \quad \text{for } i,j \in \mathcal{M}, \label{eq:t_statistics}
 \end{align}
@@ -51,8 +49,8 @@ Teststørrelserne er da givet ved
 \begin{align} 
 T_R = \max_{i,j \in \mathcal{M}} \abs{t_{ij}} \quad \text{og} \quad T_{\text{max}} = \max_{i \in \mathcal{M}} t_i. \label{eq:test_statistics}
 \end{align}
-hvor \(t_i.\) and \(t_{ij}\) er givet i \eqref{eq:t_statistics}.
-Teststørrelserne i \eqref{eq:test_statistics} anvendes til at teste følgende hypoteser
+hvor \(t_{ij}\) og \(t_i.\) er givet i \eqref{eq:t_statistics}.
+Teststørrelserne i \eqref{eq:test_statistics} anvendes til at teste følgende nulhypoteser
 \begin{align*}
 \mathcal{H}_{ij}:\mu_{ij}&=0, \\
 \mathcal{H}_{i.} : \mu_{i.}&=0,

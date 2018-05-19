@@ -22,18 +22,8 @@ Dette appendiks indeholder nogle tabeller og figurer, som anvendes i den empiris
 
 \imgfigh{resid_adap_lasso_coord_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med lasso vægte med optimeringsmetoden coodinate descent, hvor krydsvalidering er brugt til at estimere $\widehat{\lambda}$. }{resid_adap_ols_coord_kryds}
  \input{fig/tab/res_shrinkage_tab}
+ \input{fig/tab/adj_r2_shrinkage}
 
-\imgfigh{resid_lasso_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for lasso  med optimeringsmetoden coodinate descent, hvor BIC  er brugt til at estimere $\widehat{\lambda}$. }{resid_lasso_coord_bic}
-
-\imgfigh{resid_ridge_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for ridge regression med optimeringsmetoden coodinate descent, hvor BIC  er brugt til at estimere $\widehat{\lambda}$. }{resid_ridge_coord_bic}
-
-\imgfigh{resid_grp_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for group lasso med optimeringsmetoden coodinate descent, hvor BIC  er brugt til at estimere $\widehat{\lambda}$. }{resid_grp_coord_bic}
-
-\imgfigh{resid_adap_ols_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med ols vægte med optimeringsmetoden coodinate descent, hvor BIC  er brugt til at estimere $\widehat{\lambda}$. }{resid_adap_ols_coord_bic}
-
-\imgfigh{resid_adap_lasso_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med lasso vægte med optimeringsmetoden coodinate descent, hvor BIC  er brugt til at estimere $\widehat{\lambda}$. }{resid_adap_lasso_coord_bic}
-
-\input{fig/tab/res_bic_coord_tab}
 \begin{landscape}
 \begin{figure}[htbp]
 		\centering
@@ -58,7 +48,23 @@ Til højere illustreret andelen af bootstrap realisationer, hvor parameter estim
 \imgfigh{bootstrap_alasso.pdf}{0.7}{Til venstre vises boxplots af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{AL}} \del{{\widehat{\lambda}}}$ med lasso vægte og ols vægte bestemt udfra krydsvalidering. 
 Til højere illustreres andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul}{bootstrap_alasso}
 %
+
+\imgfigh{resid_lasso_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for lasso  med optimeringsmetoden coodinate descent, hvor BIC  er brugt til at estimere $\widehat{\lambda}$. }{resid_lasso_coord_bic}
+
+\imgfigh{resid_ridge_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for ridge regression med optimeringsmetoden coodinate descent, hvor BIC  er brugt til at estimere $\widehat{\lambda}$. }{resid_ridge_coord_bic}
+
+\imgfigh{resid_grp_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for group lasso med optimeringsmetoden coodinate descent, hvor BIC  er brugt til at estimere $\widehat{\lambda}$. }{resid_grp_coord_bic}
+
+\imgfigh{resid_adap_ols_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med ols vægte med optimeringsmetoden coodinate descent, hvor BIC  er brugt til at estimere $\widehat{\lambda}$. }{resid_adap_ols_coord_bic}
+
+\imgfigh{resid_adap_lasso_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med lasso vægte med optimeringsmetoden coodinate descent, hvor BIC  er brugt til at estimere $\widehat{\lambda}$. }{resid_adap_lasso_coord_bic}
+
 %\imgfigh{bootstrap_gglasso.pdf}{0.73}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{gl}} \del{{\widehat{\lambda}}} $ bestemt udfra krydsvalidering. 
 %Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul}{bootstrap_gglasso}
 
-\input{fig/tab/adj_r2_shrinkage}
+ \input{fig/tab/res_bic_coord_tab}
+
+
+\imgfigh{boxplot_lasso_coord_bic.pdf}{0.7}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{lasso}} \del{{\widehat{\lambda}}} $ bestemt udfra bic. 
+Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul}{boxplot_lasso_coord_bic}
+

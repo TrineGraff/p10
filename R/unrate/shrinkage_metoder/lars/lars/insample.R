@@ -9,7 +9,9 @@ lars_cv = cv.lars(x_train, y_train, type = "lar", intercept = FALSE,
                    normalize = FALSE, trace = FALSE)
 lars_fit = lars(x_train, y_train, type = "lar", intercept = FALSE, 
                 normalize = FALSE)
-getmin = getmin_l(lars_cv$index, lars_cv$cv, lars_cv$cv.error)
+getmin_lars = getmin_l(lars_cv$index, lars_cv$cv, lars_cv$cv.error)
+
+?cv.lars
 
 data.frame(
   lambda = c("min", "1se"), 
@@ -57,16 +59,16 @@ idx_hat = which(b_hat != 0)
 b_hat[idx_hat ]
 
 # Krydsvalidering ---------------------------------------------------------
-df_la = data.frame(lasso_cv$index, lasso_cv$cv, lasso_cv$cv.error)
+df_lars = data.frame(lars_cv$index, lars_cv$cv, lars_cv$cv.error)
 
-ggplot(df_la, aes(df_la$lasso_cv.index,df_la$lasso_cv.cv)) + 
-  geom_errorbar(aes(ymin = df_la$lasso_cv.cv + df_la$lasso_cv.cv.error, 
-                    ymax = df_la$lasso_cv.cv - df_la$lasso_cv.cv.error, width = .1)) +
+lars = ggplot(df_lars, aes(df_lars$lars_cv.index,df_lars$lars_cv.cv)) + 
+  geom_errorbar(aes(ymin = df_lars $lars_cv.cv + df_lars $lars_cv.cv.error, 
+                    ymax = df_lars $lars_cv.cv - df_lars $lars_cv.cv.error, width = .1)) +
   geom_point(col = "red") +
-  labs(x = "Fraktion af sidste L1 norm", y = "MSE", color = "") + 
-  geom_vline(aes(xintercept= getmin$lambda.min, col = "blue"), linetype="dotted") +
-  geom_vline(aes(xintercept= getmin$lambda.1se, col = "brown"), linetype="dotted") +
-  ggtitle("Lasso") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
+  labs(x = "Antallet af steps", y = "MSE", color = "") + 
+  geom_vline(aes(xintercept= getmin_lars$lambda.min, col = "blue"), linetype="dotted") +
+  geom_vline(aes(xintercept= getmin_lars$lambda.1se, col = "brown"), linetype="dotted") +
+  ggtitle("LARS") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
 
 
 

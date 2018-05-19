@@ -4,12 +4,26 @@ Vi har derfor 126 forklarende variabler i vores datasæt, hvor vi fjerner de fø
 Derfor indeholder vores træningsmængde nu 448 observationer fra 1. maj 1960 til 1. december 2005. 
 De laggede værdier bliver inkluderet i samme gruppe, som arbejdsløshed. 
 
-I dette kapitel vil vi finde $\widehat\lambda$, som giver den bedste model for de forskellige shrinking metoder. 
 Vi har introduceret to algoritmer til at løse vores optimeringsproblemer, som vi vil anvende.
 Vi deler derfor vores analyse op i to dele  hhv. coordinate descent og LARS algoritmen.
-Herunder finder vi så  $\widehat\lambda$ ved hjælp af 10-fold krydsvalidering og BIC. 
-For $\widehat\lambda$ estimeret ud fra krydsvalidering, ser vi ikke kun på den der giver mindst mulige krydsvaliderings fejl, der betegnes $\lambda_{\min}$, men også den største værdi således at fejlen er indenfor en standard afvigelse af minimum, som vi betegner $\lambda_{\text{1sd}}$.  
 \input{main/ch/sub/coordinate}
+
 \input{main/ch/sub/lars}
 
 
+
+%Vi vil først finde $\widehat\lambda$, som giver den optimale model for de forskellige shrinking metoder. 
+%Vi har introduceret to algoritmer til at løse vores optimeringsproblemer, som vi vil anvende.
+%Vi deler derfor vores analyse op i to dele  hhv. coordinate descent og LARS algoritmen.
+%Herunder finder vi så  $\widehat\lambda$ ved hjælp af 10-fold krydsvalidering og BIC. 
+%Når vi estimerer $\widehat\lambda$ ud fra krydsvalidering, ser vi ikke kun på den der giver mindst mulige krydsvaliderings fejl, der betegnes $\lambda_{\min}$, men også den største værdi således at fejlen er indenfor en standard afvigelse af minimum, som vi betegner $\lambda_{\text{1sd}}$.  
+%For BIC finder vi $\widehat\lambda$ , ved det $\lambda$ som giver den mindste BIC. 
+%
+%Vi anvender funktionen \texttt{glmnet} fra R-pakken af samme navn til at estimerer modellerne lasso, elastik net, ridge og adaptive lasso's koefficienter.. 
+%Funktionen genererer ud fra datasættet en følge på 100 $\lambda$-værdier og tilpasser en model til hver af disse ved maksimum likelihood estimation med algoritmen coordinate descent. 
+%Ud fra dette anvender vi så 10-fold-krydsvalidering og BIC til at vælge $\widehat{\lambda}$, som giver den optimale model. 
+%Det skal lige bemærkes, at for elastisk net har vi to turning parameter vi skal estimerer nemlig $\alpha$ og $\lambda$.  Så her har vi valgt 10 værdier af $\alpha$, hvor $\alpha \in [0,1]$. 
+%For group lasso har vi anvendt \texttt{gglasso} fra R-pakken også med samme navn til at estimerer group lasso. 
+%Denne funktion generer også en følge på 100 $\lambda$-værdier men anvender i stedet algoritmen black-wise descent.  Funktionen kræver også en gruppering af de forklarende variabler. 
+%Vi anvender grupperne som er forslået af Michael McCracken, som ses i appendiks \ref{app:app_data}. Derudover har kvadratroden af gruppens størrelse som penality faktor. 
+%For adaptive lasso med lasso vægte, anvender vi kun de forklarende variable, som lasso har udvalgt til at estimerer turning parameteren $\lambda$. 

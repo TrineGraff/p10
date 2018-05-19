@@ -1,26 +1,42 @@
 \chapter{Summary}
 %mellem min 1 side og maks 2 sider.
 %indgår i evalueringen
-The master thesis is 
-
-
-In chapter \ref{ch:dfm} the factor model is introduced.
+%
+The master thesis seek to forecast the monthly unemployment rate using freely available data from FRED.
+A simpel autoregression will be considered as a benchmark model.
+Another benchmark model that we will consider is the factor model.  \ref{ch:dfm}
 First the classical factor model is presented, at which we rely some assumptions to ensure uniqueness of the estimators.
-However 
+The factor model limits the number of model parameters by collecting information about variance in the explanatory variables in some few underlying factors.
 
-In the next chapter the lasso is presented.  
+The lasso model is an extension of classic linear regression, in which an \(\ell_1\)-constraint is imposed on the parameter estimates.
+This constraint has the effect of shrinking the coefficients, and even setting some to zero.
+As such the lasso model perform model selection in linear regression.
+This results in a convex optimzation problem, which can be solved efficiently for large problems.
 
-Herefter standard lasso,
-Hernæst teori for optimeringsmetoderne som anvendes.
-Herefter coordinate descent samt least angle regression.
-Generaliseringerne for standard lasso præsenteres herefter, elastisk net, group lasso samt adaptive lasso.
-Herefter introduceres statiske inferens for lasso.
+To solve the lasso problem we consider an algorithm called coordinate descent.
+It is especially attractive for problems such as lasso in which a closed solution does not exits, but a coordinatewise does.
+The coordinate descent algorithm choose a single coordinate to update and the performs a univariate minimization over this coordinate holding the remaining coordinates fixed, and cycle through the coordinates in some fixed order.
+Another algorithm that can be used to solve the lasso problem is the least angle regression (LARS), which delivers the entire solution path as a function of the regularization parameter \(\lambda\).
 
-In the empirical analysis the presented procedures are used to make one-step-ahead forecasts of the unrate.
-The data contains --- monthly variables for -- observation is gathered from publicly available by the Federal Reserve Bank of St. Louis.
+We will also consider some generalizations of the lasso, which all inherit the two essential features of the standard lasso, namely the shrinkage and selection of variables, or groups of variables.
+
+A breakdown of the lasso is that it tends to select only one variable if there is a group of variables which the pairwise correlations are very high.
+The elastic net makes a compromise between the ridge and the lasso penalty. 
+
+The elastic net has an additional additional tuning parameter \(\alpha\), that has to be determined.
+The group lasso is preferred if the covariate have a natural group structure.
+At last we consider the adaptive lasso, which impose weight
+Also the adaptive lasso good asymptotic 
+socalled oracle properties.
+
+
+In the empirical analysis the presented procedures are used to make one-step-ahead forecasts of the unemployment rate.
+The data contains --- monthly variables for -- observation is gathered from the Federal Reserve Bank of St. Louis and is publicly available.
 As benchmark models we will consider the autoregression model and the factor model.
-Thought the empirical analysis, the number of lags of the responsvariable chosen by the autoregressive model, will be included as kovariates during  
+Thought the empirical analysis, the number of lags of the responsvariable chosen by the autoregressive model, will be included as kovariates during the rest. 
 
 The presented models will be evaluated out-of-sample by the mean absolutte error (MAE) and the root mean squared error (RMSE).
-We will also consider the model confidence set, which identifies a set of models that are significantly better that the other models.
-At last the Diebold Mariano test is considered, to 
+We will also consider test if the lasso based models are significantly better than the bechmarks, applying the Diebold-Mariano test.
+At last the model confidence set procedure is considered, which identifies a set of models that are significantly better that the other models.
+
+We find that relative to the benchmarks the lasso models and its generalizations cannot improve the forecasts of the unemployment rate given, however we do

@@ -1,16 +1,31 @@
 \chapter{Indledning}
-Prædiktion af makroøkonomiske variable 
+At prædiktere en makroøkonomisk variable har interesse af flere årsager.
+Aktører på finansielle markeder handler på baggrund af forventninger til fremtidige aktiekurser, renter og valutakurser.
+Erhvervsfolk fastlægger produktion og investeringer på baggrund af den forventede udvikling i efterspørgsel.
+Politiker tager beslutninger om økonomisk politiske indgreb på baggrund af kort- og langsigtede prognoser for økonomien.
+Den enkelte forbruger baserer sine indkøb på indkomst.
+En makroøkonomisk variabel afhænger 
 
-Vi beskæftiger os med datasæt med et stort antal forklarende variable, og ofte er antallet af variable større end antallet af observationer.
+En central makroøkonomisk variabel er arbejdsløshedsraten.
+Arbejdsløshedsraten betegner den procentvise ledighed.
+%andel af arbejder i arbejdsstyrken der ikke er i job.
+%Arbejdsstyrken omfatter hvis arbejdskraft er til rådighed for arbejdsmarkedet og som enten er i beskæftigelse eller ledige.
+Givet et datasæt med et stort antal makroøkonomiske variable, skal vi prædiktere arbejdsløshedsraten.
 
-Til at håndtere variablerne betragtes faktor modellen samt shrinkage metoder, som alle er dimension reducerende metoder.
-Faktor modellen opsummerer al information i nogle principale komponenter inden prædiktion.
-Shrinkage metoderne identificerer og aggrerer individuelle prædiktorer som har størst indflydelse på variablen som prædikteres.
-Hvis kun få prædiktorer omfatter information til prædiktionen, da vil lasso baseret metoder eliminere irrelevante prædiktorer.
-Hvis istedet at variablen som prædikteres påvirkes af mange tidsrækker, da forventes faktor modellen at finde og karakterisere de underliggende faktorer og outperforme lasso baseret metoder.
+En oplagt metoder vil være mindste kvadraters metoder, som minimere summen af kvadrerede residualer.
+Men i dette tilfælde hvor vi betragter et så stort antal variable, da vil .
+Bias-varians tradeoff
+Og hvis antallet af variable er større end antallet af observationer, vil OLS ikke give en entydig løsning.
 
+Istedet er vi interesseret i at reducere antallet af variable.
+Hertil betragtes faktor modellen, som opsummere al information af variablerne i nogle få underliggende faktorer.
+principale komponenter?
 
-Vi vil betragte lasso-baseret approach som generaliserer standard lasso regression.
+Vi betragter lasso problemet som er en udvidelse af mindste kvadraters metode da der tilføjes en \(\ell_1\)-betingelse problemet.
+Denne betingelse vil shrinke koefficienter og sætte nogle lig 0.
+Dermed udfører lasso modelen variabeludvælgelse i lineær regression.
+
+Vi vil også betragte nogle generaliseringer af lasso problemet.
 \citep{zou_hastie} viste at ustabiliteten for variabeludvælgelse af lasso kommer af parameter usikkerheden i at estimere en stor kovariansmatrix.
 Ved at erstatte den empiriske estimator af kovariansmatricen med en skrinkage estimator, viste de at de resulterende regressions koefficienter og variabeludvælgelses proces er mere stabil.
 Dette er ækvivalent med at pålægge en ekstra \(\ell_2\) norm betingelse på lasso problemet.
@@ -20,17 +35,20 @@ Da prædiktorerne kan opdeles i blokke, pålægges en sparse betingerlser på di
 Dette gøres ved en two-stage procedure.
 I første stage opdeles prædiktorerne i blokkene. I anden stage, group lasso \citep{group_lasso} is lavet således at prædiktorerne i samme block har en tendens til at vælges sammen.
 
+Til slut betragtes også adaptive lasso.
+
 Som det kan ses i den empiriske del, har lasso varianterne tilsvarende out-of-sample forcast og generelt outperformes disse dynamisk faktor model, men elastisk net og group lasso giver mere konsistent variabel udvælgelses resultat over ...
 
 
-Teori for lasso er baseret på tværsnitsdata, men anvendes på tidsrækker.
 
 
 
-Shrinkage metoder teori er baseret på tværsnitdata, hvor faktor modeller er baseret på tidsrækkedata. 
+Teorien for lasso problemet og dens generalisering er baseret på tværsnitsdata, men anvendes for tidsrækker.
+Teorien for faktor modellen er givet på tidsrække data, men oprindelig også udviklet på tværsnitsdata.
 
 
-Tradeoff mellem varians og bias
 
-Notation
+\section{Notation}
+Afslutningsvis vil vi introducere notation som anvendes igennem rapporten:
+
 Gør klar hvad der er række vektor og søjle vektor, angående med transpose.  

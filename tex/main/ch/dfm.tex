@@ -68,7 +68,7 @@ For at løse optimeringsproblemet \eqref{eq:dfm11} differentieres objektfunktion
 \begin{align*}
 \frac{\partial}{\partial \tF} \del{\del{\X - \tF \tLambda^T}^T \del{\X - \tF \tLambda^T}} = -2 \X \tLambda + 2 \tF \tLambda^T \tLambda \quad \Longrightarrow \quad \widehat{\tF} = \X \tLambda \del{\tLambda^T \tLambda}^{-1} .
 \end{align*}
-Af antagelse \ref{ass:faktor}a), som defineres på side ---, har vi, at \(\widehat{\tF} = p^{-1} \X \tLambda\).
+Lad \(p^{-1} \tLambda^T \tLambda = \mathbf{I}_r\), som antages i antagelse \ref{ass:faktor}a), da har vi, at \(\widehat{\tF} = p^{-1} \X \tLambda\).
 Hvis \(\widehat{\tF}\) indsættes i \eqref{eq:dfm11} får vi, at
 \begin{align*}
 &\argmin_{\tLambda} \cbr{\text{Trace} \sbr{ \del{\X - p^{-1} \X \tLambda \tLambda^T}^T \del{\X - p^{-1} \X \tLambda \tLambda^T}}} \\
@@ -136,7 +136,7 @@ Antagelse \ref{ass:faktor}.b) tillader også faktorerne at være korreleret.
 %
 Lad os betragte \(\del{pT}^{-1} \sum_{t=1}^T \tLambda \tF_t \tF_t^T \tLambda^T\), som vi tager middelværdien af og lader \(T \rightarrow \infty\), da får vi af antagelse \ref{ass:faktor}.d), at
 \(\lim_{T \rightarrow \infty} p^{-1} \tLambda \del{T^{-1} \sum_{t=1}^T \E{\tF_t \tF_t^T}} \tLambda^T = p^{-1} \tLambda \boldsymbol{\Sigma}_{\tF\tF} \tLambda^T\).
-Spektral dekomposition sætningen giver, så at diagonal elementerne i \(\boldsymbol{\Sigma}_{\tF\tF}\) er egenværdierne for \(p^{-1} \tLambda \boldsymbol{\Sigma}_{\tF\tF} \tLambda^T\) og søjlerne i \(\tLambda\) er de tilsvarende egenvektorer.
+Spektral dekomposition sætningen giver så, at diagonal elementerne i \(\boldsymbol{\Sigma}_{\tF\tF}\) er egenværdierne for \(p^{-1} \tLambda \boldsymbol{\Sigma}_{\tF\tF} \tLambda^T\) og søjlerne i \(\tLambda\) er de tilsvarende egenvektorer.
 %
 %Antagelse \ref{ass:faktor} giver en normalisering asymptotisk ved at forbinde \(\tLambda\) med de ordnede ortonormal egenvektorer af \(\del{p T}^{-1} \sum_{t=1}^T \tLambda \tF_t \tF_t^T \tLambda^T\) og \(\tF_t\) med de principale komponenter af \(\tLambda \tF_t\) for \(j=1, \ldots, T\).
 %Diagonal elementerne af \(\boldsymbol{\Sigma}_{\tF \tF}\) svarer til grænsende egenværdier af \(\del{p T}^{-1} \sum_{t=1}^T \tLambda \tF_t \tF_t^T \tLambda^T\).
@@ -249,7 +249,7 @@ Dette er tab af generalitet, da flere metoder konsistent estimerer antallet af f
 %
 \begin{thm} \label{thm:factorthm2}
 Lad antagelse \ref{ass:forecasting_ligning} og betingelserne i sætning \ref{thm:factorthm1} være opfyldt. 
-Lad \(\widehat{\tbeta}_{\tF}\) og \(\widehat{\tbeta}_{\tw}\) betegne OLS estimaterne af \(\tbeta_{\tF}\) og \(\tbeta_{\tw}\) fra regressionen af \(y_{t+h}\) på \(\widehat{\tz}_t\) for \(t=1, \ldots, T-h\). Da gælder følgende
+Lad \(\widehat{\tbeta}_{\tF}\) og \(\widehat{\tbeta}_{\tw}\) betegne OLS estimaterne af \(\tbeta_{\tF}\) og \(\tbeta_{\tw}\) fra regressionen af \(y_{t+h}\) på \(\widehat{\tz}_t^T\) for \(t=1, \ldots, T-h\). Da gælder følgende
 \begin{enumerate}[label=\alph*)]
 \item \(\del{\widehat{\tbeta}_{\tF}^T \widehat{\tF}_T + \widehat{\tbeta}^T_{\tw} \tw_T} - \del{\tbeta_{\tF}^T \tF_T + \tbeta_{\tw}^T \tw_T} \overset{p}{\rightarrow} 0\).
 \item \(\widehat{\tbeta}_{\tw} - \tbeta_{\tw} \overset{p}{\rightarrow} \mathbf{0}\) og \(S_j\) defineret i sætning \ref{thm:factorthm1} kan vælges således at \(S_j \widehat{\beta}_{j \tF} - \beta_{j \tF} \overset{p}{\rightarrow} 0\) for \(j = 1, \ldots, r\).
@@ -336,31 +336,31 @@ Af antagelse \ref{ass:forecasting_ligning}.a) har vi, at \(\E{\tz_T \tz_T^T} = \
 Tilsvarende da \(\tbeta\) er endelig af antagelse \ref{ass:forecasting_ligning}.e) og \(\del{\tR \widehat{\tz}_T - \tz_T} \overset{p}{\rightarrow} 0\) af (R15) s. 1176 i \citep{stock_watson_2002a}, forsvinder også andet led i sandsynlighed af slutskys sætning \ref{thm:slutsky}. 
 \end{proof}
 
-\section{Valg af antal faktorer}
-%Antallet af faktorer kan bestemmes udfra et såkaldt \textit{scree plot}.
-%Her er egenværdierne ordnede fra den største til den mindste.
-%For at bestemme antallet af faktorer ser vi efter en bøjning i scree plottet.
-%Antallet af komponenter er givet ved punktet hvori de resterende egenværdier er relativ lav og approksimativ samme størrelse.
+%\section{Valg af antal faktorer}
+%%Antallet af faktorer kan bestemmes udfra et såkaldt \textit{scree plot}.
+%%Her er egenværdierne ordnede fra den største til den mindste.
+%%For at bestemme antallet af faktorer ser vi efter en bøjning i scree plottet.
+%%Antallet af komponenter er givet ved punktet hvori de resterende egenværdier er relativ lav og approksimativ samme størrelse.
+%%
+%Valg af antal faktorer kan baseres på informationskriterier.
+%Informationskriterierne betragter tradeoff mellem at inkludere en ekstra faktor, dvs en ekstra parameter i modellen, mod omkostningen af at øge variabiliteten, som kommer af at estimere en ekstra parameter.
+%AIC kan anvendes til at udvælge antallet af faktorer, men \citep{Bai_Ng} beviset at dette ikke giver et konsistent estimat.
+%Istedet foreslås at betragtet funktionen i \eqref{eq:dfm11}, som en funktion af \(\widehat{\tF}\) og \(k\), hvor \(0<k<k_\text{max}\) er antallet af faktorer, dvs
+%\begin{align*}
+%V \del{k, \widehat{\tF}} = \del{pT}^{-1} \sum_{j=1}^p \sum_{t=1}^T \del{x_{jt} -\boldsymbol{\lambda}_j \widehat{\tF}_t}^2
+%\end{align*}
+%som i fællesskab med en straffunktion \(g \del{p,T}\) giver informationskriteriet
+%\begin{align*}
+%\text{IC} \del{k} = \ln V \del{k, \widehat{\tF}} + k g \del{N,T}.
+%\end{align*}
+%\citep{Bai_Ng} foreslår følgende straffunktioner
+%\begin{align*}
+%g_1 \del{p,T} &= \frac{p + T}{p T} \ln \del{\frac{pT}{p + T}}, \\
+%g_2 \del{p,T} &= \frac{p + T}{p T} \ln \del{ \min \cbr{p, T}}, \\
+%g_3 \del{p,T} &= \frac{\ln \del{\min \cbr{p, T}}}{\min \cbr{p, T}},
+%\end{align*}
+%som resulterer i konsistente kriterierne, der betegnes henholdsvis \(\text{IC}_1 \del{k}\), \(\text{IC}_2 \del{k}\) samt \(\text{IC}_3 \del{k}\).
 %
-Valg af antal faktorer kan baseres på informationskriterier.
-Informationskriterierne betragter tradeoff mellem at inkludere en ekstra faktor, dvs en ekstra parameter i modellen, mod omkostningen af at øge variabiliteten, som kommer af at estimere en ekstra parameter.
-AIC kan anvendes til at udvælge antallet af faktorer, men \citep{Bai_Ng} beviset at dette ikke giver et konsistent estimat.
-Istedet foreslås at betragtet funktionen i \eqref{eq:dfm11}, som en funktion af \(\widehat{\tF}\) og \(k\), hvor \(0<k<k_\text{max}\) er antallet af faktorer, dvs
-\begin{align*}
-V \del{k, \widehat{\tF}} = \del{pT}^{-1} \sum_{j=1}^p \sum_{t=1}^T \del{x_{jt} -\boldsymbol{\lambda}_j \widehat{\tF}_t}^2
-\end{align*}
-som i fællesskab med en straffunktion \(g \del{p,T}\) giver informationskriteriet
-\begin{align*}
-\text{IC} \del{k} = \ln V \del{k, \widehat{\tF}} + k g \del{N,T}.
-\end{align*}
-\citep{Bai_Ng} foreslår følgende straffunktioner
-\begin{align*}
-g_1 \del{p,T} &= \frac{p + T}{p T} \ln \del{\frac{pT}{p + T}}, \\
-g_2 \del{p,T} &= \frac{p + T}{p T} \ln \del{ \min \cbr{p, T}}, \\
-g_3 \del{p,T} &= \frac{\ln \del{\min \cbr{p, T}}}{\min \cbr{p, T}},
-\end{align*}
-som resulterer i konsistente kriterierne, der betegnes henholdsvis \(\text{IC}_1 \del{k}\), \(\text{IC}_2 \del{k}\) samt \(\text{IC}_3 \del{k}\).
-
-For \(p = T\) fås at \(g_2 \del{T,T} = 2T^{-1} \ln \del{T}\), som bekendt er \(2\) gange BIC straffaktoren.
-
-%\citep{Bai_Ng} viste, at under betingelserne af approksimativ dfm, da er \(\hat{r}\) som minimere et af informationskriterierne med \(g \del{N,T}\) opfylder disse betingelser konsistent for den sande værdi af \(r\), under antagelse af at værdien af \(r\) er endelig og ikke stiger med \(\del{N, T}\).
+%For \(p = T\) fås at \(g_2 \del{T,T} = 2T^{-1} \ln \del{T}\), som bekendt er \(2\) gange BIC straffaktoren.
+%
+%%\citep{Bai_Ng} viste, at under betingelserne af approksimativ dfm, da er \(\hat{r}\) som minimere et af informationskriterierne med \(g \del{N,T}\) opfylder disse betingelser konsistent for den sande værdi af \(r\), under antagelse af at værdien af \(r\) er endelig og ikke stiger med \(\del{N, T}\).

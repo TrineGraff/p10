@@ -60,6 +60,7 @@ lambda <- best_lambda * n
 beta = coef(lasso.model, s = lambda/n, exact = TRUE, x = X.train, y = y.train)[-1]
 
 out_glm <- fixedLassoInf(X.train, y.train, beta, lambda, intercept = FALSE, alpha = 0.1)
+
 ?fixedLassoInf
 
 out_glm$type # partial

@@ -3,42 +3,41 @@ I den empiriske del anvendes et datasæt fra FRED, som er hentet fra Federal Res
 Datasættet består af månedlige observationer for 128 makroøkonomiske variable i perioden 1. januar 1959 til 1. november 2017 svarende til 707 observationer.
 Datasættet er givet i appendiks \ref{app:app_data}.
 
-Vi transformerer tidsrækkerne for variablerne, således at tidsrækkerne er stationære.
+Tidsrækkerne for variablerne transformeres, således at de bliver stationære.
 Som følge at disse transformationer introduceres nogle ikke-observeret værdier i starten af hver tidsrække.
 Derudover observeres at 5 variable har et stort antal ikke-observeret værdier, som derfor fjernes fra datasættet.
-Yderligere fjernes de første 12 samt de sidste 5 observationer, således at datasættet er fuldstændig renset for ikke-observeret værdier.
+Yderligere fjernes de første 12 samt de sidste 4 observationer, således at datasættet er fuldstændig renset for ikke-observeret værdier.
 Det transformerede datasæt består hermed af 123 variable i perioden 1. januar 1960 til 1. juli 2017 svarende til 691 observationer.
 Datasættet repræsenterer en bred vifte af makroøkonomiske variable, som Michael McCracken har inddelt i 8 grupper:
 %
 \begin{description}
-\item [Gruppe 1]: Output og indkomst \legendbox{chartreuse4}
-\item [Gruppe 2]: Arbejdsmarked \legendbox{blue3}
-\item [Gruppe 3]: Bolig \legendbox{purple}
-\item [Gruppe 4]: Forbrug, ordrer og varebeholdninger  \legendbox{red3}
-\item [Gruppe 5]: Penge og kredit \legendbox{deeppink}
-\item [Gruppe 6]: Renter og valutakurs \legendbox{orange}
-\item [Gruppe 7]: Priser \legendbox{cadetblue2}
-\item [Gruppe 8]: Aktiemarket \legendbox{goldenrod4}
+\item Gruppe 1: Output og indkomst \legendbox{chartreuse4}
+\item Gruppe 2: Arbejdsmarked \legendbox{blue3}
+\item Gruppe 3: Bolig \legendbox{purple}
+\item Gruppe 4: Forbrug, ordrer og varebeholdninger  \legendbox{red3}
+\item Gruppe 5: Penge og kredit \legendbox{deeppink}
+\item Gruppe 6: Renter og valutakurs \legendbox{orange}
+\item Gruppe 7: Priser \legendbox{cadetblue2}
+\item Gruppe 8: Aktiemarket \legendbox{goldenrod4}
 \end{description} 
 %
-Farverne, som illustrerer hver gruppe, vil i analysen indikerer hvilken gruppe variablerne er inddelt i.
+Farverne, som illustrerer hver gruppe, vil i analysen indikerer, hvilken gruppe variablerne tilhører.
 Vi opdeler datasættet i en træningsmængde, som består af 552 observationer fra 1. januar 1960 til 1. december 2005 og en testmængde, som består af 139 observationer fra 1. januar 2006 til 1. juli 2017. 
 
 En betydningsfuld makroøkonomisk variable er arbejdsløshed, som vi betragter som responsvariabel.  
-Arbejdsløshed er inkluderet i gruppen arbejdsmarked.
-Arbejdsløshedsraten repræsenterer antallet af ledige i procent af den samlede arbejdskraft.
-Arbejdskraften begrænses til personer på 16 år eller derover, som er bosiddende i 1 af de 50 stater eller distriktet af Columbia.
+Arbejdsløshedsraten er inkluderet i gruppen arbejdsmarked.
+Arbejdsløshedsraten repræsenterer antallet af ledige i procent af den samlede arbejdsstyrke.
+Arbejdsstyrken omfatter personer på 16 år eller derover, som er bosiddende i 1 af de 50 stater eller distriktet af Columbia.
 Dermed er arbejdsløshedsraten en indikation på, hvorvidt ressourcerne udnyttes.
 En stigende arbejdsløshed kan være forbundet med en recession.
-
 Kilden for arbejdsløshedsraten er U.S. Bureau of Labor Statistics.
 Den er sæsonjusteret og givet månedlig.
 
-På figur \ref{fig:unemployment} illustreres arbejdsløshedsraten (til venstre) samt arbejdsløshedsraten stationær og centreret (til højre).
+På figur \ref{fig:unemployment} illustreres arbejdsløshedsraten samt arbejdsløshedsraten stationær og centreret.
 Mccraken foreslår at tage 1. differensen af tidsrækken for at opnå stationaritet.
 Tidsrækken centreres, således at vi kan se bort fra skæringen.
 %
-\imgfigh{unemployment.pdf}{0.75}{Månedlig, sæsonjusteret arbejdsløshedsrate for USA.}{unemployment}
+\imgfigh{unemployment.pdf}{0.9}{Månedlig, sæsonjusteret arbejdsløshedsrate for USA.}{unemployment}
 
 Det overordnet formål med analysen er, at prædiktere arbejdsløshedsraten.
 Hertil vil vi betragte de beskrevne modeller i den teoretiske del.

@@ -1,15 +1,15 @@
-\chapter{Selektions metoder}
-Udover de 122 forklarende variabler, som er blevet introduceret i kapitel \ref{ch:data} tilføjer vi, som tidligere nævnt, fire laggede værdier af responsvariablen.  
-Vi har derfor 126 forklarende variabler i vores datasæt, hvor vi fjerner de første fire rækker for at undgå NA's. 
-Derfor indeholder vores træningsmængde nu 448 observationer fra 1. maj 1960 til 1. december 2005. 
-De laggede værdier bliver inkluderet i samme gruppe, som arbejdsløshed. 
+\chapter{Lasso modellen og dens generaliseringer}
+Da den autoregressive model valgte en orden på 4, tilføjes fire variable med laggede værdier af arbejdsløshedsraten til de øvrige 122 variable.
+Dette introducerer nogle uobserveret værdier, og derfor fjernes de første 4 observationer af hver tidsrækkede, således at vi undgår uobserveret værdier.
+De tilføjede laggede tidsrækker inkluderes i gruppe 2, hvor også arbejdsløshedsraten er inkluderet (se appendiks \ref{app:data}).
+Vi betragter derfor 126 variable i perioden fra 1. maj 1960 til 1. december 2005 svarende til 448 observationer.
 
-Vi har introduceret to algoritmer til at løse vores optimeringsproblemer, som vi vil anvende.
-Vi deler derfor vores analyse op i to dele  hhv. coordinate descent og LARS algoritmen.
+Lasso problemet og dens generaliseringer kan løses med coordinate descent algoritmen og LARS algoritmen.
+Vi vil anvende coordinate descent algoritmen til at løse lasso, ridge regression, elastisk net, group lasso og adaptive lasso med henholdsvis OLS og lasso vægte.
+Men vi har valgt blot at betragte LARS algoritmen uden og med lasso modifikationen, for at begrænse den empiriske del.
+
 \input{main/ch/sub/coordinate}
-
 \input{main/ch/sub/lars}
-
 
 
 %Vi vil først finde $\widehat\lambda$, som giver den optimale model for de forskellige shrinking metoder. 

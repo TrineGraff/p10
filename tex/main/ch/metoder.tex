@@ -1,17 +1,16 @@
 \chapter{Metoder til valg af model}
-I dette kapitel vil vi redegøre for nogle metoder, således at vi kan finde den optimale model.??
-Vi er interesseret i en model, der er god til at prædiktere, men uden at være for kompleks.  ??
+I dette kapitel vil vi redegøre for nogle metoder, som anvendes til at udvælge den ``bedste'' model. 
+Vi er interesseret i en model, der er god til at prædiktere, men uden at være for kompleks.
 
 Datasættet opdeles i en træningsmængde og en testmængde. 
 Observationerne i træningsmængden betragtes som in-sample observationer og anvendes primært til at identificere modellen og estimere parametrene. 
-Observationerne i testmængden betragtes som out-of-sample observationer og anvendes til at vurdere modellerne som er fundet udfra in-sample observationerne. 
+Observationerne i testmængden betragtes som out-of-sample observationer og anvendes til at vurdere modellem, som er fundet udfra in-sample observationerne. 
  
 \section{In-sample metoder}
-I dette afsnit vil vi introducere nogle informationskriterier hvorudfra antallet af faktorer kan vælges for faktor modellen og krydsvalidering samt BIC som anvendes til at estimere tuning parameteren \(\lambda\) for lasso modellen og dens generaliseringer.
+For faktor modellen skal vi bestemme antallet af faktorer og for lasso modellen og dens generaliseringer skal vi estimere tuning parameteren.
 
 \subsection{Valg af antal faktorer}
-For faktor modellen skal vi bestemme antallet af faktorer.
-Dette kan bestemmes udfra informationskriterier, som betragter et tradeoff mellem at inkludere en ekstra faktor, dvs en ekstra parameter i modellen, mod omkostningen af at øge variabiliteten, som kommer af at estimere en ekstra parameter.
+Antallet af faktorer kan bestemmes udfra informationskriterier, som betragter et tradeoff mellem at inkludere en ekstra faktor, dvs en ekstra parameter i modellen, mod omkostningen af at øge variabiliteten, som kommer af at estimere en ekstra parameter.
 AIC kan anvendes til at udvælge antallet af faktorer, men \citep{Bai_Ng} beviset, at dette ikke giver et konsistent estimat.
 Istedet foreslås at betragtet funktionen i \eqref{eq:dfm11}, som en funktion af \(\widehat{\tF}\) og \(k\), hvor \(0<k<k_\text{max}\) er antallet af faktorer, dvs
 \begin{align*}
@@ -29,13 +28,11 @@ g_3 \del{p,T} &= \frac{\ln \del{\min \cbr{p, T}}}{\min \cbr{p, T}},\label{eq:ic3
 \end{align}
 som betegnes henholdsvis \(\text{IC}_1 \del{k}\), \(\text{IC}_2 \del{k}\) samt \(\text{IC}_3 \del{k}\). Disse giver konsistent estimation af antallet af faktorer i faktor modellen.
 
-For \(p = T\) fås at \(g_2 \del{T,T} = 2 T^{-1} \ln \del{T}\), som bekendt er \(2\) gange BIC straffaktoren.
-
+For \(p = T\) fås at \(g_2 \del{T,T} = 2 T^{-1} \ln \del{T}\), som bekendt er \(2\) gange straffaktoren for BIC.
 
 \subsection{Udregning og valg af tuning parametre}
-I dette underafsnit introduceres krydsvalidering og BIC, som anvendes til at estimere tuning parameteren \(\lambda\) i lasso modellen og generaliseringerne af lasso.
-Bemærk at elastisk net problemet \eqref{eq:4.2} afhænger af to tuning parametre \(\lambda\) og \(\alpha\).
-
+I dette underafsnit introduceres krydsvalidering og BIC, som anvendes til at estimere tuning parameteren \(\lambda\) i lasso modellen og den generaliseringer.
+For elastisk net problemet \eqref{eq:4.2} betragtes to tuning parametre \(\lambda\) og \(\alpha\).
 
 \subsubsection{Krydsvalidering}
 \textit{En af de simpleste og oftest anvendte metoder til at estimere prædiktions fejlen er krydsvalidering. 
@@ -44,6 +41,7 @@ Dette afsnit giver en kort introduktion af krydsvalidering og er baseret på s. 
 %Krydsvalidering er en metode hvor vi estimerer prædiktions fejl fra træningssættet ved at holde fast i en del mængde. Delmængden bliver så anvendt som valideringssæt. 
 %
 %Denne tilgang med at anvende et valideringssæt er en simple strategi for at estimerer prædiktions fejl på en mængde af observationer. 
+
 %Tilgangen splitter tilfældige observationer ind  i to delmængder, et træningssæt og et valideringssæt. 
 %Forskellige regressions modeller fittes på træningsdata og deres prædiktion af responsvariablen er evaluerede i valideringssættet. 
 %Valideringssættets fejl er normalt målt i MSE. 
@@ -57,10 +55,10 @@ Dette afsnit giver en kort introduktion af krydsvalidering og er baseret på s. 
 %\subsubsection{k-fold krydsvalidering}
 En k-fold krydsvalidering opdeler tilfældigt observationerne i \(k\) grupper, som er tilnærmelsesvis af samme størrelse.
 Én af disse grupper anvendes som valideringsmængde, og de resterende \(k-1\) grupper betragtes som træningsmængde.
-En metode fittes på træningsmængden, hvorfra den gennemsnitlige kvadrerede fejl findes udfra valideringsmængden, hvilket giver \(\text{MSE}_1\).
+En regressions model fittes på træningsmængden, hvorfra den gennemsnitlige kvadrerede fejl findes udfra valideringsmængden, hvilket giver \(\text{MSE}_1\).
 Denne procedure gentages \(k\) gange, således at hver gruppe betragtes som valideringsmængde.
 Dette resulterer i \(k\) estimater af prædiktions fejlen $\text{MSE}_1, \text{MSE}_2, \dots , \text{MSE}_k$.
-\(k\)-fold krydsvalidering estimatet er da givet ved
+Estimatet for \(k\)-fold krydsvalidering er da givet ved
 \begin{align}
 \text{CV}_k = \frac{1}{k} \sum_{i=1}^k \text{MSE}_i. \label{eq:cv_k}
 \end{align}
@@ -73,13 +71,11 @@ Figur \ref{fig:cv_teori} illustrerer en 5-fold krydsvalidering.
 \caption{5-fold krydsvalidering. I dette tilfælde fittes modellen i første, anden, fjerde og femte gruppe af data og udregner prædiktionsfejlen af den fittede model for tredje gruppe.} \label{fig:cv_teori}
 \end{figure} 
 %
-Et $k$-fold krydsvalidering har en lav varians, fordi ligning \eqref{eq:cv_k} tager det gennemsnitlige output af $k$ fittede modeller, som har en lav korrelation, siden vi har et relativt lille overlap mellem træningssættet i hver model. 
-Bias kunne være et problem i forhold til hvordan vi vælger vores træningssæt. Hvis vi ikke har nok trænings observationer vil $k$-fold krydsvalidering have høj bias. Derfor er der også en bias-varians trade-off med valget af $k$. 
-
-
+Et $k$-fold krydsvalidering har en lav varians, da \eqref{eq:cv_k} tager det gennemsnitlige output af $k$ fittede modeller, som har en lav korrelation, siden vi har et relativt lille overlap mellem træningsmængden i hver model. 
+Bias kunne være et problem i forhold til hvordan vi vælger vores træningsmængde. Hvis vi ikke har nok observationer i træningsmængden vil $k$-fold krydsvalidering have høj bias. Derfor er der også en bias-varians trade-off med valget af $k$. 
 
 \subsubsection{BIC}
-Tuning parameteren \(\lambda\) kan også vælges udfra Bayesian informationskriteriet.
+Tuning parametrene kan også vælges udfra Bayesian informationskriteriet.
 Vi betragter dens skalerede version
 %
 %\begin{defn}[Bayesian informationskriteriet (BIC)] \label{def:bic}
@@ -101,7 +97,7 @@ og BIC kan omskrives til
 \text{BIC} = \log \widehat{\sigma}^2_p + \frac{p \log T}{T}.
 \end{align*}
 
-\section{Out of sample metoder}
+\section{Out-of-sample metoder}
 Vi anvender et rolling scheme forecast med expanding estimerings windows. 
 Dvs at det første estimerings window indeholder altså de sande observationer fra tiden 1 til tid $t$, og den næste estimerings window indeholderde sande observationer fra tiden 1 til $t+1$.
 Den første rolling window indeholder altså observationer fra tiden 1 til $m$, og den næste rolling window indeholder observationer fra periode 2 til $m+1$ og sådan fortsætter det. 

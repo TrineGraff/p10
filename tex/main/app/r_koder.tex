@@ -1,28 +1,42 @@
 \chapter{R koder} \label{app:r_koder}
-I dette appendiks er de mest relevante R-koder inkluderet. 
+I dette appendiks inkluderes \Rlang-koderne. 
 
-\section{Autoregressive model} \label{sec:auto}
-Nedenstående funktion anvendes til at bestemme ordenen $p$ af en autoregressiv model på træningsmængden.  
+\section{Autoregressiv model} \label{sec:auto}
+Nedenstående funktion anvendes til at bestemme ordenen $p$ af en autoregressiv model.  
 \rfile[firstline=10,lastline=28]{../R/unrate/autoregressive_model/insample.R}
 %
-Herefter anvender vi følgende funktion til at finde de estimerede parametre på træningsmængden. 
+Herefter anvender vi følgende funktion til at estimere parametrene udfra OLS. 
 \rfile[firstline=35,lastline=74]{../R/unrate/autoregressive_model/insample.R}
 
-Den næste funktionen anvender vi til at forecaste med. 
+Den autoregressive model af orden \(4\) prædikterer arbejdsløshedsraten 1-step ahead med følgende funktion. 
 \rfile[firstline=5,lastline=20]{../R/unrate/autoregressive_model/outsample.R}
 
-\section{Faktor model} \label{sec:faktor}
-Vi anvender to følgende funktioner til at estimerer og identificer faktorerne. 
-
+\section{Faktor modellen} \label{sec:faktor}
+Funktionerne \texttt{getFactors} og \texttt{estFactors} anvendes til at estimere og identificere faktorerne. 
+%
 \rfile[firstline=6,lastline=21]{../R/unrate/faktor_model/insample.R}
 \rfile[firstline=23,lastline=57]{../R/unrate/faktor_model/insample.R}
-
-Vi bruger følgende funktion til at forecasting.
+%
+Herefter prædikterer faktor modellen arbejdsløshedsraten med følgende funktion.
 \rfile[firstline=20,lastline=44]{../R/unrate/faktor_model/outsample.R}
 
 
-\section{Selektions metoder} \label{sec:faktor}
+\section{Lasso og dens generaliseringer} \label{sec:lasso}
+
+\subsection{Krydsvalidering} \label{sec:krydsvalidering}
+
+\subsubsection{Inferens} \label{subsubsec:inferens}
+Funktionen \texttt{fixedLassoInf} udregner \(p\)-værdier og konfidensintervaller for lasso estimatet for en fast værdi af tuning parameteren \(\lambda\).
+Funktionen anvender ``standard'' lasso problemet
+\begin{align*}
+\frac{1}{2} \Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \tbeta \Vert_1.
+\end{align*}
+Hvorimod \texttt{glmnet} multiplicerer først led med faktoren \(\frac{1}{n}\).
+Dette betyder, at efter vi har kørt \texttt{glmnet}, da skal vi sætte \texttt{beta = coef(obj, s=lambda/n)[-1]}, hvor \texttt{obj} er objektet, som er returneret af \texttt{glmnet} og \texttt{[-1]} fjerner skæringen som \texttt{glmnet} altid giver som første komponent, for at finde det beta der svarer til en lambda værdi.
+%
+\rfile[firstline=53,lastline=62]{../R/unrate/Inferens/selectiveInference.R}
+%
 
 \subsection{BIC} \label{sub:bic}
-Vi anvender følgende funktionen til at estimerer $\widehat{\lambda}$ med BIC
+Vi anvender følgende funktion til at estimerer $\widehat{\lambda}$ med BIC
 \rfile[firstline=2,lastline=32]{../R/unrate/shrinkage_metoder/bic.R}

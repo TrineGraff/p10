@@ -3,16 +3,16 @@
 \begin{tabular}{cccc | cccccc}
 \toprule
    \multicolumn{4}{c}{Lasso} &  \multicolumn{4}{c}{Ridge regression}  \\ \midrule
- & log & MSE & $p$ & & log & MSE & $p$ \\
+ & \(\log \del{\lambda}\) & MSE & $p$ & & \(\log \del{\lambda}\) & MSE & $p$ \\
  $\lambda_{\min}$ &$-6.6361$& 0.0019 & 28 &	$\boldsymbol{\lambda_{\min}}$ &  $\mathbf{-4.3800}$ &   $\mathbf{0.0045} $&  $\mathbf{126}$ \\ 
  $\boldsymbol{\lambda}_{\textbf{1sd}}$ & $\mathbf{-5.7057}$ & $\mathbf{0.0020} $& $\mathbf{14}$ & $\lambda_{ \text{1sd}}$& $-4.1939$ & 0.0047 & 126  \\ \bottomrule \toprule
 \multicolumn{4}{c}{Group lasso}  &  \multicolumn{4}{c}{Adaptive lasso m. OLS vægte}  \\ \midrule
-& log & MSE &$ p $ && log & MSE & $p$ &  \\
+& \(\log \del{\lambda}\) & MSE &$ p $ && \(\log \del{\lambda}\) & MSE & $p$ &  \\
 $\lambda_{\min}$& $-8.2644$ & 0.0022  & 126 & $\boldsymbol{\lambda_{\min}}$  & $\mathbf{-2.0630}$ &$ \mathbf{0.0018}$ & $\mathbf{2}$ \\
   $\boldsymbol{\lambda}_{\textbf{1sd}}$  & $\mathbf{-7.6365}$ &$ \mathbf{0.0023}$ & $\mathbf{119}$ &  $\lambda_{1\text{sd}}$ & $-0.3884$ & 0.0019 & 2 \\  \bottomrule 
   \toprule
   \multicolumn{4}{c}{Adaptive lasso m. lasso vægte}  \\ \cmidrule{1-4}
-& log & MSE & p \\
+& \(\log \del{\lambda}\) & MSE & p \\
 $\boldsymbol{\lambda_{\min}}$   &  $ \mathbf{-2.3674}$ & $ \mathbf{0.0018} $& $ \mathbf{2}$   \\
 $\lambda_{1\text{sd}}$  & $-0.2276$ & 0.0019 & 2  \\ \cmidrule{1-4}
  \end{tabular}

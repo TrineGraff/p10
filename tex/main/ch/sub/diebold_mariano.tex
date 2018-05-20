@@ -13,8 +13,11 @@ d_{ij,t} = L \del{y_t, \widehat{y}_{i,t}} - L \del{y_t, \widehat{y}_{j,t}}.
 %
 Betragt \(\hyp_0 : \E{d_{ij,t}} = 0\) imod \(\hyp_A: \E{d_{ij,t}} \neq 0\). Teststørrelsen for DM testen er defineret som
 \begin{align*}
-\text{DM} = \frac{\bar{d}_{ij}}{\sqrt{\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{ij}}}} =  \frac{\bar{d}_{ij}}{\sqrt{\frac{ 2 \pi \widehat{f}_d \del{0}}{T}}},
+\text{DM} = \frac{\bar{d}_{ij}}{\sqrt{\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{ij}}}},
 \end{align*}
-hvor \(\bar{d}_{ij} = \frac{1}{T} \sum_{t = 1}^T d_{ij,t}\) og \(\widehat{f}_d \del{0} ????\). 
+hvor \(\bar{d}_{ij} = \frac{1}{T} \sum_{t = 1}^T d_{ij,t}\) og 
+\(\mathrm{Var}\!\sbr{\bar{d}_{ij}} \approx \frac{1}{T} \del{\gamma_0 + 2 \sum_{k=1}^{h-1} \gamma_k}\) for \(h > 1 \) og \(\mathrm{Var}\!\sbr{\bar{d}_{ij}} \approx \frac{1}{T} \del{\gamma_0}\) for \(h = 1\) og \(\gamma_k = \text{Cov} \del{d_{ij,t}, d_{ij,t-k}}\). 
+%=  \frac{\bar{d}_{ij}}{\sqrt{\frac{ 2 \pi \widehat{f}_d \del{0}}{T}}},
+%\(f_d \del{0} = \frac{1}{2 \pi} \del{\gamma_0 + 2 \sum_{k=1}^{h-1} \gamma_k}\) for \(h > 1\) og \(f_d \del{0}=\frac{1}{2 \pi} \gamma_0\) for \(h=1\), hvor \(\gamma_k = \text{Cov} \del{d_{ij,t}, d_{ij,t-k}}\). 
 %
-Det kan vises, at DM teststørrelsen er asymptotisk standard normalfordelt under nulhypotesen. Derfor afvises nulhypotesen ved niveau $5 \%$, hvis $\abs{\text{DM}} > 1.96$.
+Det kan vises, at DM teststørrelsen er asymptotisk standard normalfordelt under nulhypotesen. Derfor afvises nulhypotesen, hvis $\abs{\text{DM}} > 1.96$.

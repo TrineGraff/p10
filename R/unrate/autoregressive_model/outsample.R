@@ -26,7 +26,7 @@ plot(y_test, type = "l", xlim = c(0,140), ylim = c(-0.5, 0.5))
 
 # plot --------------------------------------------------------------------
 
-dato = c(as.character(test_dato))
+dato = c(as.character(dato_test))
 
 df = data.frame(date = as.Date(dato), fc = fc$fc, y = y_test)
 

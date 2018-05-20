@@ -1,7 +1,13 @@
-\section{Lars}
-I denne sektion anvender vi algoritmen LARS til at løse vores problem og LARS algoritmen med en modifikation til at løse lasso. 
-Vi anvender funktionerne \texttt{lars} fra R-pakken af samme navn. 
-For LARS algoritmen producerer vi et fit, hver gang en ny variabler bliver tilføjet, dvs ved hvert step bliver der tilføjet en ny variable. Vi finder $\widehat{s}$, som betegner antallet af steps, ved krydsvalidering, men igen ser vi ikke kun på  $\widehat{s}_{\min}$, som giver den mindste gennemsnitlige krydsvaliderings fejl, men også den mindste værdi således at fejlen er indenfor en standard afvigelse, som betegnes $\widehat{s}_{\text{1sd}}$. 
+\section{LARS}
+Herefter anvendes LARS algoritmen uden og med lasso modifikationen, hvortil vi anvender \Rlang-pakken \texttt{lars}.
+
+For LARS algoritmen uden lasso modifikationen tilføjes en variabel i hvert step og dermed udfører algoritmen 126 steps.
+LARS algoritmen med lasso modifikationen udfører 192 steps, hvor variabler kan tilføjes og fjernes igen.
+
+
+
+For LARS algoritmen producerer vi et fit, hver gang en ny variabler bliver tilføjet, dvs ved hvert step bliver der tilføjet en ny variable. 
+Vi finder $\widehat{s}$, som betegner antallet af steps, ved krydsvalidering, men igen ser vi ikke kun på  $\widehat{s}_{\min}$, som giver den mindste gennemsnitlige krydsvaliderings fejl, men også den mindste værdi således at fejlen er indenfor en standard afvigelse, som betegnes $\widehat{s}_{\text{1sd}}$. 
 
 Krydsvalideringen for lasso deler L1-normen op i en følge af 100 punkter mellem 0 og 1, hvor vi herefter finder $\widehat{f}$. Vi ser ikke kun på den model der giver den mindste krydsvaliderings fejl, som betegnes  $\widehat{f}_{\min}$, men også  $\widehat{f}_{\text{1sd}}$ . 
 Figur \ref{fig:lars_kryds} viser krydsvaliderings plot for begge metoder. 
@@ -10,6 +16,26 @@ Figur \ref{fig:lars_kryds} viser krydsvaliderings plot for begge metoder.
 
 \imgfigh{lars_lasso_coef.pdf}{0.6}{h}{lars_lasso_coef}
 \imgfigh{lars_coef.pdf}{0.6}{h}{lars_coef}
+
+\newpage
+\subsection{Inferens}
+Lars algoritmen udfører 126 steps, hvor én variabel tilføjes i hvert step.
+Funktionen \texttt{larInf} fra \Rlang-pakken \texttt{selectiveInference} udregner \(p\)-værdier og konfidensintervaller for LARS algoritmen.
+I tabel \ref{tab:larInf} vises resultaterne.
+%
+\input{fig/tab/larInf}
+%
+
+\subsubsection{Kovarians test}
+Som nævnt udfører LARS algoritmen med lasso modifikationen 192 steps, hvori variablerne tilføjes og nogle fjernes igen.
+For \(\lambda_\text{min} = 36\) findes 21 prædiktorer, hvorpå kovarians testen udføres.
+Tabel \ref{tab:covTest} viser resultatet af dette.
+For prædiktorerne valgt i step 1-5 afvises nulhypotesen, hvilket betyder, at ...?
+%
+\input{fig/tab/covTest}
+%
+
+
 
 %SE for CV is found from the sample SE of the squared errors
 %choose fraction based 1-se cv error rule

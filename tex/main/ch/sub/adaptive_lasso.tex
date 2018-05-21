@@ -21,20 +21,19 @@ Adaptive lasso blev introduceret i \citep{adaptive_lasso} og er endnu en udvidel
 Ideen bag adaptive lasso er at tildele koefficienterne individuelle strafvægte istedet for at staffe koefficienterne ligeligt som i standard lasso.
 Den vægtede lasso er givet ved
 \begin{align*}
-\argmin_{\beta \in \R^p} \cbr{\Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p w_j \vert \beta_j \vert},
+\argmin_{\tbeta \in \R^p} \cbr{\Vert \y - \X \tbeta \Vert_2^2 + \lambda \sum_{j=1}^p w_j \vert \beta_j \vert},
 \end{align*}
 hvor \(\mathbf{w} \in \mathbb{R}^p\) er en kendt vektor og \(w_j \geq 0\).
 
-Adaptive lasso er blot en vægtet lasso, hvor vægtene \(\mathbf{w}\) er bestemt således at metoden opfylder orakelegenskaberne.
-Antag \(\tilde{\beta}\) er rod-n konsistent til \(\beta^*\), hvor \(\hat{\beta}^\text{OLS}\), \(\hat{\beta}^\text{ridge}\)?? og \(\hat{\beta}^\text{lasso}\) er rod-n konsistent.
-Vælg \(\gamma>0\) og definer \(w_j = \frac{1}{\vert \tilde{\beta}_j \vert^\gamma}\), da er adaptive lasso givet ved
-%Lad \(\tilde{\beta}\) være et pilot estimat og definer $w_j = \frac{1}{\vert \tilde{\beta}_j \vert^\gamma}$ hvor \(\gamma>0\), da er adaptive lasso givet ved
+Adaptive lasso er blot en vægtet lasso, hvor vægtene \(\mathbf{w}\) er bestemt, således at metoden opfylder orakelegenskaberne.
+Antag \(\tilde{\tbeta}\) er rod-n konsistent til \(\tbeta^*\). Der gælder, at \(\widehat{\tbeta}^\text{OLS}\) og \(\widehat{\tbeta}^\text{lasso}\) er rod-n konsistent.
+Vælg \(\gamma>0\) og definer \(\widehat{\mathbf{w}} = \frac{1}{\vert \tilde{\tbeta} \vert^\gamma}\), da er adaptive lasso  estimaterne givet ved
 \begin{align}
-\hat{\beta}^\text{AL} = \argmin_{\beta \in \R^p} \cbr{ \Vert \y - \X \beta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{1}{\vert \tilde{\beta}_j \vert^\gamma} \vert \beta_j \vert}. \label{eq:4.76}
+\widehat{\tbeta}^\text{AL} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{ \vert \beta_j \vert}{\vert \tilde{\beta}_j \vert^\gamma}}. \label{eq:4.76}
 \end{align}
-Den aktive mængde for adaptive lasso estimatet betegnes \(\mathcal{A}_n^\text{AL} = \cbr{j \ : \hat{\beta}^{\text{AL}} \neq 0 }\).
+Den aktive mængde for adaptive lasso estimatoren betegnes \(\mathcal{A}_n^\text{AL} = \cbr{j \ : \widehat{\tbeta}^{\text{AL}} \neq 0 }\).
 %Strafleddet for adaptive lasso kan ses som en approksimation til $\ell_q$ strafleddene med $q=1-\gamma$.
-Givet pilot estimaterne da er \eqref{eq:4.76} konveks, og kan dermed løses med coordinate descent algoritmen og LARS algoritmen.
+Givet \(\tilde{\tbeta}\) da er \eqref{eq:4.76} konveks, og kan dermed løses med coordinate descent algoritmen og LARS algoritmen.
 %Hvis pilot estimaterne er \(\sqrt{n}\) konsistent, da viste \citep{adaptive_lasso} at metoden finder den sande model under mere generelle betingelser end lasso.
 %Hvis \(p <n\) da kan estimaterne for mindste kvadraters metode anvendes som pilot estimater. Hvis \(p \geq n\) da er estimaterne for mindste kvadraters metode ikke veldefineret, men de univariate regressions koefficienter kan anvendes som pilot estimater.
 %
@@ -61,37 +60,39 @@ Vi kan behandle den som en tredje tunning parameter og udføre en tre-dimensione
 I \citep{adaptive_lasso} foreslås \(\hat{\beta}^\text{OLS}\) medmindre kollinaritet er en bekymring, i dette tilfælde kan vi forsøge med \(\hat{\beta}^\text{ridge}\), da den er mere stabil end \(\hat{\beta}^\text{OLS}\).
 %
 \subsection{Konsistens af adaptive lasso} \label{subsec:konsistentAL}
-For et passende valg af \(\lambda_n\) opfylder adaptive lasso orakelegenskaberne, som vi nu vil bevise.
+For et passende valg af \(\lambda_n\) opfylder adaptive lasso estimaterne orakelegenskaberne, som vi nu vil bevise.
+%
 \begin{thm}\label{thm:ALoracle}
-Antag $\frac{\lambda_n}{\sqrt{n}} \rightarrow 0$ og $\lambda_n n^\frac{\gamma-1}{2} \rightarrow \infty$. Da opfylder adaptive lasso estimaterne følgende:
+Antag $\frac{\lambda_n}{\sqrt{n}} \rightarrow 0$ og $\lambda_n n^\frac{\gamma-1}{2} \rightarrow \infty$, da opfylder adaptive lasso estimaterne følgende:
 \begin{itemize}
-\item Udvælgelsen af variabler er konsistent: $\lim_{n \rightarrow \infty} P(\mathcal{A}_n^\text{AL}=\mathcal{A})=1$
-\item Asymptotisk normalitet: $\sqrt{n}\left( \hat{\boldsymbol{\beta}}_\mathcal{A}^{\text{AL}}-\boldsymbol{\beta}_\mathcal{A}^* \right) \overset{d}{\rightarrow} N(\textbf{0},\sigma^2 \boldsymbol{C}_{11}^{-1}).$
+\item Konsistent variabeludvælgelsen: $\lim_{n \rightarrow \infty} P(\mathcal{A}_n^\text{AL}=\mathcal{A})=1$.
+\item Asymptotisk normalitet: $\sqrt{n}\left( \widehat{\boldsymbol{\beta}}_\mathcal{A}^{\text{AL}}-\boldsymbol{\beta}_\mathcal{A}^* \right) \overset{d}{\rightarrow} N(\textbf{0},\sigma^2 \boldsymbol{C}_{11}^{-1}).$
 \end{itemize} 
 \end{thm}
+%
 \begin{proof}
 Først bevises asymptotisk normalitet. Lad $\boldsymbol{\beta}=\boldsymbol{\beta}^{*} +\frac{\textbf{u}}{\sqrt{n}}$ og
 \begin{align*}
-\Psi_n(\textbf{u})=\left\Vert \mathbf{y}-\sum_{j=1}^p \textbf{x}_j \left( \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right) \right\Vert^2 + \lambda_n \sum_{j=1}^p \hat{w}_j \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert.
+\Psi_n(\textbf{u})=\left\Vert \mathbf{y}-\sum_{j=1}^p \textbf{x}_j \left( \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right) \right\Vert_2^2 + \lambda_n \sum_{j=1}^p \widehat{w}_j \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert.
 \end{align*}
-Lad $\hat{\textbf{u}}^{(n)}=\arg \min \Psi_n(\textbf{u})$, da er $\hat{\boldsymbol{\beta}}^{{\text{AL}}}=\boldsymbol{\beta}^{*} + \frac{\hat{\boldsymbol{u}}^{(n)}}{\sqrt{n}}$ eller $\hat{\boldsymbol{u}}^{(n)}=\sqrt{n}\left(\hat{\boldsymbol{\beta}}^{\text{AL}}-\boldsymbol{\beta}^{*}\right)$.
+Lad $\widehat{\textbf{u}}^{(n)}=\argmin \Psi_n(\textbf{u})$, da er $\widehat{\boldsymbol{\beta}}^{{\text{AL}}}=\boldsymbol{\beta}^{*} + \frac{\widehat{\boldsymbol{u}}^{(n)}}{\sqrt{n}}$ eller $\widehat{\boldsymbol{u}}^{(n)}=\sqrt{n}\left(\widehat{\boldsymbol{\beta}}^{\text{AL}}-\boldsymbol{\beta}^{*}\right)$.
 Lad $V(\mathbf{u})^{(n)}=\Psi_n(\textbf{u}) - \Psi_n(\textbf{0})$, da gælder, at
 \begin{align*}
-V(\mathbf{u})^{(n)}= \left\Vert \textbf{y} - \sum_{j=1}^p \textbf{x}_j \left( \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right) \right\Vert^2 +
-\lambda_n \sum_{j=1}^p \hat{w_j} \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert 
+V(\mathbf{u})^{(n)}= \left\Vert \textbf{y} - \sum_{j=1}^p \textbf{x}_j \left( \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right) \right\Vert_2^2 +
+\lambda_n \sum_{j=1}^p \widehat{w_j} \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert 
 -
-\left\Vert \textbf{y} - \sum_{j=1}^p \textbf{x}_j \beta_j^{*} \right\Vert^2 - \lambda_n \sum_{j=1}^p \hat{w_j} \left\vert \beta_j^{*} \right\vert.
+\left\Vert \textbf{y} - \sum_{j=1}^p \textbf{x}_j \beta_j^{*} \right\Vert_2^2 - \lambda_n \sum_{j=1}^p \widehat{w_j} \left\vert \beta_j^{*} \right\vert.
 \end{align*}
-Ovenstående ligning opdeles.
+Vi opdeler ovenstående ligning.
 Vi betragter først leddene hvori strafparametrene indgår
 \begin{align*}
-\lambda_n \sum_{j=1}^p \hat{w_j} \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert- \lambda_n \sum_{j=1}^p \hat{w_j} \left\vert \beta_j^{*} \right\vert 
-= \lambda_n \sum_{j=1}^p \hat{w_j} \left( \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert
+\lambda_n \sum_{j=1}^p \widehat{w_j} \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert- \lambda_n \sum_{j=1}^p \widehat{w_j} \left\vert \beta_j^{*} \right\vert 
+= \lambda_n \sum_{j=1}^p \widehat{w_j} \left( \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert
 \right).
 \end{align*}
 Vi ser herefter på de to resterende led
 \begin{align*}
-\left\Vert \textbf{y} - \sum_{j=1}^p \textbf{x}_j \left( \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right) \right\Vert^2 -\left\Vert \textbf{y} - \sum_{j=1}^p \textbf{x}_j \beta_j^{*} \right\Vert^2,
+\left\Vert \textbf{y} - \sum_{j=1}^p \textbf{x}_j \left( \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right) \right\Vert_2^2 -\left\Vert \textbf{y} - \sum_{j=1}^p \textbf{x}_j \beta_j^{*} \right\Vert_2^2,
 \end{align*}
 som kan skrives på matrix-vektor form
 \begin{align*}
@@ -103,30 +104,30 @@ som kan skrives på matrix-vektor form
 \end{align*}
 Vi får så, at 
 \begin{align}
-V(\mathbf{u})^{(n)} & = \textbf{u}^T \left(\frac{1}{n}\textbf{X}^T\textbf{X}\right)  \textbf{u} - 2 \frac{\boldsymbol{\epsilon}^T \textbf{X}}{\sqrt{n}}\textbf{u} + \lambda_n \sum_{j=1}^p \hat{w}_j \left( \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*}\right\vert
+V(\mathbf{u})^{(n)} & = \textbf{u}^T \left(\frac{1}{n}\textbf{X}^T\textbf{X}\right)  \textbf{u} - 2 \frac{\boldsymbol{\epsilon}^T \textbf{X}}{\sqrt{n}}\textbf{u} + \lambda_n \sum_{j=1}^p \widehat{w}_j \left( \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*}\right\vert
 \right) \nonumber \\
- & = \textbf{u}^T \left(\frac{1}{n}\textbf{X}^T\textbf{X}\right)  \textbf{u} - 2 \frac{\boldsymbol{\epsilon}^T \textbf{X}}{\sqrt{n}}\textbf{u} +\frac{\lambda_n}{\sqrt{n}} \sum_{j=1}^p \hat{w}_j \sqrt{n} \left( \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert
+ & = \textbf{u}^T \left(\frac{1}{n}\textbf{X}^T\textbf{X}\right)  \textbf{u} - 2 \frac{\boldsymbol{\epsilon}^T \textbf{X}}{\sqrt{n}}\textbf{u} +\frac{\lambda_n}{\sqrt{n}} \sum_{j=1}^p \widehat{w}_j \sqrt{n} \left( \left\vert \beta_j^{*} + \frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert
 \right). \label{eq:V_4}
 \end{align}
 %
 For første led i \eqref{eq:V_4} gælder der, at $\frac{1}{n} \mathbf{X}^T \mathbf{X} \overset{p}{\rightarrow} \mathbf{C}$ og for andet led har vi, at $\frac{\boldsymbol{\epsilon}^T \mathbf{X}}{\sqrt{n}} \overset{d}{\rightarrow} \textbf{W}=N(\textbf{0},\sigma^2 \boldsymbol{C})$. 
 Derfor ser vi nu blot på sidste led i \eqref{eq:V_4}. \\
-Hvis $\beta_j^{*} \neq 0$, da har vi, at $\hat{w}_j \overset{p}{\rightarrow} \left\vert \beta_j^{*} \right\vert^{-\gamma}$. Yderligere har vi, at 
+Hvis $\beta_j^{*} \neq 0$, da har vi, at $\widehat{w}_j \overset{p}{\rightarrow} \left\vert \beta_j^{*} \right\vert^{-\gamma}$. Yderligere har vi, at 
 \begin{align*}
 \lim_{n\rightarrow \infty}
 \frac{\left\vert \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert}{\frac{u_j}{\sqrt{n}}} =\frac{d}{d \beta_j^{*}} \left\vert \beta_j^{*} \right\vert =\text{sign}\left(\beta_j^{*} \right),
 \end{align*} 
 hvoraf der gælder, at $\lim_{n\rightarrow \infty} \sqrt{n} \left( \left\vert \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert \right) = u_j \text{sign}\left(\beta_j^{*} \right)$.
-Af Slutskys sætning \ref{thm:sluktsky} har vi, at 
+Af Slutskys sætning \ref{thm:slutsky} har vi, at 
 \begin{align*}
-\frac{ \lambda_n}{\sqrt{n}} \hat{w}_j \sqrt{n} \left(\left\vert \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert \right) \overset{p}{\rightarrow} 0.
+\frac{ \lambda_n}{\sqrt{n}} \widehat{w}_j \sqrt{n} \left(\left\vert \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert \right) \overset{p}{\rightarrow} 0.
 \end{align*}
 Hvis $\beta_j^{*} = 0$, da har vi $\sqrt{n} \left( \left\vert \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert \right) = \left\vert u_j \right\vert$.
 Vægtene omskrives til
 \begin{align*}
-\hat{w}_j= \left( \frac{1}{\left\vert \hat{\beta}_j \right\vert} \right)^\gamma=\left( \frac{\sqrt{n}}{\sqrt{n} \left\vert \hat{\beta}_j \right\vert} \right)^\gamma = \frac{n^{\gamma/2}}{ \left( \sqrt{n} \left\vert \hat{\beta}_j \right\vert \right)^\gamma},
+\widehat{w}_j= \left( \frac{1}{\left\vert \widehat{\beta}_j \right\vert} \right)^\gamma=\left( \frac{\sqrt{n}}{\sqrt{n} \left\vert \widehat{\beta}_j \right\vert} \right)^\gamma = \frac{n^{\gamma/2}}{ \left( \sqrt{n} \left\vert \widehat{\beta}_j \right\vert \right)^\gamma},
 \end{align*} 
-hvor $\gamma >0$ og $\hat{\beta}_j$ er rod-$n$-konsistent. Heraf har vi, at $\frac{\lambda_n}{\sqrt{n}} \hat{w}_j = \frac{\lambda_n}{\sqrt{n}} \frac{n^{\gamma/2}}{\vert \sqrt{n} \hat{\beta}_j \vert^\gamma} = \lambda_n n^{\frac{\gamma -1}{2}} \frac{1}{\vert \sqrt{n} \hat{\beta}_j \vert^\gamma} $, hvor $\sqrt{n} \hat{\beta}_j = O_p(1)$ og vi ved at  $\lambda_n n^\frac{\gamma-1}{2} \rightarrow \infty$, da har vi, at $\frac{\lambda_n}{\sqrt{n}} \hat{w}_j  \vert u_j \vert \rightarrow \infty$.
+hvor $\gamma >0$ og $\widehat{\beta}_j$ er rod-$n$-konsistent. Heraf har vi, at $\frac{\lambda_n}{\sqrt{n}} \widehat{w}_j = \frac{\lambda_n}{\sqrt{n}} \frac{n^{\gamma/2}}{\vert \sqrt{n} \widehat{\beta}_j \vert^\gamma} = \lambda_n n^{\frac{\gamma -1}{2}} \frac{1}{\vert \sqrt{n} \widehat{\beta}_j \vert^\gamma} $, hvor $\sqrt{n} \widehat{\beta}_j = O_p(1)$ og vi ved at  $\lambda_n n^\frac{\gamma-1}{2} \rightarrow \infty$, da har vi, at $\frac{\lambda_n}{\sqrt{n}} \widehat{w}_j  \vert u_j \vert \rightarrow \infty$.
 Af Slutsky sætning ser vi, at $V^{(n)} (\mathbf{u}) \overset{d}{\rightarrow} V(\textbf{u})$ for alle $\mathbf{u}$, hvor
 \begin{align*}
 V(\textbf{u}) = \begin{cases}
@@ -142,53 +143,57 @@ Derfor får vi
 \end{align}
 Vi observerer, at $\mathbf{W}_\mathcal{A}=N(\mathbf{0}, \sigma^2 \mathbf{C}_{11})$, og da har vi bevist asymptotisk normalitet. \\
 
-Herefter vil vi bevise at udvælgelsen af variabler er konsistent. For alle $j \in \mathcal{A}$, giver den asymptotiske normalitet at $\hat{\beta}_j^{\text{AL}} \overset{p}{\rightarrow}\beta_j^{*}$, dvs. $P(j \in \mathcal{A}_n^{\text{AL}}) \rightarrow 1$. Derfor er det tilstrækkeligt at vise at $\forall j' \notin \mathcal{A}$, da vil $P(j' \in \mathcal{A}_n^{\text{AL}}) \rightarrow 0$. \\
-Vi betragter $j' \in \mathcal{A}_n^{\text{AL}}$ således at $\hat{\beta}_{j'}^{\text{AL}} \neq 0$. Af første ordens betingelser har vi, at 
+Herefter vil vi bevise at variabeludvælgelsen er konsistent. For alle $j \in \mathcal{A}$, giver den asymptotiske normalitet at $\widehat{\beta}_j^{\text{AL}} \overset{p}{\rightarrow}\beta_j^{*}$, dvs. $P(j \in \mathcal{A}_n^{\text{AL}}) \rightarrow 1$. Derfor er det tilstrækkeligt at vise, at for alle $j' \notin \mathcal{A}$, da vil $P(j' \in \mathcal{A}_n^{\text{AL}}) \rightarrow 0$. \\
+Vi betragter $j' \in \mathcal{A}_n^{\text{AL}}$ således at $\widehat{\beta}_{j'}^{\text{AL}} \neq 0$. Af KKT betingelserne har vi, at 
 \begin{align*}
-2 \mathbf{x}_{j'}^T  \left( \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}}^{\text{AL}} \right)=\lambda_n \hat{w}_{j'} \left\vert \text{sign}(\hat{\beta}_{j'}^\text{AL}) \right\vert,
+2 \mathbf{x}_{j'}^T  \left( \mathbf{y}-\mathbf{X}\widehat{\boldsymbol{\beta}}^{\text{AL}} \right)=\lambda_n \widehat{w}_{j'} \left\vert \text{sign} \del{\widehat{\beta}_{j'}^\text{AL}} \right\vert,
 \end{align*}
 som er ækvivalent med
 \begin{align*}
-2 \frac{\mathbf{x}_{j'}^T \left( \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}}^{{\text{AL}}}\right)}{\sqrt{n}}=\frac{\lambda_n}{\sqrt{n}} \hat{w}_{j'}.
+2 \frac{\mathbf{x}_{j'}^T \left( \mathbf{y}-\mathbf{X}\widehat{\boldsymbol{\beta}}^{{\text{AL}}}\right)}{\sqrt{n}}=\frac{\lambda_n}{\sqrt{n}} \widehat{w}_{j'}.
 \end{align*}
-Vi fandt, at $\frac{\lambda_n}{\sqrt{n}} \hat{w}_{j'} \overset{p}{\rightarrow} \infty$. Vi har da, at 
+Vi fandt, at $\frac{\lambda_n}{\sqrt{n}} \widehat{w}_{j'} \overset{p}{\rightarrow} \infty$. Vi har da, at 
 \begin{align*}
-2 \frac{\mathbf{x}_{j'}^T \left(\mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}}^{{\text{AL}}} \right)}{\sqrt{n}}
- &= 2 \frac{\mathbf{x}_{j'}^T \left(\mathbf{X}\boldsymbol{\beta}^*+\boldsymbol{\epsilon}-\mathbf{X}\hat{\boldsymbol{\beta}}^{{\text{AL}}} \right) }{\sqrt{n}} \\
-&= 2 \frac{\mathbf{x}_{j'}^T \mathbf{X} \left(\boldsymbol{\beta}^*-\hat{\boldsymbol{\beta}}^{\text{AL}} \right)}{\sqrt{n}}+2\frac{\mathbf{x}_{j'}^T \boldsymbol{\epsilon}}{\sqrt{n}} \\
-&= 2 \frac{\mathbf{x}_{j'}^T \mathbf{X} \sqrt{n} \left(\boldsymbol{\beta}^*-\hat{\boldsymbol{\beta}}^{\text{AL}}\right)}{n}+2\frac{\mathbf{x}_{j'}^T \boldsymbol{\epsilon}}{\sqrt{n}}.
+2 \frac{\mathbf{x}_{j'}^T \left(\mathbf{y}-\mathbf{X}\widehat{\boldsymbol{\beta}}^{{\text{AL}}} \right)}{\sqrt{n}}
+ &= 2 \frac{\mathbf{x}_{j'}^T \left(\mathbf{X}\boldsymbol{\beta}^*+\boldsymbol{\epsilon}-\mathbf{X}\widehat{\boldsymbol{\beta}}^{{\text{AL}}} \right) }{\sqrt{n}} \\
+&= 2 \frac{\mathbf{x}_{j'}^T \mathbf{X} \left(\boldsymbol{\beta}^*-\widehat{\boldsymbol{\beta}}^{\text{AL}} \right)}{\sqrt{n}}+2\frac{\mathbf{x}_{j'}^T \boldsymbol{\epsilon}}{\sqrt{n}} \\
+&= 2 \frac{\mathbf{x}_{j'}^T \mathbf{X} \sqrt{n} \left(\boldsymbol{\beta}^*-\widehat{\boldsymbol{\beta}}^{\text{AL}}\right)}{n}+2\frac{\mathbf{x}_{j'}^T \boldsymbol{\epsilon}}{\sqrt{n}}.
 \end{align*}
-Af \eqref{eq:minUA} og Slutskys sætning \ref{thm:slutsky}, ved vi at $ 2 \frac{\mathbf{x}_{j'}^T \mathbf{X} \sqrt{n} \left(\boldsymbol{\beta}^*-\hat{\boldsymbol{\beta}}^{\text{AL}}\right)}{n}$ konvergerer i fordeling mod en normalfordeling og $2\frac{\mathbf{x}_{j'}^T \boldsymbol{\epsilon}}{\sqrt{n}} \overset{d}{\rightarrow} N \left(\mathbf{0}, 4 \Vert \mathbf{x}_{j'} \Vert^2 \sigma^2 \right)$. Dvs.
+Af \eqref{eq:minUA} og Slutskys sætning \ref{thm:slutsky}, ved vi at $ 2 \frac{\mathbf{x}_{j'}^T \mathbf{X} \sqrt{n} \left(\boldsymbol{\beta}^*-\widehat{\boldsymbol{\beta}}^{\text{AL}}\right)}{n}$ konvergerer i fordeling mod en normalfordeling og $2\frac{\mathbf{x}_{j'}^T \boldsymbol{\epsilon}}{\sqrt{n}} \overset{d}{\rightarrow} N \left(\mathbf{0}, 4 \Vert \mathbf{x}_{j'} \Vert^2 \sigma^2 \right)$. Dermed har vi, at
 \begin{align*}
-P\left(j' \in \mathcal{A}_n^{\text{AL}}\right) \leq P\left(2 \mathbf{x}_{j'}^T \left(\mathbf{y}-\mathbf{X} \hat{\boldsymbol{\beta}}^{\text{AL}}\right)=\lambda_n \hat{w}_{j'} \right) \rightarrow 0.
+P\left(j' \in \mathcal{A}_n^{\text{AL}}\right) \leq P\left(2 \mathbf{x}_{j'}^T \left(\mathbf{y}-\mathbf{X} \widehat{\boldsymbol{\beta}}^{\text{AL}}\right)=\lambda_n \widehat{w}_{j'} \right) \rightarrow 0.
 \end{align*}
 \end{proof}
 %
-Vægtene \(\hat{\mathbf{w}}\), som afhænger af data, er nøglen bag sætning \ref{thm:ALoracle}.
+Vægtene \(\widehat{\mathbf{w}}\), som afhænger af data, er nøglen bag sætning \ref{thm:ALoracle}.
 Når stikprøve størrelsen stiger, da øges vægtene for nul koefficient prædiktorerne til uendelig, mens vægtene for ikke-nul koefficient prædiktorerne konvergerer til en endelig konstant.
 
 
-Den ikke-negative garotte er et special tilfælde af adaptive lasso.
-Antag \(\gamma=1\) og vælg \(\hat{\mathbf{w}}=\frac{1}{\vert \hat{\beta}^{\text{OLS}} \vert}\), da løser adaptive lasso følgende optimeringsproblem
+Ikke-negative garotte er givet ved \(\widehat{\beta}_j^\text{NG} = c_j \widehat{\beta}_j^\text{OLS}\), hvor
 \begin{align}
-\hat{\beta}^\text{AL} = \argmin_{\beta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \frac{\vert \beta_j \vert}{\vert \hat{\beta}_j^\text{OLS} \vert}} \label{eq:AL8}
+\argmin_{c??} \cbr{\Vert \y - \sum_{j=1}^p \x_j \widehat{\beta}_j^\text{OLS} c_j \Vert_2^2 + \lambda_n \sum_{j=1}^p c_j}, \ \text{underlagt at } c_j \geq 0 \text{ for alle} j. \label{eq:nongarotte_om}
 \end{align}
-Da \(c_j = \frac{\hat{\beta}_j^\text{garotte}}{\hat{\beta}_j^\text{OLS}}\), kan \eqref{eq:2.19} omskrives til
+Den ikke-negative garotte er tæt relateret til et special tilfælde af adaptive lasso.
+Antag \(\gamma=1\) og vælg \(\widehat{\mathbf{w}}=\frac{1}{\vert \widehat{\tbeta}^{\text{OLS}} \vert}\), da løser adaptive lasso følgende optimeringsproblem
+\begin{align}
+\widehat{\tbeta}^\text{AL} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \tbeta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \frac{\vert \beta_j \vert}{\vert \widehat{\beta}_j^\text{OLS} \vert}} \label{eq:AL8}
+\end{align}
+Da \(c_j = \frac{\widehat{\beta}_j^\text{garotte}}{\widehat{\beta}_j^\text{OLS}}\), kan \eqref{eq:nongarotte_om} omskrives til
 \begin{align*}
-\hat{\beta}^\text{garotte} =\argmin_{c \in \mathbb{R}^p}  \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p  \frac{\vert \beta_j\vert}{\vert\hat{\beta}_j^\text{OLS}\vert}}, \ \text{underlagt at } \beta_j \hat{\beta}_j^\text{OLS} \geq 0 \text{ for alle } j.
+\widehat{\tbeta}^\text{NG} =\argmin_{\mathbf{c} \in \mathbb{R}^p}  \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p  \frac{\vert \beta_j\vert}{\vert\widehat{\beta}_j^\text{OLS}\vert}}, \ \text{underlagt at } \beta_j \widehat{\beta}_j^\text{OLS} \geq 0 \text{ for alle } j.
 \end{align*}
-Dermed kan ikke-negative garotte betragtes som adaptive lasso, hvor \(\gamma=1\) og med en ekstra fortegns betingelse.
+Dermed kan ikke-negative garotte betragtes som adaptive lasso, hvor \(\gamma=1\) og med en ekstra fortegnsbetingelse.
 %
 \begin{cor}
-Hvis vi vælger \(\lambda_n\) således at \(\frac{\lambda_n}{\sqrt{n}} \rightarrow 0\) og \(\lambda_n \rightarrow \infty\), da er ikke-negativ garrote konsistent for variabeludvælgelse.
+Hvis vi vælger et \(\lambda_n\), således at \(\frac{\lambda_n}{\sqrt{n}} \rightarrow 0\) og \(\lambda_n \rightarrow \infty\), da er variabeludvælgelsen af ikke-negativ garrote konsistent.
 \end{cor}
 %
 \begin{proof}
-Lad \(\hat{\beta}^\text{AL}\) være adaptive lasso estimatoren i \eqref{eq:AL8}.
-Af sætning \ref{thm:ALoracle} har vi, at \(\hat{\beta}^\text{AL}\) opfylder orakelegenskaberne hvis \(\frac{\lambda_n}{\sqrt{n}} \rightarrow 0\) og \(\lambda_n \rightarrow \infty\).
-For at vise at ikke-negativ garotte er konsistent, er det tilstrækkeligt at vise at \(\hat{\beta}^\text{AL}\) opfylder fortegns betingelsen, \(\beta_j \hat{\beta}_j^\text{OLS} \geq 0 \), med sandsynlighed gående mod 1.
+Lad \(\widehat{\tbeta}^\text{AL}\) være adaptive lasso estimatoren i \eqref{eq:AL8}.
+Af sætning \ref{thm:ALoracle} opfylder \(\widehat{\tbeta}^\text{AL}\) orakelegenskaberne, hvis \(\frac{\lambda_n}{\sqrt{n}} \rightarrow 0\) og \(\lambda_n \rightarrow \infty\).
+For at vise at variabeludvælgelsen af ikke-negativ garotte er konsistent, er det tilstrækkeligt at vise, at \(\widehat{\tbeta}^\text{AL}\) opfylder fortegnsbetingelsen, \(\beta_j \widehat{\beta}_j^\text{OLS} \geq 0 \), med sandsynlighed gående mod 1.
 Vælg ethvert \(j\).
-Hvis \(j \in \A\), da er \(\hat{\beta}_j^\text{AL} \hat{\beta}_j^\text{OLS} \overset{p}{\rightarrow} \del{\beta_j^*}^2 > 0\), dvs \(P \del{\hat{\beta}_j^\text{AL} \hat{\beta}_j^\text{OLS} \geq 0} \rightarrow 1\).
-Hvis \(j \notin \A\), da er \(P \del{\hat{\beta}_j^\text{AL} \hat{\beta}_j^\text{OLS} \geq 0} \geq P \del{\hat{\beta}_j^\text{AL} = 0} \rightarrow 1\).
-I begge tilfælde vil \(P \del{\hat{\beta}_j^\text{AL} \hat{\beta}_j^\text{OLS} \geq 0} \rightarrow 1\) for ethvert \(j = 1, \ldots, p\).
+Hvis \(j \in \A\), da \(\widehat{\beta}_j^\text{AL} \widehat{\beta}_j^\text{OLS} \overset{p}{\rightarrow} \del{\beta_j^*}^2 > 0\), dvs \(P \del{\widehat{\beta}_j^\text{AL} \widehat{\beta}_j^\text{OLS} \geq 0} \rightarrow 1\).
+Hvis \(j \notin \A\), da \(P \del{\widehat{\beta}_j^\text{AL} \widehat{\beta}_j^\text{OLS} \geq 0} \geq P \del{\widehat{\beta}_j^\text{AL} = 0} \rightarrow 1\).
+I begge tilfælde vil \(P \del{\widehat{\beta}_j^\text{AL} \widehat{\beta}_j^\text{OLS} \geq 0} \rightarrow 1\) for ethvert \(j = 1, \ldots, p\).
 \end{proof}

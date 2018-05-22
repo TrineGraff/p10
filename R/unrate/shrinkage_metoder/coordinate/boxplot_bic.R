@@ -1,6 +1,6 @@
 source("data_unrate.R")
 source("package.R")
-source("shrinkage_metoder/bic.R")
+source("shrinkage_metoder/coordinate/bic.R")
 source("parm.R")
 
 set.seed(1)
@@ -17,7 +17,7 @@ coef_lasso = coef(fit_lasso, s = fit_bic_lasso$lambda)
 idx_lasso = which(coef_lasso != 0) 
  
 lasso_boot<- sapply(bootstrap_idx, function(idx) {
-  as.matrix(coef(glmnet(x_train[idx,], y_train[idx], alpha = 1, lambda = fit_bic_lasso$lambda ,
+  as.matrix(coef(glmnet(x_train[idx,], y_train[idx], alpha = 1, lambda = fit_bic_lasso$lambda,
                         standardize = FALSE, intercept = FALSE)))
 })
 

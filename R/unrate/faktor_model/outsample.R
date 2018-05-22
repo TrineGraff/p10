@@ -45,9 +45,17 @@ factorForecast <- function(y, X, idx = idx, m = 4, r.hat) {
 
 
 fc.IC.1 =  factorForecast(y, xf, idx = idx, m = 4, r = 6)
-fc.IC.2 = factorForecast(y, xf, idx = idx, m = 4, r = 11)
-fc.IC.3 = factorForecast(y, xf, idx = idx, m = 4, r = 20)
+c = tidy(fc.IC.1[,1])
+write.csv(c$x, file = "fc_faktor_ic1") 
 
+
+fc.IC.2 = factorForecast(y, xf, idx = idx, m = 4, r = 11)
+c = tidy(fc.IC.2[,1])
+write.csv(c$x, file = "fc_faktor_ic2") 
+
+fc.IC.3 = factorForecast(y, xf, idx = idx, m = 4, r = 20)
+c = tidy(fc.IC.3[,1])
+write.csv(c$x, file = "fc_faktor_ic3") 
 
 
 # Analyse -----------------------------------------------------------------

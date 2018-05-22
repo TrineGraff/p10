@@ -10,12 +10,12 @@ lasso_cv = cv.lars(x_train, y_train, type = "lasso", intercept = FALSE,
 lasso_fit = lars(x_train, y_train, type = "lasso", normalize = FALSE, intercept = FALSE)
 getmin_lasso = getmin_l(lasso_cv$index, lasso_cv$cv, lasso_cv$cv.error)
 
-coef_lasso = coef(lasso_fit, s = getmin$lambda.1se, mode = "fraction")
+coef_lasso = coef(lasso_fit, s = getmin_lasso$lambda.1se, mode = "fraction")
 idx_lasso = which(coef_lasso != 0)
 length(idx_lasso)
 
 ## plot 
-coef = data.table("Lasso" = coef_lasso)
+coef = data.table("Lasso med LARS modifikation" = coef_lasso)
 coef[, feature := colnames(x_train)]
 
 koef <- coef[feature == "IPDMAT" | feature == "HWIURATIO" 
@@ -30,7 +30,7 @@ col_plot = c("blue3", "blue3", "orange", "blue3", "chartreuse4", "blue3", "blue3
              "orange", "blue3", "blue3", "blue3", "blue3", "blue3" )
 
 
-ggplot(to_plot, aes(x = feature, y = coefficient)) + 
+lasso = ggplot(to_plot, aes(x = feature, y = coefficient)) + 
   coord_flip() +
   geom_bar(stat = 'identity') +
   facet_wrap(~ variable, nrow = 1) +
@@ -41,3 +41,4 @@ ggplot(to_plot, aes(x = feature, y = coefficient)) +
   theme(plot.margin=unit(c(0,0,0.3,0),"inches")) + 
   theme(axis.text.y = element_text(hjust = 1, colour = col_plot))
 
+grid.arrange(lars,lasso, nrow = 1)

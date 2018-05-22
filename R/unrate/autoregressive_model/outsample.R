@@ -18,7 +18,11 @@ ForecastAR= function(data, p, idx = idx) {
   }
   print(list("fc" = fc))
   }
-fc = ForecastAR(y, 4, idx = idx )
+fc_ar = ForecastAR(y, 4, idx = idx )
+fc_ar = data.frame(fc_ar)
+c = tidy(fc_ar$fc)
+write.csv(c, file = "ar_4") 
+
 
 plot(fc$fc, type = "l", col = "red", xlim = c(0,140), ylim = c(-0.5, 0.5))
 par(new = TRUE)

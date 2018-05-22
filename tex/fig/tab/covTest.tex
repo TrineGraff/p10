@@ -2,35 +2,27 @@
 \centering 
 \scalebox{0.9}{
 \begin{tabular}{llll}
-\multicolumn{4}{l}{Lars algoritmen med lasso modifikation} \\
+\multicolumn{4}{l}{LARS algoritmen med lasso modifikation} \\
 \toprule
-Step & Prædiktor & Cov test & \(p\)-værdi \\
+Prædiktor & Cov test & \(p\)-værdi \\
 \midrule
-  1 & \textcolor{blue3}{UEMP15OV} & 161.38 & 0.00 \\ 
-  2 & \textcolor{blue3}{UEMPLT5} & 162.87 & 0.00 \\ 
-  3 & \textcolor{blue3}{UEMP5TO14} & 121.91 & 0.00 \\
-  4 & \textcolor{blue3}{CE16OV} & 14.48 & 0.00  \\ 
-  5 & \textcolor{blue3}{CLF16OV} & 217.42 & 0.00  \\
-  6 & \textcolor{chartreuse4}{IPDMAT} & 0.06 & 0.94 \\  
-  7 & \textcolor{orange}{GS5} & 0.39 & 0.68  \\ 
-  8 & \textcolor{blue3}{lag 1} & 0.89 & 0.41 \\ 
-  9 & \textcolor{orange}{TB6MS} & 0.04 & 0.96  \\
-  10 & \textcolor{blue3}{USCONS} & 0.01 & 0.99 \\ 
-  11 & \textcolor{red3}{DPCERA3M086SBEA} & 0.17 & 0.84 \\
-  12 &\textcolor{orange}{ EXUSUKx} & 0.24 & 0.79 \\ 
-  13 & \textcolor{blue3}{CLAIMSx} & 0.01 & 0.99 \\  
-  14 & \textcolor{red3}{AMDMNOx} & 0.05 & 0.95 \\ 
-  15 & \textcolor{blue3}{lag 4} & 0.25 & 0.78 \\ 
-  16 & \textcolor{cadetblue2}{CPIMEDSL} & 0.06 & 0.94  \\ 
-  17 & \textcolor{blue3}{USTRADE} & 0.01 & 0.99 \\ 
-  18 & \textcolor{blue3}{UEMPMEAN} & 0.00 & 1.00 \\  
-  19 & \textcolor{blue3}{USWTRADE} & 0.01 & 0.99 \\ 
-  20 & \textcolor{cadetblue2}{PPICMM}& 0.01 & 0.99  \\ 
-  21 & \textcolor{chartreuse4}{IPNMAT} & 0.37 & 0.69  \\ 
+\textcolor{blue3}{HWIURATIO} & 864.5594 & 0.00 \\
+\textcolor{blue3}{UEMP15OV} & 161.38 & 0.00 \\ 
+\textcolor{blue3}{UEMPLT5} & 162.87 & 0.00 \\ 
+\textcolor{blue3}{UEMP5TO14} & 121.91 & 0.00 \\
+\textcolor{blue3}{CE16OV} & 14.48 & 0.00  \\ 
+\textcolor{blue3}{PAYEMS} & 0.37 &  0.69 \\
+\textcolor{blue3}{CLF16OV} & 217.42 & 0.00  \\
+\textcolor{chartreuse4}{IPDMAT} & 0.06 & 0.94 \\
+\textcolor{orange}{GS5} & 0.39 & 0.68  \\ 
+\textcolor{blue3}{lag 1} & 0.89 & 0.41 \\ 
+\textcolor{orange}{TB6MS} & 0.04 & 0.96  \\
+\textcolor{blue3}{USCONS} & 0.01 & 0.99 \\ 
+ \textcolor{red3}{DPCERA3M086SBEA} & 0.17 & 0.84 \\
 \bottomrule
 \end{tabular}
 }
-\caption{Kovarians testen for lasso.
+\caption{Kovarians testen for LARS algoritmen med lasso modifikation.
 Tallene er afrundet til 2 decimaler.
-Vi viser kun \(p\)-værdier for steps af prædiktorer som medtages og bliver i modellen for \(\lambda \approx ??\), dvs hvis en prædiktor medtages i et step og senere forlader modellen, vises denne prædiktor ikke.} \label{tab:covTest}
+Vi viser kun \(p\)-værdier for prædiktorer som medtages og bliver i modellen for \(\widehat{f}_{1\text{sd}}=0.2424\), dvs hvis en prædiktor medtages i et step og senere forlader modellen, vises denne prædiktor ikke.} \label{tab:covTest}
 \end{table} 

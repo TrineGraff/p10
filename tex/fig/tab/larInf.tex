@@ -1,41 +1,33 @@
 \begin{table}[h] 
 \centering 
 \scalebox{0.8}{
-\begin{tabular}{lllllllllll}
-\multicolumn{11}{l}{Lars algoritmen} \\
+\begin{tabular}{lllllllll}
+\multicolumn{9}{l}{LARS algoritmen} \\
 \toprule
-Step & Prædiktor & Koefficient & Z-score & \(p\)-værdi & lowConfPt & UpConfPt & Spacing & CovTest & LowTailArea & UpTailArea\\
+Step & Prædiktor & Koefficient & Z-score & \(p\)-værdi & lowConfPt & UpConfPt & Spacing & CovTest \\
 \midrule
-1 & \texttt{HWIURATIO} (21) & -0.107 & -59.628 &  0.000 &   -0.110 &  -0.104 &  0.000  & 0.000 & 0.048  & 0.048 \\
-2 & \texttt{UEMP15OV} (27) &  0.057 & 29.642  & 0.000  &   0.054 &   0.061 &  0.000 &  0.000  & 0.049 &  0.049 \\
-3 & \texttt{UEMPLT5} (25) & 0.077 & 33.669 &  0.000 &  0.051 &   0.086 &  0.000 &  0.000& 0.050 & 0.049\\
-4 & 35 & -0.035 & -16.945  & 0.297 &   -0.073 &   0.055 &  0.036 &  0.036  &     0.050  &    0.050\\
-5 & \texttt{UEMP5TO14} (26) & 0.070 & 33.942 &  0.000 &    0.049 &   0.113 &   0.000 &  0.000  &     0.050 &     0.050 \\
-6 & \texttt{CE16OV} (23) & -0.021 & -10.246 &  0.318 &   -0.048  &  0.038 &  0.000 &  0.000  &     0.050 &     0.050\\
-7 & \texttt{PAYEMS} (31) & -0.009 & -2.646  & 0.702  &  -0.066 &   0.203 &  0.605 &  0.699  &     0.050  &    0.050 \\
-8 & 32 &  -0.019 & -3.152 &  0.169 &   -0.143  &  0.031 &  0.006  & 0.006  &     0.050   &   0.000 \\
-9 & 19 & -0.006 & -2.231 &  0.696  &  -0.213 &     Inf &  0.959 &  0.964 &      0.050  &    0.000 \\
-10 & \texttt{CLF16OV} (22) & 0.247 & 37.778  & 0.000  &   0.232  &  0.354 &  0.000 &  0.000 &      0.050 &     0.050 \\
-11 & \texttt{IPDMAT} (14) & -0.005 & -1.250 &  0.334  &  -0.218 &   0.104 &  0.595 &   0.858 &      0.050 &     0.050\\
-12 & \texttt{TB6MS} (78) & -0.003 & -1.420  & 0.515 &   -0.091 &   0.100 &  0.583 &  0.745  &     0.050 &     0.050 \\
-13 & 6 & -0.001 & -0.239 &  0.487 &     -Inf  &    Inf &  0.487 &  0.000   &    0.000  &    0.000 \\
-14 & 79 & -0.005 & -0.751 &  0.103  &    -Inf &   0.045  & 0.140 &  0.035 &      0.000 &     0.048 \\
-15 & \texttt{GS5} (80) & -0.005 & -1.012  & 0.154  &    -Inf &   0.135 &  0.598 &  0.000  &     0.000 &     0.050 \\
-16 & \texttt{lag 1} (123) & -0.009 & -4.035  & 0.524  &  -0.095 &   0.118 &  0.009 &  0.305  &     0.050 &     0.050 \\
-17 & \texttt{DPCERA3M086SBEA} (3) & -0.003 & -1.651  & 0.229  &    -Inf &   0.081 &  0.768 &  0.999  &     0.000  & 0.050 \\
-18 & \texttt{EXUSUKx} (94) & 0.003 &  1.408 &  0.043  &   0.014 &     Inf &  0.677 &  0.942  &     0.050 &     0.000 \\
-19 & (30) & 0.002  & 0.811  & 0.732  &    -Inf  &  0.198  & 0.429  & 0.968   &    0.000 &     0.050 \\
-20 & (57) & -0.002 & -0.905 &  0.416 &     -Inf  &    Inf &  0.166  & 0.009  &     0.000  &    0.000 \\
-21 & (34) & -0.005 & -1.058 &  0.552 &     -Inf    &  Inf &  0.911 &  0.053  &     0.000   &   0.000 \\
-22 & (126) &  0.003  & 1.249  & 0.758  &    -Inf   &   Inf &  0.157 &  0.924  &     0.000  &    0.000 \\
-23 & (37) & -0.002 & -0.631 &  0.279  &    -Inf  &    Inf &  0.582 &  0.045 &      0.000 &     0.000 \\
-24 & (105) & 0.002  & 0.776  & 0.791   &   -Inf  &    Inf &  0.899  & 0.991   &    0.000  &    0.000\\
-25 & (40) &-0.002 & -0.712 &  0.565 &     -Inf &     Inf  & 0.070 &  0.809   &    0.000   &   0.000 \\
-26 & (24) & -0.005 & -1.746 &  0.259  &    -Inf &     Inf &  0.417  & 0.696   &    0.000 &     0.000 \\
-27 & (51) & -0.002 & -0.823 &  0.288  &    -Inf  &    Inf &  0.945  & 0.936  &     0.000     & 0.000 \\
-28 & (101) & 0.003 & 1.409 & 0.226  & -Inf & Inf & 0.369 & 0.974  & 0.000  &    0.000 \\
+1 & \textcolor{blue3}{HWIURATIO} & -0.107 & -59.628 &  0.000 &   -0.110 &  -0.104 &  0.000  & 0.000 \\
+2 & \textcolor{blue3}{UEMP15OV} &  0.057 & 29.642  & 0.000  &   0.054 &   0.061 &  0.000 &  0.000 \\
+3 & \textcolor{blue3}{UEMPLT5} & 0.077 & 33.669 &  0.000 &  0.051 &   0.086 &  0.000 &  0.000 \\
+4 & \textcolor{blue3}{MANEMP} & -0.035 & -16.945  & 0.297 &   -0.073 &   0.055 &  0.036 &  0.036 \\
+5 & \textcolor{blue3}{UEMP5TO14} & 0.070 & 33.942 &  0.000 &    0.049 &   0.113 &   0.000 &  0.000  \\
+6 & \textcolor{blue3}{CE16OV} & -0.021 & -10.246 &  0.318 &   -0.048  &  0.038 &  0.000 &  0.000 \\
+7 & \textcolor{blue3}{PAYEMS} & -0.009 & -2.646  & 0.702  &  -0.066 &   0.203 &  0.605 &  0.699  \\
+8 & \textcolor{blue3}{USGOOD} &  -0.019 & -3.152 &  0.169 &   -0.143  &  0.031 &  0.006  & 0.006  \\
+9 & \textcolor{chartreuse4}{CUMFNS} & -0.006 & -2.231 &  0.696  &  -0.213 &     Inf &  0.959 &  0.964 \\
+10 &\textcolor{blue3}{CLF16OV} & 0.247 & 37.778  & 0.000  &   0.232  &  0.354 &  0.000 &  0.000 \\
+11 & \textcolor{chartreuse4}{IPDMAT} & -0.005 & -1.250 &  0.334  &  -0.218 &   0.104 &  0.595 &   0.858 \\
+12 & \textcolor{orange}{TB6MS} & -0.003 & -1.420  & 0.515 &   -0.091 &   0.100 &  0.583 &  0.745  \\
+13 & \textcolor{chartreuse4}{INDPRO} & -0.001 & -0.239 &  0.487 &     -Inf  &    Inf &  0.487 &  0.000  \\
+14 & \textcolor{orange}{GS1} & -0.005 & -0.751 &  0.103  &    -Inf &   0.045  & 0.140 &  0.035  \\
+15 & \textcolor{orange}{GS5} & -0.005 & -1.012  & 0.154  &    -Inf &   0.135 &  0.598 &  0.000  \\
+16 & \textcolor{blue3}{lag 1} & -0.009 & -4.035  & 0.524  &  -0.095 &   0.118 &  0.009 &  0.305  \\
+17 & \textcolor{red3}{DPCERA3M086SBEA} & -0.003 & -1.651  & 0.229  &    -Inf &   0.081 &  0.768 &  0.999  \\
+18 & \textcolor{orange}{EXUSUKx} & 0.003 &  1.408 &  0.043  &   0.014 &     Inf &  0.677 &  0.942  \\
+19 & \textcolor{blue3}{CLAIMSx} & 0.002  & 0.811  & 0.732  &    -Inf  &  0.198  & 0.429  & 0.968   \\
 \bottomrule
 \end{tabular}  
 }
-\caption{\(p\)-værdier og konfidensintervaller for variablerne udvalgt af lars algoritmen. Den estimeres standard afvigelse er \(0.043\), og resultaterne er for \(\lambda \approx ??\) med \(\alpha = 0.1\).} \label{tab:larInf}
+\caption{\(p\)-værdier og konfidensintervaller for variablerne udvalgt af lars algoritmen. Den estimeres standard afvigelse er \(0.043\), og resultaterne er for \(\widehat{s}_{1 \text{sd}} = 20\) med \(\alpha = 0.1\).} \label{tab:larInf}
 \end{table} 
+\textcolor{chartreuse4}{INDPRO}, \textcolor{orange}{GS1} og \textcolor{orange}{GS5}

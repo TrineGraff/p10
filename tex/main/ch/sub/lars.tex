@@ -25,7 +25,9 @@ Krydsvalideringen fejlen afviger først på 5. decimal, derfor vælger vi modell
 %
 \input{fig/tab/lars_lasso_tab}
 %
-\imgfigh{coef_lars_kryds.pdf}{1}{h}{coef_lars_kryds}
+På figur \ref{fig:coef_lars_kryds} vises koefficienter for de valgte variable for LARS uden og med lasso modifikation.
+\imgfigh{coef_lars_kryds.pdf}{1}{Estimerede koefficienter for LARS algoritmen uden og med lasso modifikationen.
+Farverne indikerer hvilken gruppe, variablerne tilhører.}{coef_lars_kryds}
 %
 
 \newpage
@@ -36,63 +38,32 @@ I tabel \ref{tab:larInf} vises resultaterne.
 %
 \input{fig/tab/larInf}
 %
+Heraf ses at nulhypotesen primært afvises for variabler i gruppe 2 (\textcolor{blue3}{HWIURATIO}, \textcolor{blue3}{UEMP15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{CLF16OV}) samt en variabel fra gruppe 6 (\textcolor{orange}{EXUSUKx}).
 
+Ifølge spacing testen afvises kun variabler fra gruppe 2, dog kan vi ikke afvise nulhypotesen for variablerne \textcolor{blue3}{PAYEMS} og \textcolor{blue3}{CLAIMSx}.
+
+Ifølge kovarianstesten er alle variable tilhørende gruppe 2 signifikant med undtagelse af \textcolor{blue3}{PAYEMS}, \textcolor{blue3}{lag 1} og \textcolor{blue3}{CLAIMSx}, hvor nulhypotesen ikke kan afvises.
+Derudover ser vi, at også variablerne \textcolor{chartreuse4}{INDPRO}, \textcolor{orange}{GS1} og \textcolor{orange}{GS5} afviser nulhypotesen.
+
+Men kun variablerne \textcolor{blue3}{HWIURATIO}, \textcolor{blue3}{UEMP15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{CLF16OV} afvises for alle teste, hvorfra vi konkluderer at disse er signifikante.
+\newpage
 \subsubsection{Kovarians test}
 Som nævnt udfører LARS algoritmen med lasso modifikationen 192 steps, hvori variablerne tilføjes og nogle fjernes igen.
-For \(\lambda_\text{min} = 36\) findes 21 prædiktorer, hvorpå kovarians testen udføres.
+For \(\widehat{f}_{1\text{sd}}=0.2424\) finder vi 13 prædiktorer, hvorpå kovarians testen udføres.
+Funktionen \texttt{covTest} fra \Rlang-pakken af samme navn udregner teststørrelsen samt \(p\)-værdie for kovarianstesten for LARS algoritmen med lasso modifikation.
 Tabel \ref{tab:covTest} viser resultatet af dette.
-For prædiktorerne valgt i step 1-5 afvises nulhypotesen, hvilket betyder, at ...?
+For 6 ud af 9 prædiktorer som tilhører gruppe 2 med undtagelse af \textcolor{blue3}{PAYEMS}, \textcolor{blue3}{lag 1} og \textcolor{blue3}{USCONS} afvises nulhypotesen, hvilket betyder, at??
+For de resterende variable kan vi ikke afvise nulhypotesen.
 %
 \input{fig/tab/covTest}
 %
+For de valgte variable udfører algoritmen 23 steps, hvor variablerne  \textcolor{chartreuse4}{CUMFNS}, \textcolor{blue3}{MANEMP}, \textcolor{orange}{TB6MS}, \textcolor{orange}{GS1}, \textcolor{blue3}{USGOOD} tilføjes og fjernes igen.
 
 
 
-%SE for CV is found from the sample SE of the squared errors
-%choose fraction based 1-se cv error rule
-%# largest value of lambda such that
-%# error is within 1 standard error of the minimum:
-%Krydsvalideringen for lars anvender antallet af steps i lars proceduren. 
-%Vi finder her fra det optimale $\widehat{s}$ 
-%Herunder finder vi 
-%
-%Igen deler vi den op i 
-%
-%this is the number of steps in lars procedure
-%
-%
+
 %#  Function produces one fit at each new variable entry.
 %# Cross-Validation for LASSO chops up the L1-norm into sequence of 100 points. 
 %#  SE for CV is found from the sample SE of the squared errors.  NOT from rerunning CV multiple times.
 %# Therefore CV may be inappropriate for small n.  Use Cp from Ssummary() instead.
 %
-
-%I den her sektion anvender vi lars algoritmen med to modifikationer, som er beskrevet i sektionerne ... .,til at estimerer lasso og elastik net
-%Vi anvender funktionerne \texttt{lars} og \texttt{elnet} fra R-pakkerne af hhv. samme navn.
-%
-%\subsubsection{Krydsvalidering}
-%I denne sektion anvender funktionerne  \texttt{cv.lars} og \texttt{cv.enet} fra R pakkerne \texttt{lars} og \texttt{elnet}. 
-%I ligning 
-%
-%Vi kan se på figur \ref{fig:lars_lasso} at jo laverer vores L1 norm er, jo større krydsvalideringsfejl får vi.  
-%
-%\imgfigh{lars_lasso.pdf}{0.7}{10-fold krydsvaliderings fejl plottede som en function af fraktion af side L1 norm. De stiplede linjer indikerer minimum fejl, samt fejlen med en standard afvigelse af minimum}{lars_lasso}
-%
-%I tabel \ref{tab:lars_tab} ser vi ikke samme tendens som ved coordinate descent. 
-%Vi ser nemlig ikke en reducering af antal parameter, hvis vi anvende r$\lambda_{1\text{sd}}$.
-%Derfor anvender vi $\lambda_{\min}$, da den har mindst krydsvaliderings fejl samt mindre kompleksitet. 
-%
-%\input{fig/tab/cv_lars_tab}
-%
-%\input{fig/tab/lars_ud}
-%
-%Tabellen viser hvilken variable lasso udvælger, og igen kan vi se at hovedparten af variablerne er i samme gruppe, som vores responsvariable. 
-%Trods, at vi har to løsnings metoder for lasso vælger de forholdsvis de samme variable.
-%
-%
-%
-%Som tidligere beskrevet kan vi for et fast $\lambda_2$ løse elastik net problemet med LARS-EN algoritmen. 
-%Vi udregner
-%anvender vi sekvens af værdier for $\lambda_2$, som 
-%
-%\subsubsection{BIC}

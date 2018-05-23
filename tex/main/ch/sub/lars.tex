@@ -1,11 +1,12 @@
 \section{LARS}
 Herefter anvendes LARS algoritmen uden og med lasso modifikationen, hvortil vi anvender \Rlang-pakken \texttt{lars}.
+\Rlang-koden for dette afsnit er givet i ---.
 
 For LARS algoritmen uden lasso modifikationen tilføjes en variabel i hvert step og dermed udfører algoritmen 126 steps.
 LARS algoritmen med lasso modifikationen udfører 192 steps, hvor variabler kan tilføjes og fjernes igen.
 
 \subsection{Krydsvalidering}
-For at finde den optimale model udføres krydvalidering.
+For at finde den optimale model udføres krydsvalidering.
 For LARS algoritmen uden lasso modifikationen betragtes antallet af steps, som betegnes \(s\). 
 Igen finder vi $\widehat{s}_{\min}$, som angiver den mindste gennemsnitlige krydsvalideringsfejl og $\widehat{s}_{\text{1sd}}$ som betegner den mindste værdi således at fejlen er indenfor en standard afvigelse. 
 

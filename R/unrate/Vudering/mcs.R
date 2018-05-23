@@ -1,3 +1,4 @@
+source("package.R")
 source("data_unrate.R")
 
 ar4 = read.csv(file = "results/fc_ar4.csv") %>% .$x
@@ -29,7 +30,6 @@ lars_lasso_bic = read.csv(file = "results/fc_lars_lasso_bic.csv")%>% .$x
 
 
 # MCS ---------------------------------------------------------------------
-dim(diffs)
 diffs <- data.frame(ar4 - y_test,
                     faktor_ic1  - y_test,
                     faktor_ic2  - y_test,
@@ -55,8 +55,6 @@ colnames(diffs) = c("AR(4)", "Faktor_1", "Faktor_2", "Faktor_3", "lasso (kryds)"
                      "adap. lasso m. lasso vægte (kryds)","adap. lasso m. lasso vægte (bic)",
                      "LARS (kryds)", "LARS (BIC)", "lasso m. lars modifikation (kryds)", "lasso m. lars modifikation (bic)")
 
-test
-
 # Tabs tabeller for MCS
 loss <- list(
   abs = abs(diffs),
@@ -65,12 +63,10 @@ loss <- list(
 
 res <- setNames(vector("list", length(loss)), names(loss))
 for (ln in names(loss)) {
-  MCS <- MCSprocedure(Loss = diffs, alpha = 0.2, B = 5000, statistic = 'Tmax')
+  MCS <- MCSprocedure(Loss = diffs, alpha = 0.1, B = 5000, statistic = 'Tmax')
   res[[ln]] <- MCS
 }
 
-
-
-saveRDS(res, file = "mcs80.rds")
+saveRDS(res, file = "mcs90.rds")
 
 

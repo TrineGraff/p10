@@ -1,0 +1,23 @@
+\section{Out-of-sample}
+I dette afsnit vil vi betragte modellernes prædiktion.
+Som nævnt foretager vi et rolling scheme med expanding window.
+
+Arbejdsløshedsraten og de prædikterede værdier sammenlignes med MAE, MSE og forhold i mellem MAE og MSE af den alternative model og benchmark modellen.
+Vi har valgt faktor modellen udfra informationskriterie 3 som overordnet benchmark model.
+Resultaterne af dette er givet i tabel \ref{tab:mae_mse_vurdering}.
+%
+\input{fig/tab/mae_mse_vurdering}
+%
+For MAE ses, at LARS algoritmen uden lasso modifikationen, hvor variablerne valgt udfra BIC, vælges som den ``bedste''.
+For MSE vælges adaptive lasso modellerne som 
+
+7. decimal
+
+\subsection{Diebold Mariano}
+I tabel \ref{tab:dm_test} ses resultaterne fra Diebold-Mariano testen, hvor hver model testes imod benchmark modellen.
+Heraf ses at nulhypotesen ikke kan afvises for faktor modellerne valgt udfra information 1 og 3, hvilket vil sige, at disse modeller ikke er signifikant forskellige fra benchmark modellen.
+%
+\input{fig/tab/dm_test}
+%
+\subsection{MCS} 
+For model confidence proceduren 

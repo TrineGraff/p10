@@ -4,7 +4,7 @@ library(grid)
 library(e1071)
 library(tseries)
 library(stats)
-library(tidyverse)
+#library(tidyverse)
 
 #coordinate
 library(glmnet)
@@ -17,6 +17,10 @@ library(lars)
 
 #forecast
 library(foreach)
+<<<<<<< Updated upstream
 library(broom)
 
 library(MCS)
+=======
+#library(broom)
+>>>>>>> Stashed changes

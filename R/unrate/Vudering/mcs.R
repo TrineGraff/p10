@@ -1,7 +1,7 @@
 source("package.R")
 source("data_unrate.R")
 
-ar4 = read.csv(file = "results/fc_ar4.csv") %>% .$x
+ar4 = read.csv(file = "results/fc_ar4.csv") 
 
 faktor_ic1 = read.csv(file = "results/fc_faktor_ic1.csv")%>% .$x
 faktor_ic2 = read.csv(file = "results/fc_faktor_ic2.csv")%>% .$x

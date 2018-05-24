@@ -1,23 +1,48 @@
 \section{Out-of-sample}
 I dette afsnit vil vi betragte modellernes prædiktion.
-Som nævnt foretager vi et rolling scheme med expanding window.
+Som nævnt prædikteres arbejdsløshedsraten one-step-ahead for et rolling scheme med expanding window.
 
-Arbejdsløshedsraten og de prædikterede værdier sammenlignes med MAE, MSE og forhold i mellem MAE og MSE af den alternative model og benchmark modellen.
-Vi har valgt faktor modellen udfra informationskriterie 3 som overordnet benchmark model.
+Arbejdsløshedsraten og de prædikterede værdier sammenlignes med MAE, MSE og forhold i mellem den alternative model og benchmark modellen for både MAE og MSE.
+Som nævnt er faktor modellen valgt udfra informationskriterie 2 benchmark model.
 Resultaterne af dette er givet i tabel \ref{tab:mae_mse_vurdering}.
 %
 \input{fig/tab/mae_mse_vurdering}
+
+For MAE ses, at LARS algoritmen uden lasso modifikationen, hvor variablerne er valgt udfra BIC, vælges som den ``bedste''.
+Ifølge MSE er adaptive lasso modellerne foretrukket.
+Først på 7. decimal ses at adaptive lasso m. ols vægte valgt udfra BIC faktisk har mindst MSE og dermed betragtes som den ``bedste''.
+Den autoregressive model af orden 4 performer dårligt out-of-sample ifølge begge tabsfunktioner, modellen er forholdsvis tæt efterfulgt af faktor modellerne.
+Men for de resterende modeller ses en tydeligt forbedring i MAE og MSE, og den indbyrdes forskel imellem disse modeller og forholdsvis lille.
+
+Herefter vil vi betragte modellernes prædiktion i forhold til benchmark modellen fra måned til måned.
+Vi definere derfor et rullende gennemsnitlig absolut fejl ratio 
+\begin{align*}
+\text{MAE}^\text{Roll} &= \frac{1}{T} \sum_{t = t_0 +1}^{T} \abs{y_t - \widehat{y}_t} \\
+R_t &= \frac{\text{MAE}_\text{Alternative}^\text{Roll}}{\text{MAE}_\text{Benchmark}^\text{Roll}}.
+\end{align*}
+Hvis \(R_t > 1\), da prædikterer benchmark modellen gennemsnitlig bedre end den alternative model op til tid \(t\), og omvendt hvis \(R_t < 1\).
+På figur \ref{fig:rolling_mae} er det rullende gennemsnitlige absolutte fejl ratio plottet.
+Faktor modellerne omkring benchmark modellen
+derimellem ridge regression
+mens de øvrige tabellerne klart prædikterer bedre end benhcmark modellen.
 %
-For MAE ses, at LARS algoritmen uden lasso modifikationen, hvor variablerne valgt udfra BIC, vælges som den ``bedste''.
-For MSE vælges adaptive lasso modellerne som 
-
-7. decimal
-
+\imgfigh{rolling_mae.pdf}{1}{Rolling gennemsnitlige absolutte fejl.}{rolling_mae}
+%
 \subsection{Diebold Mariano}
 I tabel \ref{tab:dm_test} ses resultaterne fra Diebold-Mariano testen, hvor hver model testes imod benchmark modellen.
 Heraf ses at nulhypotesen ikke kan afvises for faktor modellerne valgt udfra information 1 og 3, hvilket vil sige, at disse modeller ikke er signifikant forskellige fra benchmark modellen.
+For de resterende modeller afvises nulhypotesen, hvilket betyder, at disse ikke er signifikant forskellige fra benchmark modellen.
 %
 \input{fig/tab/dm_test}
 %
+\newpage
 \subsection{MCS} 
-For model confidence proceduren 
+Model confidence proceduren udføres for \(\alpha = 0.1\) og \(\alpha = 0.2\), teststørrelserne \(\text{T}_\text{R}\) og \(\text{T}_\text{max}\) og 5000 bootstrap resamples som bruges til at konstruerer teststørrelserne.
+I tabel \ref{tab:mcs_tab} er modellerne i 80\% og 90\% MCS angivet for \(\text{T}_\text{R}\) og \(\text{T}_\text{max}\).
+Vi har testet for absolutte fejl og kvadrerede fejl, hvilket gav samme resultat.
+For alle teste elimineres faktor modellen valgt udfra IC\(_1\) fra MCS.
+For teststørrelsen \(\text{T}_\text{R}\) elimineres yderligere ridge regression med CV og BIC for både \(\alpha = 0.1\) og \(\alpha = 0.2\).
+For teststørrelsen \(\text{T}_\text{max}\) elimineres foruden faktor modellen valgt udfra IC\(_1\) også LARS algoritmen med lasso modifikation (CV) for \(\alpha = 0.2\) og blot faktor modellen valgt udfra IC\(_1\) for \(\alpha = 0.1\).
+%
+\input{fig/tab/mcs_tab}
+%

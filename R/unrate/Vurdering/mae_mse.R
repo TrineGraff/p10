@@ -53,3 +53,8 @@ results <- list(
   relative_mae = round(mae(diffs$adap_lasso_kryds...2....y.test) / mae(diffs$faktor_ic2...2....y.test), digits = 4),
   mse = round(mse(diffs$adap_lasso_kryds...2....y.test), digits = 4),
   relative_mse = round(mse(diffs$adap_lasso_kryds...2....y.test) / mse(diffs$faktor_ic2...2....y.test), digits = 4))
+
+mse(diffs$adap_ols_kryds...2....y.test)
+mse(diffs$adap_ols_bic...2....y.test)
+mse(diffs$adap_lasso_kryds...2....y.test)
+mse(diffs$adap_lasso_bic...2....y.test)

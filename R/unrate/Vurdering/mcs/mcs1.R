@@ -52,3 +52,5 @@ for (ln in names(loss)) {
 }
 
 saveRDS(res, file = "mcs90_Tmax.rds")
+
+?MCSprocedure

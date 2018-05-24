@@ -1,0 +1,30 @@
+\begin{table}[ht]
+\center
+\scalebox{0.65}{
+\begin{tabular}{lllll}
+\toprule
+%\multicolumn{4}{c}{\(\abs{y_t - \widehat{y}_{i,t}}\) } & \multicolumn{4}{c}{\(\del{y_t - \widehat{y}_{i,t}}^2\)} \\
+\multicolumn{2}{c}{\(\text{T}_\text{R}\)} & & \multicolumn{2}{c}{\(\text{T}_\text{max}\)} \\
+\cmidrule{1-2} \cmidrule{4-5} 
+\(\alpha = 0.1\) & \(\alpha = 0.2\) & & \(\alpha = 0.1\) & \(\alpha = 0.1\) \\ \midrule
+AR\((4)\) & AR\((4)\) && AR\((4)\) & AR\((4)\) \\
+Faktor model (IC2) & Faktor model (IC2) && Faktor model (IC2) & Faktor model (IC2) \\
+Faktor model (IC3) & Faktor model (IC3) && Faktor model (IC3) & Faktor model (IC3) \\
+Lasso (CV) & Lasso (CV) && Lasso (CV) & Lasso (CV) \\
+Lasso (BIC) & Lasso (BIC) && Lasso (BIC) & Lasso (BIC) \\
+Group lasso (CV) & Group lasso (CV) && Ridge regression (CV) & Ridge regression (CV) \\
+Group lasso (BIC) & Group lasso (BIC) && Ridge regression (BIC) & Ridge regression (BIC) \\
+Adaptive lasso m. OLS (CV) & Adaptive lasso m. OLS (CV) && Group lasso (CV) & Group lasso (CV) \\
+Adaptive lasso m. OLS (BIC) & Adaptive lasso m. OLS (BIC) && Group lasso (BIC) & Group lasso (BIC) \\
+Adaptive lasso m. lasso (CV) & Adaptive lasso m. lasso (CV) && Adaptive lasso m. OLS (CV) & Adaptive lasso m. OLS (CV) \\
+Adaptive lasso m. lasso (BIC) & Adaptive lasso m. lasso (BIC) && Adaptive lasso m. OLS (BIC) & Adaptive lasso m. OLS (BIC) \\
+LARS u. lasso modifikation (CV) & LARS u. lasso modifikation (CV) && Adaptive lasso m. lasso (CV) & Adaptive lasso m. lasso (CV) \\
+LARS u. lasso modifikation (BIC) & LARS u. lasso modifikation (BIC) && Adaptive lasso m. lasso (BIC) & Adaptive lasso m. lasso (BIC) \\
+LARS m. lasso modifikation (CV) & LARS m. lasso modifikation (CV) && LARS u. lasso modifikation (CV) & LARS u. lasso modifikation (CV)\\
+LARS m. lasso modifikation (BIC) & LARS m. lasso modifikation (BIC) && LARS u. lasso modifikation (BIC) & LARS u. lasso modifikation (BIC) \\
+& && LARS m. lasso modifikation (CV) & LARS m. lasso modifikation (BIC) \\
+& && LARS m. lasso modifikation (BIC) & \\ \bottomrule
+\end{tabular}
+}
+\caption{80\% og 90 \% model confidence set for arbejdsløshedsraten for absolutte og kvadrerede fejl.} \label{tab:mcs_tab}
+\end{table}

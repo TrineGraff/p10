@@ -1,0 +1,66 @@
+\section{Polyhedral conditioning sets}
+Indledningsvis introduceres notation, som anvendes i dette afsnit.
+For en matrix \(M \in \R^{n \times p}\) og liste \(S = \sbr{s_1, \ldots, s_r} \subseteq \sbr{1, \ldots, p}\), skriver vi \(M_S \in \R^{n \times \vert S \vert}\) for submatricen, som findes ved at udtrække de tilhørende kolonner af \(M\) i den givne rækkefølge.
+Tilsvarende for en vektor \(x \in \R^p\), betegnes \(x_S\) for subvektoren.
+Vi skriver \(\del{M^T M}^+\) for Moore Penrose pseudoinverse af den kvadratiske matrix \(M^T M\) og \(M^+ = \del{M^T M}^+ M^T\) for pseudoinverse af en rektangulær matrix \(M\).
+Vi anvender \(P_L\) for projektions operatoren på det lineære underrum \(L\).
+Lad \(\mathbb{P}_{\teta^T \tmu = 0} \del{\cdot \given \y \in \mathcal{P}} \) være sandsynlighedsmålet under \(\tmu\) for hvilket \(\teta^T \tmu =0 \) betinget \(\y \in \mathcal{P}\). 
+
+Antag \(\y \sim N\del{\boldsymbol{\mu}, \sigma^2 \mathbf{I}_{n \times n}}\) og at vi ønsker at lave inferens betinget på hændelsen \(\cbr{\mathbf{A} \y \leq b}\).
+Mere præcis ønsker vi at lave inferens om \(\boldsymbol{\eta}^T \boldsymbol{\mu}\), hvor \(\boldsymbol{\eta}\) muligvis afhænger af udvægelsen.
+Hvis lasso, LARS .. har udvalgt denne mængde, da kan vi udføre inferens  af de udvalgte variable.
+Vi kunne eventuelt være interesseret i regressions koefficienterne af \(\y\) på \(\X_\mathcal{A}\), dvs \(\hat{\theta}= \del{\X_\mathcal{A}^T \X_\mathcal{A}}^{-1} \X_\mathcal{A}^T \y\).
+Disse svarer til populations parametrene \(\theta= \del{\X_\mathcal{A}^T \X_\mathcal{A}}^{-1} \X_\mathcal{A}^T \boldsymbol{\mu}\), koefficienterne af projectionen af \(\boldsymbol{\mu}\) på \(\X_\mathcal{A}\).
+Dermed kunne \(\boldsymbol{\eta}^T \boldsymbol{\mu}\) svarer til én af disse koefficienter, og dermed er \(\boldsymbol{\eta}\) en af kolonnerne af \(\X_\mathcal{A} \del{\X_\mathcal{A}^T \X_\mathcal{A}}^{-1}\). Dette eksempel fortsættes senere.
+
+%\subsubsection{Conditioning on a single polyhedron}
+%Antag \(\y \sim N \del{\boldsymbol{\mu}, \Sigma}\) og \(\boldsymbol{\eta} \in \mathbb{R}^n\) er en potential retning.
+%For at forstå fordelingen af
+%\begin{align*}
+%\boldsymbol{\eta}^T \y \given \cbr{ \mathbf{A} \y \leq b},
+%\end{align*}
+%kan vi omskrive \(\cbr{\mathbf{A} \y \leq b}\) udfra \(\boldsymbol{\eta}^T \y\) og en komponent \(\mathbf{z}\) som er uafhængig af \(\boldsymbol{\eta}^T \y\). Denne komponent er givet ved
+%\begin{align}
+%\mathbf{z} = \del{\mathbf{I} - \mathbf{c} \boldsymbol{\eta}^T} \y, \label{eq:z}
+%\end{align}
+%hvor 
+%\begin{align}
+%\mathbf{c} = \Sigma \boldsymbol{\eta} \del{\boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{-1}. \label{eq:c}
+%\end{align}
+%Det ses let, at \(\mathbf{z}\) er ukorreleret og dermed uafhængig af \(\boldsymbol{\eta}^T \y\).
+%Hvis \(\Sigma = \sigma^2 \mathbf{I}\), da er \(\mathbf{z}\) blot residualen \(\del{\mathbf{I} - P_{\boldsymbol{\eta}}} \y \) fra projektionen \(\y\) på \(\boldsymbol{\eta}\).
+%Vi kan nu omskrive \(\cbr{\mathbf{A} \y \leq b}\) udfra \(\boldsymbol{\eta}^T \y\) og \(\mathbf{z}\).
+
+%Lad \(\mathbf{z}\) være defineret som i \eqref{eq:z} og \(\mathbf{c}\) som i \eqref{eq:c}. 
+
+%\begin{proof}
+%Vi kan dekomponere \(\y = \mathbf{c} \del{\boldsymbol{\eta}^T \y} + \mathbf{z}\) og opskrive polyhedronet som følgende
+%\begin{align*}
+%\cbr{\mathbf{A} \y \leq b} &= \cbr{\mathbf{A} \del{\mathbf{c} \del{\boldsymbol{\eta}^T \y} + \mathbf{z}} \leq b} \\
+%&= \cbr{\mathbf{A} \mathbf{c} \del{\boldsymbol{\eta}^T \y} \leq b - \mathbf{A} \mathbf{z} } \\
+%&= \cbr{\del{\mathbf{A} \mathbf{c}}_j \del{\boldsymbol{\eta}^T \y} \leq b_j - \del{\mathbf{A} \mathbf{z}}_j \text{ for alle } j} \\
+%&= \begin{cases}
+%\boldsymbol{\eta}^T \y \leq \frac{b_j - \del{\mathbf{A} \mathbf{z}}_j}{\del{\mathbf{A} \mathbf{c}}_j}, \quad j:\del{\mathbf{A} \mathbf{c}}_j > 0 \\
+%\boldsymbol{\eta}^T \y \geq \frac{b_j - \del{\mathbf{A} \mathbf{z}}_j}{\del{\mathbf{A} \mathbf{c}}_j}, \quad j:\del{\mathbf{A} \mathbf{c}}_j < 0 \\
+%0 \leq b_j - \del{\mathbf{A} \mathbf{z}}_j, \quad j:\del{\mathbf{A} \mathbf{c}}_j = 0
+%\end{cases}.
+%\end{align*}
+%Da \(\boldsymbol{\eta}^T \y \) er den samme mængde for alle \(j\), må det mindste være maksimum af de nedre grænser, som er \(\mathcal{V}^- \del{\mathbf{z}}\), og ikke mere end minimum af de øvre grænser, som er \(\mathcal{V}^+ \del{\mathbf{z}}\).
+%\end{proof}
+
+--
+Betinget \(P_{\boldsymbol{\eta}^\perp} \y\), ses at hændelsen \(\cbr{\mathbf{A} \y \leq b}\) er ækvivalent med hændelsen \(\mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}\). Yderligere er \(\mathcal{V}^- \del{\y}\) og \(\mathcal{V}^+ \del{\y}\) uafhængige af \(\boldsymbol{\eta}^T \y\), da disse kun er funktioner af \(P_{\boldsymbol{\eta}^\perp} \y\), som er uafhængige af \(\y\).
+--
+
+
+
+Kovarians testen i \eqref{eq:post_44} og spacing testen \eqref{eq:post_43} er asymptotisk ækvivalent.
+Kovarians testen er derfor en asymptotisk version af spacing testen.
+
+Men nulhypoteserne er ikke identiske.
+Nulhypotesen for kovarians testen påstår at alle koefficienter for prædiktorerne som ikke er indeholdt i det nuværende aktive mængde er nul i hvert step af LARS algoritmen.
+Nulhypotesen for spacing testen er også defineret i et given step af LARS algoritmen, men tester om koefficienten som joiner den aktive mængde er nul betinget det andre aktive variable.
+Dette betyder at for første prædiktor som skal joine den aktive mængde, er nulhypoteserne ækvivalente, men afviger for de efterfølgende steps.
+TG testen anvender en tilsvarende tilgang som spacing testen, men vi kan fastholde ethvert \(\lambda\) og teste enhver koefficient som ikke er indkluderet i det relateret aktive mængde.
+
+Både kovarians testen og spacing testen er konstrueret for LARS algoritmen, og spacing testen kun for LARS uden lasso modificering, hvor vi ikke betragter at droppe variable fra den aktive mængde. TG testen kan også anvendes til at udregne lasso løsninger fra en anden metode, såsom coordinate descent.

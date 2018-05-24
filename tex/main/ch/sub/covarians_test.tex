@@ -1,5 +1,5 @@
-\subsection{Kovarians testen} \label{subsec:kovarians_test}
-I dette afsnit introduceres en test, der kan tildele \(p\)-værdier til prædiktorer som er udvalgt af adaptive procedurer.
+\section{Kovarians testen} \label{subsec:kovarians_test}
+I dette afsnit introduceres en test, der kan tildele \(p\)-værdier til prædiktorer, som er udvalgt af adaptive procedurer.
 Testen er baseret på LARS algoritmen og blev introduceret i \citep{lockhart}.
 
 %Betragt det velkendte lineære regression setup med en responsvariabel \(\y \in \mathbb{R}^n\) og en matrix af prædiktorer \(\X \in \mathbb{R}^{n \times p}\), som er relateret ved
@@ -11,11 +11,11 @@ Testen er baseret på LARS algoritmen og blev introduceret i \citep{lockhart}.
 Vi antager, at kolonner af \(\X\) er i generel position, således at løsningsstierne er entydige (se definition \ref{defn:general_position}).
 %
 For et given step i LARS algoritmen ønsker vi, at teste om prædiktoren, som medtages i den aktive mængde, er signifikant.
-Lad \(\lambda_1 > \lambda_2 > \ldots > \lambda_K\) betegne the knots returneret af LARS algoritmen.
-Dette er værdierne af reguleringsparameteren \(\lambda\), hvor der er en ændring af mængde af de aktive variable.
+Lad \(\lambda_1 > \lambda_2 > \ldots > \lambda_K\) betegne knuderne returneret af LARS algoritmen.
+Dette er værdierne af reguleringsparameteren \(\lambda\), hvor der er en ændring i mængden af de aktive variable.
 Lad \(\A_{k-1}\) betegne den aktive mængde inden \(\lambda_k\) og antag at \(j\)'te prædiktor medtages i \(\lambda_k\).
-Lad \(\hat{\beta} \del{\lambda_{k+1}}\) betegne løsningen i næste knot i stien \(\lambda_{k+1}\) udfra prædiktorerne \(\A_{k-1} \cup \cbr{j}\).
-Lad \(\tilde{\beta}_{\A_{k-1}} \del{\lambda_{k+1}}\) være løsningen af lasso problemet ved kun at anvende variablerne i \(\A_{k-1}\) i \(\lambda = \lambda_{k+1}\), som eksplicit er givet ved 
+Lad \(\hat{\tbeta} \del{\lambda_{k+1}}\) betegne løsningen i næste knude i stien \(\lambda_{k+1}\) udfra prædiktorerne \(\A_{k-1} \cup \cbr{j}\).
+Lad \(\tilde{\tbeta}_{\A_{k-1}} \del{\lambda_{k+1}}\) være løsningen af lasso problemet ved kun at anvende variablerne i \(\A_{k-1}\) i \(\lambda = \lambda_{k+1}\), som eksplicit er givet ved 
 %
 %Vi ønsker, at teste om \(j\)'te prædiktor som er medtaget i den aktive mængde i \(\lambda_k\), dvs i \(k\)'te step af LARS algoritmen, er signifikant.
 %Lad \(\A_{k-1}\) betegne den aktive mængde i step \(k-1\) og lad \(\hat{\beta} \del{\lambda_{k+1}}\) være løsningen af lasso problemet i næste knot \(\lambda_{k+1}\).
@@ -23,7 +23,7 @@ Lad \(\tilde{\beta}_{\A_{k-1}} \del{\lambda_{k+1}}\) være løsningen af lasso p
 \begin{align*}
 \tilde{\tbeta}_{\A_{k-1}} \del{\lambda_{k+1}} = \argmin_{\tbeta_{\A_{k-1}} \in \R^{\vert \A_{k-1} \vert}} \cbr{\frac{1}{2} \left\Vert \y - \X_{\A_{k-1}} \tbeta_{\A_{k-1}} \right\Vert_2^2 + \lambda_{k+1} \left\Vert \tbeta_{\A_{k-1}} \right\Vert_1},
 \end{align*}
-hvor \(\X_{\A_{k-1}}\) er en matrix, bestående af kolonnerne af \(\X\) som svarer til prædiktorerne i \(\A_{k-1}\).
+hvor \(\X_{\A_{k-1}}\) er en matrix, der består af kolonnerne af \(\X\), som svarer til prædiktorerne i \(\A_{k-1}\).
 Da kan vi definere teststørrelsen af kovarians testen
 \begin{align}
 T_k^\text{cov} = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \hat{\tbeta} \del{\lambda_{k+1}} \right\rangle - \left\langle  \y, \X_{\A_{k-1}} \tilde{\tbeta}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}. \label{eq:6.5}

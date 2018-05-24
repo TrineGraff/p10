@@ -1,9 +1,16 @@
-\chapter{Statistisk inferens} \label{kap:statistisk_inferens}
-En attraktiv egenskab af \(\ell_1\)-reguleret procedure er deres evne til at kombinere variabeludvælgelse og estimere parametre. 
-
-Vi ønsker, at bestemme den statistiske styrke af de inkluderede variable, svarende til \(p\)-værdier af de traditionelle modeller.
-Klassisk inferens kan ikke anvendes til adaptive procedurer.
-Først beskrives en mere traditionel værktøj nemlig bootstrap, hvorefter vi kort præsenterer nogle nyere redskaber hertil.
-
-%\input{main/ch/sub/bootstrap}
+\chapter{Post-selection inference for lasso} \label{kap:statistisk_inferens}
+%En attraktiv egenskab af \(\ell_1\)-reguleret procedure er deres evne til at kombinere variabeludvælgelse og estimere parametre. 
+%
+%Vi ønsker, at bestemme den statistiske styrke af de inkluderede variable, svarende til \(p\)-værdier af de traditionelle modeller.
+%Klassisk inferens kan ikke anvendes til adaptive procedurer.
+%I den empiriske del kan vi teste styrken af koefficienterne med bootstrap men også nogle nyere redskaber.
+% dette afsnit beskrives teste til inferens efter variabeludvælgelse med en adaptiv metode.
+%Teorien omkring post-selection inferens er udviklet i nyere tid og er stadig under udvikling.
+%\texttt{R}-pakkerne \texttt{covTest} og \texttt{selectiveInference} understøtter testene, som beskrives i dette afsnit.
+%\newpage
+\input{main/ch/sub/covarians_test}
 \input{main/ch/sub/post_selection_inferens}
+
+
+
+

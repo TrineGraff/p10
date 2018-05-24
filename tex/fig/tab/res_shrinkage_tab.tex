@@ -1,17 +1,21 @@
-\begin{table}
+\begin{sidewaystable} 
+%\begin{table}
 \center
-\begin{tabular}{lrrrrrrrrrr} 
+\begin{tabular}{lccccccccccc} 
+Krydsvalidering\\
 \toprule
-& \multicolumn{2}{c}{Lasso} && \multicolumn{2}{c}{Ridge } && \multicolumn{2}{c}{Elastik net} \\ \midrule
-Skewness & \multicolumn{2}{c}{$-0.1610$} &&\multicolumn{2}{c}{$-0.1194$} && \multicolumn{2}{c}{$- 0.1613$} \\
-Kurtosis & \multicolumn{2}{c}{$ -0.4633 $} && \multicolumn{2}{c}{0.5568} &&\multicolumn{2}{c}{$-0.4380$} \\
-JB-test & \multicolumn{2}{c}{0.0289} && \multicolumn{2}{c}{0.0128} && \multicolumn{2}{c}{0.0372}  \\
-LB$_{10}$ &  \multicolumn{2}{c}{-} &&  \multicolumn{2}{c}{-} &&  \multicolumn{2}{c}{-} \\  \bottomrule \toprule
- & \multicolumn{2}{c}{Group lasso} && \multicolumn{2}{c}{Adap. lasso m. ols}  && \multicolumn{2}{c}{Adap. lasso m. lasso} \\ \midrule
-Skewness & \multicolumn{2}{c}{$-0.0943$} &&  \multicolumn{2}{c}{$-0.0913$} && \multicolumn{2}{c}{$-0.0877$} \\
-Kurtosis & \multicolumn{2}{c}{$-0.3725$} &&   \multicolumn{2}{c}{$-0.6050 $} && \multicolumn{2}{c}{$-0.6096$} \\
-JB-test & \multicolumn{2}{c}{0.1478}  &&  \multicolumn{2}{c}{0.0118} &&  \multicolumn{2}{c}{0.0114} \\ 
-LB$_{10}$ &  \multicolumn{2}{c}{-} &&  \multicolumn{2}{c}{-} &&  \multicolumn{2}{c}{-} \\ \bottomrule
+& Lasso && Ridge  && Group lasso  && Adap. lasso m. OLS  && Adap. lasso m. lasso \\ \midrule
+Skewness & $-0.1610$ &&$-0.1194$ && $-0.0943$ & &   $-0.0913$ && $-0.0877$  \\
+Kurtosis & $ -0.4633 $ && 0.5568 &&  $-0.3725$ &&    $-0.6050 $ && $-0.6096$ \\
+JB-test & 0.0289 && 0.0128 &&  0.1478  &&  0.0118 &&  0.0114  \\
+LB$_{10}$-test &  0  && 0.0017 && 0  &&  0&  & 0  \\ \bottomrule \toprule
+BIC\\ \midrule
+& Lasso && Ridge &&Group lasso &  & Adap. lasso m. OLS && Adap. lasso m. lasso  \\ \midrule
+Skewness &$-0.1322$ && $-0.1127$ && $-0.1148$ & & $-0.08713$ && $-0.08715$ \\
+Kurtosis & $-0.5174$ && 0.5124 &&$-0.2385$ && $-0.6103$ && $-0.6102$\\
+JB-test & 0.0235 && 0.0239 && 0.3008   &&   0.0113 &&$0.0113$\\
+LB$_{10}$-test & 0 &&  0.0013 && 0  &  & 0 &&  0 \\  \bottomrule
  \end{tabular}
-\caption{Skewness, excess kurtosis og \(p\)-værdier for Jarque Bera og Ljung Box testen for de standardiserede residualer fra shrinkage metorderne, hvor $\widehat{\lambda}$ er valgt udfra krydsvalidering. Vi lader LB$_{10}$ betegne Ljung-Box testen med lag = 10. } \label{tab:res_shrinkage_tab}
-\end{table}
+\caption{Skewness, excess kurtosis og \(p\)-værdier for Jarque Bera og Ljung Box testen for de standardiserede residualer fra shrinkage metorderne, hvor $\widehat{\lambda}$ er valgt udfra krydsvalidering og BIC. Vi lader LB$_{10}$ betegne Ljung-Box testen med lag = 10. } \label{tab:res_shrinkage_tab}
+%\end{table}
+\end{sidewaystable}

@@ -1,9 +1,9 @@
 \section{Faktor modellen}
 For faktor modellen estimeres parametrene som følgende:
 \begin{enumerate}
-\item Estimer $r$ faktorer for $r = 1, \dots, r_{\max}$ på træningsmængden, hvor $r_{\max} = 20$.  
-\item Vælg $\widehat{r}$ udfra informationskriterierne givet i \eqref{eq:ic1}-\eqref{eq:ic3}, hvor $\widehat{r}_1$, $\widehat{r}_2$ og $\widehat{r}_3$ betegner antallet af faktorer bestemt udfra informationskriterierne IC$_1$, IC$_2$ og IC$_3$.
-\item Lad \(\widehat{\textbf{Z}} = \del{\widehat{{\textbf{F}}}^T\boldsymbol{\omega}^T}^T\) være en \(\del{r+m} \times T\) matrix, hvor \(\widehat{{\textbf{F}}}\) er en \(T \times r\) matrix af estimerede faktorer og \(\boldsymbol{\omega}\) er en \(T \times m\) matrix af laggede værdier af arbejdsløshedsraten.
+\item Estimer $k$ faktorer for $k = 1, \dots, k_{\max}$ på træningsmængden, hvor $k_{\max} = 20$.  
+\item Vælg $\widehat{k}$ udfra informationskriterierne givet i \eqref{eq:ic1}-\eqref{eq:ic3}, hvor $\widehat{k}_1$, $\widehat{k}_2$ og $\widehat{k}_3$ betegner antallet af faktorer bestemt udfra informationskriterierne IC$_1$, IC$_2$ og IC$_3$.
+\item Lad \(\widehat{\textbf{Z}} = \del{\widehat{{\textbf{F}}}^T\boldsymbol{\omega}^T}^T\) være en \(\del{k+m} \times T\) matrix, hvor \(\widehat{{\textbf{F}}}\) er en \(T \times k\) matrix af estimerede faktorer og \(\boldsymbol{\omega}\) er en \(T \times m\) matrix af laggede værdier af arbejdsløshedsraten.
 Vi lader \(m = 4\), da den autoregressive model valgte en orden på 4.
 Dette medfører nogle uobserveret værdier, og derfor fjernes de første 4 rækker i \(\widehat{\textbf{Z}}\).
 \item Estimer parametrene $\widehat{\boldsymbol{\beta}} = \del{ \widehat{\boldsymbol{\beta}}^T_{\textbf{F}} \widehat{\boldsymbol{\beta}}^T_{\boldsymbol{\omega}}}^T$ med OLS.
@@ -24,8 +24,8 @@ Derudover ser vi næsten ingen signifikante autokorrelation for de tre faktor mo
 
 Dette bekræftes i tabel \ref{tab:test_faktor}, hvor vi observerer meget lave værdier af skewness og excess kurtosis. 
 Modellen valgt udfra IC$_3$ kommer dog tættest på normalfordelingen.
-Vi ser også, at nulhypotesen om normalitet for modellerne med informationskriterierne IC$_2$, IC$_3$ ikke kan afvises, men den bliver dog afvist for IC$_1$. uafhængighed ????
- 
+Vi ser også for JB-testen, at nulhypotesen om normalitet for modellerne med informationskriterierne IC$_2$, IC$_3$ ikke kan afvises, men den bliver dog afvist for IC$_1$.  Derudover har vi at LB-testen afvises for nulhypotesen omkring uafhængighed både for $e_t$ og $e_t^2$. 
+
 Tabel \ref{tab:factor_mse_tab} viser MAE og MSE for hver model, her ses at modellen valgt udfra IC$_3$ har både mindst MAE og MSE, men den er dog også den mest komplekse model. 
 
 \input{fig/tab/factor_mse}
@@ -33,11 +33,15 @@ Tabel \ref{tab:factor_mse_tab} viser MAE og MSE for hver model, her ses at model
 Vi kan derudover også se, at vores faktor modeller har bedre forecasts performance i forhold til den autoregressive model. 
 For in-sample ser vi at adjusted R$^2$ er markant bedre for faktor modellerne end den autoregressive model og derudover tyder det på, at de standardiserede residualer er iid og normalfordelte for faktor modellerne valgt ud fra IC$_2$ og IC$_3$. 
 
-Taget dette i betragtning vil vores faktor model valgt ud fra IC$_3$ være vores benchmark model i det den performer bedst i in-sample og out-of-sample. 
-Figur \ref{fig:fc_benchmark} viser arbejdsløshedsraten og den prædikterede arbejdsløshedsrate med faktor modellen valgt udfra IC\(_3\).
+Selvom faktor modellen valgt ud fra IC$_3$ performer bedst i in -og out of sample, vælger vi faktor modellen valgt ud fra IC$_2$ til at være benchmark modellen. 
+Det skyldes, at IC$_3$ vælger max af antallet af faktorer, og fra afsnit \ref{sec:faktorer} har vi at antallet af faktorer skal være mellem 0 og max af antal faktorer. 
 
-\imgfigh{fc_benchmark.pdf}{0.7}{Arbejdsløshedsraten og prædiktion af arbejdsløshedsraten med faktor modellen valgt udfra IC\(_3\).}{fc_benchmark}
+%Taget dette i betragtning vil vores faktor model valgt ud fra IC$_3$ være vores benchmark model i det den performer bedst i in-sample og out-of-sample. 
+Figur \ref{fig:fc_benchmark2} viser arbejdsløshedsraten og den prædikterede arbejdsløshedsrate med faktor modellen valgt ud fra IC\(_2\).
 
+%\imgfigh{fc_benchmark.pdf}{0.7}{Arbejdsløshedsraten og prædiktion af arbejdsløshedsraten med faktor modellen valgt udfra IC\(_3\).}{fc_benchmark}
+
+\imgfigh{fc_benchmark2.pdf}{0.7}{Arbejdsløshedsraten og prædiktion af arbejdsløshedsraten med faktor modellen valgt udfra IC\(_2\).}{fc_benchmark2}
 
 
 %\item Forecast $\widehat{y}_{t+1}$ fra forecast-ligningen givet i ....

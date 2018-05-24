@@ -1,5 +1,5 @@
-source("data_unrate.R")
 source("package.R")
+source("data_unrate.R")
 getFactors <- function(X, r) {
   p = ncol(X) 
   XTX = crossprod(X)
@@ -60,13 +60,13 @@ write.csv(c$x, file = "fc_faktor_ic3")
 
 # Analyse -----------------------------------------------------------------
 
-dato = c(as.character(test_dato))
+dato = c(as.character(dato_test))
 
-df = data.frame(date = as.Date(dato), fc.IC.1, fc.IC.2, fc.IC.3, y_test)
+df = data.frame(date = as.Date(dato), fc.IC.2, y_test)
 
 ggplot(df, aes(x = date ))  +
   geom_line(aes(y = y_test, colour = "Arbejdsløshed")) +
-  geom_line(aes(y = fc.IC.3, colour = "Benchmark")) +
+  geom_line(aes(y = fc.IC.2, colour = "Benchmark")) +
   ylab("Rate") + xlab("Dato") +
   scale_colour_manual(values = c("gray", "red")) +
   theme(legend.title=element_blank())

@@ -1,7 +1,7 @@
 source("data_unrate.R")
 source("package.R")
 source("parm.R")
-source("shrinkage_metoder/bic.R")
+source("shrinkage_metoder/coordinate/bic.R")
 source("shrinkage_metoder/res_plot.R")
 
 fit_ols = lm(y_train ~ 0 + x_train)
@@ -30,7 +30,6 @@ skewness(tmp$y)
 kurtosis(tmp$y)
 jarque.bera.test(tmp$y)
 Box.test(tmp$y, lag = 10, "Ljung-Box")
-Box.test(tmp$y^2, lag = 10, "Ljung-Box")
 
 
 # Koefficienter -----------------------------------------------------------

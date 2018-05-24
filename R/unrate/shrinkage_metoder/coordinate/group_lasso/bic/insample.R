@@ -1,7 +1,7 @@
 source("data_unrate.R")
 source("package.R")
 source("parm.R")
-source("shrinkage_metoder/bic.R")
+source("shrinkage_metoder/coordinate/bic.R")
 source("shrinkage_metoder/res_plot.R")
 
 grp <- c(1, 1, rep(4, 3), rep(1, 14), rep(2, 27), rep(3, 10), rep(4, 4),
@@ -28,7 +28,6 @@ skewness(tmp$y)
 kurtosis(tmp$y)
 jarque.bera.test(tmp$y)
 Box.test(tmp$y, lag = 10, "Ljung-Box")
-Box.test(tmp$y^2, lag = 10, "Ljung-Box")
 
 
 # Koefficienter -----------------------------------------------------------

@@ -20,3 +20,8 @@ library(foreach)
 library(broom)
 
 library(MCS)
+
+#inferens 
+library(selectiveInference)
+library(covTest)
+

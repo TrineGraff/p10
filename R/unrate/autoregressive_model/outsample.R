@@ -19,6 +19,7 @@ ForecastAR= function(data, p, idx = idx) {
   print(list("fc" = fc))
   }
 fc_ar = ForecastAR(y, 4, idx = idx )
+
 fc_ar = data.frame(fc_ar)
 c = tidy(fc_ar$fc)
 write.csv(c, file = "ar_4") 
@@ -32,7 +33,7 @@ plot(y_test, type = "l", xlim = c(0,140), ylim = c(-0.5, 0.5))
 
 dato = c(as.character(dato_test))
 
-df = data.frame(date = as.Date(dato), fc = fc$fc, y = y_test)
+df = data.frame(date = as.Date(dato), fc = fc_ar$fc, y = y_test)
 
 ggplot(df, aes(x = date ))  +
   geom_line(aes(y = y, colour = "Arbejdsløshed")) +
@@ -53,7 +54,6 @@ mse <- function(error)
   (mean(error^2))
 }
 
-mae(fc$fc - y_test)
-mse(fc$fc - y_test)
-
+mae(fc_ar$fc - y_test)
+mse(fc_ar$fc - y_test)
 

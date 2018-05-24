@@ -5,29 +5,31 @@ Vi bruger funktionen i appendiks \ref{sub:bic} til at finde $\widehat{\lambda}$.
 Tabel \ref{tab:bic_lambda} giver $\log \del{ \widehat\lambda}$, antallet af parameter, BIC og adjusted R$^2$ for hver model. 
 Igen vælges \(\alpha = 1\) for elastik net, og derfor ser vi igen bort fra denne model.
 Adjusted R$^2$ er igen højst for adaptive lasso og mindst for ridge regression. 
-Præcis som ved anvendelse af krydsvalideringer, vælger adaptive lasso færrest antal variable, som igen er \texttt{CLF16OV} og \texttt{CE16OV}.
+Præcis som ved anvendelse af krydsvalideringer, vælger adaptive lasso færrest antal variable, som igen er \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}.
 Derudover vælger group lasso hele 99 variabler. 
 
 \input{fig/tab/bic_lambda}
 
-På figur \ref{fig:coef_bic_coord} ser vi også det samme - variablerne \texttt{CLF16OV} og \texttt{CE16OV} har de markant højeste værdier, hvor de resterende er meget tæt på nul. 
+På figur \ref{fig:coef_bic_coord} ser vi igen at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} har de markant højeste værdier, hvor de resterende er meget tæt på nul. 
 Det samme er gældende for ridge og group lasso, vi har derfor valgt ikke at inkluderer disse koefficients plots. 
 
-\imgfigh{coef_bic_coord.pdf}{0.8}{Estimerede koefficienter for lasso og adaptive lasso med OLS og lasso vægte med BIC. 
-Farverne indikerer hvilken gruppe, variabler tilhører, og y-aksen er variablerne udvalgt af lasso.}{coef_bic_coord}
+\imgfigh{coef_bic_coord.pdf}{0.8}{Estimerede koefficienter for lasso og adaptive lasso med OLS og lasso vægte, hvor $\widehat{\lambda}$ er fundet ud fra BIC. 
+Farverne indikerer hvilken gruppe, variabler tilhørerr. Y-aksen er variablerne udvalgt af lasso.}{coef_bic_coord}
 
-Figur \ref{fig:boxplot_lasso_coord_bic} viser boxplot for lasso, og vi ser at variablerne der ikke tilhører gruppe to oftes bliver valgt til at være nul, derudover er variablerne  \texttt{CLF16OV},  \texttt{CE16OV} , \texttt{lag1}, \texttt{UEMPL15OV}, og \texttt{UEMPLT5} fra gruppe to ofte estimeret til at være forskellige fra nul, dvs at lasso ofte vælger disse variable. 
-Igen ser vi, for alle modeller at variablerne \texttt{CLF16OV} og \texttt{CE16OV} ofte bliver estimeret til at være forskellige fra nul. 
-
-
-Af tabel \ref{tab:fixedLassoInf_bic} observeres at nulhypotesen afvises for \texttt{CLF16OV}, \texttt{CE16OV}. 
-
-\input{fig/tab/fixedlasso_bic}
-
-Figurerne \ref{fig:resid_lasso_coord_bic}-\ref{fig:resid_adap_ols_coord_bic} viser en an analyse af de standardiserede residualer.
+Figurerne \ref{fig:resid_lasso_coord_bic}-\ref{fig:resid_adap_ols_coord_bic} viser en analyse af de standardiserede residualer.
 Vi ser igen lidt af den samme tendens for alle metoderne. 
 Histogrammet og QQ-plottet indikerer tungere haler end normalfordelingen og autokorrelation i det første lag. 
 Dog har ridge regression og group lasso kun få outliers som ses på QQ-plottet. 
-I tabel \ref{tab:res_shrinkage_bic_tab} ser vi også, at vi ikke kan afvise LB testen omkring normalitet for group lasso. 
+I tabel \ref{tab:res_shrinkage_tab} ser vi også, at vi ikke kan afvise LB testen omkring normalitet for group lasso når $\widehat{\lambda}$ er bestemt udfra BIC. 
+
+\newpage
+\subsection*{Inferens}
+Figur \ref{fig:boxplot_lasso_coord_bic} viser boxplot for lasso, og vi ser at variablerne der ikke tilhører gruppe to oftes bliver valgt til at være nul, derudover er variablerne  \textcolor{blue3}{CLF16OV},  \textcolor{blue3}{CE16OV} , \textcolor{blue3}{lag1}, \textcolor{blue3}{UEMPL15OV}, og \textcolor{blue3}{UEMPLT5} fra gruppe to ofte estimeret til at være forskellige fra nul, dvs at lasso ofte vælger disse variable. 
+Det samme er gældende for ridge og groupe lasso. 
+
+Af tabel \ref{tab:fixedLassoInf_bic} observeres at nulhypotesen afvises for \textcolor{blue3}{CLF16OV}, \textcolor{blue3}{CE16OV}. ------
+
+\input{fig/tab/fixedlasso_bic}
+
 
 %%\input{fig/tab/bic_ud}

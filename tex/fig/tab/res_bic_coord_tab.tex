@@ -1,17 +1,17 @@
-\begin{table}
+\begin{sidewaystable}
 \center
-\begin{tabular}{lrrrrrrrrrr} 
+\begin{tabular}{lccccccccccc} 
 \toprule
-& \multicolumn{2}{c}{Lasso} && \multicolumn{2}{c}{Ridge } && \multicolumn{2}{c}{Group lasso} \\ \midrule
-Skewness & \multicolumn{2}{c}{$-0.1322$} &&\multicolumn{2}{c}{$-0.1127$} && \multicolumn{2}{c}{$-0.1148$} \\
-Kurtosis & \multicolumn{2}{c}{$-0.5174$} && \multicolumn{2}{c}{0.5124} &&\multicolumn{2}{c}{$-0.2385$} \\
-JB-test & \multicolumn{2}{c}{0.0235} && \multicolumn{2}{c}{0.0239} && \multicolumn{2}{c}{0.3008}  \\
-LB$_{10}$ &  \multicolumn{2}{c}{-} &&  \multicolumn{2}{c}{-} &&  \multicolumn{2}{c}{} \\  \bottomrule \toprule
- & \multicolumn{2}{c}{Adap. lasso m. ols}  && \multicolumn{2}{c}{Adap. lasso m. lasso} \\ \midrule
-Skewness &  \multicolumn{2}{c}{$-0.08713$} && \multicolumn{2}{c}{$-0.08715$} \\
-Kurtosis & \multicolumn{2}{c}{$-0.6103$} && \multicolumn{2}{c}{$-0.6102$} \\
-JB-test &  \multicolumn{2}{c}{0.0113} &&  \multicolumn{2}{c}{$0.0113$} \\ 
-LB$_{10}$ &   \multicolumn{2}{c}{-} &&  \multicolumn{2}{c}{-} \\ \bottomrule
+& Lasso && Ridge &&Group lasso &  & Adap. lasso m. OLS && Adap. lasso m. lasso  \\
+Skewness &$-0.1322$ && $-0.1127$ && $-0.1148$ & & $-0.08713$ && $-0.08715$ \\
+Kurtosis & $-0.5174$ && 0.5124 &&$-0.2385$ && $-0.6103$ && $-0.6102$\\
+JB-test & 0.0235 && 0.0239 && 0.3008   &&   0.0113 &&$0.0113$\\
+LB$_{10}$-test & 0 &&  0.0013 && 0  &  & 0 &&  0 \\  \bottomrule
+% & Adap. lasso m. OLS && Adap. lasso m. lasso \\ \midrule
+%Skewness & $-0.08713$ && $-0.08715$ \\
+%Kurtosis &$-0.6103$ && $-0.6102$ \\
+%JB-test &  0.0113 &&$0.0113$ \\ 
+%LB$_{10}$-test & 0 &&  0 \\ \bottomrule
  \end{tabular}
 \caption{Skewness, excess kurtosis, p-værdier for Jarque Bera og Ljung Box teste for de standardiserede residualer fra shrinkage metorderne, hvor  $\widehat{\lambda}$ er valgt udfra BIC. Vi lader LB$_{10}$ betegne Ljung-Box test med lag = 10. } \label{tab:res_shrinkage_bic_tab}
-\end{table}
+\end{sidewaystable}

@@ -17,6 +17,8 @@ ya_dato_test = data_raw$dato[-c(1:idx)]
 xf = scale(data[ , !(colnames(data) %in% drops)], center = TRUE) 
 xf_train = xf[1:idx,]
 xf_test = xf[-c(1:idx),]
+yf_train = y[1:idx]
+yf_test = y[-c(1:idx)]
 
 #tilføjer 4 laggede værdier
 df.y.lags = foreach(i = 1:4, .combine = cbind) %do%{

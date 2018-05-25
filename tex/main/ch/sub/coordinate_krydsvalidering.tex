@@ -23,54 +23,56 @@ For group lasso vælges lidt overraskende alle parametre med \(\lambda_\text{min
 Vi lader $\widehat{\lambda}_{1\text{sd}}$ være den optimale tuning parameter for group lasso, da den har det færreste antal parametre. 
 
 Adaptive lasso med OLS og lasso vægte vælger blot 2 variable for både  $\lambda_{\min}$ og $\lambda_{1\text{sd}}$. 
-Variablerne er \texttt{CLF16OV} og \texttt{CE16OV}, som begge tilhører gruppe to. 
+Variablerne er  \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}.
 Vi lader $\widehat{\lambda}_{\min}$ være tuning parameteren for adaptive lasso modellerne. 
 
 Figur \ref{fig:coef_kryds_coord} giver et overblik over størrelsen af de 14 estimerede koefficienter for lasso og de 2 estimerede koefficienter for adaptive lasso.
-Igen illustrerer farverne, hvilken gruppe variablerne tilhører.
 Heraf ses, at lasso hovedsagligt vælger variable i samme gruppe som arbejdsløshedsraten.
-Variablerne valgt af adaptive lasso, \texttt{CLF16OV} og \texttt{CE16OV}, har også de største estimerede koefficienter for lasso, mens resten af variablerne har koefficienter meget tæt på nul. 
+Variablerne valgt af adaptive lasso, \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}, har også de største estimerede koefficienter for lasso, mens resten af variablerne har koefficienter meget tæt på nul. 
 Figur \ref{fig:coef_ridge_kryds_coord} og \ref{fig:coef_gglasso_kryds_coord} viser de estimerede koefficienter for henholdsvis ridge regression og group lasso.
-Igen ser vi, at variablerne \texttt{CLF16OV} og \texttt{CE16OV} klart har de største estimerede koefficienter.    
+Igen ser vi, at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} klart har de største estimerede koefficienter.    
 %
 \imgfigh{coef_kryds_coord.pdf}{0.8}{Estimerede koefficienter for lasso og adaptive lasso med OLS og lasso vægte. 
 Farverne indikerer hvilken gruppe, variabler tilhører, og y-aksen er variablerne udvalgt af lasso.}{coef_kryds_coord}
 
-\newpage
-\subsubsection{Inferens}
-På figur \ref{fig:boxplot_lasso_coord_kryds} og \ref{fig:bootstrap_alasso} ses bootstrap resultater af variablene udvalgt af lasso og adaptive lasso.
-Fælles for lasso og adaptive lasso er, at variablerne \texttt{CLF16OV} og \texttt{CE16OV} altid vælges.
 
-For lasso ser vi, at variablerne \texttt{lag 1}, \texttt{UEMPL15OV}, \texttt{UEMP5TO14}, \texttt{UEMPLT5}, \texttt{CE16OV} og \texttt{CLF16OV}, som alle tilhører gruppe 2, ofte vælges, mens variablerne som ikke tilhører gruppe 2 oftes fravælges.
+Figur \ref{fig:resid_lasso_coord_kryds}-\ref{fig:resid_adap_ols_coord_kryds} viser en analyse af de standardiserede residualer for lasso og dens generaliseringer. 
+Vi ser, samme tendens for alle shrinkage metoderne. Histogrammet og QQ-plottet indikerer tungere haler end en normalfordeling og autokorrelation i første lag.
+Dette bekræftes i tabel \ref{tab:res_shrinkage_tab}, som viser skewness, excess kurtosis, $p$-værdier fra JB-testen og LB testen for de standardiserede residualer, hvor $\widehat{\lambda}$ er estimerede udfra krydsvalidering.  
+Vi ser, at alle modellerne har en negativ skewness og en kurtosis forskellige fra nul. 
+Derudover afvises JB testens nulhypotesen om normalitet for alle modeller med undtagelse af group lasso, samt bliver hulhypotesen omkring uafhængighed også afvist i LB testen. 
+Vi ser også, at group lasso er den model, som har en kurtosis tætteste på nul, samt en meget lille skewness. 
+
+
+Tabel \ref{tab:adj_r2_shrinkage_tab} viser adjusted R$^2$ for lasso og dens generaliseringer.
+Adaptive lasso modellerne har størst adjusted R$^2$, mens ridge regression har mindst adjusted R\(^2\), hvilket stemmer overens med at adaptive lasso valgte det færreste antal parametre, mens ridge regression valgte alle parametre. 
+
+\subsubsection*{Inferens}
+På figur \ref{fig:boxplot_lasso_coord_kryds} ses bootstrap resultater af variablene udvalgt af lasso.
+Idet adaptive lasso er konsistent i variable udvælgels, vil de to adaptive modeller altid vælge variablerne\textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} og derfor ser vi bort fra bootstrap af de to adaptive modeller. 
+
+For lasso ser vi, at variablerne \textcolor{blue3}{lag 1},\textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{UEMPLT5},\textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} ofte vælges, mens variablerne som ikke tilhører gruppe 2 oftes fravælges.
+
 %
 \imgfigh{boxplot_lasso_coord_kryds.pdf}{0.8}{
 Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\tbeta}^{\text{lasso}} \del{{\widehat{\lambda}_\text{1sd}}} $, mens plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}{boxplot_lasso_coord_kryds}
 %
-\imgfigh{bootstrap_alasso.pdf}{0.7}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\tbeta}^{\text{AL}} \del{{\widehat{\lambda}_\text{min}}}$ med OLS vægte, mens plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}{bootstrap_alasso}
+%\imgfigh{bootstrap_alasso.pdf}{0.7}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\tbeta}^{\text{AL}} \del{{\widehat{\lambda}_\text{min}}}$ med OLS vægte, mens plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}{bootstrap_alasso}
 
 Vi kan også udføre inferens for lasso modellen for en fast værdi af tuning parameteren \(\lambda\), med funktionen \texttt{fixedLassoInf} fra \Rlang-pakken \texttt{selectiveInference}.
 \Rlang-koden for dette er givet i appendiks \ref{subsubsec:inferens}.
 Funktionen udregner \(p\)-værdier og konfidensintervaller for lasso estimatet for en fast værdi af tuning parameteren.
 Resultaterne er givet i tabel \ref{tab:fixedLassoInf}.
-Heraf ser vi at variablerne \texttt{CLF16OV}, \texttt{CE16OV} og \texttt{lag 1} afviser nulhypotesen, og derfor er signifikante.
+Heraf ser vi at variablerne \textcolor{blue3}{CLF16OV}, \textcolor{blue3}{CE16OV} og \textcolor{blue3}{lag1} afviser nulhypotesen, og derfor er signifikante. ------
 %
 \input{fig/tab/fixedLassoInf}
 %
 
 \newpage
 %
- \input{fig/tab/adj_r2_shrinkage}
 %
-Tabel \ref{tab:adj_r2_shrinkage_tab} viser adjusted R$^2$ for lasso og dens generaliseringer.
-Adaptive lasso modellerne har størst adjusted R$^2$, mens ridge regression har mindst adjusted R\(^2\), hvilket stemmer overens med at adaptive lasso valgte det færreste antal parametre, mens ridge regression valgte alle parametre. 
 
+ \input{fig/tab/adj_r2_shrinkage}
 
-
-Figur \ref{fig:resid_lasso_coord_kryds}-\ref{fig:resid_adap_ols_coord_kryds} viser en analyse af de standardiserede residualer for lasso og dens generaliseringer. 
-Vi ser, samme tendens for alle shrinkage metoderne. Histogrammet og QQ-plottet indikerer tungere haler end en normalfordeling og autokorrelation i første lag.
-Dette bekræftes i tabel \ref{tab:res_shrinkage_tab}, som viser skewness, excess kurtosis og $p$-værdier fra JB-testen for de standardiserede residualer for alle shrinkage modeller. 
-Vi ser, at alle modellerne har en negativ skewness og en kurtosis forskellige fra nul. 
-Derudover afvises JB testen nulhypotesen om normalitet for alle modeller med undtagelse af group lasso. 
-Vi ser også, at group lasso er den model, som har en kurtosis tætteste på nul, samt en meget lille skewness. 
 
 \newpage

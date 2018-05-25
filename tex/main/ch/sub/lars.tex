@@ -6,7 +6,8 @@ For LARS algoritmen uden lasso modifikationen tilføjes en variabel i hvert step
 LARS algoritmen med lasso modifikationen udfører 192 steps, hvor variabler kan tilføjes og fjernes igen.
 
 \subsection{Krydsvalidering}
-For at finde den optimale model udføres krydsvalidering.
+I dette afsnit finder vi turning parameterene for LARS algoritmen og LARS med lasso modifikation med krydsvalidering. 
+Hertil anvendes funktionen \texttt{cv.lars} .  
 For LARS algoritmen uden lasso modifikationen betragtes antallet af steps, som betegnes \(s\). 
 Igen finder vi $\widehat{s}_{\min}$, som angiver den mindste gennemsnitlige krydsvalideringsfejl og $\widehat{s}_{\text{1sd}}$ som betegner den mindste værdi således at fejlen er indenfor en standard afvigelse. 
 
@@ -19,20 +20,27 @@ Igen betragtes \(\widehat{f}_{\min}\) og \(\widehat{f}_{\text{1sd}}\).
 %Krydsvalideringen for lasso deler L1-normen op i en følge af 100 punkter mellem 0 og 1, hvor vi herefter finder $\widehat{f}$. Vi ser ikke kun på den model der giver den mindste krydsvaliderings fejl, som betegnes  $\widehat{f}_{\min}$, men også  $\widehat{f}_{\text{1sd}}$ . 
 
 Figur \ref{fig:lars_kryds} viser krydsvalideringskurven og standardfejl som funktion af steps for LARS algoritmen og som funktion af fraction af \(\ell_1\)-norm for LARS algoritmen med lasso modifikationen. 
+
 \imgfigh{lars_kryds.pdf}{1}{10-fold krydsvalideringsfejl som funktion af steps for LARS algoritmen og som funktion af fraction af \(\ell_1\)-norm for LARS algoritmen med lasso modifikationen. De stiplede linjer indikerer værdier af henholdsvis \(s\) og \(f\) med den mindste krydsvalideringsfejl og den mindste værdi af \(s\) og \(f\) således at fejlen er indenfor en standard afvigelse af minimum.}{lars_kryds}
 %
 Tabel \ref{tab:lars_lasso_tab} giver antallet af steps, gennemsnitlige krydsvalideringsfejl og antallet af variable for LARS algoritmen for \(s_\text{min}\) og \(s_{1 \text{sd}}\) og fraction af \(\ell_1\)-norm, gennemsnitlige krydsvalideringsfejl og antallet af variable for LARS algoritmen med lasso modifikationen for \(f_\text{min}\) og \(f_{1 \text{sd}}\).
-Krydsvalideringen fejlen afviger først på 5. decimal, derfor vælger vi modellerne med det mindste antal variable. ---
+%
+Krydsvalideringen fejlen afviger først på 5. decimal, derfor vælger vi modellerne med det mindste antal variable. 
+Det skal dog bemærkes, at antallet af steps og antallet af parameter ikke er lig med hinanden, som vil forventes. 
+Det skyldes at ved udførelse af krydsvalidering er den første gennemsnitlige krydsvaliderings fejl baseret på hvor ingen variabler er blevet tilført. 
+Så vi har derfor 127 gennemsnitlige krydsvaliderings fejl. 
 %
 \input{fig/tab/lars_lasso_tab}
 %
 På figur \ref{fig:coef_lars_kryds} vises koefficienter for de valgte variable for LARS uden og med lasso modifikation.
-\imgfigh{coef_lars_kryds.pdf}{1}{Estimerede koefficienter for LARS algoritmen uden og med lasso modifikationen.
+
+\imgfigh{coef_lars_kryds.pdf}{1}{Estimerede koefficienter for LARS algoritmen uden og med lasso modifikationen, hvor $\widehat{s} $ og $\widehat{f}$ er fundet ud fra krydsvalidering.
 Farverne indikerer hvilken gruppe, variablerne tilhører.}{coef_lars_kryds}
-%
+
+Figurerne \ref{fig:lars_kryds_res} og  \ref{fig:lars_lasso_kryds_res} viser en analyse af de standardiserede resiudaler, hvor vi igen ser tungere haler end en normalfordeling og autokorrelation i det første lag. Tabel \ref{tab:lars_kryds_res_tab}  understøtter dette, hvor vi afviser normalitet og uafhængighed i lag 10 når turning parameterne er valgt ved krydsvalidering. 
 
 \newpage
-\subsection{Inferens}
+\subsubsection{Inferens - LARS uden modifikation}
 Lars algoritmen udfører 126 steps, hvor én variabel tilføjes i hvert step.
 Funktionen \texttt{larInf} fra \Rlang-pakken \texttt{selectiveInference} udregner \(p\)-værdier og konfidensintervaller for LARS algoritmen.
 I tabel \ref{tab:larInf} vises resultaterne.
@@ -43,12 +51,12 @@ Heraf ses at nulhypotesen primært afvises for variabler i gruppe 2 (\textcolor{
 
 Ifølge spacing testen afvises kun variabler fra gruppe 2, dog kan vi ikke afvise nulhypotesen for variablerne \textcolor{blue3}{PAYEMS} og \textcolor{blue3}{CLAIMSx}.
 
-Ifølge kovarianstesten er alle variable tilhørende gruppe 2 signifikant med undtagelse af \textcolor{blue3}{PAYEMS}, \textcolor{blue3}{lag 1} og \textcolor{blue3}{CLAIMSx}, hvor nulhypotesen ikke kan afvises.
+Ifølge kovarianstesten er alle variable tilhørende gruppe 2 signifikant med undtagelse af \textcolor{blue3}{PAYEMS}, \textcolor{blue3}{lag 1} og \textcolor{blue3}{CLAIMSx}, hvor nulhypotesen ikke kan afvises. 
 Derudover ser vi, at også variablerne \textcolor{chartreuse4}{INDPRO}, \textcolor{orange}{GS1} og \textcolor{orange}{GS5} afviser nulhypotesen.
 
 Men kun variablerne \textcolor{blue3}{HWIURATIO}, \textcolor{blue3}{UEMP15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{CLF16OV} afvises for alle teste, hvorfra vi konkluderer at disse er signifikante.
 \newpage
-\subsubsection{Kovarians test}
+\subsubsection{Inferens - LARS med lasso modifikation}
 Som nævnt udfører LARS algoritmen med lasso modifikationen 192 steps, hvori variablerne tilføjes og nogle fjernes igen.
 For \(\widehat{f}_{1\text{sd}}=0.2424\) finder vi 13 prædiktorer, hvorpå kovarians testen udføres.
 Funktionen \texttt{covTest} fra \Rlang-pakken af samme navn udregner teststørrelsen samt \(p\)-værdie for kovarianstesten for LARS algoritmen med lasso modifikation.
@@ -60,8 +68,8 @@ For de resterende variable kan vi ikke afvise nulhypotesen.
 %
 For de valgte variable udfører algoritmen 23 steps, hvor variablerne  \textcolor{chartreuse4}{CUMFNS}, \textcolor{blue3}{MANEMP}, \textcolor{orange}{TB6MS}, \textcolor{orange}{GS1}, \textcolor{blue3}{USGOOD} tilføjes og fjernes igen.
 
-
-
+\newpage
+\input{main/ch/sub/lars_bic}
 
 %#  Function produces one fit at each new variable entry.
 %# Cross-Validation for LASSO chops up the L1-norm into sequence of 100 points. 

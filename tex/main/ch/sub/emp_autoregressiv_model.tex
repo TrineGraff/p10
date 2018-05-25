@@ -1,7 +1,7 @@
 \section{Autoregressiv model}
 Den autoregressive model af orden \(p\) estimeres med OLS, og ordenen bestemmes udfra BIC.
 Vi lader $p = 1, \ldots, p_{\max}$, hvor \(p_\text{max}=12\), da vi mener, at arbejdsløshedsraten ikke vil påvirkes mere end et år tilbage.
-BIC vælger \(p=4\) og tabel \ref{tab:est_ar} giver estimeringsresultaterne for en \(\text{AR} \del{4}\).
+BIC vælger \(p=4\) og tabel \ref{tab:est_ar} giver estimeringsresultaterne for en \(\text{AR} \del{4}\). \footnote{En ARMA(p,q) estimeret med MLE, hvor $p_{\max} = 12$ og $q_{\max} = 12$ fortrækker også en AR(4) valgt ud fra BIC.}
 %
 \input{fig/tab/est_ar}
 

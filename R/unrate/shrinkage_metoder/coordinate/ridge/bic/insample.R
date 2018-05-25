@@ -1,7 +1,7 @@
 source("data_unrate.R")
 source("package.R")
 source("parm.R")
-source("shrinkage_metoder/bic.R")
+source("shrinkage_metoder/coordinate/bic.R")
 source("shrinkage_metoder/res_plot.R")
 
 fit_ridge = glmnet(x_train, y_train, family = "gaussian", alpha = 0, intercept = FALSE, standardize=FALSE)
@@ -23,5 +23,4 @@ skewness(tmp$y)
 kurtosis(tmp$y)
 jarque.bera.test(tmp$y)
 Box.test(tmp$y, lag = 10, "Ljung-Box")
-Box.test(tmp$y^2, lag = 10, "Ljung-Box")
 

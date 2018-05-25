@@ -30,20 +30,19 @@ res = scale(res)
 
 tmp = data.frame(Date = as.Date(dato_train), y = res)
 
-qqnorm<- qqnorm.plot(res)
-hist <- histogdens.plot(res)
-resid <- residuals.plot(res)
-acf <- residuals.acf.plot(res)
+#qqnorm<- qqnorm.plot(res)
+#hist <- histogdens.plot(res)
+#resid <- residuals.plot(res)
+#acf <- residuals.acf.plot(res)
 
-print(grid.arrange(top=textGrob('', gp=gpar(fontsize=20)), hist, qqnorm, resid, acf,
-                   layout_matrix = matrix(c(1,2,3,4), ncol = 2, byrow = 2)))
+#print(grid.arrange(top=textGrob('', gp=gpar(fontsize=20)), hist, qqnorm, resid, acf,
+ #                  layout_matrix = matrix(c(1,2,3,4), ncol = 2, byrow = 2)))
 
 
 skewness(res)
 kurtosis(res)
 jarque.bera.test(res)
 Box.test(res, lag = 10, "Ljung-Box")
-Box.test(res^2, lag = 10, "Ljung-Box")
 
 # Adj. R ------------------------------------------------------------------
 SS.res = sum((y_train - x_train[,idx_beta] %*% beta_hat)^2)

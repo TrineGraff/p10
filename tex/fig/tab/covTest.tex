@@ -1,28 +1,26 @@
-\begin{table}[h] 
+\begin{table}[ht] 
 \centering 
-\scalebox{0.9}{
-\begin{tabular}{llll}
-\multicolumn{4}{l}{LARS algoritmen med lasso modifikation} \\
+\begin{tabular}{lccc}
+%\multicolumn{3}{l}{LARS algoritmen med lasso modifikation} \\
 \toprule
 Prædiktor & Cov test & \(p\)-værdi \\
 \midrule
-\textcolor{blue3}{HWIURATIO} & 864.5594 & 0.00 \\
-\textcolor{blue3}{UEMP15OV} & 161.38 & 0.00 \\ 
-\textcolor{blue3}{UEMPLT5} & 162.87 & 0.00 \\ 
-\textcolor{blue3}{UEMP5TO14} & 121.91 & 0.00 \\
-\textcolor{blue3}{CE16OV} & 14.48 & 0.00  \\ 
-\textcolor{blue3}{PAYEMS} & 0.37 &  0.69 \\
-\textcolor{blue3}{CLF16OV} & 217.42 & 0.00  \\
-\textcolor{chartreuse4}{IPDMAT} & 0.06 & 0.94 \\
-\textcolor{orange}{GS5} & 0.39 & 0.68  \\ 
-\textcolor{blue3}{lag 1} & 0.89 & 0.41 \\ 
-\textcolor{orange}{TB6MS} & 0.04 & 0.96  \\
-\textcolor{blue3}{USCONS} & 0.01 & 0.99 \\ 
- \textcolor{red3}{DPCERA3M086SBEA} & 0.17 & 0.84 \\
+ \textcolor{blue3}{HWIURATIO}  &   864.6317 & 0.0000 \\
+ \textcolor{blue3}{UEMP15OV}  &   161.3770&  0.0000 \\
+ \textcolor{blue3}{UEMPLT5} &  163.0670 & 0.0000 \\
+ \textcolor{blue3}{UEMP5TO14}  &   122.3840  &0.0000 \\
+ \textcolor{blue3}{CE16OV} & 14.7416  &0.0000 \\
+ \textcolor{blue3}{PAYEMS} &  0.3356  &0.7151 \\
+  \textcolor{blue3}{USGOOD}  &   5.0872 & 0.0066 \\
+ \textcolor{blue3}{CLF16OV}    &   221.9181 & 0.0000 \\
+\textcolor{chartreuse4}{IPDMAT}       &    0.0668&  0.9354 \\
+\textcolor{orange}{GS5}   &       0.3856 &    0.6803 \\
+ \textcolor{blue3}{ lag1 }  &      0.8897 &    0.4115 \\
+\textcolor{orange}{ TB6MS }&       0.0419   &  0.9590 \\
+ \textcolor{blue3}{USCONS }&   0.0132   &  0.9869 \\ 
 \bottomrule
 \end{tabular}
-}
+
 \caption{Kovarians testen for LARS algoritmen med lasso modifikation.
-Tallene er afrundet til 2 decimaler.
 Vi viser kun \(p\)-værdier for prædiktorer som medtages og bliver i modellen for \(\widehat{f}_{1\text{sd}}=0.2424\), dvs hvis en prædiktor medtages i et step og senere forlader modellen, vises denne prædiktor ikke.} \label{tab:covTest}
 \end{table} 

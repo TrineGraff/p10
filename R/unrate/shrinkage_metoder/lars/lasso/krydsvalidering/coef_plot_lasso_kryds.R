@@ -15,7 +15,7 @@ idx_lasso = which(coef_lasso != 0)
 length(idx_lasso)
 
 ## plot 
-coef = data.table("Lasso med LARS modifikation" = coef_lasso)
+coef = data.table("LARS med lasso modifikation" = coef_lasso)
 coef[, feature := colnames(x_train)]
 
 koef <- coef[feature == "IPDMAT" | feature == "HWIURATIO" 

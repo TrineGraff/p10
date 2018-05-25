@@ -21,6 +21,14 @@ library(foreach)
 library(broom)
 
 library(MCS)
+<<<<<<< HEAD
 =======
 #library(broom)
 >>>>>>> Stashed changes
+=======
+
+#inferens 
+library(selectiveInference)
+library(covTest)
+
+>>>>>>> master

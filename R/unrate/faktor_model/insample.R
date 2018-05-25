@@ -1,16 +1,17 @@
 source("data_unrate.R")
 source("package.R")
+source("shrinkage_metoder/res_plot.R")
 
 #xf er de forklarende matricer uden anvendelse af skalering
 
-getFactors <- function(X, r) {
+getFactors <- function(X, k) {
   p = ncol(X) 
   XTX = crossprod(X)
   
   X.eig = eigen(XTX, symmetric = TRUE)
   eig.vec = X.eig$vectors
   
-  loadings = eig.vec[, 1:r] * sqrt(p)
+  loadings = eig.vec[, 1:k] * sqrt(p)
   factors = (X %*% loadings) / p
   
   list.out <- list(
@@ -25,33 +26,33 @@ estFactors <- function(X.df, ic = 1, trace = FALSE) {
   n.obs = nrow(X)
   p = ncol(X)
   
-  r.max = 20
-  ics = rep(NA, r.max)
+  k.max = 20
+  ics = rep(NA, k.max)
   
-  for (r in 1:r.max) {
-    est.r <- getFactors(X, r)
-    F.r <- est.r$factors
-    L.r <- est.r$loading
+  for (k in 1:k.max) {
+    est.k <- getFactors(X, k)
+    F.k <- est.k$factors
+    L.k <- est.k$loading
     
     if(ic == 1) {
-      penalty <- r * (p + n.obs) / (p * n.obs) * log((p * n.obs) / p + n.obs)
+      penalty <- k * (p + n.obs) / (p * n.obs) * log((p * n.obs) / p + n.obs)
     } else if (ic == 2) {
-      penalty <- r * (p + n.obs) / (p * n.obs) * log(min(p, n.obs))
+      penalty <- k * (p + n.obs) / (p * n.obs) * log(min(p, n.obs))
     } else if (ic == 3) {
-      penalty <- r * log(min(p, n.obs)) / min(p, n.obs)
+      penalty <- k * log(min(p, n.obs)) / min(p, n.obs)
     } else {
       stop("Invalid information criterion argument")
     }
     
-    V.r = matrix.trace(crossprod(X - tcrossprod(F.r, L.r))) / (n.obs * p)
-    ics[r] = log(V.r) + penalty
-    if (trace) cat("r =", r, "\tV =", V.r, "\tIC =", ics[r], "\n")
+    V.k = matrix.trace(crossprod(X - tcrossprod(F.k, L.k))) / (n.obs * p)
+    ics[k] = log(V.k) + penalty
+    if (trace) cat("k =", k, "\tV =", V.k, "\tIC =", ics[k], "\n")
   }
   
-  r.opt = which.min(ics)
-  est.opt = getFactors(X, r.opt)
+  k.opt = which.min(ics)
+  est.opt = getFactors(X, k.opt)
   factors.opt = est.opt$factors
-  colnames(factors.opt) = paste("F", 1:r.opt, sep = "")
+  colnames(factors.opt) = paste("F", 1:k.opt, sep = "")
   df.out = data.frame(factors.opt) %>% tbl_df
   return(df.out)
 }
@@ -62,7 +63,7 @@ m = 4 #valgt fra en AR
 
 #Laver omega_t
 df.y.lags = foreach(i = 1:m, .combine = cbind) %do%{
-  lag(y_train, i) 
+  lag(yf_train, i) 
 }
 colnames(df.y.lags) = c("lag1", "lag2", "lag3", "lag4")
 
@@ -75,7 +76,7 @@ factors.IC.3 = estFactors(xf_train, ic = 3, trace = T) #20 faktorer
 fit = function(F.t, w.t, y_train) {
   m = dim(w.t)[2] # antal lags
   n.obs = dim(w.t)[1] #antal observationer t_0
-  r = dim(F.t)[2] #antal faktorer
+  k = dim(F.t)[2] #antal faktorer
   Z = data.frame(F.t, w.t) %>% tbl_df  
   Z = Z[(m + 1):n.obs,] %>% as.matrix(.) #ser bort fra de første m rækker
   y.res = y_train[(m + 1):n.obs] #ser bort fra de første m observationer
@@ -87,16 +88,16 @@ fit = function(F.t, w.t, y_train) {
   SS.res = sum((resid)^2)
   SS.tot = sum((y.res - mean(y.res))^2)
   R.sqrd = 1 - (SS.res / SS.tot)
-  adj.R.sqrt = 1 - (1 - R.sqrd) * ((n.obs - 1) / (n.obs - (m + r) - 1)) 
+  adj.R.sqrt = 1 - (1 - R.sqrd) * ((n.obs - 1) / (n.obs - (m + k) - 1)) 
   
   
   return(list("beta.hat" = beta.hat, "fit" = fit, "residuals" = resid, 
               "adj.R.sqrt" = adj.R.sqrt))
   }
   
-fit.IC.1 = fit(factors.IC.1, df.y.lags, y_train)
-fit.IC.2 = fit(factors.IC.2, df.y.lags, y_train)
-fit.IC.3 = fit(factors.IC.3, df.y.lags, y_train)
+fit.IC.1 = fit(factors.IC.1, df.y.lags, yf_train)
+fit.IC.2 = fit(factors.IC.2, df.y.lags, yf_train)
+fit.IC.3 = fit(factors.IC.3, df.y.lags, yf_train)
 
 #tester beta og adjusted R squared
 df = data.frame(factors.IC.1, df.y.lags)
@@ -112,56 +113,9 @@ res.IC.2 = scale(fit.IC.2$residuals)
 res.IC.3 = scale(fit.IC.3$residuals)
 
 # skal gøres manuelt
-tmp = data.frame(Date = as.Date(train_dato[5:length(y_train)]), y = res.IC.3)
+tmp = data.frame(Date = as.Date(dato_train), y = res.IC.3)
 res = res.IC.3 
   
-qqnorm.plot = function(y){
-  q.sample_l = quantile(y)[["25%"]]
-  q.sample_u = quantile(y)[["75%"]]
-  q.theory_l = qnorm(0.25)
-  q.theory_u = qnorm(0.75)
-  slope = (q.sample_l - q.sample_u)/(q.theory_l-q.theory_u)
-  int = q.sample_l - slope*q.theory_l
-  ggplot() +
-    stat_qq(aes(sample = y)) +
-    geom_abline(intercept = int, slope = slope) +
-    xlab("Teoretisk kvantil") +
-    ylab("Sample kvantil") +
-    ggtitle("Normal Q-Q plot") 
-}
-
-histogdens.plot = function(y){
-  ggplot(mapping = aes(x = y)) +
-    geom_histogram(aes(y = ..density..), binwidth = 1) +
-    geom_density() +
-    stat_function(fun = dnorm, color="red", args=list(mean=mean(y), sd=sd(y))) +
-    xlab("Standard afvigelse") +
-    ylab("") +
-    ggtitle("Fordelingen af residualerne")
-}
-
-residuals.plot = function(y) {
-  ggplot(tmp, aes(Date, y)) + 
-    geom_line() +
-    xlab("Dato") +
-    ylab("Residualer") +
-    ggtitle("Residualerne")
-}
-
-residuals.acf.plot = function(y){
-  acf <- acf(y, plot = FALSE)
-  df <- with(acf, data.frame(lag, acf))
-  acf.confint <- qnorm(0.975) / sqrt(length(y))
-  acf.plot <- df %>%
-    ggplot(aes(x = lag, y = acf)) +
-    geom_hline(aes(yintercept = 0)) +
-    geom_segment(aes(xend = lag, yend = 0)) +
-    geom_hline(yintercept = c(-acf.confint, acf.confint), linetype = "dashed", color = "blue") +
-    xlab("Lags") +
-    ylab("Autokorrelation") +
-    ggtitle("Residual korrelogram")
-}
-
 qqnorm<- qqnorm.plot(res)
 hist <- histogdens.plot(res)
 resid <- residuals.plot(res)

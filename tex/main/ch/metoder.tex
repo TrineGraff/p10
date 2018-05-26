@@ -103,15 +103,20 @@ og BIC kan omskrives til
 Vi anvender et rolling scheme forecast med expanding estimerings windows. 
 Dvs at det første estimerings window indeholder altså de sande observationer fra tiden 1 til tid $t$, og den næste estimerings window indeholder de sande observationer fra tiden 1 til $t+1$.
 
-For at vurdere en models prædiktions evnen betragtes den gennemsnitlige kvadrede fejl (MSE) og den gennemsnitlige absolutte fejl (MAE) og vi ser også på den relative prædiktion i forhold til benchmark med en gennemsnitlige tabs ratio.
+For at vurdere en models prædiktions evnen betragtes den gennemsnitlige kvadrede fejl (MSE) og den gennemsnitlige absolutte fejl (MAE)
 \begin{align}
-\text{MSE} & =  \frac{1}{T} \sum_{t=1}^{T} \del{y_{t} - \widehat{y}_{t}}^2 \label{eq:mse}  \qquad \qquad R_{\text{\text{MSE}}} = \frac{\text{MSE}_{\text{Alternativ}}}{\text{MSE}_{\text{Benchmark}}}, \\
-\text{MAE} & =  \frac{1}{T} \sum_{t=1}^{T} \abs{y_{t} - \widehat{y}_{t}}, \label{eq:mae}  \qquad \qquad R_{\text{MAE}} = \frac{\text{MAE}_{\text{Alternativ}}}{\text{MAE}_{\text{Benchmark}}}
+\text{MSE} & =  \frac{1}{T} \sum_{t=1}^{T} \del{y_{t} - \widehat{y}_{t}}^2 \label{eq:mse}, \\
+\text{MAE} & =  \frac{1}{T} \sum_{t=1}^{T} \abs{y_{t} - \widehat{y}_{t}}, \label{eq:mae} ,
 \end{align} 
 hvor $T$ er antallet af observationer i testmængden, $y_{t}$ er observationen til tid $t$ og $\widehat{y}_{t}$ er prædiktionen af $y_{t}$.
 MSE og MAE kan betragtes som tabsfunktioner, da de måler en afvigelse fra de observerede værdier.
 Tabsfunktionerne vil være lig 0 for en perfekt prædiktion, og ellers vil de have en positiv værdi, derfor foretrækkes modeller med lav MSE eller MAE.
-Hvis den gennemsnitlig tabs ratio har en værdi mindre end 1, dvs at den alternative model er bedre end benchmark, og omvendt hvis værdien er større end 1. 
+
+Udfra tabsfunktionerne kan vi betragte et gennemsnitlig tabs ratio mellem en given model og benchmark modellen, som er givet ved
+\begin{align*}
+R_{\text{\text{MSE}}} = \frac{\text{MSE}_{\text{Alternativ}}}{\text{MSE}_{\text{Benchmark}}}, \qquad R_{\text{MAE}} = \frac{\text{MAE}_{\text{Alternativ}}}{\text{MAE}_{\text{Benchmark}}}.
+\end{align*} 
+Hvis et gennemsnitlig tabs ratio er mindre end 1, da er den alternative model bedre end benchmark modellen og omvendt hvis værdien er større end 1. 
 
 Foruden MSE og MAE betragtes \textit{Diebold-Mariano} testen samt \textit{model confidence set} (MCS) proceduren.
 Diebold-Mariano testen kan anvendes til at teste om én model er signifikant bedre end en anden model, mens MCS proceduren identificerer en mængde af modeller, som er signifikant bedre end de øvrige modeller, men ikke signifikant bedre end de øvrige modeller i mængden.

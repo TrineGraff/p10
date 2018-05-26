@@ -8,7 +8,7 @@ Nedenstående funktion anvendes til at bestemme ordenen $p$ af en autoregressiv 
 Herefter anvender vi følgende funktion til at estimere parametrene udfra OLS. 
 \rfile[firstline=35,lastline=74]{../R/unrate/autoregressive_model/insample.R}
 
-Den autoregressive model af orden \(4\) prædikterer arbejdsløshedsraten 1-step ahead med følgende funktion. 
+Den næste funktion anvendes til prædiktion med AR(4) 
 \rfile[firstline=5,lastline=20]{../R/unrate/autoregressive_model/outsample.R}
 
 \section{Faktor modellen} \label{sec:faktor}
@@ -23,7 +23,7 @@ Herefter prædikterer faktor modellen arbejdsløshedsraten med følgende funktio
 
 \section{Lasso og dens generaliseringer} \label{sec:lasso}
 
-\subsection{Krydsvalidering} \label{sec:krydsvalidering}
+%\subsection{Krydsvalidering} \label{sec:krydsvalidering}
 
 \subsubsection{Inferens} \label{subsubsec:inferens}
 Funktionen \texttt{fixedLassoInf} udregner \(p\)-værdier og konfidensintervaller for lasso estimatet for en fast værdi af tuning parameteren \(\lambda\).
@@ -36,7 +36,8 @@ Dette betyder, at efter vi har kørt \texttt{glmnet}, da skal vi sætte \texttt{
 %
 \rfile[firstline=53,lastline=62]{../R/unrate/Inferens/selectiveInference.R}
 %
+Koden er her vist for $\widehat{\lambda}$ valgt ud fra krydsvalidering. Det er samme princip for $\widehat{\lambda}$  valgt ud fra BIC,  bare at vi anvender nedenstående kode til at estimerer \texttt{best\_lambda}.
 
 \subsection{BIC} \label{sub:bic}
 Vi anvender følgende funktion til at estimerer $\widehat{\lambda}$ med BIC
-\rfile[firstline=2,lastline=32]{../R/unrate/shrinkage_metoder/bic.R}
+\rfile[firstline=2,lastline=32]{../R/unrate/shrinkage_metoder/coordinate/bic.R}

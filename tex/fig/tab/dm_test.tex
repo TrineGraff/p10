@@ -4,23 +4,23 @@
 \toprule
 % & \(\abs{y_t - \widehat{y}_{i,t}}\) & \(\del{y_t - \widehat{y}_{i,t}}^2\) \\ \midrule
  & Absolutte fejl & Kvadrerede fejl \\ \midrule
-AR\(\del{4}\) & 0.002064 & 0.003207 \\  
+AR\(\del{4}\) & 0.0021 & 0.0032 \\  
 Faktor model (IC\(_1\)) & 0.1692 & 0.1183 \\
 Faktor model (IC\(_3\)) & 0.2426 & 0.1888 \\
-Lasso (CV) & < 2.2e-16 & 2.933e-12 \\
-Lasso (BIC) & < 2.2e-16 & 2.728e-12 \\
-Ridge regression (CV) & 6.418e-13 & 3.551e-09  \\
-Ridge regression (BIC) & 2.85e-13 & 2.507e-09 \\
-Group lasso (CV) & < 2.2e-16 & 5.999e-12  \\
-Group lasso (BIC) & < 2.2e-16 & 8.845e-12 \\
-Adap. lasso m. OLS (CV) & < 2.2e-16 & 2.876e-12 \\
-Adap. lasso m. OLS (BIC) & < 2.2e-16 & 2.908e-12 \\
-Adap. lasso m. lasso (CV) & < 2.2e-16 & 2.905e-12  \\
-Adap. lasso m. lasso (BIC) & < 2.2e-16 & 2.908e-12 \\
-LARS u. lasso modifikation (CV) & < 2.2e-16 & 2.64e-12  \\
-LARS u. lasso modifikation (BIC) & < 2.2e-16 & 2.615e-12 \\
-LARS m. lasso modifikation (CV) & < 2.2e-16 & 4.694e-12  \\
-LARS m. lasso modifikation (BIC) & < 2.2e-16 & 3.328e-12 \\ \bottomrule
+Lasso (CV) & 0 & $2.933\cdot 10^{-12}$ \\
+Lasso (BIC) & 0 & $2.728 \cdot 10^{-12}$ \\
+Ridge regression (CV) & $6.418 \cdot 10^{-13}$  & $3.551\cdot 10 ^{-09}$  \\
+Ridge regression (BIC) &$ 2.85 \cdot 10^{-13} $& $2.507\cdot 10 ^{-09}$\\
+Group lasso (CV) & 0 &$ 5.999 \cdot 10^{-12}$  \\
+Group lasso (BIC) & 0& $8.845 \cdot 10^{-12}$ \\
+Adap. lasso m. OLS (CV) & 0& $2.876 \cdot 10^{-12} $\\
+Adap. lasso m. OLS (BIC) & 0& $2.908\cdot 10^{-12}$\\
+Adap. lasso m. lasso (CV) & 0 & $2.905\cdot 10^{-12} $\\
+Adap. lasso m. lasso (BIC) & 0& $2.908\cdot 10^{-12}$\\
+LARS u. lasso modifikation (CV) & 0 & $2.64\cdot 10^{-12}$  \\
+LARS u. lasso modifikation (BIC) & 0& $2.615\cdot 10^{-12}$ \\
+LARS m. lasso modifikation (CV) & 0& $4.694\cdot 10^{-12} $ \\
+LARS m. lasso modifikation (BIC) & 0& $3.328\cdot 10^{-12 }$ \\ \bottomrule
 \end{tabular}
 \caption{\(p\)-værdier for Diebold-Mariano testen for hver model imod benchmark modellen.} \label{tab:dm_test}
 \end{table}

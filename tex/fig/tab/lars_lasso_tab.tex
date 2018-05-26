@@ -2,11 +2,14 @@
 \center
 \begin{tabular}{cccc | cccccc}
 \toprule
-   \multicolumn{4}{c}{LARS} &  \multicolumn{4}{c}{LARS med lasso modifikation}  \\ \midrule
- & Steps & MSE & $p$ & & Fraction af \(\ell_1\)-norm & MSE & $p$ \\
- $s_{\min}$ &28 & 0.0019 &27  &	$f_{\min}$ & 0.2626 & 0.0019 & 21\\ 
- $\mathbf{s}_{\textbf{1sd}}$ & \textbf{20}& \textbf{0.0019} & \textbf{19} & $\mathbf{f}_{\textbf{1sd}}$& \textbf{0.2424} & \textbf{0.0019} & \textbf{13 } \\ \bottomrule 
+ &  \multicolumn{3}{c}{LARS} &&  \multicolumn{3}{c}{LARS med lasso modifikation}  \\ \midrule
+% & Steps & MSE & $p$ & & Fraction af \(\ell_1\)-norm & MSE & $p$ \\
+% $s_{\min}$ &28 & 0.0019 &27  &	$f_{\min}$ & 0.2626 & 0.0019 & 21\\ 
+% $\mathbf{s}_{\textbf{1sd}}$ & \textbf{20}& \textbf{0.0019} & \textbf{19} & $\mathbf{f}_{\textbf{1sd}}$& \textbf{0.2424} & \textbf{0.0019} & \textbf{13 } \\ \bottomrule 
+& $f$ & MSE & $p$ & & $f$ & MSE & $p$ \\
+$\lambda_{\min}$ & $0.2753$ &  0.0019 &27 &&  0.2626 & 0.0019 & 21   \\
+$\boldsymbol{\lambda}_{\textbf{1sd}}$ & $\textbf{0.2542} $ & \textbf{0.0019} & \textbf{19} &&  \textbf{0.2424} & \textbf{0.0019} & \textbf{13 } \\ \bottomrule
  \end{tabular}
-\caption{Antallet af steps eller fraction af \(\ell_1\)-norm, gennemsnitlige krydsvalideringsfejl og antallet af variable for $s_{\min}$, $s_{\text{1sd}}$, $f_{\min}$ og $f_{\text{1sd}}$.
-Rækkerne markeret med tykt er de valgte tuning parametre.} \label{tab:lars_lasso_tab}
+\caption{Tabellen viser $f_{\min}$ og $f_{\text{1sd}}$, som er fundet ud fra krydsvalidering, samt det gennemsnitlige krydsvalideringsfejl, som er målt i MSE og antallet af parameter. 
+$f$-værdierne, som er markeret med tykt er de valgte estimater for $\widehat{f}$.} \label{tab:lars_lasso_tab}
 \end{table}

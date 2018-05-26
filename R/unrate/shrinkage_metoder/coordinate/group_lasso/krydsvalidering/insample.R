@@ -9,8 +9,11 @@ grp <- c(1, 1, rep(4, 3), rep(1, 14), rep(2, 27), rep(3, 10), rep(4, 4),
 
 
 gglasso_cv <- cv.gglasso(x_train, y_train, group = grp, nfold = 10, intercept = FALSE, loss = "ls" )
-gglasso_fit = gglasso(x_train, y_train, group = grp, intercept = FALSE, loss = "ls")
+gglasso_fit = gglasso(x_train, y_train, group = grp, intercept = FALSE, loss = "ls", dfmax = 8)
 
+plot(gglasso_fit, xlim = c(-7, -5), ylim = c(-0.001, 0.001))
+
+summary(gglasso_fit)
 data.frame(
   lambda = c("min", "1se"), 
   lambda_val = c(log(gglasso_cv$lambda.min), log(gglasso_cv$lambda.1se)),

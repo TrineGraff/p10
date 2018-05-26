@@ -44,6 +44,9 @@ Dette appendiks indeholder nogle tabeller og figurer, som anvendes i den empiris
 \end{figure}
 \end{landscape}
 
+\imgfigh{boxplot_lasso_coord_kryds.pdf}{1}{
+Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\tbeta}^{\text{lasso}} \del{{\widehat{\lambda}_\text{1sd}}} $, hvor $\widehat{\lambda}_\text{1sd}$ er estimeret ud fra krydsvalidering.  Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}{boxplot_lasso_coord_kryds}
+
 %%%%% BIC %%%%%%%
 
 \imgfigh{resid_lasso_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for lasso  med optimeringsmetoden coodinate descent, hvor BIC  er brugt til at estimere $\widehat{\lambda}$. }{resid_lasso_coord_bic}
@@ -57,7 +60,7 @@ Dette appendiks indeholder nogle tabeller og figurer, som anvendes i den empiris
 \imgfigh{resid_adap_lasso_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med lasso vægte med optimeringsmetoden coodinate descent, hvor BIC  er brugt til at estimere $\widehat{\lambda}$. }{resid_adap_lasso_coord_bic}
 
 
-\imgfigh{boxplot_lasso_coord_bic.pdf}{0.7}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{lasso}} \del{{\widehat{\lambda}}} $, hvor $ \widehat{\lambda} $ er bestemt udfra BIC. 
+\imgfigh{boxplot_lasso_coord_bic.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{lasso}} \del{{\widehat{\lambda}}} $, hvor $ \widehat{\lambda} $ er bestemt udfra BIC. 
 Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul}{boxplot_lasso_coord_bic}
 
 
@@ -66,6 +69,12 @@ Til højere illustreret andelen af bootstrap realisationer, hvor parameter estim
 
 \imgfigh{lars_lasso_kryds_res.pdf}{0.7}{Analyse af de standardiserede residualer for LARS med lasso modifikation, hvor krydsvalidering  er brugt til at estimere $\widehat{f}$. }{lars_lasso_kryds_res}
 
+\imgfigh{boxplot_lars_kryds.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisatioer af $\widehat{\boldsymbol{\beta}}^{LARS} \del{\widehat{f}}$, hvor $\widehat{f}$ er estimeret ud fra krydsvalidering. Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}{coef_lars_kryds}
+
+
+\imgfigh{boxplot_lasso_kryds.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisatioer af $\widehat{\boldsymbol{\beta}}^{lasso} \del{\widehat{f}}$, hvor $\widehat{f}$ er estimeret udfra krydsvalidering. Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}{coef_lasso_kryds}
+
+
 \input{fig/tab/lars_kryds_res}
 
 %%%%% LARS bic %%%%%%%
@@ -73,6 +82,11 @@ Til højere illustreret andelen af bootstrap realisationer, hvor parameter estim
 \imgfigh{lars_bic_res.pdf}{0.7}{Analyse af de standardiserede residualer for LARS uden modifikation, hvor BIC  er brugt til at estimere $\widehat{s}$. }{lars_bic_resid}
 
 \imgfigh{lars_lasso_bic_resid.pdf}{0.7}{Analyse af de standardiserede residualer for LARS med lasso modifikation, hvor BIC  er brugt til at estimere $\widehat{f}$. }{lars_lasso_bic_resid}
+
+\imgfigh{boxplot_lars_bic.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $ \widehat{\boldsymbol{\beta}}^{LARS} \del{\widehat{f}}$, hvor $ \widehat{f}$ er estimeret ud fra BIC. Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul. }{boxplot_lars_bic}
+
+
+\imgfigh{boxplot_lars_lasso_bic.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $ \widehat{\boldsymbol{\beta}}^{lasso} \del{\widehat{f}}$, hvor $ \widehat{f}$ er estimeret ud fra BIC. Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul. }{boxplot_lars_bic}
 
 %\input{fig/tab/lars_bic_res_tab}
 

@@ -1,5 +1,5 @@
-source("data_unrate.R")
 source("package.R")
+source("data_unrate.R")
 source("shrinkage_metoder/coordinate/bic.R")
 source("parm.R")
 

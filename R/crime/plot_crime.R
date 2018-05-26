@@ -3,10 +3,20 @@ library(glmnet)
 library(ggfortify)
 library(gridExtra)
 
-crime <- read.csv("crime.csv")
-fit_lasso = glmnet(crime.rate ~ ., data = crime, alpha = 1)
+crime <- read.csv("../crime/crime.csv")
+crime = as.matrix(data.frame(crime))
+
+y = crime$crime.rate
+x = data.frame(crime$funding, crime$hs, crime$not.hs, crime$college, crime$college4)
+
+glmnet(x, y, family = "gaussian", alpha = 1)
+fit_lasso = glmnet(crime.rate ~ .,data = crime)
+
+
 fit_el = glmnet(crime.rate ~ ., data = crime, alpha = 0.7)
 fit_ridge = glmnet(crime.rate ~ ., data = crime, alpha = 0)
+
+
 
 plot_lasso = autoplot(fit_lasso, xvar = "lambda") + 
   ylab("Koefficienter") + 

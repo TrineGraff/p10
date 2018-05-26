@@ -14,7 +14,8 @@ Først på 7. decimal ses at adaptive lasso m. ols vægte valgt udfra BIC faktis
 Den autoregressive model af orden 4 performer dårligt out-of-sample ifølge begge tabsfunktioner, modellen er forholdsvis tæt efterfulgt af faktor modellerne.
 Men for de resterende modeller ses en tydeligt forbedring i MAE og MSE, og den indbyrdes forskel imellem disse modeller og forholdsvis lille.
 
-Herefter vil vi betragte modellernes prædiktion i forhold til benchmark modellen fra måned til måned.
+For at se hvornår vores modeller outperformer vores benchmark betragter vi modellernes prædiktion i forhold til benchmark fra måned til måned
+%Herefter vil vi betragte modellernes prædiktion i forhold til benchmark modellen fra måned til måned.
 Vi definere derfor et rullende gennemsnitlig absolut fejl ratio 
 \begin{align*}
 \text{MAE}^\text{Roll} &= \frac{1}{T} \sum_{t = t_0 +1}^{T} \abs{y_t - \widehat{y}_t} \\
@@ -28,6 +29,7 @@ mens de øvrige tabellerne klart prædikterer bedre end benhcmark modellen.
 %
 \imgfigh{rolling_mae.pdf}{1}{Rolling gennemsnitlige absolutte fejl.}{rolling_mae}
 %
+
 \subsection{Diebold Mariano}
 I tabel \ref{tab:dm_test} ses resultaterne fra Diebold-Mariano testen, hvor hver model testes imod benchmark modellen.
 Heraf ses at nulhypotesen ikke kan afvises for faktor modellerne valgt udfra information 1 og 3, hvilket vil sige, at disse modeller ikke er signifikant forskellige fra benchmark modellen.

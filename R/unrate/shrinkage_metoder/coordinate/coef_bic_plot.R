@@ -1,6 +1,6 @@
 source("data_unrate.R")
 source("package.R")
-source("shrinkage_metoder/bic.R")
+source("shrinkage_metoder/coordinate/bic.R")
 source("parm.R")
 library(data.table)
 

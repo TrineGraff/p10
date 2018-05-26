@@ -7,11 +7,10 @@ set.seed(1)
 
 lasso_cv = cv.lars(x_train, y_train, type = "lasso", intercept = FALSE, 
                    normalize = FALSE, trace = FALSE)
+plotCVLars(lasso_cv, se = TRUE)
+
 lasso_fit = lars(x_train, y_train, type = "lasso", normalize = FALSE, intercept = FALSE)
-
 getmin = getmin_l(lasso_cv$index, lasso_cv$cv, lasso_cv$cv.error)
-
-which.min(summary(lasso_fit)$Cp)
 
 data.frame(
   lambda = c("min", "1se"), 
@@ -65,11 +64,11 @@ lasso = ggplot(df_la, aes(df_la$lasso_cv.index,df_la$lasso_cv.cv)) +
   geom_errorbar(aes(ymin = df_la$lasso_cv.cv + df_la$lasso_cv.cv.error, 
                     ymax = df_la$lasso_cv.cv - df_la$lasso_cv.cv.error, width = .1)) +
   geom_point(col = "red") +
-  labs(x = "Fraktion", y = "MSE", color = "") + 
+  labs(x = expression(f==abs(beta)/max(abs(beta))), y = "MSE", color = "") + 
   geom_vline(aes(xintercept= getmin$lambda.min, col = "blue"), linetype="dotted") +
   geom_vline(aes(xintercept= getmin$lambda.1se, col = "brown"), linetype="dotted") +
-  ggtitle("Lasso") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
+  ggtitle("LARS med lasso modifikation") + scale_color_manual(labels = c(expression(f[min]), expression(f[1][sd])), values = c("blue", "brown"))
 
-#grid.arrange(lars, lasso, ncol = 2)
+grid.arrange(lars, lasso, ncol = 2)
 
 

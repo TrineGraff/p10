@@ -53,6 +53,32 @@ Betinget \(P_{\boldsymbol{\eta}^\perp} \y\), ses at hændelsen \(\cbr{\mathbf{A}
 --
 
 
+KOVARIANS
+Hernæst vil vi introducere en alternativ form af teststørrelsen i \eqref{eq:6.5}, som er nyttigt af beregningsmæssige årsager.
+\begin{align*}
+T_k^\text{cov} = \frac{1}{\sigma^2} \omega_k^2 \cdot \lambda_k \del{\lambda_k - \lambda_{k+1}},
+\end{align*}
+hvor \(\lambda_k\) og \(\lambda_{k+1}\) er LARS knots i step \(k\) og \(k+1\) af stien og \(\omega_k\) er vægten givet i \eqref{eq:post_41}.
+
+----
+
+Hvis \(\X\) er ortogonal, da er teststørrelsen for kovarians testen givet ved
+\begin{align*}
+T_k^\text{cov} = \frac{1}{\sigma^2} \lambda_k \del{\lambda_k - \lambda_{k+1}}
+\end{align*} 
+Derudover fandt vi at \eqref{eq:ortogonal_lasso} som også kan skrives \(\hat{\beta}_j = S_\lambda \del{\frac{1}{n} \mathbf{x}_j^T \y}\).
+Lad \(\mathbf{U}_j = \mathbf{x}_j^T \y\) for \(j=1,\ldots, p\). 
+Knots i lasso stien er blot værdierne af \(\lambda\) for hvilket koefficienterne er ikke-nul
+\begin{align*}
+\lambda_1 = \vert \mathbf{U}_{(1)} \vert, \quad \lambda_2 = \vert \mathbf{U}_{(2)} \vert, \quad \ldots, \lambda_p = \vert \mathbf{U}_{(p)} \vert, \quad,
+\end{align*}
+hvor \(\vert \mathbf{U}_{(1)} \vert \geq \vert \mathbf{U}_{(2)} \vert \geq \dots \geq \vert \mathbf{U}_{(p)} \vert\) er order statistics af \(\vert \mathbf{U}_1 \vert, \ldots, \vert \mathbf{U}_p \vert\).
+Derfor 
+\begin{align*}
+T_k^\text{cov} = \frac{1}{\sigma^2}  \vert \mathbf{U}_{(k)} \vert \del{ \vert \mathbf{U}_{(k)} \vert -  \vert \mathbf{U}_{(k+1)} \vert}
+\end{align*}
+
+---
 
 Kovarians testen i \eqref{eq:post_44} og spacing testen \eqref{eq:post_43} er asymptotisk ækvivalent.
 Kovarians testen er derfor en asymptotisk version af spacing testen.

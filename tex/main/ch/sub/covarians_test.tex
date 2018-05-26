@@ -1,86 +1,77 @@
 \section{Kovarians testen} \label{subsec:kovarians_test}
-I dette afsnit introduceres en test, der kan tildele \(p\)-værdier til prædiktorer, som er udvalgt af adaptive procedurer.
+I dette afsnit introduceres en test, der kan tildele \(p\)-værdier til prædiktorerne, som er udvalgt af lasso.
 Testen er baseret på LARS algoritmen og blev introduceret i \citep{lockhart}.
 
-%Betragt det velkendte lineære regression setup med en responsvariabel \(\y \in \mathbb{R}^n\) og en matrix af prædiktorer \(\X \in \mathbb{R}^{n \times p}\), som er relateret ved
-%\begin{align}
-%\y = \X \tbeta + \boldsymbol{\epsilon}, \quad \boldsymbol{\epsilon} \sim N\del{\mathbf{0}, \sigma^2 \mathbf{I}}, \label{eq:set-up}
-%\end{align}
-%hvor \(\tbeta \in \mathbb{R}^p\) er ukendte koefficienter, som skal estimeres.
+Betragt det velkendte lineære regression setup, hvor \(\y\) er en \(n \times 1\) vektor med responsvariable og \(\X\) er en \(n \times p\) matrix med prædiktorer, som er relateret ved
+\begin{align}
+\y = \X \tbeta + \boldsymbol{\epsilon}, \quad \boldsymbol{\epsilon} \sim N\del{\mathbf{0}, \sigma^2 \mathbf{I}_n}, \label{eq:set-up}
+\end{align}
+hvor \(\tbeta\) er en \(p \times 1\) vektor, som skal estimeres.
 
-Vi antager, at kolonner af \(\X\) er i generel position, således at løsningsstierne er entydige (se definition \ref{defn:general_position}).
+Vi antager, at kolonner af \(\X\) er i generel position, for at sikre en entydig løsning af LARS algoritmen med lasso modifikationen (se definition \ref{defn:general_position}).
 %
-For et given step i LARS algoritmen ønsker vi, at teste om prædiktoren, som medtages i den aktive mængde, er signifikant.
-Lad \(\lambda_1 > \lambda_2 > \ldots > \lambda_K\) betegne knuderne returneret af LARS algoritmen.
-Dette er værdierne af reguleringsparameteren \(\lambda\), hvor der er en ændring i mængden af de aktive variable.
-Lad \(\A_{k-1}\) betegne den aktive mængde inden \(\lambda_k\) og antag at \(j\)'te prædiktor medtages i \(\lambda_k\).
-Lad \(\hat{\tbeta} \del{\lambda_{k+1}}\) betegne løsningen i næste knude i stien \(\lambda_{k+1}\) udfra prædiktorerne \(\A_{k-1} \cup \cbr{j}\).
-Lad \(\tilde{\tbeta}_{\A_{k-1}} \del{\lambda_{k+1}}\) være løsningen af lasso problemet ved kun at anvende variablerne i \(\A_{k-1}\) i \(\lambda = \lambda_{k+1}\), som eksplicit er givet ved 
-%
-%Vi ønsker, at teste om \(j\)'te prædiktor som er medtaget i den aktive mængde i \(\lambda_k\), dvs i \(k\)'te step af LARS algoritmen, er signifikant.
-%Lad \(\A_{k-1}\) betegne den aktive mængde i step \(k-1\) og lad \(\hat{\beta} \del{\lambda_{k+1}}\) være løsningen af lasso problemet i næste knot \(\lambda_{k+1}\).
-%Lad \(\tilde{\beta}_{\A_{k-1}} \del{\lambda_{k+1}}\) være løsningen af lasso problemet ved kun at anvende variablerne i \(\A_{k-1}\)
+Vi ønsker, at teste om \(j\)'te prædiktor, som tilføjes til den aktive mængde i \(\lambda_k\), dvs i \(k\)'te step af LARS algoritmen, er signifikant.
+Lad \(\A_{k-1}\) betegne den aktive mængde i step \(k-1\) inden prædiktoren er tilføjet og lad \(\widehat{\tbeta} \del{\lambda_{k+1}}\) betegne løsningen i \(\lambda_{k+1}\) udfra prædiktorerne \(\A_{k-1} \cup \cbr{j}\).
+%være estimaterne i slutningen af dette step.
+%Vi refitter lasso ved blot at anvende variablerne i \(\A_{k-1}\)
+Lad \(\tilde{\tbeta}_{\A_{k-1}} \del{\lambda_{k+1}}\) være løsningen af lasso problemet ved kun at anvende variablerne i \(\A_{k-1}\) i \(\lambda_{k+1}\), som eksplicit er givet ved 
 \begin{align*}
 \tilde{\tbeta}_{\A_{k-1}} \del{\lambda_{k+1}} = \argmin_{\tbeta_{\A_{k-1}} \in \R^{\vert \A_{k-1} \vert}} \cbr{\frac{1}{2} \left\Vert \y - \X_{\A_{k-1}} \tbeta_{\A_{k-1}} \right\Vert_2^2 + \lambda_{k+1} \left\Vert \tbeta_{\A_{k-1}} \right\Vert_1},
 \end{align*}
 hvor \(\X_{\A_{k-1}}\) er en matrix, der består af kolonnerne af \(\X\), som svarer til prædiktorerne i \(\A_{k-1}\).
 Da kan vi definere teststørrelsen af kovarians testen
 \begin{align}
-T_k^\text{cov} = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \hat{\tbeta} \del{\lambda_{k+1}} \right\rangle - \left\langle  \y, \X_{\A_{k-1}} \tilde{\tbeta}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}. \label{eq:6.5}
+T_k^\text{cov} = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \widehat{\tbeta} \del{\lambda_{k+1}} \right\rangle - \left\langle  \y, \X_{\A_{k-1}} \tilde{\tbeta}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}. \label{eq:6.5}
 \end{align}
-Intuitivt er teststørrelsen af kovarians testen i \eqref{eq:6.5} en funktion af differensen mellem \(\X \hat{\tbeta}\) og \(\X_{\A_{k-1}} \tilde{\tbeta}_{\A_{k-1}}\), dvs de fittede værdier givet ved at medtage \(j\)'te prædiktor i den nuværende aktive mængde og undlade den.
-Navnet af testen kommer af, at tælleren i \eqref{eq:6.5} kan skrives som differensen mellem empiriske kovarianser og et lille led.
-Desto større kovarians af \(\y\) og \(\X \hat{\tbeta}\) sammenlignet med \(\X_{\A_{k-1}} \hat{\tbeta}_{\A_{k-1}}\), desto vigtigere er \(j\)'te prædiktor i modellen \(\A \cup \cbr{j}\).
-
-Kovarians teststørrelsen evalueres i næste knot \(\lambda_{k+1}\), da \(j\)'te koefficient stadig er lig nul i \(\lambda_k\).
-I \(\lambda = \lambda_{k+1}\), ses den ...
- og dermed
+Intuitivt er teststørrelsen af kovarians testen i \eqref{eq:6.5} en funktion af differensen mellem \(\X \widehat{\tbeta}\) og \(\X_{\A_{k-1}} \tilde{\tbeta}_{\A_{k-1}}\), dvs de fittede værdier givet ved at medtage \(j\)'te prædiktor i den nuværende aktive mængde og undlade den.
+Navnet af testen kommer af, at tælleren i \eqref{eq:6.5} kan betragtes som differensen mellem empiriske (ikke-centreret) kovarianser og et lille led 
+\footnote{Lad \(\y = \y - \tmu + \tmu\) med \(\tmu = \X \tbeta^*\), da kan tælleren af \eqref{eq:6.5} omskrives \(T_k^\text{cov} = \left\langle \y - \tmu, \X \widehat{\tbeta} \del{\lambda_{k+1}} \right\rangle - \left\langle \y - \tmu, \X_{\A_{k-1}} \tilde{\tbeta}_{\A_{k-1}} \del{\lambda_{k+1}} \right\rangle + \left\langle \tmu, \X \widehat{\tbeta} \del{\lambda_{k+1}} - \X_{\A_{k-1}} \tilde{\tbeta}_{\A_{k-1}} \del{\lambda_{k+1}} \right\rangle\).
+De første to led er empiriske kovarianser og det sidste led er typisk lille.}.
+Desto større kovarians af \(\y\) og \(\X \widehat{\tbeta}\) sammenlignet med \(\X_{\A_{k-1}} \tilde{\tbeta}_{\A_{k-1}}\), desto vigtigere er \(j\)'te prædiktor i modellen \(\A_{k-1} \cup \cbr{j}\).
+%Kovarians teststørrelsen evalueres i næste knot \(\lambda_{k+1}\), da \(j\)'te koefficient stadig er lig nul i \(\lambda_k\).
+%I \(\lambda = \lambda_{k+1}\), ses den ...
+% og dermed
 %\begin{align*}
 %\X \hat{\beta} \del{\lambda_k} = \X_{\A_{k-1}} \hat{\beta}_{\A_{k-1}} \del{\lambda_k} = \X_{\A_{k-1}} \tilde{\beta}_{\A_{k-1}} \del{\lambda_k}
 %\end{align*}
 %Det naturlig valg for tuning parameteren i \eqref{eq:6.5} er derfor \(\lambda= \lambda_{k+1}\).
 
-Under nulhypotesen at lasso modellen med den aktive mængde \(\A_{k-1}\) indeholder alle sande aktive variable, som skal skrives \(\hyp_0: \mathcal{A}_{k-1} \supseteq \text{supp} \del{\tbeta^*}\), hvor \(\tbeta^*\) er den sande koefficientvektor, da har teststørrelsen i \eqref{eq:6.5} en asymptotisk standard eksponentiel fordeling
+Under nulhypotesen at lasso modellen med den aktive mængde \(\A_{k-1}\) indeholder alle sande aktive variable, dvs \(\hyp_0: \mathcal{A}_{k-1} \supseteq \text{supp} \del{\tbeta^*}\), hvor \(\tbeta^*\) er den sande koefficientvektor, da har teststørrelsen i \eqref{eq:6.5} en asymptotisk standard eksponentiel fordeling
 \begin{align*}
 T_k^\text{cov} \overset{d}{\rightarrow} \text{Exp}\del{1}.
 \end{align*}
-Hvis \(\sigma^2\) er ukendt, kan den estimeres under den fulde model \(\hat{\sigma}^2 = \frac{1}{n-p} \text{SSR}_p\). 
+Hvis \(\sigma^2\) er ukendt, kan den estimeres under den fulde model \(\widehat{\sigma}^2 = \frac{1}{n-p} \text{SSR}_p\). 
 Dette indsættes i \eqref{eq:6.5}, og eksponential testen bliver en eksakt \(F_{2,n-p}\) test.
 
-Denne test er også det naturlige analog til degrees of freedom resultaterne for lasso \eqref{eq:df_lasso} og LARS (section 2.5).
-Lasso med \(k\) ikke-nul koefficienter forventes at have \(k\) frihedsgrader, og LARS anvender en frihedsgrad for hver segment \(\del{\lambda_{k+1}, \lambda_k}\) langs stien.
-Kovarians testen har middelværdi lig en, som er antal frihedsgrader per trin.
-%
-
-Hernæst vil vi introducere en alternativ form af teststørrelsen i \eqref{eq:6.5}, som er nyttigt af beregningsmæssige årsager.
+For crime data ønsker vi at udregne \(p\)-værdien for prædiktoren \texttt{hs}, som optages i den aktive mængde i tredje step af LARS algoritmen (se figur \ref{fig:crime_covTest}). 
+Da skal vi udregne kovariansen i \(\lambda_4\), der er givet ved \(\left\langle \y, \X \widehat{\tbeta} \del{\lambda_4} \right\rangle\).
+Herefter fjernes prædiktoren \texttt{hs}, hvilket giver den aktive mængde \(\A_{2}\), vi refitter i \(\lambda_4\) og udregner igen kovariansen i \(\lambda_4\), der er givet ved \(\left\langle  \y, \X_{\A_{2}} \tilde{\tbeta}_{\mathcal{A}_{2}} \del{\lambda_{4}} \right\rangle\).
+Teststørrelsen af kovarians testen er da givet ved
 \begin{align*}
-T_k^\text{cov} = \frac{1}{\sigma^2} \omega_k^2 \cdot \lambda_k \del{\lambda_k - \lambda_{k+1}},
+T_3^\text{cov} = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \widehat{\tbeta} \del{\lambda_{4}} \right\rangle - \left\langle  \y, \X_{\A_{2}} \tilde{\tbeta}_{\mathcal{A}_{2}} \del{\lambda_{4}} \right\rangle}.
 \end{align*}
-hvor \(\lambda_k\) og \(\lambda_{k+1}\) er LARS knots i step \(k\) og \(k+1\) af stien og \(\omega_k\) er vægten givet i \eqref{eq:post_41}.
+%
+\begin{figure}[H]
+\centering
+\scalebox{0.75}{\includegraphics{fig/img/crime_covTest.pdf}}
+\caption{Illustration af kovarians testen for prædiktoren \texttt{hs}.} \label{fig:crime_covTest}
+\end{figure}
+%
+Resultatet af kovarians testen anvendt på crime data er givet i tabel \ref{tab:crime_covTest}.
+Nulhypotesen afvises for \texttt{fundings}, som optages i den aktive mængde i første step, hvilket betyder, at prædiktoren er signifikant.
+For de resterende prædiktorer kan nulhypotesen ikke afvises.
+%
+\input{fig/tab/crime_covTest}
 
+Kovarians testen er det naturlige analog til resultaterne for frihedsgrader for lasso og LARS.
+Som nævnt tidligere har lasso med \(k\) ikke-nul koefficienter \(k\) frihedsgrader, mens LARS anvender en frihedsgrad for hvert step.
+Kovarians testen har middelværdi lig en, som er antallet af frihedsgrader per step.
+Hermed kan man sige at Exp\(\del{1}\) fordelingen svarer til \(\chi_1^2\) fordelingen for adaptive procedurer.
 
-
-%Hvis \(\X\) er ortogonal, da er teststørrelsen for kovarians testen givet ved
-%\begin{align*}
-%T_k^\text{cov} = \frac{1}{\sigma^2} \lambda_k \del{\lambda_k - \lambda_{k+1}}
-%\end{align*} 
-%Derudover fandt vi at \eqref{eq:ortogonal_lasso} som også kan skrives \(\hat{\beta}_j = S_\lambda \del{\frac{1}{n} \mathbf{x}_j^T \y}\).
-%Lad \(\mathbf{U}_j = \mathbf{x}_j^T \y\) for \(j=1,\ldots, p\). 
-%Knots i lasso stien er blot værdierne af \(\lambda\) for hvilket koefficienterne er ikke-nul
-%\begin{align*}
-%\lambda_1 = \vert \mathbf{U}_{(1)} \vert, \quad \lambda_2 = \vert \mathbf{U}_{(2)} \vert, \quad \ldots, \lambda_p = \vert \mathbf{U}_{(p)} \vert, \quad,
-%\end{align*}
-%hvor \(\vert \mathbf{U}_{(1)} \vert \geq \vert \mathbf{U}_{(2)} \vert \geq \dots \geq \vert \mathbf{U}_{(p)} \vert\) er order statistics af \(\vert \mathbf{U}_1 \vert, \ldots, \vert \mathbf{U}_p \vert\).
-%Derfor 
-%\begin{align*}
-%T_k^\text{cov} = \frac{1}{\sigma^2}  \vert \mathbf{U}_{(k)} \vert \del{ \vert \mathbf{U}_{(k)} \vert -  \vert \mathbf{U}_{(k+1)} \vert}
-%\end{align*}
-
-
-Kovarians testen har nogle begrænsninger.
-Først skal der gælde, at kolonner af \(\X\) er i generel position.
-%Hvis der eksisterer en kategorisk variabel blandt prædiktorerne, og den resulterende variabel beskrives af dummy variable, da er antagelse om at kolonnerne af \(\X\) er i general position altså ikke overholdt.
-Derudover tager testen ikke højde for, hvis nogle variable medtages i modellen mere end én gang (som er tilladt for lasso modificeringen af LARS algoritmen), da behandles hver situation separat og testene udføres separat.
-Til sidst er testen kun asymptotisk.
-
-I næste afsnit introduceres en test som kan anvendes efter modeludvælgelse og som giver en eksakt fordeling af teststørrelsen.
+%Kovarians testen har nogle begrænsninger.
+%Først skal der gælde, at kolonner af \(\X\) er i generel position.
+%%Hvis der eksisterer en kategorisk variabel blandt prædiktorerne, og den resulterende variabel beskrives af dummy variable, da er antagelse om at kolonnerne af \(\X\) er i general position altså ikke overholdt.
+%Derudover tager testen ikke højde for, hvis nogle variable medtages i modellen mere end én gang (som er tilladt for lasso modifikationen af LARS algoritmen), da behandles hver situation separat og testene udføres separat.
+%Til sidst er testen kun asymptotisk.
+%
+%I næste afsnit introduceres en test som kan anvendes efter modeludvælgelse og som giver en eksakt fordeling af teststørrelsen.

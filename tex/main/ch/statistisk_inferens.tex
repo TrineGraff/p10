@@ -1,13 +1,10 @@
-\chapter{Post-selection inference for lasso} \label{kap:statistisk_inferens}
-%En attraktiv egenskab af \(\ell_1\)-reguleret procedure er deres evne til at kombinere variabeludvælgelse og estimere parametre. 
-%
-%Vi ønsker, at bestemme den statistiske styrke af de inkluderede variable, svarende til \(p\)-værdier af de traditionelle modeller.
-%Klassisk inferens kan ikke anvendes til adaptive procedurer.
-%I den empiriske del kan vi teste styrken af koefficienterne med bootstrap men også nogle nyere redskaber.
-% dette afsnit beskrives teste til inferens efter variabeludvælgelse med en adaptiv metode.
-%Teorien omkring post-selection inferens er udviklet i nyere tid og er stadig under udvikling.
-%\texttt{R}-pakkerne \texttt{covTest} og \texttt{selectiveInference} understøtter testene, som beskrives i dette afsnit.
-%\newpage
+\chapter{Post-selection inferens for lasso} \label{kap:statistisk_inferens}
+Klassisk inferens kan ikke anvendes til adaptive procedurer som lasso, da udvælgelsen af variable er stokastisk.
+Istedet betragtes post-selection inferens, hvor vi udfører inferens efter udvælgelsen variable for adaptive metoder.
+
+Foruden boostrap vil vi i den empiriske del betragte kovarians testen samt TG testen.
+Teorien omkring post-selection inferens er udviklet i nyere tid og er stadig under udvikling.
+\Rlang-pakkerne \texttt{covTest} og \texttt{selectiveInference} understøtter testene, som beskrives i dette kapitel.
 \input{main/ch/sub/covarians_test}
 \input{main/ch/sub/post_selection_inferens}
 

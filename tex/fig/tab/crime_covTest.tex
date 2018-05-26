@@ -1,0 +1,15 @@
+\begin{table}[ht] 
+\centering 
+\begin{tabular}{lccc}
+%\multicolumn{3}{l}{LARS algoritmen med lasso modifikation} \\
+\toprule
+Prædiktor & Cov test & \(p\)-værdi \\
+\midrule
+\texttt{funding} & 11.0180 & 0.0001 \\ 
+\texttt{not.hs} & 0.6485 & 0.5277 \\
+\texttt{hs} & 0.8468 & 0.4355 \\
+\texttt{college4} & 0.1872 & 0.8299 \\
+\texttt{college} & 0.0075 & 0.9926 \\ \bottomrule
+\end{tabular}
+\caption{Kovarians testen for LARS algoritmen med lasso modifikation for crime data. Vi har, at \(\widehat{\sigma}^2 = 250.389\) og nulfordelingen \(F \del{2,45}\).} \label{tab:crime_covTest}
+\end{table} 

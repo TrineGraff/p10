@@ -61,13 +61,12 @@ write.csv(c$x, file = "fc_faktor_ic3")
 # Analyse -----------------------------------------------------------------
 
 dato = c(as.character(dato_test))
-
 df = data.frame(date = as.Date(dato), fc.IC.2, y_test)
 
 ggplot(df, aes(x = date ))  +
-  geom_line(aes(y = y_test, colour = "Arbejdsløshed")) +
-  geom_line(aes(y = fc.IC.2, colour = "Benchmark")) +
-  ylab("Rate") + xlab("Dato") +
+  geom_line(aes(y = y_test, colour = "Arbejdsløshedsrate")) +
+  geom_line(aes(y = fc.IC.2, colour = "Benchmark model")) +
+  ylab("Rate") + xlab("") +
   scale_colour_manual(values = c("gray", "red")) +
   theme(legend.title=element_blank())
 

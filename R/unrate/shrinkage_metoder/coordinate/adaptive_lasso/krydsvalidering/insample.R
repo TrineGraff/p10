@@ -45,13 +45,10 @@ jarque.bera.test(res)
 Box.test(res, lag = 10, "Ljung-Box")
 
 # Adj. R ------------------------------------------------------------------
-SS.res = sum((y_train - x_train[,idx_beta] %*% beta_hat)^2)
-SS.tot = sum((y_train - mean(y_train))^2)
-n = length(y_train)
-p = parm(beta_hat)
-R.sqrd = 1 - (SS.res / SS.tot)
-adj.R.sqrt = 1 - (1 - R.sqrd) * ((n - 1) / (n - p - 1)) 
-adj.R.sqrt * 100
+adj.r.2_min = adj.r.2(y_train, x_train[,idx_beta], beta_hat)
+
+coef_1sd = as.vector(coef(adap_lasso_fit, s = adap_lasso_cv$lambda.1se)) %>% .[-1]
+adj.r.2(y_train, x_train[,idx_beta], coef_1sd)
 
 
 # koefficienter -----------------------------------------------------------

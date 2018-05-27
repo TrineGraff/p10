@@ -36,9 +36,9 @@ dato = c(as.character(dato_test))
 df = data.frame(date = as.Date(dato), fc = fc_ar$fc, y = y_test)
 
 ggplot(df, aes(x = date ))  +
-  geom_line(aes(y = y, colour = "Arbejdsløshed")) +
+  geom_line(aes(y = y, colour = "Arbejdsløshedsrate")) +
   geom_line(aes(y = fc, colour = "AR(4)")) +
-  ylab("Rate") + xlab("Dato") +
+  ylab("Rate") + xlab("") +
   scale_colour_manual(values = c("red", "gray")) +
   theme(legend.title=element_blank())
 

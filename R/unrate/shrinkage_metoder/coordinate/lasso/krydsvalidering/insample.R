@@ -2,6 +2,7 @@ source("data_unrate.R")
 source("package.R")
 source("parm.R")
 source("shrinkage_metoder/res_plot.R")
+source("shrinkage_metoder/adj.r.2.R")
 
 set.seed(1)
 
@@ -15,7 +16,8 @@ data.frame(
   p = apply(coef(lasso_fit, s = c(lasso_cv$lambda.min, lasso_cv$lambda.1se)), 2, parm) 
 ) 
 
-
+test = coef(lasso_fit, s = lasso_cv$lambda.1se)
+idx = which(test!=0)
 beta_hat = as.vector(coef(lasso_fit, s = lasso_cv$lambda.1se)) %>% .[-1] #fjerner skæringen 
 fit = x_train %*% beta_hat
 
@@ -39,13 +41,10 @@ Box.test(res^2, lag = 10, "Ljung-Box")
 
 # Adj. R ------------------------------------------------------------------
 
-SS.res = sum((y_train - x_train %*% beta_hat)^2)
-SS.tot = sum((y_train - mean(y_train))^2)
-n = length(y_train)
-p = parm(beta_hat)
-R.sqrd = 1 - (SS.res / SS.tot)
-adj.R.sqrt = 1 - (1 - R.sqrd) * ((n - 1) / (n - p - 1)) 
-adj.R.sqrt * 100
+adj.r.2_1sd = adj.r.2(y_train, x_train, beta_hat )
+
+coef_min = as.vector(coef(lasso_fit, s = lasso_cv$lambda.min)) %>% .[-1]
+adj.r.2(y_train, x_train, coef_min)
 
 # Koefficienter -----------------------------------------------------------
 coef_hat = coef(lasso_fit, s = lasso_cv$lambda.1se)

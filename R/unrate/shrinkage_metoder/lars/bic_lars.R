@@ -12,6 +12,9 @@ larsBIC <- function(y, x, fit) {
   }
   idx = which.min(BICs)
   beta_hat = fit$beta[idx,]
+  f = apply(abs(fit$beta), 1, sum) 
+  f = f/max(f)
+  f_hat = f[idx]
   
   #Adjusted r^2
   SS.res = sum((y - x %*% beta_hat)^2)
@@ -22,7 +25,7 @@ larsBIC <- function(y, x, fit) {
   adj.R.sqrt = 1 - (1 - R.sqrd) * ((n - 1) / (n - p - 1)) 
   res = y - x %*% beta_hat
   print(list("scale_res" = scale(res),
-             "s" = idx,
+             "f_hat" = f_hat,
              "bic_min" = BICs[idx], 
              "p" = p,
              "adj.R.sqrt" = adj.R.sqrt

@@ -53,3 +53,5 @@ idx_hat = which(coef_hat != 0)
 coef_hat[idx_hat,]     
 
 
+test = lm(y_train ~ 0 +x_train[,idx_hat])
+summary(test)

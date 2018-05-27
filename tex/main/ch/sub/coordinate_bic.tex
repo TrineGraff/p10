@@ -1,17 +1,17 @@
 \subsection{BIC}
-Hernæst vil vi finde tuning parameteren med BIC. 
-Vi bruger funktionen i appendiks \ref{sub:bic} til at finde $\widehat{\lambda}$. 
+Hernæst vil vi estimere tuning parameteren \(\widehat{\lambda}\) med BIC, hvortil vi anvender funktionen i appendiks \ref{sub:bic}.
 
-Tabel \ref{tab:bic_lambda} giver $\log \del{ \widehat\lambda}$, antallet af parameter, BIC og adjusted R$^2$ for lasso og dens generaliseringer. 
+Tabel \ref{tab:bic_lambda} giver værdierne af $\log \del{ \widehat{\lambda}_\text{BIC}}$, antallet af parametre, BIC og adjusted R$^2$ for lasso og dens generaliseringer. 
 Igen vælges \(\alpha = 1\) for elastik net, og derfor ser vi igen bort fra denne model.
 Adjusted R$^2$ er igen højst for adaptive lasso og mindst for ridge regression. 
-Præcis som ved anvendelse af krydsvalideringer, vælger adaptive lasso færrest antal variable, som igen er det variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}.
+Igen vælger adaptive lasso modellerne variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}.
 Derudover vælger group lasso hele 99 variabler. 
 
 \input{fig/tab/bic_lambda}
 
-På figur \ref{fig:coef_bic_coord} ser vi at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} har de højeste estimerede værdier, hvor de resterende er meget tæt på nul. 
-Det samme er gældende for ridge og group lasso, vi har derfor valgt ikke at inkluderer disse koefficients plots. 
+På figur \ref{fig:coef_bic_coord} ses de 17 estimerede koefficienter for lasso og 2 estimerede koefficienter for adaptive lasso.
+Igen har variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} de største estimerede koefficienter, mens de resterende estimerede koefficienter er meget tæt på nul. 
+Vi har valgt, ikke at inkludere de estimerede koefficienter for ridge regression og group lasso, da det samme gør sig gældende for disse.
 
 \imgfigh{coef_bic_coord.pdf}{1}{Estimerede koefficienter for lasso og adaptive lasso med OLS og lasso vægte, hvor $\widehat{\lambda}$ er fundet ud fra BIC. 
 Farverne indikerer hvilken gruppe, variabler tilhører og y-aksen er variablerne udvalgt af lasso.}{coef_bic_coord}
@@ -23,13 +23,19 @@ Dog har ridge regression og group lasso kun få outliers som ses på QQ-plottet.
 I tabel \ref{tab:res_shrinkage_tab} ser vi også, at vi ikke kan afvise LB testen omkring normalitet for group lasso når $\widehat{\lambda}$ er bestemt udfra BIC. 
 
 \newpage
-\subsection*{Inferens}
-Figur \ref{fig:boxplot_lasso_coord_bic} viser boxplot for lasso, og vi ser at variablerne der ikke tilhører gruppe to oftes bliver valgt til at være nul, derudover er variablerne  \textcolor{blue3}{CLF16OV},  \textcolor{blue3}{CE16OV} , \textcolor{blue3}{lag1}, \textcolor{blue3}{UEMPL15OV}, og \textcolor{blue3}{UEMPLT5} fra gruppe to ofte estimeret til at være forskellige fra nul, dvs at lasso ofte vælger disse variable. 
-Det samme er gældende for ridge og groupe lasso. 
+\subsubsection{Inferens}
+På figur \ref{fig:boxplot_lasso_coord_bic} ses bootstrap resultaterne for variablerne udvalgt af lasso.
+Variablene \textcolor{cadetblue2}{CPIMEDSL}, \textcolor{orange}{TB6MS}, \textcolor{blue3}{USTRADE} og \textcolor{blue3}{CLAIMSx} fravælges over 50\% af bootstrap realisationerne, mens variablerne \textcolor{blue3}{lag 1}, \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} ofte vælges.
+I forhold til størrelsen af de estimerede koefficienter for lasso er bootstrap resultaterne ikke overraskende. 
+%
+%\imgfigh{bootstrap_alasso.pdf}{0.7}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\tbeta}^{\text{AL}} \del{{\widehat{\lambda}_\text{min}}}$ med OLS vægte, mens plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}{bootstrap_alasso}
+%
 
-Af tabel \ref{tab:fixedLassoInf_bic} observeres at nulhypotesen afvises for \textcolor{blue3}{CLF16OV}, \textcolor{blue3}{CE16OV}. ------
+Igen anvendes TG testen for de valgte variable med lasso.
+Resultaterne er givet i tabel \ref{tab:fixedLassoInf_bic}.
+Heraf ser vi at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} afviser nulhypotesen, og derfor er signifikante.
 
 \input{fig/tab/fixedlasso_bic}
 
 
-%%\input{fig/tab/bic_ud}
+

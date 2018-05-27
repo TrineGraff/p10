@@ -1,23 +1,23 @@
 \section{Coordinate descent}
-I dette afsnit vil vi finde tuning parameteren $\widehat\lambda$, som giver den optimale model for lasso og dens generaliseringer. 
-Hertil anvendes funktionen \texttt{glmnet} fra \Rlang-pakken af samme navn til at estimere parametrene af hver model. 
-Funktionen genererer ud fra træningsmængden en følge med 100 værdier af $\lambda$, og fitter en model til hver af disse ved maksimum likelihood estimation med algoritmen coordinate descent. 
-
-For group lasso har vi anvendt funktionen \texttt{gglasso} fra \Rlang-pakken også med samme navn til at estimere parametrene for group lasso. 
-Denne funktion generer også en følge med 100 værdier af $\lambda$, men anvender i stedet algoritmen block-wise descent. 
+I dette afsnit vil vi finde den optimale model for lasso og dens generaliseringer udfra coordinate descent.
+For lasso, ridge regression, elastisk net og adaptive lasso anvendes funktionen \texttt{glmnet} fra \Rlang-pakken af samme navn.
+Funktionen genererer en følge med 100 værdier af $\lambda$, og fitter en model til hver af disse ved maksimum likelihood estimation.
+For group lasso har vi anvendt funktionen \texttt{gglasso} fra \Rlang-pakken også med samme navn. 
+Funktionen generer også en følge med 100 værdier af $\lambda$, men anvender i stedet algoritmen block coordinate descent. 
 Funktionen kræver at variablerne er opdelt i grupper, hvortil vi betragter grupperne som er forslået af Michael McCracken, som ses i appendiks \ref{app:app_data}. 
-Derudover har kvadratroden af gruppens størrelse som penality faktor.
+For group lasso anvendes kvadratroden af gruppens størrelse som straffaktor, som anbefales af \citep{group_lasso}.
 
-Vi finder så $\widehat\lambda$ for modellerne ved hjælp af 10-fold krydsvalidering og BIC. 
+For at finde den optimale model anvendes 10-fold krydsvalidering og BIC til at estimere tuning parameteren $\widehat\lambda$.
+Bemærk at for elastisk net har vi to tuning parametre, som vi skal estimeres, nemlig $\alpha$ og $\lambda$.  
+Vi har valgt 10 værdier af \(\alpha\), hvor $\alpha \in \sbr{0,1}$.
+For hvert \(\alpha\), finder vi \(\widehat{\lambda}_\alpha\), hvorudfra vi finder den optimale \(\widehat{\lambda}\) udfra krydsvalidering og BIC.
 
-Det skal lige bemærkes, at for elastisk net har vi to turning parameter vi skal estimerer nemlig $\alpha$ og $\lambda$.  Så her har vi valgt 10 værdier af $\alpha$, hvor $\alpha \in (0,1)$. 
+For adaptive lasso med lasso vægte anvender vi kun de forklarende variable, som lasso har udvalgt til at estimere tuning parameteren $\widehat{\lambda}$. 
 
-For adaptive lasso med lasso vægte, anvender vi kun de forklarende variable, som lasso har udvalgt til at estimerer turning parameteren $\lambda$. 
-
-I kapitel \ref{kap:statistisk_inferens} introducerede vi for inferens for lasso modellen, hvor lambda er fast.
-Til det anvender vi funktionen  \texttt{fixedLassoInf} fra \Rlang-pakken \texttt{selectiveInference} (ses i appendiks ...) 
-Funktionen udregner \(p\)-værdier og konfidensintervaller for lasso estimatet for en fast værdi af tuning parameteren.
-Funktionen kan dog kun anvendes af lasso og ikke dens generaliseringer. 
+I kapitel \ref{kap:statistisk_inferens} introduceres TG testen, som udfører inferens for lasso modellen for en fast værdi af tuning parameteren.
+Hertil anvendes funktionen \texttt{fixedLassoInf} fra \Rlang-pakken \texttt{selectiveInference}, som udregner \(p\)-værdier og konfidensintervaller for lasso estimatet.
+\Rlang-koden for dette er givet i appendiks \ref{subsubsec:inferens}.
+Funktionen kan dog kun anvendes for lasso modellen og ikke dens generaliseringer. 
 
 \input{main/ch/sub/coordinate_krydsvalidering}
 \input{main/ch/sub/coordinate_bic}

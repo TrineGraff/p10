@@ -1,30 +1,35 @@
 \subsection{BIC}
-Tabel \ref{tab:bic_lars} giver $\widehat{f}$, antallet af parameter, BIC og adjusted R$^2$ for LARS uden og med lasso modifikation. 
-Adjusted R$^2$ er højst for LARS med lasso modifikationen, men er også den der vælger færrest antal parameter. 
-Den vælger kun 17, hvor LARS vælger 20 parameter. 
-På figur \ref{fig:coef_plot_lars_bic} ser vi de estimerede koefficienter for LARS algoritmen uden og med lasso modifikation, og igen ser  vi at variablerne \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} er dem med de største værdier, hvor de resterende er meget tæt på nul. 
+I dette afsnit findes den optimale model udfra BIC.
+For LARS algoritmen uden lasso modifikationen betragtes en følge af 127 værdier af $f$, dvs at vi får en værdi af BIC når en variable tilføjes.
+For LARS algoritmen med lasso modifikation betragtes en følge af 192 værdier af $f$, dvs vi får en værdi af BIC for hver gang en variable bliver tilføjet eller fjernet. 
+Tabel \ref{tab:bic_lars} giver fraktion af \(\ell_1\)-norm, antallet af parametre, BIC og adjusted R$^2$ for LARS uden og med lasso modifikation. 
+Adjusted R$^2$ er højst for LARS med lasso modifikationen, som også vælger det færreste antal parametre. 
+På figur \ref{fig:coef_plot_lars_bic} ser vi de estimerede koefficienter for LARS algoritmen uden og med lasso modifikation, og igen ser vi, at variablerne \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} har de største estimerede koefficienter, mens de resterende koefficienter er meget tæt på nul. 
 
 \input{fig/tab/bic_lars}
 
 \imgfigh{coef_plot_lars_bic.pdf}{1}{Estimerede koefficienter for LARS algoritmen uden og med lasso modifikationen, hvor $\widehat{f}$ er fundet ud fra BIC. Farverne indikerer hvilken gruppe, variablerne tilhører. }{coef_plot_lars_bic}
 
-Figurerne \ref{fig:lars_bic_resid} og  \ref{fig:lars_lasso_bic_resid} viser en analyse af de standardiserede residualer for LARS uden og med lasso modifikation. Vi ser, at histogrammet og QQ-plottet viser tungere haler end en normalfordeling og autokorrelation i første lag. Dette ses også i tabel \ref{tab:lars_kryds_res_tab}, hvor også JB testens nulhypotese om normalitet og LB testen om uafhængighed bliver afvist, når turning parameterene er valgt ud fra BIC. 
+Figurerne \ref{fig:lars_bic_resid} og  \ref{fig:lars_lasso_bic_resid} viser en analyse af de standardiserede residualer for LARS uden og med lasso modifikation. 
+Vi ser, at histogrammet og QQ-plottet viser tungere haler end normalfordelingen og autokorrelation i første lag. 
+Dette ses også i tabel \ref{tab:lars_kryds_res_tab}, hvor normalitet og uafhængighed afvises.
 
 
-\subsubsection{Inferens - LARS uden modifikation}
-På figur \ref{fig:boxplot_lars_bic} ses bootstrap resultaterne af variablerne udvalgt af LARS uden modifikation. Vi ser at variablerne  \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{CE16OV}, \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{HWURATIO} bliver valgt i næsten alle bootstraps realisationerne.
- Variablerne \textcolor{red3}{DPCERA3M086SBEA},  \textcolor{chartreuse4}{INDPRO}, \textcolor{chartreuse4}{CUMFNS}, \textcolor{blue3}{CLAIMSx}, \textcolor{red3}{AMDMNOx}, \textcolor{orange}{GS1}, \textcolor{orange}{EXUSUKx}  bliver over 50 \% af bootstrap realisationerne estimeret til at være nul.  
+\subsubsection{Inferens for LARS}
+På figur \ref{fig:boxplot_lars_bic} ses bootstrap resultaterne af variablerne udvalgt af LARS uden lasso modifikation. 
+Vi ser, at variablerne \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{CE16OV}, \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{HWURATIO} bliver valgt i næsten alle bootstraps realisationerne.
+Variablerne \textcolor{red3}{DPCERA3M086SBEA}, \textcolor{chartreuse4}{INDPRO}, \textcolor{chartreuse4}{CUMFNS}, \textcolor{blue3}{CLAIMSx}, \textcolor{red3}{AMDMNOx}, \textcolor{orange}{GS1}, \textcolor{orange}{EXUSUKx}  bliver over 50 \% af bootstrap realisationerne estimeret til at være nul.  
 
-Tabel \ref{tab:larInf_kryds} viser p-værdier og konfidensintervaller for LARS algoritmen. Heraf ses, at nulhypotesen accepteres for alle variable.
+Tabel \ref{tab:larInf_kryds} viser \(p\)-værdier og konfidensintervaller for LARS algoritmen. 
+Heraf ses, at nulhypotesen accepteres for alle variable, hvilket betyder, at ingen prædiktorer er signifikante.
 
 \input{fig/tab/larinf_bic}
 
-\subsubsection{Inferens - LARS med lasso modifikation}
+\subsubsection{Inferens for LARS med lasso modifikation}
 På figur \ref{fig:boxplot_lars_bic} ses bootstrap resultaterne af variabler udvalgt af LARS med lasso modifikation. 
 Her ser vi at variablerne \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{CE16OV}, \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{lag1} bliver valgt i næsten alle bootstrap realisationerne. Derudover ser vi at \textcolor{orange}{TB6MS} bliver estimeret til at være nul over 30 \% af bootstrap realisationerne. 
 
-Tabel \ref{tab:covTest_bic} viser resultatet af  kovariansen testen. Vi ser at variablerne \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} afviser null hypotesen. Disse variabler, er også de første variabler LARS algoritmen tilføjer.  
-
-
+Tabel \ref{tab:covTest_bic} viser resultatet af  kovariansen testen. Vi ser at variablerne \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} afviser nulhypotesen. 
+Disse variabler, er også de første variabler LARS algoritmen tilføjer.  
 
 \input{fig/tab/cov_test_bic}

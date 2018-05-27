@@ -1,12 +1,12 @@
 \chapter{Lasso modellen og dens generaliseringer}
-Da den autoregressive model valgte en orden på 4, tilføjes fire variable med laggede værdier af arbejdsløshedsraten til de øvrige 122 variable.
+Da den autoregressive model valgte en orden på 4, tilføjes somsagt fire variable med laggede værdier af arbejdsløshedsraten til de øvrige 122 variable.
 Dette introducerer nogle uobserveret værdier, og derfor fjernes de første 4 observationer af hver tidsrækkede, således at vi undgår uobserveret værdier.
 De tilføjede laggede tidsrækker inkluderes i gruppe 2, hvor også arbejdsløshedsraten er inkluderet (se appendiks \ref{app:data}).
 Vi betragter derfor 126 variable i perioden fra 1. maj 1960 til 1. december 2005 svarende til 448 observationer.
 
 Lasso problemet og dens generaliseringer kan løses med coordinate descent algoritmen og LARS algoritmen.
 Vi vil anvende coordinate descent algoritmen til at løse lasso, ridge regression, elastisk net, group lasso og adaptive lasso med henholdsvis OLS og lasso vægte.
-Men vi har valgt blot at betragte LARS algoritmen uden og med lasso modifikationen, for at begrænse den empiriske del.
+Men vi har valgt blot at betragte LARS algoritmen uden og med lasso modifikationen.
 
 \input{main/ch/sub/coordinate}
 \input{main/ch/sub/lars}

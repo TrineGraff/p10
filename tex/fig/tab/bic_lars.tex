@@ -1,12 +1,12 @@
 \begin{table}
 \center
-\begin{tabular}{lcc | cc} 
+\begin{tabular}{lcc | lcc} 
 \toprule
-& \multicolumn{1}{c}{LARS}  && \multicolumn{1}{c}{LARS med lasso modifikation} \\ \midrule
-$\widehat{f}$ & 0.2623 & & 0.2604   \\
-$p$ & 20 & &  17  \\
-BIC & $-6.0925$ && $-6.1627$  \\
-Adj. R$^2$ &94 \% & & 94.24 \% \\ \bottomrule
+\multicolumn{2}{c}{LARS}  & \multicolumn{1}{c}{ } & \multicolumn{2}{c}{LARS med lasso modifikation} \\ \midrule
+$\widehat{f}_\text{BIC}$ & 0.2623 & &$\widehat{f}_\text{BIC}$ & 0.2604   \\
+$p$ & 20 & & $p$ & 17  \\
+BIC & $-6.0925$ && BIC & $-6.1627$  \\
+Adj. R$^2$ &94 \% & & Adj. R$^2$ & 94.24 \% \\ \bottomrule
  \end{tabular}
-\caption{Tabellen viser $\widehat{f}$ bestemt ud fra BIC, samt antallet af parameter , BIC og adjusted  R$^2$ for LARS uden og med lasso modifikation. } \label{tab:bic_lars}
+\caption{Værdien af $\widehat{f}_\text{BIC}$, antallet af parametre, BIC og adjusted  R$^2$ for LARS uden og med lasso modifikation.} \label{tab:bic_lars}
 \end{table}

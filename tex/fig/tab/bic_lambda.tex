@@ -3,15 +3,15 @@
 \begin{tabular}{lccc} 
 \toprule
 & \multicolumn{1}{c}{Lasso} & \multicolumn{1}{c}{Ridge regression}  &  \multicolumn{1}{c}{Group lasso}\\ \midrule
-$\log \del{\widehat{\lambda}}$ & $-6.2639$ & $-4.4730$  & $-7.2876$ \\
+$\log \del{\widehat{\lambda}_\text{BIC}}$ & $-6.2639$ & $-4.4730$  & $-7.2876$ \\
 $p$ & 17 & 126 & 99 \\
 BIC & $-6.1608 $& $-3.3230$ & $-5.0721$  \\
 Adj. R$^2$ & 94.23 \% & 86.98  \%   & 92.11 \%  \\ \bottomrule \toprule
 & Adap. lasso m. OLS vægte & Adap. lasso m. lasso vægte \\ \midrule
-$\log \del{ \widehat{\lambda}}$ &  $-2.6212$& $-1.8390$ \\
+$\log \del{ \widehat{\lambda}_\text{BIC}}$ &  $-2.6212$& $-1.8390$ \\
 $p$ & 2&2 \\
 BIC &  $-6.3153$&$-6.3142$ \\
 Adj. R$^2$ & 94.28 \% &  94.28 \% \\ \bottomrule
  \end{tabular}
-\caption{$\log \del{ \widehat\lambda}$, antallet af parameter, BIC og adjusted R$^2$ for lasso og dens generaliseringer, hvor $\widehat{\lambda}$ er estimeret ud fra BIC.} \label{tab:bic_lambda}
+\caption{Logaritmen af $\widehat{\lambda}_\text{BIC}$, antallet af parametre, BIC og adjusted R$^2$ for lasso og dens generaliseringer.} \label{tab:bic_lambda}
 \end{table}

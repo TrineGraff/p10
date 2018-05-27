@@ -1,34 +1,28 @@
 \section{Autoregressiv model}
 Den autoregressive model af orden \(p\) estimeres med OLS, og ordenen bestemmes udfra BIC.
 Vi lader $p = 1, \ldots, p_{\max}$, hvor \(p_\text{max}=12\), da vi mener, at arbejdsløshedsraten ikke vil påvirkes mere end et år tilbage.
-BIC vælger \(p=4\) og tabel \ref{tab:est_ar} giver estimeringsresultaterne for en \(\text{AR} \del{4}\). \footnote{En ARMA(p,q) estimeret med MLE, hvor $p_{\max} = 12$ og $q_{\max} = 12$ fortrækker også en AR(4) valgt ud fra BIC.}
+BIC vælger \(p=4\) og tabel \ref{tab:est_ar} giver estimeringsresultaterne for en \(\text{AR} \del{4}\). \footnote{For en ARMA(p,q) hvor $p_{\max} = 12$ og $q_{\max} = 12$, hvor parametrene estimeres med MLE, vælger BIC også en AR(4).}
 %
 \input{fig/tab/est_ar}
 
 Alle koefficienterne med undtagelse af $\widehat\phi_1$ er signifikante ved et 0.1 \% niveau. 
 Vi ser også, at adjusted $R^2$ kun er 12.30\%, hvilket indikerer, at en autoregressiv model af orden 4 ikke er en optimal model for arbejdsløshedsraten. 
 
+\input{fig/tab/test_ar}
+
 Figur \ref{fig:resid_ar} viser en analyse af de standardiserede residualer for \(\text{AR} \del{4}\). 
 Histogrammet og QQ-plottet indikerer, at residualerne har tungere haler end normalfordelingen. 
 Derudover observeres få signifikante autokorrelationer.
 Dette bekræftes i tabel \ref{tab:test_ar}, som viser skewness, excess kurtosis og \(p\)-værdier for Jarque-Bera og Ljung-Box testen for de standardiserede residualer. 
-Vi ser, at skewness og kurtosis er positive og at JB testen afviser nulhypotesen om normalitet. 
-LB testen i lag 10 afviser også nulhypotesen om uafhængighed for både de standardiserede residualer samt de kvadrerede standardiserede residualer. 
-%
-\input{fig/tab/test_ar}
-%
-%Modellen prædikteres udfra prædiktionsligningen
-%\begin{align*}
-%\widehat{y}_{t+1 \given t} = \sum_{j = 1}^4 \widehat{\beta}_j y_{t+1-j}.
-%\end{align*}
-%\qquad t = 552, \ldots, T-1??
+Vi ser, at skewness og kurtosis er positive, JB testen afviser nulhypotesen om normalitet og LB testen i lag 10 afviser nulhypotesen om uafhængighed.
+
 
 Forecast er som nævnt opnået ved et rolling scheme med expanding estimerings window. 
 Figur \ref{fig:fc_ar} viser arbejdsløshedsraten og den prædikterede arbejdsløshedsrate med en AR\(\del{4}\).
 Vi kan se, at en AR(4) ikke fanger udsvingene, hvilket igen tyder på, at det ikke er en særlig god model. 
-I tabel \ref{tab:tabs_ar} er MAE og MSE udregnet for modellen. 
+For AR(4) fås en MAE på 0.1312 og MSE på 0.0272.
+%I tabel \ref{tab:tabs_ar} er MAE og MSE udregnet for modellen. 
+%\input{fig/tab/ar_rmse_mae}
 
-\input{fig/tab/ar_rmse_mae}
-
-\imgfigh{fc_ar.pdf}{0.7}{Arbejdsløshedsraten og prædiktion af arbejdsløshedsraten med en \(\text{AR} \del{4}\).}{fc_ar}
+\imgfigh{fc_ar.pdf}{0.75}{Arbejdsløshedsraten og prædiktion af arbejdsløshedsraten med en \(\text{AR} \del{4}\).}{fc_ar}
 \newpage

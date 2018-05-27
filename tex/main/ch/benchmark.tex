@@ -1,12 +1,9 @@
-\chapter{Benchmarks}
-I dette afsnit betragter vi den autoregressive model og faktor modellen. 
-Den autoregressiv model, som er defineret i definition \ref{def:ar}, anvendes kun fordi vi senere vil tilføje ordenen af den autoregressive model som belæg for hvor mange lags, der skal tilføjes til de forklarende variable. 
-Den bliver dog stadig inkluderet, som en del af analysen.
-%Vi har valgt at inkludere denne, da den er simpel og kun anvender tidligere lags af responsvariablen.
-%Vi vil senere anvende ordenen af den autoregressive model som belæg for hvor mange lags, der skal tilføjes som forklarende variable til de øvrige 122 variable. 
-Derudover har vi også valgt en faktor model som benchmark.
-\Rlang-koderne, som er anvendt i dette kapitel, er givet i afsnit \ref{sec:auto} og \ref{sec:faktor}.
+\chapter{Benchmark model}
+I dette afsnit vil vi finde en benchmark model udfra en autoregressive model, som er  defineret i definition \ref{def:ar}, og faktor modellen. 
+Den autoregressive model er primært inkluderet i analysen, da vi anvender ordenen af den autoregressive model, som belæg for hvor mange lags, vi senere vil tilføje til de forklarende variable, da arbejdsløsheden kan være afhængig af de tidligere værdier.
+Modellen bliver dog stadig inkluderet som en del af analysen, og betragtes som en af benchmark modellerne, da den er simpel og kun anvender tidligere lags af responsvariablen.
 
+\Rlang-koderne, som er anvendt i dette kapitel, er givet i afsnit \ref{sec:auto} og \ref{sec:faktor}.
 \input{main/ch/sub/emp_autoregressiv_model}
 \input{main/ch/sub/emp_faktor_model}
 

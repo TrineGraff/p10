@@ -100,9 +100,7 @@ og BIC kan omskrives til
 \end{align*}
 
 \section{Out-of-sample metoder}
-Vi anvender et rolling scheme forecast med expanding estimerings windows. 
-Dvs at det første estimerings window indeholder altså de sande observationer fra tiden 1 til tid $t$, og den næste estimerings window indeholder de sande observationer fra tiden 1 til $t+1$.
-
+I den empiriske del betragtes et rolling scheme forecast med expanding estimerings windows.
 For at vurdere en models prædiktions evnen betragtes den gennemsnitlige kvadrede fejl (MSE) og den gennemsnitlige absolutte fejl (MAE)
 \begin{align}
 \text{MSE} & =  \frac{1}{T} \sum_{t=1}^{T} \del{y_{t} - \widehat{y}_{t}}^2 \label{eq:mse}, \\

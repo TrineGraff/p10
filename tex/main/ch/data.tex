@@ -1,12 +1,12 @@
 \chapter{Data} \label{ch:data}
-I den empiriske del anvendes et datasæt fra FRED, som er hentet fra Federal Reserve Bank of St. Louis. \footnote{\url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}}
+I den empiriske del anvendes et datasæt sammensat af Michael McCracken, som er hentet fra Federal Reserve Bank of St. Louis. \footnote{\url{https://research.stlouisfed.org/econ/mccracken/fred-databases/}}
 Datasættet består af månedlige observationer for 128 makroøkonomiske variable i perioden 1. januar 1959 til 1. november 2017 svarende til 707 observationer.
 Datasættet er givet i appendiks \ref{app:app_data}.
 
-Tidsrækkerne for variablerne transformeres, således at de bliver stationære.
-Som følge at disse transformationer introduceres nogle ikke-observeret værdier i starten af hver tidsrække.
-Derudover observeres at 5 variable har et stort antal ikke-observeret værdier, som derfor fjernes fra datasættet.
-Yderligere fjernes de første 12 samt de sidste 4 observationer, således at datasættet er fuldstændig renset for ikke-observeret værdier.
+Vi observerer, at 5 variable har et stort antal ikke-observeret værdier, som derfor fjernes fra datasættet.
+Herefter transformeres hver variabel med en given transformation foreslået af Michael McCracken, således at de bliver stationære.
+Som følge at disse transformationer opstår nogle ikke-observeret værdier i starten af hver tidsrække.
+For at undgå ikke-observeret værdier i datasættet fjerner vi de første 12 samt de sidste 4 observationer.
 Det transformerede datasæt består hermed af 123 variable i perioden 1. januar 1960 til 1. juli 2017 svarende til 691 observationer.
 Datasættet repræsenterer en bred vifte af makroøkonomiske variable, som Michael McCracken har inddelt i 8 grupper:
 %
@@ -16,7 +16,7 @@ Datasættet repræsenterer en bred vifte af makroøkonomiske variable, som Micha
 \item Gruppe 3: Bolig \legendbox{purple}
 \item Gruppe 4: Forbrug, ordrer og varebeholdninger  \legendbox{red3}
 \item Gruppe 5: Penge og kredit \legendbox{deeppink}
-\item Gruppe 6: Renter og valutakurs \legendbox{orange}
+\item Gruppe 6: Renter og valutakurser \legendbox{orange}
 \item Gruppe 7: Priser \legendbox{cadetblue2}
 \item Gruppe 8: Aktiemarket \legendbox{goldenrod4}
 \end{description} 
@@ -37,7 +37,7 @@ På figur \ref{fig:unemployment} illustreres arbejdsløshedsraten samt arbejdsl�
 Mccraken foreslår at tage 1. differensen af tidsrækken for at opnå stationaritet.
 Tidsrækken centreres, således at vi kan se bort fra skæringen.
 %
-\imgfigh{unemployment.pdf}{0.9}{Det øverste billede er USA's arbejdsløshedsrate fra d. 1 januar 1960 til 1 juli 2017. Det nederste billede er første differens af USA's arbejdsløshedsrate fra d. 1 januar 1960 til 1. juli 2017. }{unemployment}
+\imgfigh{unemployment.pdf}{0.9}{Den øverste figur viser arbejdsløshedsraten fra d. 1 januar 1960 til 1 juli 2017, mens den nederste figur viser første differens af arbejdsløshedsraten centreret fra d. 1 januar 1960 til 1. juli 2017. }{unemployment}
 
 Det overordnet formål med analysen er, at prædiktere arbejdsløshedsraten.
 Hertil vil vi betragte de beskrevne modeller i den teoretiske del.

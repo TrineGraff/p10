@@ -2,9 +2,8 @@
 %mellem min 1 side og maks 2 sider.
 %indgår i evalueringen
 %
-The master thesis seek to forecast the monthly unemployment rate using freely available data from FRED.
-A simpel autoregression will be considered as a benchmark model.
-Another benchmark model that we will consider is the factor model.  \ref{ch:dfm}
+The object of the master is to predict macroeconomic variables.
+
 First the classical factor model is presented, at which we rely some assumptions to ensure uniqueness of the estimators.
 The factor model limits the number of model parameters by collecting information about variance in the explanatory variables in some few underlying factors.
 
@@ -16,27 +15,32 @@ This results in a convex optimzation problem, which can be solved efficiently fo
 To solve the lasso problem we consider an algorithm called coordinate descent.
 It is especially attractive for problems such as lasso in which a closed solution does not exits, but a coordinatewise does.
 The coordinate descent algorithm choose a single coordinate to update and the performs a univariate minimization over this coordinate holding the remaining coordinates fixed, and cycle through the coordinates in some fixed order.
-Another algorithm that can be used to solve the lasso problem is the least angle regression (LARS), which delivers the entire solution path as a function of the regularization parameter \(\lambda\).
+We also consider the least angle regression (LARS), which delivers the entire solution path as a function of the regularization parameter \(\lambda\).
+piecewise construction of the path of the lasso solutions.
+A modification can be applied to the LARS algorithm, such that is can be used to solve the lasso problem.
 
 We will also consider some generalizations of the lasso, which all inherit the two essential features of the standard lasso, namely the shrinkage and selection of variables, or groups of variables.
+A breakdown of the lasso is that it tends to select only one variabel, if there is a group of variables in which the pairwise correlations are very high.
+The elastic net makes a compromise between the ridge and the lasso penalty, and handles highly correlated variables better than lasso. 
+The elastic net has an additional tuning parameter \(\alpha\), that has to be determined. For \(\alpha = 1\), the elastic net reduces to the lasso, and for \(\alpha = 0\) it reduces to ridge regression.
+Another generalization of the lasso is group lasso, which is preferred if the covariate have a natural group structure.
+At last we consider the adaptive lasso as a means for fitting models sparser than lasso.
+The adaptive lasso fulfills the socalled oracle properties under some general conditions, which very desirable, as it means the it recovers the true model. 
 
-A breakdown of the lasso is that it tends to select only one variable if there is a group of variables which the pairwise correlations are very high.
-The elastic net makes a compromise between the ridge and the lasso penalty. 
+At last some theory for post-selection inference of the lasso is introduced.
+For the LARS algorithm with lasso modification we consider the covarians test.
+The covariance test assigns \(p\)-values to the predictors as the are successively entered by the lasso.
+Next we consider a general scheme for post-selection inference.
 
-The elastic net has an additional additional tuning parameter \(\alpha\), that has to be determined.
-The group lasso is preferred if the covariate have a natural group structure.
-At last we consider the adaptive lasso, which impose weight
-Also the adaptive lasso good asymptotic 
-socalled oracle properties.
+In the empirical part the presented models are used to predict the unemployment rate one-step-ahead.
+The dataset that we will consider is gathered from the Federal Reserve Bank of St. Louis and is publicly available.
+It consists of 122 monthly macroeconomic variables and covers the period fra January 1, 1959 to November 1, 2017, corresponding to 707 observations.
 
+The autoregressive model is included as an argument for the number of lagged values for the unemployment rate to included in the model matrix.
+As a benchmark model we will consider the factor model.
 
-In the empirical analysis the presented procedures are used to make one-step-ahead forecasts of the unemployment rate.
-The data contains --- monthly variables for -- observation is gathered from the Federal Reserve Bank of St. Louis and is publicly available.
-As benchmark models we will consider the autoregression model and the factor model.
-Thought the empirical analysis, the number of lags of the responsvariable chosen by the autoregressive model, will be included as kovariates during the rest. 
-
-The presented models will be evaluated out-of-sample by the mean absolutte error (MAE) and the root mean squared error (RMSE).
-We will also consider test if the lasso based models are significantly better than the bechmarks, applying the Diebold-Mariano test.
+The optimal model for the lasso problem and its generalizations is found by a 10-fold crossvalidation and BIC.
+The presented models will be evaluated out-of-sample by the mean absolutte error (MAE) and the mean squared error (RMSE).
+From the Diebold Mariano test we find that the lasso based models are significantly better that the benchmark model. 
 At last the model confidence set procedure is considered, which identifies a set of models that are significantly better that the other models.
-
-We find that relative to the benchmarks the lasso models and its generalizations cannot improve the forecasts of the unemployment rate given, however we do
+Both the 80\% and 90\% MCS includes all the lasso based models.

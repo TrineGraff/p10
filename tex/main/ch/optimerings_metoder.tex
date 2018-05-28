@@ -1,5 +1,5 @@
 \chapter{Optimeringsmetoder} \label{ch:optimeringsmetoder}
-\textit{I dette kapitel præsenteres optimeringsalgoritmerne coordinate descent og Least Angle Regression (LARS) for konvekse problemer.
+\textit{I dette kapitel præsenteres først nogle optimeringsbetinger, og derefter optimeringsalgoritmerne coordinate descent og Least Angle Regression (LARS), som kan løse lasso problemet.
 Kapitel er baseret på kapitel 5 i \citep{hastie}, \citep{glmnet1} og \citep{efron}.} 
 %
 \section{Konvekse optimeringsbetingelser}
@@ -44,10 +44,10 @@ Disse KKT betingelser er nødvendige og tilstrækkelige for at \(\tbeta^*\) er e
 %
 \subsection{Subgradienter}
 Som nævnt i underafsnittet \ref{subsec:udregning_lasso} er \(\ell_1\)-normen \(g \del{\tbeta} = \sum_{j=1}^p \vert \beta_j \vert\) konveks, men ikke differentialbel i ethvert punkt, hvor mindst et koordinat \(\beta_j = 0\).
-For sådan et problem er optimalitetsbetingelserne, første ordens betingelsen \eqref{eq:5.3} og Lagrange betingelsen \eqref{eq:5.8}, ikke gældende, da de betragter gradienter af \(f\) og \(g\).
-Heldigvis findes der en naturlig generalisering af begrebet gradient for konvekse funktioner, som tillader mere generel optimeringsteori.
+For sådan et problem er første ordens betingelsen \eqref{eq:5.3} og Lagrange betingelsen \eqref{eq:5.8} ikke gældende, da de betragter gradienter af \(f\) og \(g\).
+Heldigvis findes der en naturlig generalisering af begrebet gradient for konvekse funktioner.
 
-For konvekse funktioner, giver tangent approksimationen af første ordens en nedre grænse.
+For differentiable, konvekse funktioner giver tangent approksimationen af første ordens en nedre grænse.
 %Begrebet subgradient er baseret på en generalisering af dette.
 Givet en konveks funktion \(f: \ \R^p \rightarrow \R\), siges \(\tz \in \R^p\) at være en subgradient af \(f\) i \(\tbeta\) hvis
 \begin{align*}
@@ -60,7 +60,7 @@ Når \(f\) er differentialble i \(\tbeta\), da reduceres subdifferentialet til �
 I punkter hvor \(f\) ikke er differentialbel, da er subdifferentialet en konveks mængde bestående af alle mulige subgradienter.
 
 Figur \ref{fig:subgradients} viser en funktion \(f : \R \rightarrow \R\) og nogle eksempler på subgradienter i punkterne \(\beta_1\) og \(\beta_2\).
-I punktet \(\beta_1\) er funktionen differentiabel og derfor har vi blot en subgradient, givet ved \(f' \del{\beta_1}\). I punktet \(\beta_2\) er funktionen ikke differentiabel og derfor har vi flere subgradienter, som hver specificerer et tangentplan, som giver en nedre grænse på \(f\).
+I punktet \(\beta_1\) er funktionen differentiabel, og derfor har vi blot en subgradient, givet ved \(f' \del{\beta_1}\). I punktet \(\beta_2\) er funktionen ikke differentiabel, og derfor har vi flere subgradienter, som hver specificerer et tangentplan, som giver en nedre grænse på \(f\).
 %
 \begin{figure}[H]
 \centering
@@ -68,7 +68,7 @@ I punktet \(\beta_1\) er funktionen differentiabel og derfor har vi blot en subg
 \caption{En konveks funktion \(f : \ \R \rightarrow \R\) med nogle eksempler på subgradienter i \(\beta_1\) og \(\beta_2\).} \label{fig:subgradients}
 \end{figure}
 %
-Antag mindst en af funktionerne \(\cbr{f, g_j}\) er konvekse men ikke differentiable. Da giver Lagrange betingelsen \eqref{eq:5.8} ikke mening, men under milde betingelser for funktionerne, da kan KKT betingelserne modificeres til følgende
+Antag mindst en af funktionerne \(\cbr{f, g_j}\) er konvekse, men ikke differentiable, da giver Lagrange betingelsen \eqref{eq:5.8} ikke mening, men under milde betingelser for funktionerne, da kan KKT betingelserne modificeres til følgende
 \begin{align}
 \mathbf{0} \in \partial f \del{\tbeta^*} + \sum_{j=1}^m \lambda_j^* \partial g_j \del{\tbeta^*}, \label{eq:5.11}
 \end{align}

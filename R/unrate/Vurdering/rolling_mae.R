@@ -79,8 +79,8 @@ df$dato[5:8]
 df$Lasso_CV
 
 ggplot(df, aes(x = dato)) +
-  geom_line(aes(y = Bench, color = "Benchmark")) +
-  geom_line(aes(y = AR4, colour = "AR4")) +
+  geom_line(aes(y = Bench, color = "Benchmark model")) +
+  geom_line(aes(y = AR4, colour = "AR(4)")) +
   geom_line(aes(y = Faktor1, colour = "Faktor model (IC1)")) + 
   geom_line(aes(y = Lasso_CV, colour = "Lasso (CV)")) +
   geom_line(aes(y = Lasso_BIC, colour = "Lasso (BIC)")) +

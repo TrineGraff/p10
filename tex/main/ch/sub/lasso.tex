@@ -238,20 +238,18 @@ Antag at, vi har en additive-error model
 y_i = f \del{x_i} + \epsilon_i, \quad i = 1, \ldots, n,
 \end{align*}
 hvor \(f\) er ukendt og \(\epsilon_i \sim iid \del{0, \sigma^2}\).
-Lad \(\widehat{\y}\) betegne \(n\) sample prædiktorer, da defineres 
+Givet en model fitting metode \(\delta\), lad \(\widehat{\y} = \delta \del{\y}\), da defineres frihedsgraderne for \(\delta\) 
 \begin{align}
 \text{df}\del{\widehat{\y}} := \frac{1}{\sigma^2} \sum_{i=1}^n \text{Cov}\del{\widehat{y}_i, y_i}. \label{eq:df_lasso}
 \end{align}
-Kovariansen tages her over det stokastiske i responsvariablen \(\cbr{y_i}_{i=1}^n\) hvor prædiktorerne fastholdes.
-Antal frihedsgrader svarer da til indflydelsen hver respons mål har på dens prædiktion.
+Kovariansen tages her over det stokastiske i responsvariablerne \(\cbr{y_i}_{i=1}^n\) hvor prædiktorerne fastholdes.
+Antal frihedsgrader svarer da til indflydelsen hver responsvariabel har på dens prædiktion.
 Desto bedre modellen tilpasser data, desto højere antal frihedsgrader.
-Det kan vises, at for lasso med en fast strafparameter \(\lambda\) er antallet af ikke-nul koefficienter \(k_\lambda\) et unbiased estimat af frihedsgrader.
-
-Som nævnt ovenfor anvender forward-stepwise regression mere end \(k\) frihedsgrader efter \(k\) step.
+Det kan vises, at for lasso med en fast strafparameter \(\lambda\) er antallet af ikke-nul koefficienter \(k_\lambda\) et unbiased estimat af antallet af frihedsgrader \citep{df_lasso}.
+%
+%Som nævnt ovenfor anvender forward-stepwise regression mere end \(k\) frihedsgrader efter \(k\) step.
 Lasso udvælger ikke blot prædiktorer, som bekendt øger antallet af frihedsgrader, men shrinks også koefficienterne mod 0 relativ til mindste kvadraters estimaterne.
 Denne skrinkage er netop tilstrækkelig til at bringe antallet af frihedsgrader til \(k\).
 Dette resultat er særligt nyttig, da det giver et kvalitativ mål af mængden af fitting som vi har opnået ved ethvert punkt på lasso stien.
-Generelt er beviset for dette resultat meget besværligt.
-Men i det ortogonale tilfælde ...
 
-Ideen tages et skridt videre i sektion \ref{subsec:kovarians_test} hvor vi beskriver \textit{kovarians testen} til at teste significancen af prediktorerne ift lasso.
+I afsnit \ref{subsec:kovarians_test} beskrives \textit{kovarians testen}, som er et naturligt analog til frihedsgrader, der tester om prædiktorerne udvalgt af lasso er signifikante.

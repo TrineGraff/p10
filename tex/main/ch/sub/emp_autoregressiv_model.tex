@@ -6,14 +6,14 @@ BIC vælger \(p=4\) og tabel \ref{tab:est_ar} giver estimeringsresultaterne for 
 \input{fig/tab/est_ar}
 
 Alle koefficienterne med undtagelse af $\widehat\phi_1$ er signifikante ved et 0.1 \% niveau. 
-Vi ser også, at adjusted $R^2$ kun er 12.30\%, hvilket indikerer, at en autoregressiv model af orden 4 ikke er en optimal model for arbejdsløshedsraten. 
+Vi ser også, at adjusted $R^2$ kun er 12.30\% (se definition \ref{def:adjr2}), hvilket indikerer, at en autoregressiv model af orden 4 ikke er en optimal model for arbejdsløshedsraten. 
 
 \input{fig/tab/test_ar}
 
 Figur \ref{fig:resid_ar} viser en analyse af de standardiserede residualer for \(\text{AR} \del{4}\). 
 Histogrammet og QQ-plottet indikerer, at residualerne har tungere haler end normalfordelingen. 
 Derudover observeres få signifikante autokorrelationer.
-Dette bekræftes i tabel \ref{tab:test_ar}, som viser skewness, excess kurtosis og \(p\)-værdier for Jarque-Bera og Ljung-Box testen for de standardiserede residualer. 
+Dette bekræftes i tabel \ref{tab:test_ar}, som viser skewness, excess kurtosis og \(p\)-værdier for Jarque-Bera og Ljung-Box testen (se definition \ref{def:jbtest} og \ref{def:lbtest}) for de standardiserede residualer. 
 Vi ser, at skewness og kurtosis er positive, JB testen afviser nulhypotesen om normalitet og LB testen i lag 10 afviser nulhypotesen om uafhængighed.
 
 

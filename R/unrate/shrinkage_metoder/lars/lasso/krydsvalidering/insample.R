@@ -3,11 +3,11 @@ source("package.R")
 source("parm.R")
 source("shrinkage_metoder/res_plot.R")
 source("shrinkage_metoder/lars/getmin.R")
+source("shrinkage_metoder/adj.r.2.R")
 set.seed(1)
 
 lasso_cv = cv.lars(x_train, y_train, type = "lasso", intercept = FALSE, 
                    normalize = FALSE, trace = FALSE)
-plotCVLars(lasso_cv, se = TRUE)
 
 lasso_fit = lars(x_train, y_train, type = "lasso", normalize = FALSE, intercept = FALSE)
 getmin = getmin_l(lasso_cv$index, lasso_cv$cv, lasso_cv$cv.error)
@@ -44,13 +44,11 @@ Box.test(res, lag = 10, "Ljung-Box")
 
 # Adj. R ------------------------------------------------------------------
 
-SS.res = sum((y_train - x_train %*% beta_hat)^2)
-SS.tot = sum((y_train - mean(y_train))^2)
-n = length(y_train)
-p = parm(beta_hat)
-R.sqrd = 1 - (SS.res / SS.tot)
-adj.R.sqrt = 1 - (1 - R.sqrd) * ((n - 1) / (n - p - 1)) 
-adj.R.sqrt * 100
+adj.r.2_1sd = adj.r.2(y_train, x_train, beta_hat)
+
+beta_hat_min = as.vector(coef(lasso_fit, s = getmin$lambda.min, mode = "fraction"))
+adj.r.2_min = adj.r.2(y_train, x_train, beta_hat_min)
+
 
 # Koefficienter -----------------------------------------------------------
 b_hat = coef(lasso_fit, s = getmin$lambda.1se, mode = "fraction")
@@ -69,6 +67,6 @@ lasso = ggplot(df_la, aes(df_la$lasso_cv.index,df_la$lasso_cv.cv)) +
   geom_vline(aes(xintercept= getmin$lambda.1se, col = "brown"), linetype="dotted") +
   ggtitle("LARS med lasso modifikation") + scale_color_manual(labels = c(expression(f[min]), expression(f[1][sd])), values = c("blue", "brown"))
 
-grid.arrange(lars, lasso, ncol = 2)
+#grid.arrange(lars, lasso, ncol = 2)
 
 

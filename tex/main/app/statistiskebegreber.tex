@@ -74,7 +74,19 @@ y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \dots + \phi_p y_{t-p} + \omega_t, \qqua
 hvor $y_t$ er stationær og $\phi_1 , \phi_2, \dots, \phi_p $ er konstanter  $\del{ \phi_p \neq 0}$ og $\omega_t \sim iid\del{0, \sigma_\omega^2}$, hvis ikke andet er angivet.  
 \end{defn}
 
-\begin{defn}[Jarque-Bera test]
+\begin{defn}[Adjusted R$^2$] \label{def:adjr2}
+Adjusted R$^2$ er givet ved
+\begin{align*}
+R^2_{\text{adj}} = 1 - \sbr{\frac{(1 - R)(n-1)}{n - p -1}},
+\end{align*}
+hvor $N$ er antallet af punkter, $p$ er antallet af prædiktorer og 
+\begin{align*}
+R = 1 - \frac{\sum_{i = 1}^n \del{y_i - \sum_{j=1}^px_{ij} \beta_j}}{\sum_{i = 1}^n \del{y_i - \bar{y}}}
+\end{align*}
+\end{defn}
+ 
+
+\begin{defn}[Jarque-Bera test] \label{def:jbtest}
 Betragt \(\hyp_0: \) data er normalfordelt imod \(\hyp_1:\) data er ikke normalfordelt.
 Teststørrelsen for Jarque-Bera testen er givet ved
 \begin{align*}
@@ -85,7 +97,7 @@ hvor \(n\) er antallet af observationer, \(S\) er den empiriske skewness, \(C\) 
 Under \(\hyp_0\) følger teststørrelsen \(\text{JB}\) en \(\chi_{\del{2}}^2\)-fordeling.
 For et signifikant niveau \(\alpha\), afvises hypotesen hvis \(\text{JB} > \chi_{1-\alpha,2}^2\), hvor \(\chi_{1-\alpha,2}^2\) er en \(1 - \alpha\) kvantil af \(\chi^2\)-fordelingen med \(2\) frihedsgrader.
 
-\begin{defn}[Ljung-Box test]
+\begin{defn}[Ljung-Box test] \label{def:lbtest}
 Betragt \(\hyp_0 :\) data er uafhængig fordelt imod \(\hyp_1 :\) data er ikke uafhængig fordelt.
 Teststørrelse for Ljung-Box testen er givet ved
 \begin{align*}

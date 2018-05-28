@@ -3,18 +3,18 @@
 \begin{tabular}{lcccc | lccccc}
 \toprule
    \multicolumn{5}{c}{Lasso} & \multicolumn{1}{c}{ }&  \multicolumn{5}{c}{Ridge regression}  \\ \midrule
- & \(\log \del{\lambda}\) & MSE & $p$ & Adj. R$^2$ &&& \(\log \del{\lambda}\) & MSE & $p$ & Adj. R$^2$\\
+ & \(\log \del{\lambda}\) & MSE & $p$ & R$^2_{\text{adj}}$ &&& \(\log \del{\lambda}\) & MSE & $p$ & R$^2_{\text{adj}}$\\
  $\lambda_{\min}$ &$-6.6361$& 0.0019 & 28 & 94.28\% &&  $\boldsymbol{\lambda_{\min}}$ &  $\mathbf{-4.3800}$ &   $\mathbf{0.0045} $&  $\mathbf{126}$ & $ \mathbf{86.56 \% }$ \\ 
  $\boldsymbol{\lambda}_{\textbf{1sd}}$ & $\mathbf{-5.7057}$ & $\mathbf{0.0020} $ & $\mathbf{14}$ &$\textbf{ 93.81} \boldsymbol{\%}$ && $\lambda_{ \text{1sd}}$& $-4.1939$ & 0.0047 & 126 &  85.70\%  \\ \bottomrule \toprule
 \multicolumn{5}{c}{Group lasso}  &&  \multicolumn{5}{c}{Adap. lasso m. OLS vægte}  \\ \midrule
-& \(\log \del{\lambda}\) & MSE &$ p $ &Adj. R$^2$ &&& \(\log \del{\lambda}\) & MSE & $p$ & Adj. R$^2$ \\
+& \(\log \del{\lambda}\) & MSE &$ p $ &R$^2_{\text{adj}}$&&& \(\log \del{\lambda}\) & MSE & $p$ & R$^2_{\text{adj}}$ \\
 $\lambda_{\min}$& $-8.2644$ & 0.0022  & 126 & 93.23\% && $\boldsymbol{\lambda_{\min}}$  & $\mathbf{-2.0630}$ &$ \mathbf{0.0018}$ & $\mathbf{2}$ & $\textbf{94.27} \%$ \\
   $\boldsymbol{\lambda}_{\textbf{1sd}}$  & $\mathbf{-7.6365}$ &$ \mathbf{0.0023}$ & $\mathbf{119}$ &$ \textbf{92.60} \%$ &&  $\lambda_{1\text{sd}}$ & $-0.3884$ & 0.0019 & 2 &  93.93\%\\  \bottomrule 
   \toprule
   \multicolumn{5}{c}{Adap. lasso m. lasso vægte}  \\ \cmidrule{1-5}
-& \(\log \del{\lambda}\) & MSE & $p$ & Adj. R$^2$\\
+& \(\log \del{\lambda}\) & MSE & $p$ & R$^2_{\text{adj}}$\\
 $\boldsymbol{\lambda_{\min}}$   &  $ \mathbf{-2.3674}$ & $ \mathbf{0.0018} $& $ \mathbf{2}$ &   $\textbf{94.28} \%$ \\
 $\lambda_{1\text{sd}}$  & $-0.2276$ & 0.0019 & 2 & 93.92\%\\ \cmidrule{1-5}
  \end{tabular}
-\caption{Logaritmen af $\lambda_{min}$ og $\lambda_{1\text{sd}}$, gennemsnitlig krydsvalideringsfejl, som er målt i MSE, antallet af paramete og adjusted R$^2$ for lasso og dens generaliseringer. De valgte tuning parameter for hver metode er markeret med tykt.} \label{tab:cv_tab}
+\caption{Logaritmen af $\lambda_{min}$ og $\lambda_{1\text{sd}}$, gennemsnitlig krydsvalideringsfejl, som er målt i MSE, antallet af parametre og adjusted R$^2$ for lasso og dens generaliseringer. De valgte tuning parameter for hver metode er markeret med tykt.} \label{tab:cv_tab}
 \end{table}

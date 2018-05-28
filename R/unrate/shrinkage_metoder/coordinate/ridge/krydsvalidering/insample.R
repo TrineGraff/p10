@@ -43,6 +43,6 @@ Box.test(res^2, lag = 10, "Ljung-Box")
 
 adj.r.2_min = adj.r.2(y_train, x_train, beta_hat )
 
-coef_1sd = as.vector(coef(ridge_fit, s = ridge_cv$lambda.min)) %>% .[-1]
+coef_1sd = as.vector(coef(ridge_fit, s = ridge_cv$lambda.1se)) %>% .[-1]
 adj.r.2(y_train, x_train, coef_1sd )
 

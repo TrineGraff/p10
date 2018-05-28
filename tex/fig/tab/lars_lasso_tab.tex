@@ -1,11 +1,11 @@
 \begin{table}
 \center
-\begin{tabular}{lcccc | lcccc}
+\begin{tabular}{lccccc | lccccc}
 \toprule
- \multicolumn{4}{c}{LARS} & \multicolumn{1}{c}{ }&   \multicolumn{4}{c}{LARS med lasso modifikation}  \\ \midrule
-& $f$ & MSE & $p$ && & $f$ & MSE & $p$ \\
-$f_{\text{min}}$ & $0.2753$ &  0.0019 & 27 && \(f_{\min}\) &  0.2626 & 0.0019 & 21   \\
-$\boldsymbol{f}_{\textbf{1sd}}$ & $\textbf{0.2542} $ & \textbf{0.0019} & \textbf{19} &&$\boldsymbol{f}_{\textbf{1sd}}$ & \textbf{0.2424} & \textbf{0.0019} & \textbf{13 } \\ \bottomrule
+ \multicolumn{5}{c}{LARS} & \multicolumn{1}{c}{ }&   \multicolumn{5}{c}{LARS med lasso modifikation}  \\ \midrule
+& Værdi & MSE & $p$ &R$^2_{\text{adj}}$ && & Værdi & MSE & $p$ & R$^2_{\text{adj}}$\\
+$f_{\text{min}}$ & $0.2753$ &  0.0019 & 27 &94.24\% & & \(f_{\min}\) &  0.2626 & 0.0019 & 21  & 94.25\% \\
+$\boldsymbol{f}_{\textbf{1sd}}$ & $\textbf{0.2542} $ & \textbf{0.0019} & \textbf{19} & \textbf{93.76}\%&&$\boldsymbol{f}_{\textbf{1sd}}$ & \textbf{0.2424} & \textbf{0.0019} & \textbf{13 } & \textbf{93.64}\% \\ \bottomrule
  \end{tabular}
-\caption{Værdien af $f_{min}$ og $f_{1\text{sd}}$, gennemsnitlig krydsvalideringsfejl, som er målt i MSE, og antallet af parameter. De valgte tuning parameter for hver metode er markeret med tykt.} \label{tab:lars_lasso_tab}
+\caption{Værdien af $f_{min}$ og $f_{1\text{sd}}$, gennemsnitlig krydsvalideringsfejl, som er målt i MSE, antallet af parameter og adjusted R$^2$ for LARS uden og med modifikation. De valgte tuning parameter for hver metode er markeret med tykt.} \label{tab:lars_lasso_tab}
 \end{table}

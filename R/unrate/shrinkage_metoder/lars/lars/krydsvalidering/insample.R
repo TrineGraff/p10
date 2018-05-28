@@ -3,6 +3,7 @@ source("package.R")
 source("parm.R")
 source("shrinkage_metoder/res_plot.R")
 source("shrinkage_metoder/lars/getmin.R")
+source("shrinkage_metoder/adj.r.2.R")
 set.seed(1)
 
 lars_cv = cv.lars(x_train, y_train, type = "lar", intercept = FALSE, 
@@ -55,7 +56,7 @@ data.frame(
   #fraction fordi vi har L1 norm af vektoren (se plot)
 )
 
-beta_hat = as.vector(coef(lars_fit, s = getmin_lars$lambda.1se, mode = "step"))
+beta_hat = as.vector(coef(lars_fit, s = f[20], mode = "fraction"))
 fit = x_train %*% beta_hat
 
 
@@ -79,13 +80,10 @@ Box.test(res, lag = 10, "Ljung-Box")
 
 # Adj. R ------------------------------------------------------------------
 
-SS.res = sum((y_train - x_train %*% beta_hat)^2)
-SS.tot = sum((y_train - mean(y_train))^2)
-n = length(y_train)
-p = parm(beta_hat)
-R.sqrd = 1 - (SS.res / SS.tot)
-adj.R.sqrt = 1 - (1 - R.sqrd) * ((n - 1) / (n - p - 1)) 
-adj.R.sqrt * 100
+adj.r.2_1sd = adj.r.2(y_train, x_train, beta_hat)
+
+beta_hat_min = as.vector(coef(lars_fit, s = f[28], mode = "fraction"))
+adj.r.2_min = adj.r.2(y_train, x_train, beta_hat_min)
 
 # Koefficienter -----------------------------------------------------------
 b_hat = coef(lars_fit, s = getmin_lars$lambda.1se, mode = "step")

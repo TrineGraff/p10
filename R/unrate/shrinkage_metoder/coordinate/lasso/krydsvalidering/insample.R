@@ -45,7 +45,9 @@ adj.r.2_1sd = adj.r.2(y_train, x_train, beta_hat )
 
 coef_min = as.vector(coef(lasso_fit, s = lasso_cv$lambda.min)) %>% .[-1]
 adj.r.2(y_train, x_train, coef_min)
-
+lm = lm(y_train ~ 0 +x_train[,idx -1])
+summary(lm)
+0.9396 
 # Koefficienter -----------------------------------------------------------
 coef_hat = coef(lasso_fit, s = lasso_cv$lambda.1se)
 idx_hat = which(coef_hat != 0) 

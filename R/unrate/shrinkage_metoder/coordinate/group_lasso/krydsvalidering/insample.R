@@ -2,6 +2,8 @@ source("data_unrate.R")
 source("package.R")
 source("parm.R")
 source("shrinkage_metoder/res_plot.R")
+source("shrinkage_metoder/adj.r.2.R")
+
 set.seed(1)
 
 grp <- c(1, 1, rep(4, 3), rep(1, 14), rep(2, 27), rep(3, 10), rep(4, 4),
@@ -10,6 +12,11 @@ grp <- c(1, 1, rep(4, 3), rep(1, 14), rep(2, 27), rep(3, 10), rep(4, 4),
 
 gglasso_cv <- cv.gglasso(x_train, y_train, group = grp, nfold = 10, intercept = FALSE, loss = "ls" )
 gglasso_fit = gglasso(x_train, y_train, group = grp, intercept = FALSE, loss = "ls", dfmax = 8)
+
+
+data.frame(c(1,grp),coef(gglasso_fit, s = gglasso_cv$lambda.1se))
+
+
 
 plot(gglasso_fit, xlim = c(-7, -5), ylim = c(-0.001, 0.001))
 
@@ -46,13 +53,11 @@ Box.test(res^2, lag = 10, "Ljung-Box")
 
 # Adj. R ------------------------------------------------------------------
 
-SS.res = sum((y_train - x_train %*% beta_hat)^2)
-SS.tot = sum((y_train - mean(y_train))^2)
-n = length(y_train)
-p = parm(beta_hat)
-R.sqrd = 1 - (SS.res / SS.tot)
-adj.R.sqrt = 1 - (1 - R.sqrd) * ((n - 1) / (n - p - 1)) 
-adj.R.sqrt * 100
+adj.r.2_1sd = adj.r.2(y_train, x_train, beta_hat )
+
+coef_min = as.vector(coef(gglasso_fit, s = gglasso_cv$lambda.min)) %>% .[-1]
+adj.r.2(y_train, x_train, coef_min)
+
 
 # Koefficienter -----------------------------------------------------------
 

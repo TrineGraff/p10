@@ -14,3 +14,6 @@ lambda <- lasso.best_lambda * n
 beta = coef(lasso.model, s = lambda/n)[-1]
 
 out_glm <- fixedLassoInf(X.train, y.train, beta, lambda, intercept = FALSE, alpha = 0.1)
+
+
+?fixedLassoInf

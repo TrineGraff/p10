@@ -33,7 +33,6 @@ lars_lasso_bic = read.csv(file = "results/fc_lars_lasso_bic.csv")%>% .$x
 diffs <- data.frame(ar4 - y_test,
                     faktor_ic1  - y_test,
                     faktor_ic2  - y_test,
-                    faktor_ic3 - y_test,
                     lasso_kryds - y_test,
                     lasso_bic - y_test,
                     ridge_kryds  - y_test,
@@ -70,3 +69,4 @@ for (ln in names(loss)) {
 saveRDS(res, file = "mcs90.rds")
 
 
+?MCSprocedure

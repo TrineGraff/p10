@@ -6,7 +6,6 @@ ar4 = read.csv(file = "results/fc_ar4.csv")
 
 faktor_ic1 = read.csv(file = "results/fc_faktor_ic1.csv")
 faktor_ic2 = read.csv(file = "results/fc_faktor_ic2.csv")
-faktor_ic3 = read.csv(file = "results/fc_faktor_ic3.csv")
 
 lasso_kryds = read.csv(file = "results/fc_lasso_kryds.csv")
 lasso_bic = read.csv(file = "results/fc_lasso_bic.csv")
@@ -42,7 +41,7 @@ mean(abs(diffs$ar4...2....y.test))
 cummean(abs(diffs$ar4...2....y.test))
 
 MSE_rol  = function(error) {
-  (cummean(abs(error)))
+  (cummean((error)^2))
 }
 
 AR4 <- MSE_rol(diffs$ar4...2....y.test)
@@ -101,5 +100,4 @@ ggplot(df, aes(x = dato)) +
   xlab(" ") +
   ylab("Ratio") + labs(color='Models') +
   theme(legend.title=element_blank())
-
 

@@ -74,6 +74,26 @@ y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \dots + \phi_p y_{t-p} + \omega_t, \qqua
 hvor $y_t$ er stationær og $\phi_1 , \phi_2, \dots, \phi_p $ er konstanter  $\del{ \phi_p \neq 0}$ og $\omega_t \sim iid\del{0, \sigma_\omega^2}$, hvis ikke andet er angivet.  
 \end{defn}
 
+\begin{defn}[Jarque-Bera test]
+Betragt \(\hyp_0: \) data er normalfordelt imod \(\hyp_1:\) data er ikke normalfordelt.
+Teststørrelsen for Jarque-Bera testen er givet ved
+\begin{align*}
+\text{JB} = \frac{n-p+1}{6} \del{S^2 + \frac{1}{4} \del{C-3}^2},
+\end{align*}
+hvor \(n\) er antallet af observationer, \(S\) er den empiriske skewness, \(C\) er den empiriske kurtosis og \(p\) er antallet af prædiktorer.
+\end{defn}
+Under \(\hyp_0\) følger teststørrelsen \(\text{JB}\) en \(\chi_{\del{2}}^2\)-fordeling.
+For et signifikant niveau \(\alpha\), afvises hypotesen hvis \(\text{JB} > \chi_{1-\alpha,2}^2\), hvor \(\chi_{1-\alpha,2}^2\) er en \(1 - \alpha\) kvantil af \(\chi^2\)-fordelingen med \(2\) frihedsgrader.
 
+\begin{defn}[Ljung-Box test]
+Betragt \(\hyp_0 :\) data er uafhængig fordelt imod \(\hyp_1 :\) data er ikke uafhængig fordelt.
+Teststørrelse for Ljung-Box testen er givet ved
+\begin{align*}
+Q = n \del{n +2} \sum_{k=1}^h \frac{\widehat{\rho}_k^2}{n-k},
+\end{align*}
+hvor \(n\) er antallet af observationer, \(\widehat{\rho}_k^2\) er den empiriske autokorrelation i lag \(k\) og \(h\) er antallet af lags som testes.
+\end{defn}
+Under \(\hyp_0\) følger teststørrelsen \(Q\) en \(\chi_{\del{h}}^2\)-fordeling.
+For et signifikant niveau \(\alpha\), afvises hypotesen hvis \(Q > \chi_{1-\alpha,h}^2\), hvor \(\chi_{1-\alpha,h}^2\) er en \(1 - \alpha\) kvantil af \(\chi^2\)-fordelingen med \(h\) frihedsgrader.
 
 

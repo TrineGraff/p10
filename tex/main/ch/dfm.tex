@@ -84,7 +84,7 @@ som er ækvivalent med
 \end{align*}
 Løsningen til dette problem findes ved at sætte \(\widehat{\tLambda}\) lig med de skalerede egenvektorer af \(\X^T \X\), svarende til dens \(r\) største egenværdier.
 Dvs \(\hat{\tLambda} = \sqrt{n} \cdot \boldsymbol{\nu}_r\), hvor \(\boldsymbol{\nu}_r\) er egenvektorerne svarende til de \(r\) største egenværdier af \(\X^T \X\).
-Hvorefter vi kan udregne \(\widehat{\tF} = p^{-1} \X \widehat{\tLambda}\), som altså kræver egenvektorerne af \(\X^T \X\).
+Herefter vi kan udregne \(\widehat{\tF} = p^{-1} \X \widehat{\tLambda}\), som altså kræver egenvektorerne af \(\X^T \X\).
 
 %Hvis \(p > T\), kan løsningen udregnes simplere ved at koncentrere \(\tLambda\) ud istedet for \(\tF\), og da vil minimeringsproblemet \eqref{eq:dfm11} være ækvivalent med maksimeringsproblemet \\
 %\(\argmax_{\tF} \cbr{ \text{Trace} \sbr{ \tF^T \X \X^T \tF}}\) underlagt at \(T^{-1} \tF^T \tF = \mathbf{I}_r\).
@@ -109,7 +109,7 @@ Faktorerne \(\tF_t\) og \(\tF^*_t\) har samme statistiske egenskaber, og generer
 \begin{align*}
 \boldsymbol{\Sigma}_{\X \X} = \tLambda \tR \tR^T \tLambda^T + \boldsymbol{\Psi} = \tLambda^* \tLambda^{*^T} + \boldsymbol{\Psi}.
 \end{align*}
-Derfor kan faktor loadings \(\tLambda\) kun bestemmes op til en ortogonal matrix \(\tR\), hvorfor der pålægges nogle betingelser således at \(\tLambda\) entydigt kan bestemmes.
+Derfor kan faktor loadings \(\tLambda\) kun bestemmes op til en ortogonal matrix \(\tR\), hvorfor der pålægges nogle betingelser, således at \(\tLambda\) entydigt kan bestemmes.
 %derfor skal der anvendes en normalisering for entydigt at definere faktorerne.
 %Denne ikke-entydighed kan løses ved at roterer faktorerne således at faktor loadings opfylder følgende betingelser
 Nedenfor introduceres nogle modelantagelser, som er nødvendige til at identificere entydige faktorer.

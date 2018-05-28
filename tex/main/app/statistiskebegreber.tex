@@ -89,11 +89,11 @@ For et signifikant niveau \(\alpha\), afvises hypotesen hvis \(\text{JB} > \chi_
 Betragt \(\hyp_0 :\) data er uafhængig fordelt imod \(\hyp_1 :\) data er ikke uafhængig fordelt.
 Teststørrelse for Ljung-Box testen er givet ved
 \begin{align*}
-Q = n \del{n +2} \sum_{k=1}^h \frac{\widehat{\rho}_k^2}{n-k},
+\text{LB} = n \del{n +2} \sum_{k=1}^h \frac{\widehat{\rho}_k^2}{n-k},
 \end{align*}
 hvor \(n\) er antallet af observationer, \(\widehat{\rho}_k^2\) er den empiriske autokorrelation i lag \(k\) og \(h\) er antallet af lags som testes.
 \end{defn}
-Under \(\hyp_0\) følger teststørrelsen \(Q\) en \(\chi_{\del{h}}^2\)-fordeling.
-For et signifikant niveau \(\alpha\), afvises hypotesen hvis \(Q > \chi_{1-\alpha,h}^2\), hvor \(\chi_{1-\alpha,h}^2\) er en \(1 - \alpha\) kvantil af \(\chi^2\)-fordelingen med \(h\) frihedsgrader.
+Under \(\hyp_0\) følger teststørrelsen \(\text{LB}\) en \(\chi_{\del{h}}^2\)-fordeling.
+For et signifikant niveau \(\alpha\), afvises hypotesen hvis \(\text{LB} > \chi_{1-\alpha,h}^2\), hvor \(\chi_{1-\alpha,h}^2\) er en \(1 - \alpha\) kvantil af \(\chi^2\)-fordelingen med \(h\) frihedsgrader.
 
 

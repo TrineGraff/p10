@@ -4,7 +4,7 @@
 \textit{The Least Absolute Shrinkage Selection Operator}, som forkortes lasso, blev introduceret i \citep{lasso}. 
 Lasso finder løsningen til optimeringsproblemet
 \begin{align}
-\hat{\tbeta}^\text{lasso} = \argmin_{\tbeta} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t, \label{eq:2.3}
+\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t, \label{eq:2.3}
 \end{align} 
 hvor vi bemærker, at betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt som en \(\ell_1\)-norm betingelse $\Vert \tbeta \Vert_1 \leq t$.
 Værdien af \(t\) begrænser summen af de absolutte værdier af parameter estimaterne og kontrollerer kompleksiteten af modellen. 
@@ -12,12 +12,12 @@ En lav værdi af \(t\) vil begrænse antallet af parametre, hvilket fører til e
 
 Lasso problemet kan omskrives til et Lagrange problem
 \begin{align}
-\hat{\tbeta}^\text{lasso} = \argmin_{\tbeta} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \tbeta \Vert_1}, \label{eq:2.5}
+\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \tbeta \Vert_1}, \label{eq:2.5}
 \end{align}
 hvor $\lambda \geq 0$ er en såkaldt strafparameter. 
 Der er en en-til-en korrespondance mellem det betingede problem \eqref{eq:2.3} og Lagrange problemet \eqref{eq:2.5}. 
 For hver værdi af \(t\) hvor \(\Vert \tbeta \Vert_1 \leq t\) er opfyldt, da findes en tilhørende værdi af $\lambda$ som giver den samme løsning for \eqref{eq:2.5}.
-Omvendt gælder der, at løsningen $\hat{\tbeta}_\lambda$ til \eqref{eq:2.5} løser grænseproblemet med $t=\Vert \hat{\tbeta}_\lambda \Vert_1$.
+Omvendt gælder der, at løsningen $\widehat{\tbeta}_\lambda$ til \eqref{eq:2.5} løser grænseproblemet med $t=\Vert \widehat{\tbeta}_\lambda \Vert_1$.
 Værdien af \(\lambda\) skal specificeres ved en ekstern procedure kaldet \textit{krydsvalidering}, som vil blive diskuteret i kapitel \ref{ch:metoder}.
 
 I andre beskrivelser af lasso estimatoren kan en faktor indsættes foran summeringen \eqref{eq:2.3} eller den euklidiske norm \eqref{eq:2.5} givet ved \(\frac{1}{2n}\) eller \(\frac{1}{2}\).
@@ -204,31 +204,24 @@ Den beskrevne algoritme svarer til metoden \textit{cyclical coordinate descent},
 Under milde regularitetsbetingelser konvergerer løsningen til et global optimum.
 Fra opdateringen \eqref{eq:2.14} ser vi, at algoritmen foretager en univariat regression af den partial residual på hver prædiktor, cycling gennem prædiktorerne indtil konvergens.
 
-Hvis prædiktorerne er ortogonale, dvs $\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{x}_k \right\rangle = 0$ for alle $j \neq k$, da reduceres opdateringen \eqref{eq:2.14} til
-\begin{align}
-\widehat{\beta}_j = S_\frac{\lambda}{2n} \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle}, \label{eq:ortogonal_lasso}
-\end{align}
-dermed er $\widehat{\beta}_j$ blot soft-thresholded version af det univariate mindste kvadraters estimat af $\mathbf{y}$ regresseret imod $\mathbf{x}_j$, som bevises i ---. Således har vi en lukket løsning og ingen iterationer er påkrævet.
+%Hvis prædiktorerne er ortogonale, dvs $\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{x}_k \right\rangle = 0$ for alle $j \neq k$, da reduceres opdateringen \eqref{eq:2.14} til
+%\begin{align}
+%\widehat{\beta}_j = S_\frac{\lambda}{2n} \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle}, \label{eq:ortogonal_lasso}
+%\end{align}
+%dermed er $\widehat{\beta}_j$ blot soft-thresholded version af det univariate mindste kvadraters estimat af $\mathbf{y}$ regresseret imod $\mathbf{x}_j$, som bevises i ---. 
 
-Ofte er vi interesseret i, at finde lasso løsningen for en mængde af \(\lambda\) værdier og ikke blot én fast \(\lambda\).
-Metoden \textit{pathwise coordinate descent} kan anvendes hertil.
-Man starter med en værdi af \(\lambda\), som præcis er stor nok til, at den optimale løsning er vektor bestående af \(0\).
-Denne værdi er lig \(\lambda_{\max}=\max_j \left\vert \frac{1}{2} \left\langle \mathbf{x}_j, \y \right\rangle \right\vert\).
-Da kan vi mindske \(\lambda\) lidt og køre coordinate descent indtil konvergens.
-Vi mindsker \(\lambda\) igen og anvende den tidligere løsning som en warm start, da kan vi køre coordinate descent indtil konvergens.
-Hermed kan vi udregne løsningen over en grid af \(\lambda\) værdier. \\
-
-Coordinate descent er særlig hurtig til at løse lasso problemet, da den koordinatvis minimizers er tilgængelig \eqref{eq:2.14}, og dermed er en iterativ søgning langs hver koordinat ikke nødvendig.
+Coordinate descent er særlig hurtig til at løse lasso problemet, da den koordinatvise minimizers er tilgængelig \eqref{eq:2.14}, og dermed er en iterativ søgning langs hver koordinat ikke nødvendig.
 Derudover udnytter coordinat descent at lasso giver sparse løsninger.
 For tilstrækkelige høje \(\lambda\) værdier er de fleste koefficienter lig $0$.
 
-\textit{Homotopy metoder} er en alternativ teknisk til at løse lasso problemet. Disse producerer en helt sti af løsninger i en frekventiel sekvens, ved at starte med nul.
-Denne sti er faktisk piecewise lineær.
-Algoritmen kaldet \textit{least angle regression} (LARS) er en homotopy metode som effektivt konstruerer piecewise lineære stier.
+\textit{Homotopy metoder} er en alternativ teknisk til at løse lasso problemet. 
+Disse producerer sekventielt hele stien af løsninger ved at starte med nul.
+Stien er stykvis lineær.
+Algoritmen kaldet \textit{least angle regression} (LARS) er en homotopy metode, som effektivt konstruerer den stykvise lineære sti.
 En mere teoretisk gennemgang af coordinate descent og LARS algoritmen er givet i kapitel \ref{kap:optimeringsmetoder}.
 %
 \subsection{Frihedsgrader}
-Antag vi har \(p\) prædiktorer, og fitter en lineær regressions model udfra \(k\) af disse prædiktorer, hvor \(k <p\).
+Antag vi har \(p\) prædiktorer, og fitter en lineær regressionsmodel udfra \(k\) af disse prædiktorer, hvor \(k <p\).
 Hvis disse \(k\) prædiktorer vælges uafhængigt af responsvariablen, da kan man sige, at fitting proceduren anvender \(k\) frihedsgrader.
 Dette svarer løst sagt til, at teststørrelsen for at teste nulhypotesen om at alle \(k\) koefficienter er 0, har en \(\chi^2\) fordeling med \(k\) frihedsgrader.
 

@@ -1,4 +1,20 @@
 \section{Coordinate descent}
+Ofte er vi interesseret i, at finde lasso løsningen for en mængde af \(\lambda\) værdier og ikke blot én fast \(\lambda\).
+Metoden \textit{pathwise coordinate descent} kan anvendes hertil.
+Man starter med en værdi af \(\lambda\), som præcis er stor nok til, at den optimale løsning er vektor bestående af \(0\).
+Denne værdi er lig \(\lambda_{\max}=\max_j \left\vert \frac{1}{2} \left\langle \mathbf{x}_j, \y \right\rangle \right\vert\).
+Da kan vi mindske \(\lambda\) lidt og køre coordinate descent indtil konvergens.
+Vi mindsker \(\lambda\) igen og anvende den tidligere løsning som en warm start, da kan vi køre coordinate descent indtil konvergens.
+Hermed kan vi udregne løsningen over en grid af \(\lambda\) værdier. \\
+
+
+
+
+
+
+
+
+
 %Ideen bag coordinat descent er, at optimere en target funktion mht én parameter mens de resterende parametre fastholdes. 
 %Vi gennemløber alle parametre iterativ indtil konvergens.
 %Coordinate descent er specielt attraktiv for problemer som lasso, som har en simpel lukket løsning for en dimension, men ikke for flere dimensioner.

@@ -59,7 +59,7 @@ r = ggplot(df_r, aes(log(df_r$ridge_cv.lambda),df_r$ridge_cv.cvm )) +
   labs(x = expression(log(lambda)), y = "MSE", color = "") + 
   geom_vline(aes(xintercept= log(ridge_cv$lambda.min), col = "blue"), linetype="dotted") +
   geom_vline(aes(xintercept= log(ridge_cv$lambda.1se), col = "brown"), linetype="dotted") +
-  ggtitle("Ridge") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
+  ggtitle("Ridge regression") + scale_color_manual(labels = c(expression(lambda[min]), expression(lambda[1][sd])), values = c("blue", "brown"))
 
 df_grp = data.frame(gglasso_cv$lambda, gglasso_cv$cvm, gglasso_cv$cvsd)
 

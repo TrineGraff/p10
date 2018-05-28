@@ -17,7 +17,7 @@ For at give et bedre overblik giver tabel \ref{tab:cv_tab} værdierne af $\log \
 
 For lasso ses en markant reducering i antallet af parametre for $\lambda_{1\text{sd}}$ i forhold til $\lambda_{\min}$, dette øger ikke krydsvalideringsfejlen eller adjusted R$^2$ betydeligt, og derfor anvendes $\widehat{\lambda}_{1\text{sd}}$ som tuning parameter for lasso. 
 %Ridge regression mindsker blot koefficienter, og derfor vælges alle variable. 
-Vi ser også, at ridge regression har den mindste værdi af adjusted R$^2$, men modellen mindsker også blot koefficienterne, og alle variablerne bliver valgt. 
+Vi ser også, at ridge regression har den mindste værdi af adjusted R$^2$, men modellen mindsker også blot koefficienterne, så alle variablerne bliver valgt. 
 For ridge regression vælger vi, derfor $\widehat{\lambda}_{\min}$ som tuning parameter, da den har mindst krydsvalideringsfejl.
 For group lasso vælges lidt overraskende alle parametre med \(\lambda_\text{min}\), mens antallet af parametre reduceres med 7 for $\lambda_{1\text{sd}}$. Disse 7 variable tilhører alle gruppe 5.
 Vi lader $\widehat{\lambda}_{1\text{sd}}$ være den optimale tuning parameter for group lasso, da den har det færreste antal parametre. 

@@ -1,10 +1,12 @@
-\chapter{Post-selection inferens for lasso} \label{kap:statistisk_inferens}
+\chapter{Inferens for lasso} \label{kap:statistisk_inferens}
 Klassisk inferens kan ikke anvendes til adaptive procedurer som lasso, da udvælgelsen af variable er stokastisk.
-Istedet betragtes post-selection inferens, hvor vi udfører inferens efter udvælgelsen variable for adaptive metoder.
+Istedet betragtes post-selection inferens, hvor vi udfører inferens efter udvælgelsen af variable.
 
-Foruden boostrap vil vi i den empiriske del betragte kovarians testen samt TG testen.
+Foruden bootstrap vil vi i den empiriske del betragte kovarians testen samt TG testen.
+Kovarians testen anvendes for LARS algoritmen med lasso modifikation, mens TG testen anvendes for lasso modellen med et fast \(\lambda\) og LARS algoritmen uden lasso modifikation.
 Teorien omkring post-selection inferens er udviklet i nyere tid og er stadig under udvikling.
 \Rlang-pakkerne \texttt{covTest} og \texttt{selectiveInference} understøtter testene, som beskrives i dette kapitel.
+
 \input{main/ch/sub/covarians_test}
 \input{main/ch/sub/post_selection_inferens}
 

@@ -41,9 +41,15 @@ Under nulhypotesen at lasso modellen med den aktive mængde \(\A_{k-1}\) indehol
 T_k^\text{cov} \overset{d}{\rightarrow} \text{Exp}\del{1}.
 \end{align*}
 Hvis \(\sigma^2\) er ukendt, kan den estimeres under den fulde model \(\widehat{\sigma}^2 = \frac{1}{n-p} \text{SSR}_p\). 
+<<<<<<< Updated upstream
 Dette indsættes i \eqref{eq:6.5}, og eksponential testen bliver en eksakt \(F_{2,n-p}\) test. \\
 %
 \begin{eks} \\
+=======
+Dette indsættes i \eqref{eq:6.5}, og eksponential testen bliver en eksakt \(F_{2,n-p}\) test.
+
+\begin{eks}
+>>>>>>> Stashed changes
 For crime data ønsker vi at udregne \(p\)-værdien for prædiktoren \texttt{hs}, som optages i den aktive mængde i tredje step af LARS algoritmen (se figur \ref{fig:crime_covTest}). 
 Da skal vi udregne kovariansen i \(\lambda_4\), der er givet ved \(\left\langle \y, \X \widehat{\tbeta}^\text{lasso} \del{\lambda_4} \right\rangle\).
 Herefter fjernes prædiktoren \texttt{hs}, hvilket giver den aktive mængde \(\A_{2}\), vi refitter i \(\lambda_4\) og udregner igen kovariansen i \(\lambda_4\), der er givet ved \(\left\langle  \y, \X_{\A_{2}} \tilde{\tbeta}^\text{lasso}_{\mathcal{A}_{2}} \del{\lambda_{4}} \right\rangle\).
@@ -54,7 +60,11 @@ T_3^\text{cov} = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \widehat{\tbeta}^\
 %
 \begin{figure}[H]
 \centering
+<<<<<<< Updated upstream
 \scalebox{0.6}{\includegraphics{fig/img/crime_covTest.pdf}}
+=======
+\scalebox{0.5}{\includegraphics{fig/img/crime_covTest.pdf}}
+>>>>>>> Stashed changes
 \caption{Illustration af kovarians testen for prædiktoren \texttt{hs}.} \label{fig:crime_covTest}
 \end{figure}
 %

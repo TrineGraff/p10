@@ -30,10 +30,10 @@ Sætning \ref{thm:slutsky} tillader at finde grænsefordelingen af $X_n$ og sand
 
 
 \begin{defn}[General position] \label{defn:general_position}
-Kolonnerne \(\mathbf{X}_1, \ldots, \mathbf{X}_p\) siges at være i generel position hvis the affine span af enhver \(k+1\) vektorer \(s_1 \X_1, \ldots, s_{k+1} \X_{k+1}\) ikke indeholder ethvert element af mængden \(\cbr{\pm \X_i : \ i \neq i_1, \ldots, i_{k+1}}\) for ethvert fortegn \(s_1, \ldots, s_{k+1} \in \cbr{-1,1}\), for \(k < \min \cbr{n,p}\). 
+Kolonnerne \(\mathbf{X}_1, \ldots, \mathbf{X}_p\) siges at være i generel position, hvis det affine spænd af enhver \(k+1\) vektorer \(s_1 \X_1, \ldots, s_{k+1} \X_{k+1}\) ikke indeholder ethvert element af mængden \(\cbr{\pm \X_i : \ i \neq i_1, \ldots, i_{k+1}}\) for ethvert fortegn \(s_1, \ldots, s_{k+1} \in \cbr{-1,1}\), for \(k < \min \cbr{n,p}\). 
 \end{defn}
 Ovenstående betingelse er svag og gælder blandt andet når indgangene af \(\X\) kommer af en kontinuert sandsynlighedsfordeling.
-At kolonnerne af model matrix er i generel position sikrer at LARS og lasso stierne er entydig, \citep{lasso_unique}.
+At kolonnerne af model matrix er i generel position, sikrer at LARS og lasso stierne er entydige \citep{lasso_unique}.
 
 \begin{defn}[Konveks mængde] \label{defn:konveksm}
 En mængde \(\mathcal{C} \subseteq \R^p\) er konveks, hvis der for alle \(\tbeta, \tbeta' \in \mathcal{C}\) og alle skalarer \(s \in \sbr{0,1}\) gælder, at alle vektorer på formen

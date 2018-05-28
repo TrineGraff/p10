@@ -1,20 +1,4 @@
 \section{Coordinate descent}
-Ofte er vi interesseret i, at finde lasso løsningen for en mængde af \(\lambda\) værdier og ikke blot én fast \(\lambda\).
-Metoden \textit{pathwise coordinate descent} kan anvendes hertil.
-Man starter med en værdi af \(\lambda\), som præcis er stor nok til, at den optimale løsning er vektor bestående af \(0\).
-Denne værdi er lig \(\lambda_{\max}=\max_j \left\vert \frac{1}{2} \left\langle \mathbf{x}_j, \y \right\rangle \right\vert\).
-Da kan vi mindske \(\lambda\) lidt og køre coordinate descent indtil konvergens.
-Vi mindsker \(\lambda\) igen og anvende den tidligere løsning som en warm start, da kan vi køre coordinate descent indtil konvergens.
-Hermed kan vi udregne løsningen over en grid af \(\lambda\) værdier. \\
-
-
-
-
-
-
-
-
-
 %Ideen bag coordinat descent er, at optimere en target funktion mht én parameter mens de resterende parametre fastholdes. 
 %Vi gennemløber alle parametre iterativ indtil konvergens.
 %Coordinate descent er specielt attraktiv for problemer som lasso, som har en simpel lukket løsning for en dimension, men ikke for flere dimensioner.
@@ -60,29 +44,28 @@ Hvis den ikke-differentiable komponent \(h\) ikke kan adskilles, da kan det ikke
 \begin{alg} [Coordinate descent for lasso problemet]
 \begin{enumerate}
 \item Standardisere prædiktorerne \(\x_1, \ldots, \x_p\) og centre responsvariablen.
-Definer et gitter af værdier \(\lambda_0 > \lambda_1 > \ldots > \lambda_L\), hvor \(\lambda_0\) vælges, således at \(\hat{\tbeta} \del{\lambda_0} =\mathbf{0}\).
+Definer en følge af værdier \(\lambda_0 > \lambda_1 > \ldots > \lambda_L\), hvor \(\lambda_0\) vælges, således at \(\widehat{\tbeta}^\text{lasso} \del{\lambda_0} =\mathbf{0}\).
 \item For hvert \(\lambda \in \cbr{\lambda_0, \ldots, \lambda_L}\), gentages følgende steps over \(j = 1, \ldots, p\) indtil konvergens:
 \begin{itemize}
 \item Opskriv lasso problemet \eqref{eq:2.5}
 \begin{align*}
-\sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \hat{\beta}_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert
+\sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{lasso}_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert
 \end{align*}
-hvor \(\hat{\beta}_k \del{\lambda}\) er det nuværende estimat for \(\beta_k\) for et given \(\lambda\), hvor \(k \neq j\).
-\item Udregn de partielle residualer: \(r_{i}^{(j)} = y_i - \sum_{k \neq j} x_{ik} \hat{\beta}_k \del{\lambda}\) for alle \(i\)
+hvor \(\widehat{\beta}^\text{lasso}_k \del{\lambda}\) er det nuværende estimat for \(\beta_k\) for et given \(\lambda\), hvor \(k \neq j\).
+\item Udregn de partielle residualer: \(r_{i}^{(j)} = y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{lasso}_k \del{\lambda}\) for alle \(i\)
 \item Udregn koefficienten af en simpel lineær regression af det partial residual på \(j\)'te prædiktor: \(\tilde{\beta}_j = \frac{1}{n} \sum_{i=1}^n r_{i}^{(j)} x_{ij}\) 
-\item Opdater det nuværende estimat \(\hat{\beta}_j\) udfra soft-thresholding operatoren
+\item Opdater det nuværende estimat \(\widehat{\beta}^\text{lasso}_j\) udfra soft-thresholding operatoren
 \begin{align}
-\hat{\beta}_j \del{\lambda}= S_\lambda \del{\tilde{\beta}_j}. \label{eq:update_coordinate}
+\widehat{\beta}^\text{lasso}_j \del{\lambda}= S_{\frac{\lambda}{2n}} \del{\tilde{\beta}_j}. \label{eq:update_coordinate}
 \end{align}
 \end{itemize}
 \end{enumerate}
 \end{alg}
 %
-Løsningerne udregnes for en aftagende følge af værdier \(\cbr{\lambda_{\ell}}_{\ell = 0}^L\), hvor \(\lambda_0\) vælges således at \(\hat{\tbeta}^\text{lasso} \del{\lambda_0} =\mathbf{0}\). 
-Algoritmen udnytter \textit{warm start}, hvilket betyder, at \(\widehat{\beta} \del{\lambda_\ell}\) anvendes som begyndelsesværdi for løsningen \(\widehat{\beta} \del{\lambda_{\ell + 1}}\), dette fører til en mere stabil algoritme. 
-
+Løsningerne udregnes for en aftagende følge af værdier \(\cbr{\lambda_{\ell}}_{\ell = 0}^L\), hvor \(\lambda_0\) vælges således at \(\hat{\tbeta} \del{\lambda_0} =\mathbf{0}\). 
+Algoritmen udnytter \textit{warm start}, hvilket betyder, at \(\widehat{\tbeta} \del{\lambda_\ell}\) anvendes som begyndelsesværdi for løsningen \(\widehat{\tbeta} \del{\lambda_{\ell + 1}}\), dette fører til en mere stabil algoritme. 
 Når \(\widehat{\tbeta} = \mathbf{0}\), har vi af -- at \(\hat{\beta}_j\) vil forblive nul hvis \(\frac{1}{n} \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert < \lambda\). Derfor er \( \lambda_0 = \frac{1}{n} \max_j \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert\).
-Strategien er at vælge en minimum værdi \(\lambda_L = \epsilon \lambda_0\) og konstruerer en følge af \(K\) værdier af \(\lambda\) som aftager fra \(\lambda_0\) til \(\lambda_L\) på logskalaen.
+Strategien er at vælge en minimum værdi \(\lambda_L = \epsilon \lambda_0\) og konstruere en følge af \(K\) værdier af \(\lambda\) som aftager fra \(\lambda_0\) til \(\lambda_L\) på logskalaen.
 Typiske værdier er \(\epsilon = 0.001\) og \(K =100\).
 %
 %Den største værdi som betragtes er givet ved \(\lambda_0 = \frac{1}{n} \max_j \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert\), da enhver værdi større end \(\lambda_0\) vil give en tom model.
@@ -92,9 +75,17 @@ Typiske værdier er \(\epsilon = 0.001\) og \(K =100\).
 %Hvis for fordobler antallet \(L=100\) til \(2L\), vil ikke fordobles beregningstiden, da disse warm starts er meget bedre og færre iterationer kræves hver gang.
 %
 
+%Ofte er vi interesseret i, at finde lasso løsningen for en mængde af \(\lambda\) værdier og ikke blot én fast \(\lambda\).
+%Metoden \textit{pathwise coordinate descent} kan anvendes hertil.
+%Man starter med en værdi af \(\lambda\), som præcis er stor nok til, at den optimale løsning er vektor bestående af \(0\).
+%Denne værdi er lig \(\lambda_{\max}=\max_j \left\vert \frac{1}{2} \left\langle \mathbf{x}_j, \y \right\rangle \right\vert\).
+%Da kan vi mindske \(\lambda\) lidt og køre coordinate descent indtil konvergens.
+%Vi mindsker \(\lambda\) igen og anvende den tidligere løsning som en warm start, da kan vi køre coordinate descent indtil konvergens.
+%Hermed kan vi udregne løsningen over en grid af \(\lambda\) værdier. \\
+
 Coordinate descent kan være hurtigere end LARS algoritmen særligt for store problemer.
 Dette skyldes at \eqref{eq:update_coordinate} hurtigt kan opdateres som \(j\) varierer, og ofte er opdateringen at lade \(\beta_j = 0\).
 Coordinate descent algoritmen for lasso giver ikke den fulde lasso løsningsstil som LARS algoritmen, men kan bruges til at udregne lasso løsningerne for \(\Lambda\).
 
-%Den beskrevne coordinate descent algoritmen er implementeret i \texttt{R} pakken \texttt{glmnet}.
-%Koefficientstierne i figur \ref{fig:crime_koef} er f
+Den beskrevne coordinate descent algoritmen er implementeret i \Rlang-pakken \texttt{glmnet}.
+Koefficientstierne i figur \ref{fig:crime_koef} er fundet udfra denne algoritme.

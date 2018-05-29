@@ -3,35 +3,37 @@ LARS algoritmen blev introduceret i \citep{efron}.
 Først vil vi beskrive LARS algoritmen, hvorefter vi vil introducere en simpel modifikation, som fører til lasso estimater. \\[2mm]
 %
 I grove træk fungerer algoritmen som følgende. 
-Først sættes alle koefficienter lig nul, og vi finder prædiktoren som er mest korreleret med responsvariablen \(\y\), denne prædiktor betegnes \(x_{j_1}\).
+Først sættes alle koefficienter lig nul, og vi finder prædiktoren, som er mest korreleret med responsvariablen \(\y\), denne prædiktor betegnes \(x_{j_1}\).
 Der udføres en simpel lineær regression af \(\y\) på \(x_{j_1}\), hvoraf vi finder en residualvektor.
 %som herefter betragtes som responsvariablen.
 Herefter tages det størst mulige step i retningen af denne prædiktor indtil en anden prædiktor, som betegnes \(x_{j_2}\), har samme korrelation med den nuværende residual.
-Istedet for at fortsætte langs \(x_{j_1}\), fortsætter LARS i en retning som er ensvinklet mellem de to prædiktorer indtil en tredje variabel bliver den mest korreleret mængde.
+Istedet for at fortsætte langs \(x_{j_1}\) fortsætter LARS i en retning, som er ensvinklet mellem de to prædiktorer, indtil en tredje variabel bliver den mest korreleret mængde.
 LARS fortsætter da ensvinklet imellem \(x_{j_1}\), \(x_{j_2}\) og \(x_{j_3}\), dvs langs ``least angle direction'' indtil en fjerde variable medtages, osv.
 
-LARS finder estimaterne \(\widehat{\tmu} = \X \widehat{\tbeta}\), ved at tilføjes én prædiktor i hvert step til modellen, således at efter \(k\) steps er præcis \(k\) af disse \(\hat{\beta}_j\) forskellig fra nul.
+LARS finder estimaterne \(\widehat{\tmu} = \X \widehat{\tbeta}\) ved at tilføje én prædiktor til modellen i hvert step, således at præcis \(k\) estimater er forskellig fra nul efter \(k\) steps.
 
-Figur \ref{fig:lars} illustrerer algoritmen, hvor $p = 2$ og $\X = \del{\textbf{x}_1, \textbf{x}_2}$.
+Figur \ref{fig:lars} illustrerer algoritmen, hvor $p = 2$ og $\X = \del{\textbf{x}_1 \  \textbf{x}_2}$.
 I dette tilfælde afhænger de nuværende korrelationer, givet ved \(\textbf{c}\del{\boldsymbol{\widehat{\mu}}} = \X^T\del{\textbf{y} - \widehat{\boldsymbol{\mu}}}\), kun af projektionen \(\bar{\y}_2\) af \(\y\) på det lineære rum $\mathcal{L} \del{\X}$ udspændt af \(\x_1\) og \(\x_2\), dvs 
 \begin{align*}
 \textbf{c}\del{\boldsymbol{\widehat{\mu}}} =  \X^T \del{ \bar{\y}_2 - \boldsymbol{\widehat{\mu}}}.
 \end{align*}
 Algoritmen starter i $\widehat{\boldsymbol{\mu}}_0 = \textbf{0}$.
-På figur \ref{fig:lars} ses, at \(\bar{\y}_2 - \widehat{\boldsymbol{\mu}}_0\) har en mindre vinkel med \(\x_1\) end \(\x_2\), dvs \(c_1 \del{\widehat{\boldsymbol{\mu}}_0} > c_2 \del{\widehat{\boldsymbol{\mu}}_0}\).
-LARS tilføjer derfor \(\widehat{\boldsymbol{\mu}}_0\) i retningen af \(\x_1\), og vi får
+På figur \ref{fig:lars} ses, at vinklen mellem \(\bar{\y}_2 - \widehat{\boldsymbol{\mu}}_0\) og \(\x_1\) er mindre end vinklen mellem \(\bar{\y}_2 - \widehat{\boldsymbol{\mu}}_0\) og \(\x_2\) og dermed fås \(c_1 \del{\widehat{\boldsymbol{\mu}}_0} > c_2 \del{\widehat{\boldsymbol{\mu}}_0}\).
+%\(\bar{\y}_2 - \widehat{\boldsymbol{\mu}}_0\) har en mindre vinkel med \(\x_1\) end \(\x_2\), dvs \(c_1 \del{\widehat{\boldsymbol{\mu}}_0} > c_2 \del{\widehat{\boldsymbol{\mu}}_0}\).
+Derfor tilføjer LARS \(\widehat{\boldsymbol{\mu}}_0\) i retningen af \(\x_1\), og vi får
 \begin{align*}
 \widehat{\tmu}_1 = \widehat{\tmu}_0 + \widehat{\gamma}_1 \x_1,
 \end{align*}
-hvor \(\widehat{\gamma}_1\), som er stepstørrelsen, vælges således at  \(\bar{\y}_2 - \widehat{\tmu}_1\) er ligeså korreleret med \(\x_1\) som med \(\x_2\).
-Dermed halverer \(\bar{\y}_2 - \widehat{\boldsymbol{\mu}}_1\) vinklen mellem \(\x_1\) og \(\x_2\) således at \(c_1 \del{\widehat{\boldsymbol{\mu}}_1} = c_2 \del{\widehat{\boldsymbol{\mu}}_1}\).
+hvor stepstørrelsen \(\widehat{\gamma}_1\) vælges, således at korrelationen mellem \(\bar{\y}_2 - \widehat{\tmu}_1\) og \(\x_1\) er lig korrelationen mellem \(\bar{\y}_2 - \widehat{\tmu}_1\) og \(\x_2\).
+%  \(\bar{\y}_2 - \widehat{\tmu}_1\) er ligeså korreleret med \(\x_1\) som med \(\x_2\).
+Dermed halverer \(\bar{\y}_2 - \widehat{\boldsymbol{\mu}}_1\) vinklen mellem \(\x_1\) og \(\x_2\), således at \(c_1 \del{\widehat{\boldsymbol{\mu}}_1} = c_2 \del{\widehat{\boldsymbol{\mu}}_1}\).
 %
 \begin{figure}[H]
 \centering
 \scalebox{0.8}{\input{fig/lars1.tikz}}
 \caption{LARS algoritmen for \(p=2\). \(\bar{\y}_2\) er projektionen af \(\y\) på det lineære underrum \(\mathcal{L} \del{\x_1, \x_2}\).
-Med start i \(\widehat{\tmu}_0=\mathbf{0}\), har residualvektoren \(\bar{\y}_2 - \widehat{\tmu}_0\) en større korrelation med \(\x_1\) end \(\x_2\). Næste LARS estimat er \(\widehat{\tmu}_1 = \widehat{\tmu}_0 + \widehat{\gamma}_1 \x_1\), hvor \(\widehat{\gamma}_1\) vælges således at \(\bar{\y}_2 - \widehat{\tmu}_1\) halverer vinklen mellem \(\x_1\) og \(\x_2\). Da er \(\widehat{\tmu}_2 = \widehat{\tmu}_1 + \widehat{\gamma}_2 \mathbf{u}_2\), hvor \(\mathbf{u}_2\) er en enhedsvektor som ligger langs denne halveringslinje.
-Der gælder at \(\widehat{\tmu}_2 = \bar{\y}_2\) for \(p=2\), dette er ikke tilfældet for \(p>2\), som ses på figur \ref{fig:lars2}.
+Algoritmen starter i \(\widehat{\tmu}_0=\mathbf{0}\). Residualvektoren \(\bar{\y}_2 - \widehat{\tmu}_0\) har en større korrelation med \(\x_1\) end \(\x_2\). Næste LARS estimat er \(\widehat{\tmu}_1 = \widehat{\tmu}_0 + \widehat{\gamma}_1 \x_1\), hvor \(\widehat{\gamma}_1\) vælges, således at \(\bar{\y}_2 - \widehat{\tmu}_1\) halverer vinklen mellem \(\x_1\) og \(\x_2\). Næste LARS estimat er \(\widehat{\tmu}_2 = \widehat{\tmu}_1 + \widehat{\gamma}_2 \mathbf{u}_2\), hvor \(\mathbf{u}_2\) er en enhedsvektor, som ligger langs denne halveringslinje.
+Der gælder, at \(\widehat{\tmu}_2 = \bar{\y}_2\) for \(p=2\), dette er ikke tilfældet for \(p>2\), som ses på figur \ref{fig:lars2}.
  }\label{fig:lars}
 \end{figure}
 %
@@ -40,7 +42,7 @@ Det næste LARS estimat er dermed
 \begin{align*}
 \widehat{\boldsymbol{\mu}}_2 = \widehat{\boldsymbol{\mu}}_1+ \widehat{\gamma}_2 \mathbf{u}_2,
 \end{align*}
-hvor $\widehat{\gamma}_2$ vælges således at $\widehat{\boldsymbol{\mu}}_2 = \bar{\textbf{y}}_2$ i tilfældet hvor $p = 2$. 
+hvor $\widehat{\gamma}_2$ er valgt, således at $\widehat{\boldsymbol{\mu}}_2 = \bar{\textbf{y}}_2$ i dette tilfælde hvor $p = 2$. 
 For \(p>2\), da vil stepstørrelsen \(\widehat{\gamma}_2\) være mindre, hvilket fører til en anden ændring af retningen, som illustreres på figur \ref{fig:lars2}.
 %
 \begin{figure}[H]
@@ -55,19 +57,20 @@ Lad \(\A\) være en delmængde af indekser \(\cbr{1,\ldots, p}\), og definer mat
 \begin{align}
 \X_\A = \del{\dots s_j \x_j \dots}_{j \in \A}, \label{eq:lars_2.4}
 \end{align}
-hvor  $s_j = \pm 1$, således at \(\X_\A\) er en matrix bestående af kolonnerne af \(\X\) som er inkluderet i \(\mathcal{A}\) multipliceret \(s_j\).
+hvor $s_j = \pm 1$, således at \(\X_\A\) er en matrix, som består af søjlerne i \(\X\), der er inkluderet i \(\mathcal{A}\) multipliceret \(s_j\).
 Lad 
 \begin{align}
 N_\A = \X_\A^T \X_\A \quad \text{og} \quad A_\A = \del{\mathbf{1}_\A^T N_\A^{-1} \mathbf{1}_\A}^{-1/2}, \label{eq:lars_2.5}
 \end{align}
-hvor \(\mathbf{1}_\A\) er en vektor bestående af 1-tallet med længde lig antal elementer i \(\A\).
-Da defineres en ensvinklet vektor
+hvor \(\mathbf{1}_\A\) er en vektor af 1-taller med en længde lig antallet af elementer i \(\A\).
+Da defineres en såkaldt ``ensvinklet'' vektor
 \begin{align}
 \mathbf{u}_\A = \X_\A \omega_\A, \quad \text{hvor } \omega_\A = A_\A N_\A^{-1} \mathbf{1}_\A, \label{eq:lars_2.6}
 \end{align}
-som er en enhedsvektor, der giver lige vinkler, mindre end \(90^0\), med kolonnerne af \(\X_\A\), dvs
+som er en enhedsvektor, der gør vinkler mellem søjlerne i \(\X_\A\) lige store, dvs
+%der resulterer i lige store vinkler der er mindre end \(90^0\), med søjlerne i \(\X_\A\), dvs
 \begin{align}
-\X_\A^T \mathbf{u}_\A = A_\A \mathbf{1}_\A \quad \text{og} \quad \Vert \mathbf{u}_\A \Vert^2 = 1. \label{eq:lars_2.7}
+\X_\A^T \mathbf{u}_\A = A_\A \mathbf{1}_\A \quad \text{og} \quad \Vert \mathbf{u}_\A \Vert_2^2 = 1. \label{eq:lars_2.7}
 \end{align}
 Herefter kan vi give en fyldestgørende beskrivelse af LARS algoritmen.
 %
@@ -76,7 +79,7 @@ Herefter kan vi give en fyldestgørende beskrivelse af LARS algoritmen.
 \item Standardisere prædiktorerne og centre responsvariablen. 
 Start med \(\widehat{\boldsymbol{\mu}}_0 = \mathbf{0}\), \(\widehat{\mathbf{c}} = \X^T \y\), og \(\A = \emptyset\).
 \item Find prædiktoren \(\tx_j\) som er mest korreleret med ???? y og noegt residual!!! og definer den aktive mængde \(\A = \cbr{j}\).
-\item Gentag følgende indtil alle prædiktorer fra \(\A^C\) er i den aktive mængde:
+\item Gentag følgende indtil alle prædiktorer er indeholdt i den aktive mængde:
 \begin{itemize}
 \item Antag \(\widehat{\boldsymbol{\mu}}_\A\) er det nuværende LARS estimat og at
 \begin{align}
@@ -91,7 +94,7 @@ Lad
 \begin{align*}
 s_j = \text{sign} \cbr{\widehat{c}_j}, \quad j \in \A,
 \end{align*}
-da udregnes \(\X_\A\), \(A_\A\) og \(\mathbf{u}_\A\) som i \eqref{eq:lars_2.4}-\eqref{eq:lars_2.6}  samt vektoren af indre produkt
+da udregnes \(\X_\A\), \(A_\A\) og \(\mathbf{u}_\A\) som i \eqref{eq:lars_2.4}-\eqref{eq:lars_2.6} samt
 \begin{align*}
 \mathbf{a} = \X^T \mathbf{u}_\A.
 \end{align*}
@@ -103,8 +106,8 @@ hvor
 \begin{align}
 \widehat{\gamma} = \min_{j \in \A^c}^+ \cbr{ \frac{\widehat{C}- \widehat{c}_j}{A_\A - a_j} , \frac{\widehat{C} + \widehat{c}_j}{A_\A + a_j}}, \label{eq:lars_2.13}
 \end{align}
-og hvor \(\min^+\) indikerer at minimum kun tages over de positive komponenter indenfor valget af \(j\) i \eqref{eq:lars_2.13}.
-\item Sæt \(\A = \A \cup \cbr{\hat{j}}\), hvor \(\hat{j}\) er minimeringsindekset i \eqref{eq:lars_2.13}.
+og hvor \(\min^+\) indikerer, at minimum kun tages over de positive komponenter indenfor valget af \(j\) i \eqref{eq:lars_2.13}.
+\item Sæt \(\A = \A \cup \cbr{\widehat{j}}\), hvor \(\widehat{j}\) er minimeringsindekset i \eqref{eq:lars_2.13}.
 \end{itemize}
 \end{enumerate}
 \end{alg}
@@ -124,20 +127,20 @@ For \(j \in \A\) giver \eqref{eq:lars_2.7}-\eqref{eq:lars_2.9} at
 \end{align}
 som viser, at alle af de maksimale absolutte nuværende korrelationer falder ligeligt.
 For \(j \in \A^C\), viser \eqref{eq:lars_2.15} og \eqref{eq:lars_2.16} at \(c_j \del{\gamma}\) er lig den maksimale værdi i \(\gamma = \frac{\widehat{C} - \widehat{c}_j}{A_\A - a_j}\).
-Derfor er \(\hat{\gamma}\) i \eqref{eq:lars_2.13} den mindst positive værdi af \(\gamma\) således at et nyt indeks \(\widehat{j}\) tilføjes til den aktive mængde.
-\(\hat{j}\) er minimeringsindekset i \eqref{eq:lars_2.13} og den nye aktive mængde \(\A_+\) er \(\A \cup \cbr{\widehat{j}}\) og den nye maksimum absolut korrelation er \(\widehat{C}_+ = \widehat{C}- \widehat{\gamma} A_\A\).
+Derfor er \(\widehat{\gamma}\) i \eqref{eq:lars_2.13} den mindst positive værdi af \(\gamma\), således at et nyt indeks \(\widehat{j}\) tilføjes til den aktive mængde.
+\(\widehat{j}\) er minimeringsindekset i \eqref{eq:lars_2.13} og den nye aktive mængde \(\A_+\) er \(\A \cup \cbr{\widehat{j}}\) og den nye maksimum absolut korrelation er \(\widehat{C}_+ = \widehat{C}- \widehat{\gamma} A_\A\).
 %
-\begin{figure}[H]
-\centering
-\scalebox{0.6}{\includegraphics{fig/img/crime_lars_lasso.pdf}}
-\caption{Koefficientstierne udregnet med LARS imod fraktion af \(\ell_1\) norm for crime data.} \label{fig:crime_lar}
-\end{figure}
-%
-Figur \ref{fig:crime_lar} illustrerer lars estimaterne som funktion af shrinkage for crime data.
-Af figuren kan vi aflæse rækkefølgen, hvori variablerne medtages i modellen.
-For \(s=0\), er der ingen variable i modellen, som ses til ventre.
-Hvis vi bevæger os mod højre ses at den første variabel som medtages i modellen er variabel 1 (\texttt{funding}), efterfulgt at variabel 3 (\texttt{not.hs}), derefter 2 (\texttt{hs}), variabel 5 (\texttt{college4}) og til slut variabel 4 (\texttt{college}). 
-Algoritmen kræver \(p=5\) steps.
+%\begin{figure}[H]
+%\centering
+%\scalebox{0.6}{\includegraphics{fig/img/crime_lars_lasso.pdf}}
+%\caption{Koefficientstierne udregnet med LARS imod fraktion af \(\ell_1\) norm for crime data.} \label{fig:crime_lar}
+%\end{figure}
+%%
+%Figur \ref{fig:crime_lar} illustrerer lars estimaterne som funktion af shrinkage for crime data.
+%Af figuren kan vi aflæse rækkefølgen, hvori variablerne medtages i modellen.
+%For \(s=0\), er der ingen variable i modellen, som ses til ventre.
+%Hvis vi bevæger os mod højre ses at den første variabel som medtages i modellen er variabel 1 (\texttt{funding}), efterfulgt at variabel 3 (\texttt{not.hs}), derefter 2 (\texttt{hs}), variabel 5 (\texttt{college4}) og til slut variabel 4 (\texttt{college}). 
+%Algoritmen kræver \(p=5\) steps.
 %
 %Højre figur viser de absolutte nuværende korrelationer
 %\begin{align*}
@@ -153,7 +156,7 @@ Algoritmen kræver \(p=5\) steps.
 %Fortegnet \(s_j\) af hver \(\x_j\) i \eqref{eq:lars_2.4} forbliver konstant, da den aktive mængde kun stiger.
 
 For LARS algoritmen kræves blot \(p\) steps for at finde den fulde løsning.
-De beregnings omkostninger for LARS algoritmen er af samme orden, som hvad der kræves for løsningen af mindste kvadraters metode med \(p\) prædiktorer.
+De beregnings mæssige omkostninger for LARS algoritmen er af samme orden som løsningen af OLS med \(p\) prædiktorer.
 
 
 \subsection{Lasso modifikation} \label{subsec:lasso_modifikation}
@@ -182,10 +185,16 @@ Lad
 \begin{align*}
 \omega_\A = A_\A N_\A^{-1} \mathbf{1}_\A,
 \end{align*}
-være en vektor med længde lig antallet af elementer i \(\A\) og definer \(\widehat{\mathbf{d}} \in \R^p\) til at være lig \(s_j \omega_{\A_j}\) for \(j \in \A\) og nul ellers.
+være en vektor med længde lig antallet af elementer i \(\A\) og definer en \(p \times 1\) vektor
+\begin{align*}
+\widehat{\mathbf{d}} = \begin{cases}
+s_j \omega_{\A_j}, &\text{hvis } j \in \A, \\
+0, & \text{ellers}.
+\end{cases}
+\end{align*}
 Hvis vi bevæger os i den positive \(\gamma\) retning langs LARS linjen \eqref{eq:lars_2.14}, ser vi, at
 \begin{align*}
-\tmu \del{\gamma} = \X \beta \del{\gamma}, \quad \text{hvor } \beta_j \del{\gamma} = \widehat{\beta}_j + \gamma \widehat{d}_j
+\tmu \del{\gamma} = \X \tbeta \del{\gamma}, \quad \text{hvor } \beta_j \del{\gamma} = \widehat{\beta}_j + \gamma \widehat{d}_j
 \end{align*}
 for \(j \in \A\).
 Derfor vil \(\beta_j \del{\gamma}\) ændre fortegn i
@@ -203,15 +212,34 @@ Hvis \(\tilde{\gamma} < \widehat{\gamma}\), da kan \(\beta_{\tilde{j}} \del{\gam
 Der gælder, at \(c_{\tilde{j}}\) ikke kan ændre fortegn indenfor ét LARS step da \(\abs{c_{\tilde{j}} \del{\gamma}} = \widehat{C} - \gamma A_\A> 0\) af \eqref{eq:lars_2.16}. \\[2mm]
 %
 \textbf{Lasso modifikation} \\
-Hvis \(\tilde{\gamma} < \widehat{\gamma}\), stop det igangværende LARS step i \(\gamma = \tilde{\gamma}\) og fjern \(\tilde{j}\) fra udregningen af den nærste ensvinklet retning.
+Hvis \(\tilde{\gamma} < \widehat{\gamma}\), stop det igangværende LARS step i \(\gamma = \tilde{\gamma}\) og fjern \(\tilde{j}\) fra udregningen af den næste ensvinklet retning.
 Dvs
 \begin{align*}
 \widehat{\tmu}_{\A_+} = \widehat{\tmu}_\A + \tilde{\gamma} \mathbf{u}_\A \quad \text{og} \quad \A_+ = \A - \cbr{\tilde{j}},
 \end{align*}
 istedet for \eqref{eq:lars_2.12}.
 
-Den aktive mængde \(\A\) vokser monotont som for den originale LARS algoritme, men lasso modifikationen tillader \(\A\) at falde.
-Antallet er steps i lasso modifikationen er dermed større end \(p\).
+LARS algoritmen med lasso modifikationen tillader den aktive mængde \(\A\) at aftage.
+Antallet er steps i LARS algoritmen med lasso modifikationen er dermed større end \(p\).
+
+
+Lad os opsummere nogle egenskaber af lasso stien
+Stien \(\widehat{\tbeta}^\text{lasso} \del{\lambda}\) er en kontinuert og stykvis lineære funktion af \(\lambda\) med knuder i \(\lambda_1 \geq \lambda_2 \geq \cdots \geq \lambda_r \geq 0\).
+i \(\lambda = \infty\), har løsningen \(\widehat{\tbeta}^\text{lasso} \del{\infty}\) ingen aktive variable, dvs den aktive mængde er tom. 
+Vi aftager \(\lambda\) og da markerer hver knude \(\lambda_k\) tilføjelsen eller fjernelsen af en variabel i den nuværende aktive mængde.
+Derfor er den aktive mængde og fortegnene af de aktive variable konstant mellem knuderne.
+I ethvert punkt \(\lambda\) i stien,
+---
+
+Figur \ref{fig:diabetes_lars} illustrerer koefficientstierne for LARS algoritmen uden og med lasso modifikationen som funktion af fraktion af \(\ell_1\)-norm for diabetes data.
+Af figuren kan vi aflæse rækkefølgen, hvori variablerne medtages i modellen.
+For LARS algoritmen uden lasso modifikationen udføres 10 steps, mens LARS algoritmen med lasso modifikationen udfører 12 steps.
+De 2 ekstra steps som LARS algoritmen med lasso modifikationen udfører kommer af, at variablen \texttt{hdl} fjernes og tilføjes igen i henholdsvis step 11 og 12?
+
+\imgfigh{diabetes_lars.pdf}{0.9}{Koefficientstierne for LARS algoritmen uden og med lasso modifikationen som funktion af fraktion af \(\ell_1\)-normen for diabetes data.}{diabetes_lars}
+%
+\input{fig/tab/diabetes}
+%
 
 %\subsection{Frihedsgrader og \(C_p\) estimater}
 %

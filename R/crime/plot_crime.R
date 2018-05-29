@@ -1,22 +1,16 @@
-library(plotmo) 
-library(glmnet)
-library(ggfortify)
-library(gridExtra)
+crime <- read.csv("/Users/louisenygaardchristensen/Desktop/p10/R/crime/crime.csv")
+head(crime)
+# p = 6 (y = crime.rate) og n = 50
 
-crime <- read.csv("../crime/crime.csv")
-crime = as.matrix(data.frame(crime))
+crime_design <- model.matrix(crime.rate ~ . - 1, data = crime)
+# y = crime.rate, og vi har fjernet intercept
+crime_design_std <- scale(crime_design, center = TRUE, scale = TRUE)
 
-y = crime$crime.rate
-x = data.frame(crime$funding, crime$hs, crime$not.hs, crime$college, crime$college4)
+crime_response <- crime$crime.rate - mean(crime$crime.rate)
 
-glmnet(x, y, family = "gaussian", alpha = 1)
-fit_lasso = glmnet(crime.rate ~ .,data = crime)
-
-
-fit_el = glmnet(crime.rate ~ ., data = crime, alpha = 0.7)
-fit_ridge = glmnet(crime.rate ~ ., data = crime, alpha = 0)
-
-
+fit_lasso <- glmnet(crime_design_std, crime_response, alpha = 1, standardize = FALSE, intercept = FALSE)
+plot(fit_lasso)
+plot(fit_lasso, xvar = "lambda")
 
 plot_lasso = autoplot(fit_lasso, xvar = "lambda") + 
   ylab("Koefficienter") + 
@@ -24,20 +18,14 @@ plot_lasso = autoplot(fit_lasso, xvar = "lambda") +
   theme(legend.title=element_blank()) +
   ggtitle("Lasso")
 
-plot_el = autoplot(fit_el, xvar = "lambda") +
-  ylab("Koefficienter") + 
-  xlab(expression(log(lambda))) +
-  theme(legend.title=element_blank()) +
-  ggtitle(expression(paste("Eleatik net, ", alpha, '= 0.5')))
+fit_ridge <- glmnet(crime_design_std, crime_response, alpha = 0, standardize = FALSE, intercept = FALSE)
+plot(fit_ridge)
+plot(fit_ridge, xvar = "lambda")
 
 plot_ridge = autoplot(fit_ridge, xvar = "lambda") +
   ylab("Koefficienter") + 
   xlab(expression(log(lambda))) +
   theme(legend.title=element_blank()) +
-  ggtitle("Ridge")
+  ggtitle("Ridge regression")
 
-grid.arrange(plot_lasso, plot_el)
 grid.arrange(plot_lasso, plot_ridge)
-
-
-

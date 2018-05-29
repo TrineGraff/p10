@@ -1,11 +1,26 @@
+%\begin{table}[h]
+%\center
+%\begin{tabular}{lccc}
+%\toprule
+%& Faktor model (IC$_1$) & Faktor model (IC$_2$) & Faktor model (IC$_3$) \\ \midrule
+%$\widehat{k}$ & 6 & 11 & 20 \\ 
+%IC$\del{\widehat{k}}$ & $-0.3519$  & $-0.5314$ & $-0.6931$  \\
+%R$^2_{\text{adj}}$  & 37.08 \% & 50.85 \% & 60.23 \% \\
+%LogLike & - & - & -\\ \bottomrule
+% \end{tabular}
+%\caption{Antal faktorer, værdien af informationskriteriet for dette antal faktorer samt adjusted \(R^2\) for faktormodellerne valgt udfra IC$_1$, IC$_2$ og IC$_3$, som betegnes faktor model (IC\(_1\)), faktor model (IC\(_2\)) og faktor model (IC\(_3\)).} \label{tab:est_faktor}
+%\end{table}
+
 \begin{table}[h]
 \center
-\begin{tabular}{lccc}
+\begin{tabular}{lcccc | lcccccc}
 \toprule
-& Faktor model (IC$_1$) & Faktor model (IC$_2$) & Faktor model (IC$_3$) \\ \midrule
-$\widehat{k}$ & 6 & 11 & 20 \\ 
-IC$\del{\widehat{k}}$ & $-0.3519$  & $-0.5314$ & $-0.6931$  \\
-Adj. R$^2$ & 37.08 \% & 50.85 \% & 60.23 \% \\ \bottomrule
+\multicolumn{5}{c}{Faktor model (IC$_1$)} & \multicolumn{5}{c}{Faktor model (IC$_2$)} \\ \midrule
+& Værdi &  IC$_1$ &  R$^2_{\text{adj}}$ & LogLik & & Værdi &  IC$_1$ &  R$^2_{\text{adj}}$ & LogLik \\
+$\widehat{k}$ & 6 &  $-0.3519$ &  15.79 \% &  224.3621 & $\widehat{k}$ &11 & $-0.5314$ &  16.85 \% &  230.3414 \\\bottomrule \toprule
+\multicolumn{5}{c}{Faktor model (IC$_1$)} \\ \cmidrule{1-5}
+& Værdi &  IC$_1$ &  R$^2_{\text{adj}}$ & LogLik\\
+$\widehat{k}$ & 20 & $-0.6931$ & 17.87 & 238.3753 \\ \cmidrule{1-5}
  \end{tabular}
-\caption{Antal faktorer, værdien af informationskriteriet for dette antal faktorer samt adjusted \(R^2\) for faktormodellerne valgt udfra IC$_1$, IC$_2$ og IC$_3$, som betegnes faktor model (IC\(_1\)), faktor model (IC\(_2\)) og faktor model (IC\(_3\)).} \label{tab:est_faktor}
+ \caption{Antal faktorer, værdien af informationskriteriet for dette antal faktorer, justerede \(R^2\) samt log-likehood for faktormodellerne valgt udfra IC$_1$, IC$_2$ og IC$_3$, som betegnes faktor model (IC\(_1\)), faktor model (IC\(_2\)) og faktor model (IC\(_3\)).} \label{tab:est_faktor}
 \end{table}

@@ -31,7 +31,10 @@ Box.test(tmp$y, lag = 10, "Ljung-Box")
 
 
 # Koefficienter -----------------------------------------------------------
-b_hat = (coef(gglasso_fit, s = grp_bic$lambda))
-idx_hat = which(b_hat == 0) 
-b_hat[idx_hat,] 
 
+coef_bic= coef(gglasso_fit, s = grp_bic$lambda)
+idx_bic = which(coef_bic != 0)
+
+lm = lm(y_train ~ 0 + x_train[,idx_bic -1 ])
+summary(lm)
+logLik(lm)

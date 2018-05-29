@@ -24,3 +24,13 @@ kurtosis(tmp$y)
 jarque.bera.test(tmp$y)
 Box.test(tmp$y, lag = 10, "Ljung-Box")
 
+
+# adj. R^2 ----------------------------------------------------------------
+
+coef_bic= coef(fit_ridge, s = fit_bic_ridge$lambda)
+idx_bic = which(coef_bic != 0)
+
+lm = lm(y_train ~ 0 + x_train[,idx_bic -1 ])
+summary(lm)
+logLik(lm)
+

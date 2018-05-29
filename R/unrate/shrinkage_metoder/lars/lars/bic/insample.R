@@ -32,3 +32,12 @@ skewness(tmp$y)
 kurtosis(tmp$y)
 jarque.bera.test(tmp$y)
 Box.test(tmp$y, lag = 10, "Ljung-Box")
+
+
+# adj R^2 -----------------------------------------------------------------
+
+coef_min = coef(lars_fit, s = lars_bic$f_hat, mode = "fraction")
+idx_min = which(coef_min != 0)
+lm_min = lm(y_train~0 + x_train[, (idx_min)])
+summary(lm_min)
+logLik(lm_min)

@@ -18,17 +18,24 @@
 
 \begin{table}
 \center
-\begin{tabular}{lcccc  | lccccc} 
+\scalebox{0.8}{
+\begin{tabular}{lccccc  | lcccccc} 
 \toprule
- \multicolumn{5}{c}{Lasso} && \multicolumn{5}{c}{Ridge regression}  \\ \midrule
-& $\log \del{\widehat{\lambda}_\text{BIC}}$  & BIC & $p$ & R$^2_{\text{adj}}$ && & $\log \del{\widehat{\lambda}_\text{BIC}}$  &  BIC & $p$ &R$^2_{\text{adj}}$  \\
-$\widehat{\lambda}_\text{BIC} $&  $-6.2639$ & $-6.1608$ & 17 &  94.23 \% && $\widehat{\lambda}_\text{BIC} $ & $-4.4730$ & $-3.3230$ &  126 & 86.98 \% \\ \bottomrule \toprule 
+ \multicolumn{6}{c}{Lasso} & \multicolumn{6}{c}{Ridge regression}  \\ \midrule
+& $\log \del{\widehat{\lambda}_\text{BIC}}$  & BIC & $p$ & R$^2_{\text{adj}}$ & LogLik & & $\log \del{\widehat{\lambda}_\text{BIC}}$  &  BIC & $p$ &R$^2_{\text{adj}}$ & LogLik  \\
+%lasso(min
+$\widehat{\lambda}_\text{BIC} $&  $-6.2639$ & $-6.1608$ & 17 &  94.46  \% & 974.9938& 
+%ridge(min
+ $\widehat{\lambda}_\text{BIC} $ & $-4.4730$ & $-3.3230$ &  126 &  93.96 \% & 1014.633 \\ \bottomrule \toprule 
  \multicolumn{5}{c}{Group lasso} && \multicolumn{5}{c}{Adap. lasso m. OLS vægte}  \\ \midrule
-& $\log \del{\widehat{\lambda}_\text{BIC}}$  & BIC & $p$ &R$^2_{\text{adj}}$ && & $\log \del{\widehat{\lambda}_\text{BIC}}$  &  BIC & $p$ &R$^2_{\text{adj}}$   \\
-$\widehat{\lambda}_\text{BIC}$ & $-7.2876$ &  $-5.0721$ &99  & 92.11\% &&  $\widehat{\lambda}_\text{BIC}$ & $-2.6212$ &  $-6.3153$  & 2 & $94.28 \%$ \\ \bottomrule \toprule 
- \multicolumn{5}{c}{Adap. lasso m. lasso vægte}  \\
-& $\log \del{\widehat{\lambda}_\text{BIC}}$  & BIC & $p$ & R$^2_{\text{adj}}$\\
- $\widehat{\lambda}_\text{BIC}  $&  	$-1.8390$ & $-6.3142$  & 2& 94.28\% \\ \cmidrule{1-5}
- \end{tabular}
-\caption{Logaritmen af $\widehat{\lambda}_\text{BIC}$, antallet af parametre, BIC og adjusted R$^2$ for lasso og dens generaliseringer.} \label{tab:bic_lambda}
+& $\log \del{\widehat{\lambda}_\text{BIC}}$  & BIC & $p$ &R$^2_{\text{adj}}$ &LogLik & & $\log \del{\widehat{\lambda}_\text{BIC}}$  &  BIC & $p$ &R$^2_{\text{adj}}$  & Loglik \\
+%group
+$\widehat{\lambda}_\text{BIC}$ & $-7.2876$ &  $-5.0721$ &99  & 94.17  \% & 1007.311&  
+%ols vægte
+$\widehat{\lambda}_\text{BIC}$ & $-2.6212$ &  $-6.3153$  & 2 & $94.28 \%$ & 959.0402 \\ \bottomrule \toprule 
+ \multicolumn{6}{c}{Adap. lasso m. lasso vægte}  \\ \cmidrule{1-6}
+& $\log \del{\widehat{\lambda}_\text{BIC}}$  & BIC & $p$ & R$^2_{\text{adj}}$& LogLik\\
+ $\widehat{\lambda}_\text{BIC}  $&  	$-1.8390$ & $-6.3142$  & 2& 94.28 \%& 959.0402 \\ \cmidrule{1-6}
+ \end{tabular}}
+\caption{Logaritmen af $\widehat{\lambda}_\text{BIC}$, antallet af parametre, BIC, justerede R$^2$  og log-likelihood for lasso og dens generaliseringer.} \label{tab:bic_lambda}
 \end{table}

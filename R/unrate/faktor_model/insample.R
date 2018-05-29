@@ -84,15 +84,9 @@ fit = function(F.t, w.t, y_train) {
   beta.hat = solve(crossprod(Z), crossprod(Z, y.res))
   fit = Z %*% beta.hat
   resid = y.res - fit
+  scale_resid = scale(resid)
   
-  SS.res = sum((resid)^2)
-  SS.tot = sum((y.res - mean(y.res))^2)
-  R.sqrd = 1 - (SS.res / SS.tot)
-  adj.R.sqrt = 1 - (1 - R.sqrd) * ((n.obs - 1) / (n.obs - (m + k) - 1)) 
-  
-  
-  return(list("beta.hat" = beta.hat, "fit" = fit, "residuals" = resid, 
-              "adj.R.sqrt" = adj.R.sqrt))
+  return(list("beta.hat" = beta.hat, "fit" = fit, "scale_residuals" = scale_resid))
   }
   
 fit.IC.1 = fit(factors.IC.1, df.y.lags, yf_train)
@@ -100,10 +94,12 @@ fit.IC.2 = fit(factors.IC.2, df.y.lags, yf_train)
 fit.IC.3 = fit(factors.IC.3, df.y.lags, yf_train)
 
 #tester beta og adjusted R squared
-df = data.frame(factors.IC.1, df.y.lags)
+df = data.frame(factors.IC.3, df.y.lags)
 x.ny = df[(1+m):552,] %>% as.matrix()
 y.ny = y_train[(1+m):552]
 
+lm_fit = lm(y.ny~ 0 +x.ny)
+logLik(lm_fit)
 summary(lm(y.ny~ 0 +x.ny))
 
 

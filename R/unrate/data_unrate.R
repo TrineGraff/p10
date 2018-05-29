@@ -1,4 +1,4 @@
-library(tidyverse)
+setwd("~/Desktop/Projekt/R/unrate")
 data_raw = read.csv("../data/transformed_data.csv") %>% as.data.frame()
 idx =  floor(0.80 * nrow(data_raw)) 
 data = data_raw[, -c(1, 2)]
@@ -38,6 +38,5 @@ x_test = x[-c(1:(idx - 4)),]
 y_test = y[-c(1:(idx))]
 
 dato_test = data_raw$dato[-(1:idx)]
-
 
 

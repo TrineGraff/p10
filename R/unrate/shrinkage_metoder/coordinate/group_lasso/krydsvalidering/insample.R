@@ -53,12 +53,17 @@ Box.test(res^2, lag = 10, "Ljung-Box")
 
 # Adj. R ------------------------------------------------------------------
 
-adj.r.2_1sd = adj.r.2(y_train, x_train, beta_hat )
+coef_min = coef(gglasso_fit, s = gglasso_cv$lambda.min)
+idx_min = which(coef_min != 0)
+lm_min = lm(y_train~0 +x_train[, (idx_min - 1)])
+summary(lm_min)
+logLik(lm_min)
 
-coef_min = as.vector(coef(gglasso_fit, s = gglasso_cv$lambda.min)) %>% .[-1]
-adj.r.2(y_train, x_train, coef_min)
-
-
+coef_1sd = coef(gglasso_fit, s = gglasso_cv$lambda.1se)
+idx_1sd = which(coef_1sd != 0)
+lm_1sd = lm(y_train~0+x_train[, (idx_1sd - 1)])
+summary(lm_1sd)
+logLik(lm_1sd)
 # Koefficienter -----------------------------------------------------------
 
 coef_hat = coef(gglasso_fit, s = gglasso_cv$lambda.1se)

@@ -9,11 +9,11 @@ Dette medfører nogle uobserveret værdier, og derfor fjernes de første 4 rækk
 \item Estimer parametrene $\widehat{\boldsymbol{\beta}} = \del{ \widehat{\boldsymbol{\beta}}^T_{\textbf{F}} \widehat{\boldsymbol{\beta}}^T_{\boldsymbol{\omega}}}^T$ med OLS.
 \end{enumerate}
 
-Tabel \ref{tab:est_faktor} viser antallet af faktorer, værdien af informationskriteriet for dette antal faktorer samt adjusted \(R^2\) for hver af de tre informationskriterier. 
+Tabel \ref{tab:est_faktor} viser antallet af faktorer, værdien af informationskriteriet for dette antal faktorer, justerede \(R^2\) samt log-likelihood for hver af de tre informationskriterier. 
 
 \input{fig/tab/est_faktor}
 Vi observerer, at IC$_1$ vælger den mindst komplekse model, da den vælger det færreste antal faktorer, mens IC$_3$ vælger det maksimale antal faktorer \footnote{For \(k_\text{max} = 50\) vælger IC\(_3\) stadig det maksimale antal faktorer, som er i modstrid med at \(0<k<k_\text{max}\), derfor betragtes faktor modellen valgt udfra IC\(_3\) ikke.}. 
-Adjusted \(R^2\) er størst for modellen valgt af IC$_3$ og mindst for modellen valgt af IC$_1$.
+Justerede \(R^2\) og log-likelihood er størst for modellen valgt af IC$_3$ og mindst for modellen valgt af IC$_1$.
 
 Figur \ref{fig:ic1_res} og \ref{fig:ic2_res} viser en analyse af de standardiserede residualer for faktor modellerne.
 QQ-plottet viser, at residualerne har tungere haler end normalfordelingen, og ganske få signifikante autokorrelationer.
@@ -30,4 +30,4 @@ Heraf ses at faktor modellen valgt udfra IC\(_2\) har mindst MAE og MSE.
 Figur \ref{fig:fc_benchmark2} viser arbejdsløshedsraten og den prædikterede arbejdsløshedsrate med faktor modellen valgt udfra IC\(_2\).
 \imgfigh{fc_benchmark2.pdf}{1}{Arbejdsløshedsraten og prædiktion af arbejdsløshedsraten med faktor modellen valgt udfra IC\(_2\).}{fc_benchmark2}
 
-Vi vælger faktor modellen valgt udfra IC\(_2\) som benchmark model, da den har størst adjusted \(R^2\) og mindst MAE og MSE i forhold til AR(4) og faktor modellen valgt udfra IC\(_1\).
+Vi vælger faktor modellen valgt udfra IC\(_2\) som benchmark model, da den har størst justerede \(R^2\) og mindst MAE og MSE i forhold til AR(4) og faktor modellen valgt udfra IC\(_1\).

@@ -14,6 +14,10 @@ gglasso_cv <- cv.gglasso(x_train, y_train, group = grp, nfold = 10, intercept = 
 gglasso_fit = gglasso(x_train, y_train, group = grp, intercept = FALSE, loss = "ls", dfmax = 8)
 
 
+
+summary(gglasso_fit)
+plot(gglasso_fit)
+
 data.frame(c(1,grp),coef(gglasso_fit, s = gglasso_cv$lambda.1se))
 
 

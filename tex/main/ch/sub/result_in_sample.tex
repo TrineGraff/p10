@@ -1,12 +1,29 @@
 \section{Oversigt over in-sample resultater} 
-For at få et bedre oversigt over vores 14 modeller i in-sample betragtes tabel \ref{tab:topvariable}. Den viser de 12 meste valgte variabler samt beskrivelse. Vi ser at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} bliver valgt af alle 14 modeller, imens de resterende variabler ikke bliver valgt af adaptive lasso med OLS vægte og adaptive lasso med lasso vægte, hvor krydsvalidering og BIC er anvendt til valg af $\widehat{\lambda}$. 
+For at få et bedre oversigt over vores 14 modeller i in-sample betragtes tabel \ref{tab:topvariable}. Den viser de 12 meste valgte variabler samt beskrivelse. Vi ser at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} bliver valgt af alle 14 modeller, imens de resterende variabler ikke bliver valgt af adaptive lasso med OLS vægte og adaptive lasso med lasso vægte, hvor variablerne er bestemt ud fra  krydsvalidering og BIC. 
 
 \input{fig/tab/topvariable_insample}
 
-I forhold til den justerede R$^2$ ser vi, at ridge regression løst med coordinate descent,
-hvor $\widehat{\lambda}$ er estimeret ud fra henholdvis krydsvalidering og BIC har samme værdi, som også er den laveste værdi for alle 14 modeller. 
-Vi ser også, at alle lasso modellerne har samme justerede R$^2$, selvom at de er løst ud fra to forskellige algoritmer, hvor der også er anvendt krydsvalidering og BIC til valg af $\widehat{\lambda}$. 
+I forhold til den justerede R$^2$ ser vi, at ridge regression løst med coordinate descent, hvor $\widehat{\lambda}$ er estimeret ud fra henholdsvis krydsvalidering og BIC har samme værdi, som også er den laveste værdi for alle 14 modeller. 
+Vi ser også, at alle lasso modellerne har samme justerede R$^2$, selvom at de er løst ud fra to forskellige algoritmer, hvor variablerne er valgt ud fra krydsvalidering og BIC. 
 
 De adaptive lasso modeller i coordinate descent har den laveste log-likelihood, men er også dem med færreste antal parameter. Derudover har vi at log-likehood er størst for ridge regression, men igen vælger den også alle 126 forklarende variable. 
 
 Derudover er alle 14 modeller klart bedre i in-sample resultater i forhold til benchmarkmodellen. Det kunne godt tyde på, at vores benchmark model ikke vil præsterer særligt godt out-of-sample. 
+
+
+Vi anvender, som nævnt TG testen til lasso løst med coordinate descent og LARS uden lasso modifikation. Vi ser for lasso, at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} er signifikante for både når variablerne er bestemt ud fra krydsvalidering og BIC. 
+
+Generelt for TG-testen anvendt på LARS uden lasso modifikation ser vi, at variablens grænser i endepunkterne ofte indeholder \textit{inf} og/eller \textit{-inf}. 
+Det skyldes at konfidensintervallet er udregnet numerisk, og bliver ustabil når punktet $\boldsymbol{\eta}^T \y$ er for tæt på dens trunkerede interval, altså $\mathcal{V^+}$ og $\mathcal{V^-}$. 
+
+
+
+
+This function should match (in terms of its output) that from the lars package, but returns additional information (namely, the polyhedral constraints) needed for the selective inference calculations.
+
+
+
+
+
+
+

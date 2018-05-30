@@ -6,6 +6,7 @@ For LARS algoritmen uden lasso modifikationen tilføjes en variabel i hvert step
 
 For at finde den optimale model anvendes igen 10-fold krydsvalidering og BIC til at estimere tuning parameteren, som for LARS algoritmen er fraktion af \(\ell_1\) norm, der er givet ved \(f = \frac{\abs{\tbeta}}{\max \abs{\tbeta}}\), hvor \(f \in \sbr{0,1}\).
 
+
 Vi anvender TG testen for LARS uden lasso modifikation og kovarians testen for LARS med lasso modifikation.   
 Hertil anvender vi funktionerne \texttt{larInf} fra \Rlang-pakken \texttt{selectiveInference} og \texttt{covTest} fra \Rlang-pakken af samme navn. 
 \Rlang-koden for dette er givet i appendiks \ref{subsubsec:inferens}.
@@ -50,19 +51,6 @@ Resultaterne er givet i tabel \ref{tab:larInf_kryds}.
 Heraf ser vi, at variablen \textcolor{orange}{GS5} afviser nulhypotesen, som derfor er den eneste signifikante prædiktor, hvilket vi nok ikke helt havde forventet. 
 %
 \input{fig/tab/larInf}
-%
-
-%Lars algoritmen udfører 126 steps, hvor én variabel tilføjes i hvert step.
-
-
-%Heraf ses at nulhypotesen primært afvises for variabler i gruppe 2 (\textcolor{blue3}{HWIURATIO}, \textcolor{blue3}{UEMP15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{CLF16OV}) samt en variabel fra gruppe 6 (\textcolor{orange}{EXUSUKx}).
-
-%Ifølge spacing testen afvises kun variabler fra gruppe 2, dog kan vi ikke afvise nulhypotesen for variablerne \textcolor{blue3}{PAYEMS} og \textcolor{blue3}{CLAIMSx}.
-
-%Ifølge kovarianstesten er alle variable tilhørende gruppe 2 signifikant med undtagelse af \textcolor{blue3}{PAYEMS}, \textcolor{blue3}{lag 1} og \textcolor{blue3}{CLAIMSx}, hvor nulhypotesen ikke kan afvises. 
-%Derudover ser vi, at også variablerne \textcolor{chartreuse4}{INDPRO}, \textcolor{orange}{GS1} og \textcolor{orange}{GS5} afviser nulhypotesen.
-
-%Men kun variablerne \textcolor{blue3}{HWIURATIO}, \textcolor{blue3}{UEMP15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{CLF16OV} afvises for alle teste, hvorfra vi konkluderer at disse er signifikante.
 
 \newpage
 \subsubsection{Inferens for LARS med lasso modifikation}

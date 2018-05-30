@@ -77,3 +77,29 @@ coef4.1 <- predict(object, s = 4.1, type = "coef", mode = "norm")
 
 
 obejct_Test <- covTest(object, x = X, y = y)
+(156.727 - mean(X[,1]))/ obejct_Test$sigma
+
+
+
+lar_fit = lar(X, y, intercept = FALSE)
+lar_fit$bls
+?lar
+
+
+
+
+larinf = larInf(lar_fit, alpha = 0.01)
+
+laiInf
+
+
+fit0=glm(y~ X[,2],family="gaussian")
+sfit0 = summary(fit0)
+coef0 = fit0$coef[-1]
+se0 = sqrt(diag(sfit0$cov.scaled))[2]
+zscore = coef0/se0
+
+sfit0 = summary(fit0)
+coef0 = fit0$coef + mean(x_train[,21])
+se0 = sqrt(diag(sfit0$cov.scaled))
+zscore = coef0/se0

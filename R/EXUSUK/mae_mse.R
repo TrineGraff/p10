@@ -5,8 +5,7 @@ mae <- function(error)
 }
 
 # Root Mean Squared Error
-rmse <- function(error)
+mse <- function(error)
 {
-  sqrt(mean(error^2))
+  (mean(error^2))
 }
-

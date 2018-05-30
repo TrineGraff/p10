@@ -1,5 +1,5 @@
-source("data_unrate.R")
 source("package.R")
+source("data_unrate.R")
 source("parm.R")
 source("shrinkage_metoder/res_plot.R")
 source("shrinkage_metoder/adj.r.2.R")
@@ -17,7 +17,7 @@ data.frame(
 ) 
 
 test = coef(lasso_fit, s = lasso_cv$lambda.1se)
-idx = which(test!=0)
+idx_lasso = which(test!=0)
 beta_hat = as.vector(coef(lasso_fit, s = lasso_cv$lambda.1se)) %>% .[-1] #fjerner skæringen 
 fit = x_train %*% beta_hat
 
@@ -40,19 +40,25 @@ Box.test(res, lag = 10, "Ljung-Box")
 Box.test(res^2, lag = 10, "Ljung-Box")
 
 # Adj. R ------------------------------------------------------------------
+coef_min = coef(lasso_fit, s = lasso_cv$lambda.min)
+idx_min = which(coef_min != 0)
+lm_min = lm(y_train~0 + x_train[, (idx_min - 1)])
+summary(lm_min)
+logLik(lm_min)
 
-adj.r.2_1sd = adj.r.2(y_train, x_train, beta_hat )
+coef_1sd = coef(lasso_fit, s = lasso_cv$lambda.1se)
+idx_1sd = which(coef_1sd != 0)
+lm_1sd = lm(y_train~0 + x_train[, (idx_1sd - 1)])
+summary(lm_1sd)
+logLik(lm_1sd)
 
-coef_min = as.vector(coef(lasso_fit, s = lasso_cv$lambda.min)) %>% .[-1]
-adj.r.2(y_train, x_train, coef_min)
-lm = lm(y_train ~ 0 +x_train[,idx -1])
-summary(lm)
-0.9396 
 # Koefficienter -----------------------------------------------------------
 coef_hat = coef(lasso_fit, s = lasso_cv$lambda.1se)
 idx_hat = which(coef_hat != 0) 
 coef_hat[idx_hat,]     
 
 
-test = lm(y_train ~ 0 +x_train[,idx_hat])
-summary(test)
+# log like ----------------------------------------------------------------
+test = glmnet(x_train, y_train, family = "gaussian", alpha = 1, intercept = FALSE, standardize=FALSE, s = lasso_cv$lambda.min)
+test$nulldev - deviance(test)
+?glmnet

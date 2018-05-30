@@ -80,10 +80,17 @@ Box.test(res, lag = 10, "Ljung-Box")
 
 # Adj. R ------------------------------------------------------------------
 
-adj.r.2_1sd = adj.r.2(y_train, x_train, beta_hat)
+coef_min = coef(lars_fit, s = f[20], mode = "fraction")
+idx_min = which(coef_min != 0)
+lm_min = lm(y_train~0 + x_train[, (idx_min)])
+summary(lm_min)
+logLik(lm_min)
 
-beta_hat_min = as.vector(coef(lars_fit, s = f[28], mode = "fraction"))
-adj.r.2_min = adj.r.2(y_train, x_train, beta_hat_min)
+coef_1sd = coef(lars_fit, s = f[28], mode = "fraction")
+idx_1sd = which(coef_1sd != 0)
+lm_1sd = lm(y_train~0 + x_train[, (idx_1sd - 1)])
+summary(lm_1sd)
+logLik(lm_1sd)
 
 # Koefficienter -----------------------------------------------------------
 b_hat = coef(lars_fit, s = getmin_lars$lambda.1se, mode = "step")

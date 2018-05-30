@@ -25,6 +25,9 @@ Herefter prædikterer faktor modellen arbejdsløshedsraten med følgende funktio
 
 %\subsection{Krydsvalidering} \label{sec:krydsvalidering}
 
+Vi anvender følgende funktion til at estimerer $\widehat{\lambda}$ med BIC
+\rfile[firstline=2,lastline=32]{../R/unrate/shrinkage_metoder/coordinate/bic.R}
+
 \subsubsection{Inferens} \label{subsubsec:inferens}
 Funktionen \texttt{fixedLassoInf} udregner \(p\)-værdier og konfidensintervaller for lasso estimatet for en fast værdi af tuning parameteren \(\lambda\).
 Funktionen anvender ``standard'' lasso problemet
@@ -38,6 +41,5 @@ Dette betyder, at efter vi har kørt \texttt{glmnet}, da skal vi sætte \texttt{
 %
 Koden er her vist for $\widehat{\lambda}$ valgt ud fra krydsvalidering. Det er samme princip for $\widehat{\lambda}$  valgt ud fra BIC,  bare at vi anvender nedenstående kode til at estimerer \texttt{best\_lambda}.
 
-\subsection{BIC} \label{sub:bic}
-Vi anvender følgende funktion til at estimerer $\widehat{\lambda}$ med BIC
-\rfile[firstline=2,lastline=32]{../R/unrate/shrinkage_metoder/coordinate/bic.R}
+
+

@@ -2,8 +2,8 @@
 I dette afsnit findes den optimale model udfra BIC.
 For LARS algoritmen uden lasso modifikationen betragtes en følge af 127 værdier af $f$, dvs at vi får en værdi af BIC når en variable tilføjes.
 For LARS algoritmen med lasso modifikation betragtes en følge af 192 værdier af $f$, dvs vi får en værdi af BIC for hver gang en variable bliver tilføjet eller fjernet. 
-Tabel \ref{tab:bic_lars} giver fraktion af \(\ell_1\)-norm, antallet af parametre, BIC og adjusted R$^2$ for LARS uden og med lasso modifikation. 
-Adjusted R$^2$ er højst for LARS med lasso modifikationen, som også vælger det færreste antal parametre. 
+Tabel \ref{tab:bic_lars} giver fraktion af \(\ell_1\)-norm, antallet af parametre, BIC, justerede R$^2$ og log-likelihood for LARS uden og med lasso modifikation. 
+Justerede R$^2$ er højst for LARS med lasso modifikationen, som også vælger det færreste antal parametre. 
 På figur \ref{fig:coef_plot_lars_bic} ser vi de estimerede koefficienter for LARS algoritmen uden og med lasso modifikation, og igen ser vi, at variablerne \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} har de største estimerede koefficienter, mens de resterende koefficienter er meget tæt på nul. 
 
 \input{fig/tab/bic_lars}
@@ -34,3 +34,6 @@ For de valgte variable udfører algoritmen 31 steps, hvor variablerne \textcolor
 Variablen \textcolor{orange}{TB6MS} bliver tilføjet, fjernet og tilføjet igen. 
 
 \input{fig/tab/cov_test_bic}
+
+
+

@@ -7,10 +7,10 @@ Som nævnt er faktor modellen valgt udfra informationskriterie 2 benchmark model
 Resultaterne af dette er givet i tabel \ref{tab:mae_mse_vurdering}.
 %
 \input{fig/tab/mae_mse_vurdering}
-
-For MAE ses, at LARS algoritmen uden lasso modifikationen, hvor variablerne er valgt udfra BIC, vælges som den ``bedste'' out-of-sample, mens adaptive lasso modellerne foretrukket
-ifølge MSE.
-Først på 7. decimal af MSE for adaptive lasso modellerne ses at adaptive lasso m. OLS vægte valgt udfra BIC faktisk har mindst MSE og dermed betragtes som den ``bedste'' out-of-sample.
+LARS algoritmen uden lasso modifikationen, hvor variablerne er valgt ud fra BIC, har den mindste MAE, mens adaptive lasso modellerne har den mindste MSE. 
+%For MAE ses, at LARS algoritmen uden lasso modifikationen, hvor variablerne er valgt udfra BIC, har den mindste MAE, mens adaptive lasso modellerne foretrukket ifølge MSE.
+Først på 7. decimal af MSE for adaptive lasso modellerne ses at adaptive lasso m. OLS vægte valgt udfra BIC faktisk har mindst MSE. 
+% og dermed betragtes som den ``bedste'' out-of-sample.
 I forhold til benchmark modellen har AR(4) den dårligste prædiktion tæt efterfulgt af faktor modellen, mens der for de resterende modeller ses en tydelig forbedring.
 Den indbyrdes forskel i MAE og MSE for lasso modellerne og dens generaliseringer er forholdsvis lille.
 
@@ -46,16 +46,50 @@ For teststørrelsen \(\text{T}_\text{max}\) elimineres foruden faktor modellen v
 %
 \input{fig/tab/mcs_tab}
 %
-Overordnet set præsterer AR(4) dårligst både in- og out-of-sample.
-Faktor modellen valgt udfra IC\(_1\)
-adaptive lasso inkludere kun 2 prædiktorer og er stadig iblandt de bedste modeller.
-For group lasso som inkludere 99 prædiktorerne 119 (CV) og 99 (BIC), hvilket ikke forbedrer prædiktionen fra de øvrige lasso baseret modeller.
 
-Vi ser ikke den store forskel ved at anvende krydsvalidering fremfor BIC
-LARS med lasso modifikation i forhold til lasso 
+\section{Oversigt over out-of-sample resultater}
+Vi ser, at de modeller hvor variablerne er estimeret ud fra BIC har en lidt bedre MAE, på nær for group lasso. 
 
-LARS uden lasso modifikation lader til at præstrere bedre end LARS med lasso modifikation.
-lidt overraskende.
-least angle regression er ikke direkte under lasso modellerne eller shrinkage.
+ 
+
+%Generelt for out-of-sample resultater får vi at lasso og dens generaliseringer er signifikante bedre end benchmark modellen. 
+%Vi
+%
+% da de alle er signifikante forskellige fra benchmark modellen, samt har en markant mindre MSE og MAE end benchmark modellen. 
+%Derudover ser vi, at AR(4) har de dårligste resultater både i in-sample og out-of-sample stærkt efterfulgt af faktor modellen valgt ud fra IC$_1$. 
+%Vi ser også, at de to ridge regression modeller har den største MSE og MAE, efterfulgt af de to group lasso modeller. De fire modeller er også dem med flest parameter. 
+%
+% er den der har størst MSE og MAE, hvor $\widehat{\lambda}$ estimeret ud fra både krydsvalidering og BIC. 
+%Ridge regression er som nævnt også den med fleste variabler, hvor på 
+%
+%
+%af lasso og dens generaliseringer.
+%
+%
+%
+%For lasso og dens generaliseringer, ser vi at ridge regression er den der har størst MSE og MAE, samt at det er den med flest variabler. Vi ser at 
+%
+%
+%
+%
+%Lasso og dens generaliseringer er alle signifikante bedre end benchmark, da vi har at de er alle signifikante forskellige fra benchmark og at de har markant mindre MSE og MAE end benchmark modellen. 
+%
+%AR(4) har de dårligste resultater både i in-sample og out-of-sample stærkt efterfulgt af faktor modellen valgt ud fra IC$_1$.  
+%
+%
+%
+%
+%
+%Overordnet set præsterer AR(4) dårligst både in- og out-of-sample.
+%Faktor modellen valgt udfra IC\(_1\)
+%adaptive lasso inkludere kun 2 prædiktorer og er stadig iblandt de bedste modeller.
+%For group lasso som inkludere 99 prædiktorerne 119 (CV) og 99 (BIC), hvilket ikke forbedrer prædiktionen fra de øvrige lasso baseret modeller.
+%
+%Vi ser ikke den store forskel ved at anvende krydsvalidering fremfor BIC
+%LARS med lasso modifikation i forhold til lasso 
+%
+%LARS uden lasso modifikation lader til at præstrere bedre end LARS med lasso modifikation.
+%lidt overraskende.
+%least angle regression er ikke direkte under lasso modellerne eller shrinkage.
 
 

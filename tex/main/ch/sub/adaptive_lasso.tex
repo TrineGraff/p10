@@ -1,44 +1,25 @@
-%\section{Ikke-konvekse strafled}
-%Ved at gå fra et \(\ell_2\) strafled til et \(\ell_1\) strafled, fandt vi, at for samme frihedsgrader vælger lasso en delmængde af variablerne til at have ikke-nul koefficienter og shrinks deres koefficienter mindre.
-%Når antallet af prediktorer er højt og antallet af relevante variable er lille, kan dette være tilstrækkeligt.
-%For at reducere antallet af variable tilstrækkeligt, da vil lasso måske over-shrink de valgte variable.
-%Derfor er det interessant at betragte ikke-konvekse strafled.
-%
-%Det naturlige valg vil være \(\ell_q\) strafleddet for \(0 \leq q \leq 1\), hvor \(\ell_0\) svarer til \textit{best-subset selection}.
-%Figur \ref{fig:nonconvex_penalties} viser \(\ell_q\) enhedskuglerne for \(q \in \cbr{2, \ 1, \ 0.8}\)
-%
-%%
-%\begin{figure}[H]
-%\centering
-% \scalebox{0.5}{\includegraphics{fig/nonconvex_penalties.jpg}}
-%\caption{\(\ell_q\) enhedskuglerne i \(\mathbb{R}^3\) for \(q=2\) (venstre), \(q=1\) (midten) og \(q=0.8\) (højre). 
-%For \(q<1\) er betingelsesområderne ikke-konvekse. Lavere \(q\) svarer til færre ikke-nul koefficienter og mindre shrinkage.}
-%\label{fig:nonconvex_penalties}
-%\end{figure}
-%%
 \section{Adaptive lasso}
 Adaptive lasso blev introduceret i \citep{adaptive_lasso} og er endnu en udvidelse af standard lasso.
-Ideen bag adaptive lasso er at tildele koefficienterne individuelle strafvægte istedet for at staffe koefficienterne ligeligt som i standard lasso.
+Ideen bag adaptive lasso er at tildele prædiktorernes koefficienter individuelle straffe, istedet for at alle koefficienter straffes ligeligt, som er tilfældet for standard lasso.
 Den vægtede lasso er givet ved
 \begin{align*}
 \argmin_{\tbeta \in \R^p} \cbr{\Vert \y - \X \tbeta \Vert_2^2 + \lambda \sum_{j=1}^p w_j \vert \beta_j \vert},
 \end{align*}
-hvor \(\mathbf{w} \in \mathbb{R}^p\) er en kendt vektor og \(w_j \geq 0\).
+hvor \(\mathbf{w}\) er en kendt \(p \times 1\) vektor og \(w_j \geq 0\).
 
 Adaptive lasso er blot en vægtet lasso, hvor vægtene \(\mathbf{w}\) er bestemt, således at metoden opfylder orakelegenskaberne.
-Antag \(\tilde{\tbeta}\) er rod-n konsistent til \(\tbeta^*\). Der gælder, at \(\widehat{\tbeta}^\text{OLS}\) og \(\widehat{\tbeta}^\text{lasso}\) er rod-n konsistent.
-Vælg \(\gamma>0\) og definer \(\widehat{\mathbf{w}} = \frac{1}{\vert \tilde{\tbeta} \vert^\gamma}\), da er adaptive lasso  estimaterne givet ved
+\begin{defn}[Adaptive lasso]
+Antag responsvariablen er centreret og prædiktorerne er standardiseret.
+Antag yderligere at \(\tilde{\tbeta}\) er rod-n konsistent til \(\tbeta^*\).
+Vælg \(\gamma>0\) og definer \(\widehat{\mathbf{w}} = \frac{1}{\vert \tilde{\tbeta} \vert^\gamma}\), da er adaptive lasso estimaterne givet ved
 \begin{align}
 \widehat{\tbeta}^\text{AL} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{ \vert \beta_j \vert}{\vert \tilde{\beta}_j \vert^\gamma}}. \label{eq:4.76}
 \end{align}
-Den aktive mængde for adaptive lasso estimatoren betegnes \(\mathcal{A}_n^\text{AL} = \cbr{j \ : \widehat{\tbeta}^{\text{AL}} \neq 0 }\).
-%Strafleddet for adaptive lasso kan ses som en approksimation til $\ell_q$ strafleddene med $q=1-\gamma$.
-Givet \(\tilde{\tbeta}\) da er \eqref{eq:4.76} konveks, og kan dermed løses med coordinate descent algoritmen og LARS algoritmen.
-%Hvis pilot estimaterne er \(\sqrt{n}\) konsistent, da viste \citep{adaptive_lasso} at metoden finder den sande model under mere generelle betingelser end lasso.
-%Hvis \(p <n\) da kan estimaterne for mindste kvadraters metode anvendes som pilot estimater. Hvis \(p \geq n\) da er estimaterne for mindste kvadraters metode ikke veldefineret, men de univariate regressions koefficienter kan anvendes som pilot estimater.
-%
-\subsection{Udregning af adaptive lasso}
+\end{defn}
+Af sætning --- Der gælder, at \(\widehat{\tbeta}^\text{OLS}\) og \(\widehat{\tbeta}^\text{lasso}\) er rod-n konsistent.
 
+\subsection{Udregning af adaptive lasso}
+Givet \(\tilde{\tbeta}\) da er \eqref{eq:4.76} konveks, og kan dermed løses med coordinate descent og LARS algoritmen.
 \subsubsection{Coordinate descent}
 
 \subsubsection{LARS}
@@ -49,7 +30,7 @@ Adaptive lasso estimaterne kan løses vha LARS algoritmen \citep{efron}.
 \begin{align*}
 \hat{\beta}^{**} = \argmin_{\beta} \left\Vert \y - \sum_{j=1}^p \mathbf{x}_j^{**} \beta_j \right\Vert^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert
 \end{align*}
-\item Output \(\hat{\beta}_j^{*(n)} = \frac{\beta_j^{**}}{\hat{w}_j}\)
+\item Output \(\hat{\beta}_j^{\text{AL}} = \frac{\beta_j^{**}}{\hat{w}_j}\)
 \end{enumerate}
 computermæssige omkostninger er af orden \(O\del{np^2}\) svarende til et enkelt OLS fit.
 
@@ -60,6 +41,7 @@ Vi kan behandle den som en tredje tunning parameter og udføre en tre-dimensione
 I \citep{adaptive_lasso} foreslås \(\hat{\beta}^\text{OLS}\) medmindre kollinaritet er en bekymring, i dette tilfælde kan vi forsøge med \(\hat{\beta}^\text{ridge}\), da den er mere stabil end \(\hat{\beta}^\text{OLS}\).
 %
 \subsection{Konsistens af adaptive lasso} \label{subsec:konsistentAL}
+Den aktive mængde for adaptive lasso estimatoren betegnes \(\mathcal{A}_n^\text{AL} = \cbr{j \ : \widehat{\tbeta}^{\text{AL}} \neq 0 }\).
 For et passende valg af \(\lambda_n\) opfylder adaptive lasso estimaterne orakelegenskaberne, som vi nu vil bevise.
 %
 \begin{thm}\label{thm:ALoracle}

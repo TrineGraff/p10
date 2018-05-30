@@ -22,15 +22,19 @@ Af sætning --- Der gælder, at \(\widehat{\tbeta}^\text{OLS}\) og \(\widehat{\t
 Givet \(\tilde{\tbeta}\) da er \eqref{eq:4.76} konveks, og kan dermed løses med coordinate descent og LARS algoritmen.
 \subsubsection{Coordinate descent}
 
+
+På figur \ref{fig:diabetes_lasso_adaptivelasso} illustreres koefficientstierne for lasso og adaptive lasso med OLS vægte for diabetes data.
+\imgfigh{diabetes_lasso_adaptivelasso.pdf}{0.9}{Koefficientstierne for lasso og adaptive lasso med OLS vægte som funktion af $\log \del{\lambda}$ for diabetes data.}{diabetes_lasso_adaptivelasso}
+
 \subsubsection{LARS}
-Adaptive lasso estimaterne kan løses vha LARS algoritmen \citep{efron}.
+Adaptive lasso estimaterne kan løses vha LARS algoritmen \citep{efron}, udfra følgende simple steps
 \begin{enumerate}
-\item Definer \(\mathbf{x}_j^{**} = \frac{\mathbf{x}_j}{\hat{w}_j}\) for \(j=1, \ldots, p\)
-\item Løs lasso problemet for alle \(\lambda_n\)
-\begin{align*}
-\hat{\beta}^{**} = \argmin_{\beta} \left\Vert \y - \sum_{j=1}^p \mathbf{x}_j^{**} \beta_j \right\Vert^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert
-\end{align*}
-\item Output \(\hat{\beta}_j^{\text{AL}} = \frac{\beta_j^{**}}{\hat{w}_j}\)
+\item Definer \(\mathbf{x}_j^{*} = \frac{\mathbf{x}_j}{\widehat{w}_j}\) for \(j=1, \ldots, p\)
+\item Løs lasso problemet for alle \(\lambda_n\): \(\widehat{\tbeta}^{*} = \argmin_{\tbeta} \left\Vert \y - \sum_{j=1}^p \mathbf{x}_j^{*} \beta_j \right\Vert^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert\)
+%\begin{align*}
+%\widehat{\tbeta}^{*} = \argmin_{\tbeta} \left\Vert \y - \sum_{j=1}^p \mathbf{x}_j^{*} \beta_j \right\Vert^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert
+%\end{align*}
+\item Adaptive lasso estimatoren er da givet ved \(\widehat{\beta}_j^{\text{AL}} = \frac{\widehat{\beta}_j^{*}}{\widehat{w}_j}\)
 \end{enumerate}
 computermæssige omkostninger er af orden \(O\del{np^2}\) svarende til et enkelt OLS fit.
 

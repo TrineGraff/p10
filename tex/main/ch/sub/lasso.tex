@@ -4,7 +4,7 @@
 \textit{The Least Absolute Shrinkage Selection Operator}, som forkortes lasso, blev introduceret i \citep{lasso}. 
 Lasso finder løsningen til optimeringsproblemet
 \begin{align}
-\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t, \label{eq:2.3}
+\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta \in \R^p} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t, \label{eq:2.3}
 \end{align} 
 hvor vi bemærker, at betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt som en \(\ell_1\)-norm betingelse $\Vert \tbeta \Vert_1 \leq t$.
 Værdien af \(t\) begrænser summen af de absolutte værdier af parameter estimaterne og kontrollerer kompleksiteten af modellen. 
@@ -12,7 +12,7 @@ En lav værdi af \(t\) vil begrænse antallet af parametre, hvilket fører til e
 
 Lasso problemet kan omskrives til et Lagrange problem
 \begin{align}
-\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \tbeta \Vert_1}, \label{eq:2.5}
+\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \tbeta \Vert_1}, \label{eq:2.5}
 \end{align}
 hvor $\lambda \geq 0$ er en såkaldt strafparameter. 
 Der er en en-til-en korrespondance mellem det betingede problem \eqref{eq:2.3} og Lagrange problemet \eqref{eq:2.5}. 
@@ -26,41 +26,47 @@ I andre beskrivelser af lasso estimatoren kan en faktor indsættes foran summeri
 
 \textit{Ridge regression} estimatoren findes udfra 
 \begin{align} 
-\widehat{\tbeta}^\text{ridge} = \argmin_{\tbeta} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
+\widehat{\tbeta}^\text{ridge} = \argmin_{\tbeta \in \R^p} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
 \end{align} 
 hvor betingelsen $\sum_{j=1}^p \beta_j^2 \leq t$ kan skrives mere kompakt som en \(\ell_2\)-norm betingelse $\Vert \tbeta \Vert_2^2 \leq t$.
 Ridge regression problemet kan også omskrives til et Lagrange problem
 \begin{align*}
-\widehat{\tbeta}^\text{ridge} = \argmin_{\tbeta} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \tbeta \Vert_2^2},
+\widehat{\tbeta}^\text{ridge} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \tbeta \Vert_2^2},
 \end{align*}
 hvor $\lambda \geq 0$.
-Heraf kan ridge regression estimatoren findes ved at differentiere \(\del{\y - \X \tbeta}^T \del{\y - \X \tbeta} + \lambda \tbeta^T \tbeta\) mht $\tbeta$, sætte dette lig 0 og isolere for $\tbeta$. Hvoraf vi finder, at
+\begin{defn}[Ridge regression]
+Estimatoren for ridge regression er givet ved
 \begin{align} 
 \widehat{\tbeta}^\text{ridge} = \del{\X^T \X + \lambda \mathbf{I}_p}^{-1} \X^T \y. \label{eq:ridge_estimator}
-\end{align}  
-Sammenlignet med mindste kvadraters regression tilføjer ridge regression en positiv konstant $\lambda$ på diagonalen af $\X^T \X$, hvilket medfører, at \(\X^T \X + \lambda \mathbf{I}_p\) er invertibel, selvom $\X$ ikke har fuld rang. 
+\end{align} 
+\end{defn}
+Estimatoren findes ved at differentiere \(\del{\y - \X \tbeta}^T \del{\y - \X \tbeta} + \lambda \tbeta^T \tbeta\) mht $\tbeta$, sætte dette lig 0 og isolere for $\tbeta$.
+Ridge regression tilføjer altså en positiv konstant $\lambda$ på diagonalen af $\X^T \X$, hvilket medfører, at \(\X^T \X + \lambda \mathbf{I}_p\) er invertibel, selvom $\X$ ikke har fuld rang. 
 Dermed er en entydig løsning altid garanteret. 
 %
 \begin{exmp}
-Lad os betragte data givet i tabel \ref{tab:crime} af \citep{crimedata}.
-For 50 byer i USA er kriminalitetsraten per 1 million indbyggere givet og følgende 5 prædiktorer: 
+Lad os betragte data givet i tabel \ref{tab:diabetes} af ???
+Datasættet består af målinger på 442 diabetes patienter, hvor responsvariablen er et kvalitativ mål af sygdomsprogressionen et år efter sygdommen er konstateret og følgende 10 prædiktorer: 
 \begin{itemize}
-\item \texttt{funding}: årlige politiske finansiering i dollars per indbygger
-\item \texttt{hs}: procentvise andel af 25 årige eller derover som har gennemført 4 år på high school
-\item \texttt{not-hs}: procentvise andel af 16-19 årige som ikke studerer på eller ikke har gennemført high school
-\item \texttt{college}: procentvise andel af 18-24 årige som studerer på college
-\item \texttt{college4}: procentvise andel af 25 årige eller derover som har gennemført mindst 4 år på college
+\item \texttt{age}: patientens alder
+\item \texttt{sex}: 1 for kvinde og 0 for mænd??
+\item \texttt{bmi}: body-mass index
+\item \texttt{map}: gennemsnitlig blodtryk
+\item Målinger af blodet:
+\begin{itemize}
+\item \texttt{tc},  \texttt{ldl}, \texttt{hdl}, \texttt{tch}, \texttt{ltg} og \texttt{tglu}
+\end{itemize}
 \end{itemize}
 %
-\input{fig/tab/crime}
+\input{fig/tab/diabetes}
 %
-Datasættet, som vi betegner crime data, er inkluderet for at underbygge teorien og vi vil løbende i rapporten referere til det.
+Datasættet, som vi betegner diabetes data, er inkluderet for at underbygge teorien og vi vil løbende i rapporten referere til det.
 \end{exmp}
 %
-På figur \ref{fig:crime_koef} illustreres koefficientstierne for henholdsvis lasso og ridge regression for crime data.
+På figur \ref{fig:diabetes_koef} illustreres koefficientstierne for henholdsvis lasso og ridge regression for diabetes data.
 Heraf ses at lasso udfører variabeludvælgelse og mindsker koefficienterne, mens ridge regression blot mindsker koefficienterne.
 %
-\imgfigh{crime_lasso_ridge.pdf}{0.9}{Koefficientstierne for lasso og ridge regression plottet imod $\log \del{\lambda}$.}{crime_koef}
+\imgfigh{diabetes_lasso_ridge.pdf}{0.9}{Koefficientstierne for lasso og ridge regression som funktion af $\log \del{\lambda}$ for diabetes data.}{diabetes_koef}
 
 Betingelsesområderne for lasso og ridge regression for \(p=2\) illustreres på figur \ref{fig:LassoRig}.
 %
@@ -120,7 +126,7 @@ Når \(p>2\) da vil betingelsesområdet for lasso være en polydron med mange hj
 %\end{proof}
 %
 \subsection{Udregning af lasso} \label{subsec:udregning_lasso}
-Strafleddet for lasso problemet er ikke differentiabel, og derfor findes der ikke en lukket løsning til optimeringsproblemet.
+Strafleddet for lasso problemet er ikke differentiabel, og derfor findes der ikke en explicit løsning til optimeringsproblemet.
 Men da lasso problemet er konveks, kan vi finde en numerisk løsning blandt andet udfra en simpel procedure kaldet \textit{coordinate descent}, som vi vil beskrive nærmere i kapitel \ref{ch:optimeringsmetoder}.
 
 Nedenfor vil vi argumentere for at lasso problemet er konveks.
@@ -220,7 +226,7 @@ Stien er stykvis lineær.
 Algoritmen kaldet \textit{least angle regression} (LARS) er en homotopy metode, som effektivt konstruerer den stykvise lineære sti.
 En mere teoretisk gennemgang af coordinate descent og LARS algoritmen er givet i kapitel \ref{kap:optimeringsmetoder}.
 %
-\subsection{Frihedsgrader}
+\section{Frihedsgrader}
 Antag vi har \(p\) prædiktorer, og fitter en lineær regressionsmodel udfra \(k\) af disse prædiktorer, hvor \(k <p\).
 Hvis disse \(k\) prædiktorer vælges uafhængigt af responsvariablen, da kan man sige, at fitting proceduren anvender \(k\) frihedsgrader.
 Dette svarer løst sagt til, at teststørrelsen for at teste nulhypotesen om at alle \(k\) koefficienter er 0, har en \(\chi^2\) fordeling med \(k\) frihedsgrader.

@@ -1,6 +1,6 @@
 \chapter{Metoder til valg af model} \label{ch:metoder}
 I dette kapitel vil vi redegøre for nogle metoder, som anvendes til at udvælge den ``bedste'' model. 
-Vi er interesseret i en model, der er god til at prædiktere, men uden at være for kompleks.
+Vi er interesseret i en model, der er god til at prædiktere, som ikke er for kompleks.
 
 Datasættet opdeles i en træningsmængde og en testmængde. 
 Observationerne i træningsmængden betragtes som in-sample observationer og anvendes primært til at identificere modellen og estimere parametrene. 
@@ -27,7 +27,7 @@ Informationskriterierne giver konsistent estimation af antallet af faktorer i fa
 
 \subsection{Valg af tuning parameter}
 I dette underafsnit introduceres to metoder til at estimere tuning parameteren \(\lambda\) i lasso modellen og den generaliseringer, nemlig krydsvalidering og BIC. 
-Krydsvalidering finder den model med mindst prædiktionsfejl, mens BIC vælger den model, som giver det bedste fit i forhold til modellens kompleksitet. 
+Krydsvalidering finder modellen med mindst prædiktionsfejl, mens BIC vælger den model, som giver det bedste fit i forhold til modellens kompleksitet. 
 %For elastisk net problemet \eqref{eq:4.2} betragtes to tuning parametre \(\lambda\) og \(\alpha\).
 
 \subsubsection{Krydsvalidering}
@@ -51,9 +51,9 @@ Krydsvalidering finder den model med mindst prædiktionsfejl, mens BIC vælger d
 %\subsubsection{k-fold krydsvalidering}
 En k-fold krydsvalidering opdeler tilfældigt observationerne i \(k\) grupper, som er tilnærmelsesvis af samme størrelse.
 Én af disse grupper anvendes som valideringsmængde, og de resterende \(k-1\) grupper betragtes som træningsmængde.
-En regressions model fittes på træningsmængden, hvorfra den gennemsnitlige kvadrerede fejl findes udfra valideringsmængden, hvilket giver \(\text{MSE}_1\).
+En regressionsmodel fittes på træningsmængden, hvorfra den gennemsnitlige kvadrerede fejl findes udfra valideringsmængden, hvilket giver \(\text{MSE}_1\).
 Denne procedure gentages \(k\) gange, således at hver gruppe betragtes som valideringsmængde.
-Dette resulterer i \(k\) estimater af prædiktions fejlen $\text{MSE}_1, \text{MSE}_2, \dots , \text{MSE}_k$.
+Dette resulterer i \(k\) estimater af prædiktionsfejlen $\text{MSE}_1, \text{MSE}_2, \dots , \text{MSE}_k$.
 Estimatet for \(k\)-fold krydsvalidering er da givet ved
 \begin{align}
 \text{CV}_k = \frac{1}{k} \sum_{i=1}^k \text{MSE}_i. \label{eq:cv_k}
@@ -72,7 +72,7 @@ Bias kunne være et problem i forhold til hvordan vi vælger vores træningsmæn
 
 \subsubsection{BIC}
 Tuning parametrene kan også vælges udfra Bayesian informationskriteriet.
-Vi betragter dens skalerede version
+Vi betragter dens skalerede version.
 %
 \begin{defn}[Bayesian informationskriteriet (BIC)] \label{def:bic}
 \begin{align*}
@@ -95,7 +95,7 @@ og BIC kan omskrives til
 
 \section{Out-of-sample metoder}
 I den empiriske del betragtes et rolling scheme forecast med expanding estimerings windows.
-For at vurdere en models prædiktions evnen betragtes den gennemsnitlige kvadrede fejl (MSE) og den gennemsnitlige absolutte fejl (MAE)
+For at vurdere en models prædiktion betragtes den gennemsnitlige kvadrede fejl (MSE) og den gennemsnitlige absolutte fejl (MAE)
 \begin{align}
 \text{MSE} & =  \frac{1}{T} \sum_{t=1}^{T} \del{y_{t} - \widehat{y}_{t}}^2 \label{eq:mse}, \\
 \text{MAE} & =  \frac{1}{T} \sum_{t=1}^{T} \abs{y_{t} - \widehat{y}_{t}}, \label{eq:mae} ,
@@ -110,12 +110,12 @@ R^{\text{\text{MSE}}} = \frac{\text{MSE}^{\text{Alternativ}}}{\text{MSE}^{\text{
 \end{align*} 
 Hvis et gennemsnitlig tabs ratio er mindre end 1, da er den alternative model bedre end benchmark modellen og omvendt hvis værdien er større end 1. 
 
-For at vurdere modellernes prædiktion i forhold til benchmark modellen fra observation til observation, defineres et rullende gennemsnitlig kvadreret og absolut tabs ratio, som er givet ved
+For at vurdere modellernes prædiktion i forhold til benchmark modellen fra observation til observation, defineres et rullende gennemsnitlig tabs ratio, som er givet ved
 \begin{align*}
 R_{t}^\text{MSE} =\frac{\text{MSE}_\text{t}^\text{Alternative}}{\text{MSE}_\text{t}^\text{Benchmark}}, \qquad\frac{\text{MAE}_\text{t}^\text{Alternative}}{\text{MAE}_\text{t}^\text{Benchmark}},
 \end{align*}
-hvor $\text{MSE}_t = \frac{1}{T} \sum_{t =1}^{T} \del{y_t - \widehat{y}_t}^2$ og $\text{MAE}_t = \frac{1}{T} \sum_{t = 1}^{T} \abs{y_t - \widehat{y}_t}$
-Hvis et rullende gennemsnitlige tabs ratio er mindre end 1, da prædikterer den alternative model gennemsnitlig bedre end benchmark modellen og omvendt hvis værdien er større end 1.
+hvor $\text{MSE}_t = \frac{1}{T} \sum_{t =1}^{T} \del{y_t - \widehat{y}_t}^2$ og $\text{MAE}_t = \frac{1}{T} \sum_{t = 1}^{T} \abs{y_t - \widehat{y}_t}$.
+Hvis et rullende gennemsnitlig tabs ratio er mindre end 1, da prædikterer den alternative model gennemsnitlig bedre end benchmark modellen til tid \(t\) og omvendt hvis værdien er større end 1.
 
 Foruden MSE og MAE betragtes \textit{Diebold-Mariano} testen samt \textit{model confidence set} (MCS) proceduren.
 Diebold-Mariano testen kan anvendes til at teste om én model er signifikant bedre end en anden model, mens MCS proceduren identificerer en mængde af modeller, som er signifikant bedre end de øvrige modeller, men ikke signifikant bedre end de øvrige modeller i mængden.

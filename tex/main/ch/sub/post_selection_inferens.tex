@@ -1,5 +1,5 @@
-\section{Inferens baseret på polyhedral lemmaet} \label{subsec:teste_polyhedron}
-I dette afsnit vil vi præsentere polyhedral lemmaet, hvorudfra TG testen er baseret, som giver eksakte \(p\)-værdier og konfidensintervaller i det gaussiske tilfælde.
+\section{Inferens baseret på polyeder lemmaet} \label{subsec:teste_polyhedron}
+I dette afsnit vil vi præsentere polyeder lemmaet, hvorudfra TG testen er baseret, som giver eksakte \(p\)-værdier og konfidensintervaller i det gaussiske tilfælde.
 Afsnittet er baseret på \citep{post_inference} og kapitel 6 i \citep{hastie}.
 
 %Hvis udvælgelsen af variable kan skrives som \(\cbr{\boldsymbol{\Gamma} \y \geq \mathbf{u}}\), for en matrix \(\boldsymbol{\Gamma}\) og vektor \(\mathbf{u}\), da kan .
@@ -12,7 +12,7 @@ Afsnittet er baseret på \citep{post_inference} og kapitel 6 i \citep{hastie}.
 
 Antag \(\y \sim N \del{\tmu, \sigma^2 \mathbf{I}_n }\), hvor \(\tmu\) er en ukendt \(n \times 1\) vektor og \(\boldsymbol{\Sigma}\) er en kendt \(n \times n\) matrix.
 Dette generaliserer vores setup i \eqref{eq:set-up}.
-Vi betragter polyhedronen \(\mathcal{P} = \cbr{\y : \ \boldsymbol{\Gamma} \y \geq \mathbf{u}}\), hvor \(\boldsymbol{\Gamma}\) er en \(m \times n\) matrix og \(\mathbf{u}\) er en \(m \times 1\) vektor. Uligheden skal fortolkes elementvis.
+Vi betragter et polyeder \(\mathcal{P} = \cbr{\y : \ \boldsymbol{\Gamma} \y \geq \mathbf{u}}\), hvor \(\boldsymbol{\Gamma}\) er en \(m \times n\) matrix og \(\mathbf{u}\) er en \(m \times 1\) vektor. Uligheden skal fortolkes elementvis.
 For et fast \(\teta\), som er en \(n \times 1\) vektor, ønsker vi at lave inferens af \(\teta^T \tmu\) betinget \(\y \in \mathcal{P}\).
 For et specifik valg af \(\teta\) er \(\teta^T \tmu\) lig regressionskoefficienten af \(j\)'te prædiktor \(\beta_j\), men i princippet kan vi teste enhver lineær betingelse på regressionskoefficienterne ved at specificere \(\teta\).
 
@@ -27,7 +27,7 @@ For et specifik valg af \(\teta\) er \(\teta^T \tmu\) lig regressionskoefficient
 
 Nedenfor gives en alternativ repræsentation af \(\mathcal{P}\).
 %
-\begin{lem}[Polyhedral lemma] \label{lem:polyhedral}
+\begin{lem}[Polyeder lemma] \label{lem:polyhedral}
 For ethvert \(\boldsymbol{\Sigma}\) og \(\teta\) hvor \(\teta^T \boldsymbol{\Sigma} \teta \neq 0\), gælder der, at
 \begin{align}
 \boldsymbol{\Gamma} \y \geq \mathbf{u} \ \Longleftrightarrow \ \mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}, \quad  \mathcal{V}^0 \del{\y} \leq 0, \label{eq:post_8}
@@ -47,15 +47,15 @@ Blot uafhængighedsresultatet afhænger af normaliteten af \(\y\).
 Se figur \ref{fig:polyhedron} for en geometrisk illustration af lemmaet.
 Intuitivt kan resultatet forklares som følgende, hvor vi antager, at \(\boldsymbol{\Sigma}= \mathbf{I}_n\).
 Først dekomponeres \(\y=P_{\boldsymbol{\eta}} \y + P_{\boldsymbol{\eta}^\perp} \y\), hvor \(P_{\boldsymbol{\eta}} \y = \frac{\boldsymbol{\eta} \boldsymbol{\eta}^T \y}{\Vert \boldsymbol{\eta} \Vert_2^2}\) er projektionen af \(\y\) langs \(\boldsymbol{\eta}\) og \(P_{\boldsymbol{\eta}^\perp} \y = \y - P_{\boldsymbol{\eta}} \y\) er projektionen på det ortogonale komplement af \(\boldsymbol{\eta}\).
-Vi kan betragte \(\y\) som en afvigelse fra \(P_{\boldsymbol{\eta}^\perp} \y\) af størrelsen \(\boldsymbol{\eta}^T \y\), langs linjen bestemt af \(\boldsymbol{\eta}\).
-Mængderne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) bestemmer, hvor langt vi kan afvige på hver side af \(P_{\boldsymbol{\eta}^\perp} \y\), inden \(\y\) forlader polyhedronen, hvoraf vi får uligheden \(\mathcal{V}^- \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+\).
-Nogle flader af polyhedronen kan være perfekt justeret med \(\boldsymbol{\eta}\), dvs deres normal vektorer kan være ortogonale med \(\boldsymbol{\eta}\).
+Vi kan betragte \(\y\) som en afvigelse fra \(P_{\boldsymbol{\eta}^\perp} \y\) af størrelsen \(\boldsymbol{\eta}^T \y\) langs linjen bestemt af \(\boldsymbol{\eta}\).
+Mængderne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) bestemmer, hvor langt vi kan afvige på hver side af \(P_{\boldsymbol{\eta}^\perp} \y\), inden \(\y\) forlader polyederet, hvoraf vi får uligheden \(\mathcal{V}^- \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+\).
+Nogle flader af polyederet kan være perfekt justeret med \(\boldsymbol{\eta}\), dvs deres normal vektorer kan være ortogonale med \(\boldsymbol{\eta}\).
 Dette kan tjekkes udfra \(\mathcal{V}^0\) ved at \(\y\) ligger på den rigtige side af disse flader.  
 %
 \begin{figure}[H]
 \centering
 \scalebox{1}{\input{fig/polyhedron.tikz}}
-\caption{Geometri af polyhedral udvælgelsen som trunkering. For simplicitet antages at \(\boldsymbol{\Sigma} = \mathbf{I}_n\). Det blå område er polyhedron mængden \(\cbr{\y : \ \boldsymbol{\Gamma} \y \geq \mathbf{u}}\).
+\caption{Geometri af polyeder udvælgelsen som trunkering. For simplicitet antages at \(\boldsymbol{\Sigma} = \mathbf{I}_n\). Det blå område er polyederet \(\cbr{\y : \ \boldsymbol{\Gamma} \y \geq \mathbf{u}}\).
 Ved at dekomponere \(\y\) til dens projektion på \(\teta\) og dens projektion på det ortogonale komplement af \(\teta\), ses at \(\boldsymbol{\Gamma} \y \geq \mathbf{u}\) er opfyldt, hvis og kun hvis \(\teta^T \y\) ikke afviger for langt fra \(P_{\boldsymbol{\eta}^\perp} \y\), dvs den skal fastholdes imellem grænserne \(\mathcal{V}^-\) og \(\mathcal{V}^+\).
 Yderligere er grænserne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) kun funktioner af \(P_{\boldsymbol{\eta}^\perp} \y\), derfor er de uafhængige af \(\teta^T \y\) under normalitet.} \label{fig:polyhedron}
 \end{figure}
@@ -108,7 +108,7 @@ Da er \(I= [\delta_\alpha, \infty )\) et gyldig enkeltsidet konfidensinterval fo
 \end{align}
 \end{lem}
 %
-Af teststørrelsen i \eqref{eq:post_1.14} har vi magt imod enkeltsidet alternativ hypotese \(\hyp_1 : \teta^T \tmu > 0\), da den trunkerede normal overlevelsesfunktion \(1-F_{\mu, \sigma^2}^{\sbr{a,b}} \del{x}\), evalueret i ethvert fast punkt \(x\), er monoton stigende i \(\mu\).
+Vi har styrke imod den enkeltsidet alternativ hypotese \(\hyp_1 : \teta^T \tmu > 0\), da \(1-F_{\mu, \sigma^2}^{\sbr{a,b}} \del{x}\), evalueret i ethvert fast punkt \(x\), er monoton stigende i \(\mu\).
 Dette gælder også for konfidensintervallet i \eqref{eq:post_1.16} og \eqref{eq:post_1.17}.
 Herefter betragtes dobbeltsidet inferens.
 %
@@ -138,7 +138,7 @@ Da gælder, at
 \end{align}
 \end{lem}
 %
-Teststørrelsen i \eqref{eq:post_1.18}, defineret som minimum af den trunkerede normal fordelingsfunktion og overlevelsesfunktionen, har magt imod den alternative hypotese \(\hyp_1: \boldsymbol{\eta}^T \tmu \neq 0\).
+Teststørrelsen i \eqref{eq:post_1.18}, defineret som 2 multipliceret minimum af fordelingsfunktionen af ----- og overlevelsesfunktionen, har styrke imod den alternative hypotese \(\hyp_1: \boldsymbol{\eta}^T \tmu \neq 0\).
 Beviset for dens nulhypotese i \eqref{eq:post_1.19} kommer af, at hvis \(U\) følger en standard uniform fordeling, da gør \(2 \cdot \min \cbr{U,1-U}\) også.
 Konstruktionen af konfidensintervallet i \eqref{eq:post_20}, \eqref{eq:post_21} og \eqref{eq:post_22} anvender igen monotonicitet af en trunkeret normal overlevelsesfunktion i den underliggende middelværdi parameter.
 
@@ -148,7 +148,7 @@ Konstruktionen af konfidensintervallet i \eqref{eq:post_20}, \eqref{eq:post_21} 
 
 \subsection{TG test}
 Vi antager, at kolonnerne af \(\X\) er i general position (se definition \ref{defn:general_position}), hvilket medfører, at løsningsstierne for LARS uden og med lasso modifikation er entydige \citep{lasso_unique}. 
-\citep{post_inference} beviste at modeludvælgelsen for LARS og LARS med lasso modifikation kan karakteriseres som et polyhedron på formen \(\cbr{\y : \ \Gamma \y \geq 0}\).
+\citep{post_inference} beviste at modeludvælgelsen for LARS og LARS med lasso modifikation kan karakteriseres som et polyeder på formen \(\cbr{\y : \ \Gamma \y \geq 0}\).
 
 Givet antallet af steps \(k\), da kan vi let udregne betinget \(p\)-værdier og konfidensintervaller, efter vi har konstrueret matricen \(\boldsymbol{\Gamma}\) for henholdsvis LARS eller lasso.
 Lad os teste nulhypotesen \(\hyp_0: \ \teta^T \tmu = 0\), hvor \(\teta\) er vilkårlig.

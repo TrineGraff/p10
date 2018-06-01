@@ -13,7 +13,7 @@ The factor model limits the number of model parameters by collecting information
 Then we present the lasso estimator, which is an extension of classic linear regression, in which an \(\ell_1\)-constraint is imposed on the parameter estimates.
 This constraint shrinks the coefficients, and will set some of them to zero.
 As such the lasso model perform variable selection in linear regression.
-This results in a convex optimzation problem, which can be solved efficiently for large problems.
+This results in a convex optimization problem, which can be solved efficiently for large problems.
 
 To solve the lasso problem we consider an algorithm called coordinate descent.
 It is especially attractive for problems such as lasso in which a closed solution does not exits, but a coordinatewise does.
@@ -34,7 +34,7 @@ We also describe some theory for the inference of the lasso.
 For the LARS algorithm with lasso modification we consider the covariance test.
 The covariance test assigns \(p\)-values to the predictors as the are successively entered by the lasso.
 It turns out that the selection event of LARS and lasso can be characterized as a polyhedral.
-From the polyhedral lemma an equivalent respresentation of the polyhedral is given, from which inference of the selected predictors can be made.
+The polyhedral lemma present an alternative representation of the polyhedral, which is used to make inference for the selected predictors.
 
 In the empirical part the presented models are used to predict the unemployment rate one-step-ahead.
 The dataset that we will consider is gathered from the Federal Reserve Bank of St. Louis and is publicly available.

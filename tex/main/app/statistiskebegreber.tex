@@ -1,18 +1,18 @@
 \chapter{Generelle statistiske begreber}
 I dette appendiks defineres generelle statistiske begreber, som anvendes igennem rapporten.
-
-Løst sagt, siges en estimator at være konsistent, hvis følgen $\boldsymbol{\theta}_n(\mathbf{Y})$ af estimatorer for parameteren $\boldsymbol{\theta}$ konvergerer i sandsynlighed mod den sande værdi $\boldsymbol{\theta}$. 
-% 
-\begin{defn}[Svag konsistens] \label{def:konsistent}
-Lad $\{ \boldsymbol{\hat{\theta}}_n \}$ være en følge af estimatorer. Da siges $ \{ \boldsymbol {\hat{\theta}}_n \}$ at være konsistens for $\boldsymbol{\theta}$ hvis
-\begin{align*}
-\boldsymbol{\hat{\theta}} \overset{p}{\rightarrow} \boldsymbol{\theta}.
-%\underset{n \rightarrow \infty}{\lim} P \left( \vert \boldsymbol{\hat{\theta}}_n - \boldsymbol{\theta} \vert \leq \epsilon \right) =1
-\end{align*}
-\end{defn}
+%
+%Løst sagt, siges en estimator at være konsistent, hvis følgen $\boldsymbol{\theta}_n(\mathbf{Y})$ af estimatorer for parameteren $\boldsymbol{\theta}$ konvergerer i sandsynlighed mod den sande værdi $\boldsymbol{\theta}$. 
+%% 
+%\begin{defn}[Svag konsistens] \label{def:konsistent}
+%Lad $\{ \boldsymbol{\hat{\theta}}_n \}$ være en følge af estimatorer. Da siges $ \{ \boldsymbol {\hat{\theta}}_n \}$ at være konsistens for $\boldsymbol{\theta}$ hvis
+%\begin{align*}
+%\boldsymbol{\hat{\theta}} \overset{p}{\rightarrow} \boldsymbol{\theta}.
+%%\underset{n \rightarrow \infty}{\lim} P \left( \vert \boldsymbol{\hat{\theta}}_n - \boldsymbol{\theta} \vert \leq \epsilon \right) =1
+%\end{align*}
+%\end{defn}
 %
 \begin{defn}[Rod-n-konsistent estimator] \label{def:rodn}
-En estimator $  \boldsymbol {\hat{\theta}}_n $ for $\boldsymbol{\theta}$ er rod-n-konsistent hvis
+En estimator \(\widehat{\tbeta}_n\) for \(\tbeta\) er rod-n-konsistent hvis
 \begin{align*}
 \boldsymbol {\hat{\theta}}_n  - \boldsymbol{\theta} = O \left( \frac{1}{\sqrt{n}} \right).
 \end{align*}
@@ -63,7 +63,7 @@ Uligheden sikrer, at en konveks funktion ikke kan have et lokalt minimum, som ik
 %
 \begin{defn} \label{defn:supp}
 Antag \(f: \X \rightarrow \R\), hvor \(\X\) er en vilkårlig mængde.
-Support mængden af \(f\), som skrives \(\text{supp} \del{f}\), er en mængde af punkter i \(\X\), hvor \(f\) er ikke-nul
+Støtte mængden af \(f\), som skrives \(\text{supp} \del{f}\), er en mængde af punkter i \(\X\), hvor \(f\) er ikke-nul
 \begin{align*}
 \text{supp} \del{f} = \cbr{x \in \X \given f \del{x} \neq 0}.
 \end{align*}
@@ -77,14 +77,14 @@ y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \dots + \phi_p y_{t-p} + \omega_t, \qqua
 hvor $y_t$ er stationær og $\phi_1 , \phi_2, \dots, \phi_p $ er konstanter  $\del{ \phi_p \neq 0}$ og $\omega_t \sim iid\del{0, \sigma_\omega^2}$, hvis ikke andet er angivet.  
 \end{defn}
 
-\begin{defn}[justerede R$^2$] \label{def:adjr2}
+\begin{defn}[Justerede R$^2$] \label{def:adjr2}
 Justerede R$^2$ er givet ved
 \begin{align*}
 R^2_{\text{adj}} = 1 - \sbr{\frac{(1 - R)(n-1)}{n - p -1}},
 \end{align*}
-hvor $N$ er antallet af punkter, $p$ er antallet af prædiktorer og 
+hvor $n$ er antallet af observationer, $p$ er antallet af prædiktorer og 
 \begin{align*}
-R = 1 - \frac{\sum_{i = 1}^n \del{y_i - \sum_{j=1}^px_{ij} \beta_j}}{\sum_{i = 1}^n \del{y_i - \bar{y}}}
+R = 1 - \frac{\sum_{i = 1}^n \del{y_i - \sum_{j=1}^px_{ij} \beta_j}}{\sum_{i = 1}^n \del{y_i - \bar{y}}}.
 \end{align*}
 \end{defn}
  

@@ -1,25 +1,36 @@
 \section{Inferens baseret på polyeder lemmaet} \label{subsec:teste_polyhedron}
-I dette afsnit vil vi præsentere polyeder lemmaet, hvorudfra TG testen er baseret, som giver eksakte \(p\)-værdier og konfidensintervaller i det gaussiske tilfælde.
-Afsnittet er baseret på \citep{post_inference} og kapitel 6 i \citep{hastie}.
+Lad os antage
+\begin{align*}
+\y \sim N \del{\tmu,  \boldsymbol{\Sigma}},
+\end{align*}
+hvor \(\tmu\) er en ukendt \(n \times 1\) vektor og \(\boldsymbol{\Sigma}\) er en kendt \(n \times n\) matrix.
+Dette generaliserer vores setup i \eqref{eq:set-up}.
+Betragt et polyeder
+\begin{align*}
+\mathcal{P} = \cbr{\y : \ \boldsymbol{\Gamma} \y \geq \mathbf{u}},
+\end{align*}
+hvor \(\boldsymbol{\Gamma}\) er en \(m \times n\) matrix, \(\mathbf{u}\) er en \(m \times 1\) vektor og uligheden skal fortolkes elementvis.
 
-%Hvis udvælgelsen af variable kan skrives som \(\cbr{\boldsymbol{\Gamma} \y \geq \mathbf{u}}\), for en matrix \(\boldsymbol{\Gamma}\) og vektor \(\mathbf{u}\), da kan .
-%Dette kan anvendes til lasso for en fast værdi af \(\lambda\) og til steps i LARS algoritmen, hvilket vil give en eksakt kovarians test.
-%
+På s. 606-607 i \citep{post_inference} bevises, at variabeludvælgelsen af LARS algoritmen uden og med lasso modifikationen kan karakteriseres som et polyeder.
+
 %Lasso løsningen for en fast værdi af \(\lambda\) er karakteriseret ved en mængde af aktive variable og fortegnene af deres koefficienter.
-%Det viser sig at udvælgelsen af variable, som fører til den givne kombination kan skrives på formen \(\cbr{\boldsymbol{\Gamma} \y \geq \mathbf{u}}\).
+%Det viser sig at udvælgelsen af variable kan skrives på formen \(\cbr{\boldsymbol{\Gamma} \y \geq \mathbf{u}}\).
 %Med andre ord svarer mængden \(\cbr{\y : \ \boldsymbol{\Gamma} \y \geq \mathbf{u}}\) til værdierne af \(\y\) som giver samme aktive variable og fortegn.
 %Det samme gør sig gældende for LARS algoritmen efter \(k\) steps.
 
-Antag \(\y \sim N \del{\tmu, \sigma^2 \mathbf{I}_n }\), hvor \(\tmu\) er en ukendt \(n \times 1\) vektor og \(\boldsymbol{\Sigma}\) er en kendt \(n \times n\) matrix.
-Dette generaliserer vores setup i \eqref{eq:set-up}.
-Vi betragter et polyeder \(\mathcal{P} = \cbr{\y : \ \boldsymbol{\Gamma} \y \geq \mathbf{u}}\), hvor \(\boldsymbol{\Gamma}\) er en \(m \times n\) matrix og \(\mathbf{u}\) er en \(m \times 1\) vektor. Uligheden skal fortolkes elementvis.
-For et fast \(\teta\), som er en \(n \times 1\) vektor, ønsker vi at lave inferens af \(\teta^T \tmu\) betinget \(\y \in \mathcal{P}\).
-For et specifik valg af \(\teta\) er \(\teta^T \tmu\) lig regressionskoefficienten af \(j\)'te prædiktor \(\beta_j\), men i princippet kan vi teste enhver lineær betingelse på regressionskoefficienterne ved at specificere \(\teta\).
+Lad \(\teta\) være en \(n \times 1\) vektor, da er målet at lave inferens af  \(\teta^T \tmu\) betinget \(\y \in \mathcal{P}\).
+Vi betragter nulhypotesen \(\hyp_0 : \teta^T \tmu = 0\) betinget \(\y \in \mathcal{P}\).
+For \(\teta = \del{\X_{\A_k}^+}^T \mathbf{e}_k\), hvor \(\X_{\A_k}\) er en matrix, der består af søjlerne i \(\X\), som svarer til prædiktorerne i \(\A_k\), \( \del{\X_{\A_k}^+} = \del{\X_{\A_k}^T \X_{\A_k}}^{-1} \X_{\A_k}^T\) er den pseudoinverse af \(\X_{\A_k}\) og \(\mathbf{e}_k\) er \(k\)'te standard vektor, har vi, at
+\begin{align*}
+\teta^T \tmu = \mathbf{e}_k^T \X_{\A_k}^+ \tmu =  \mathbf{e}_k^T \del{\X_{\A_k}^T \X_{\A_k}}^{-1} \X_{\A_k}^T \X_{\A_k} \tbeta = \beta_k,
+\end{align*}
+og nulhypotesen svarer derfor til at teste om koefficienten af den sidst tilføjede variabel, i regressionen af \(\tmu\) på \(\X_{\A_k}\), er lig 0.
+
+
+%Vi antager, at kolonnerne af \(\X\) er i general position (se definition \ref{defn:general_position}), hvilket medfører, at løsningsstierne for LARS uden og med lasso modifikation er entydige \citep{lasso_unique}. 
+%\citep{post_inference} beviste at modeludvælgelsen for LARS og LARS med lasso modifikation kan karakteriseres som et polyeder på formen \(\cbr{\y : \ \Gamma \y \geq 0}\).
 
 %Vi antager, at kolonnerne af \(\X\) er i general position (se definition \ref{defn:general_position}), hvilket medfører at løsningsstierne for LARS og LARS med lasso modifikation er entydige \citep{lasso_unique}. 
-%
-%Herefter vil vi vise at modeludvælgelsen for LARS og LARS med lasso modifikation kan karakteriseres som et polyhedron på formen \(\cbr{\y : \ \Gamma \y \geq 0}\)
-%det viser sig at udvælgelsen af LARS og lasso kan udtrykkes som polyhedral betingelser på y.
 %For kovarians testen antages at den sande model er lineær, dette er ikke nødvendigt for TG testen.
 %
 %TG testen antager ikke at den sande model er lineær, dvs vi antager ikke at \(\tmu = \X \tbeta^*\).
@@ -36,20 +47,45 @@ hvor
 \begin{align}
 \mathcal{V}^- \del{\y} &= \max_{j: \rho_j > 0} \frac{u_j - \del{\boldsymbol{\Gamma} \y}_j + \rho_j \boldsymbol{\eta}^T \y}{\rho_j}, \label{eq:V-} \\
 \mathcal{V}^+ \del{\y} &= \min_{j: \rho_j < 0} \frac{u_j - \del{\boldsymbol{\Gamma} \y}_j + \rho_j \boldsymbol{\eta}^T \y}{\rho_j}, \label{eq:V+} \\
-\mathcal{V}^0 \del{\y} &= \max_{j: \rho_j = 0} \del{u_j - \del{\boldsymbol{\Gamma} \y}_j}, \label{eq:V0} 
+\mathcal{V}^0 \del{\y} &= \max_{j: \rho_j = 0} u_j - \del{\boldsymbol{\Gamma} \y}_j, \label{eq:V0} 
 \end{align}
 og \(\boldsymbol{\rho}=\frac{\boldsymbol{\Gamma} \boldsymbol{\Sigma} \boldsymbol{\eta}}{\teta^T \boldsymbol{\Sigma} \teta}\).
 Yderligere  er \(\boldsymbol{\eta}^T \y\) og \(\del{\mathcal{V}^-\del{\y}, \mathcal{V}^+\del{\y},\mathcal{V}^0\del{\y}}\) uafhængige. 
 \end{lem}
 %
-Resultatet i \eqref{eq:post_8} hvor \(\mathcal{V}^-\), \(\mathcal{V}^+\) og \(\mathcal{V}^0\) defineres i \eqref{eq:V-}-\eqref{eq:V0} er deterministisk og gælder for alle \(\y\).
+\begin{proof}
+Omskriv uligheden \(\boldsymbol{\Gamma} \y \geq \mathbf{u}\)
+\begin{align*}
+\boldsymbol{\Gamma} \del{ \frac{\boldsymbol{\Sigma} \boldsymbol{\eta} \teta^T}{\teta^T \boldsymbol{\Sigma} \teta} \y + \del{\mathbf{I}_n - \frac{\boldsymbol{\Sigma}\boldsymbol{\eta} \teta^T}{\teta^T \boldsymbol{\Sigma} \teta}} \y} \geq \mathbf{u}.
+\end{align*}
+Lad \(\boldsymbol{\rho} = \frac{\boldsymbol{\Gamma} \boldsymbol{\Sigma} \boldsymbol{\eta}}{\teta^T \boldsymbol{\Sigma} \teta}\), da fås, at
+\begin{align*}
+\boldsymbol{\rho} \teta^T \y + \boldsymbol{\Gamma} \y - \boldsymbol{\rho} \teta^T \y &\geq \mathbf{u} \\
+\boldsymbol{\rho} \teta^T \y &\geq \mathbf{u} - \boldsymbol{\Gamma} \y + \boldsymbol{\rho} \teta^T \y,
+\end{align*}
+som kan udtrykkes som
+\begin{align*}
+\teta^T \y & \geq \frac{u_j - \del{\boldsymbol{\Gamma} \y}_j + \rho_j \boldsymbol{\eta}^T \y}{\rho_j}, \quad \text{for } \rho_j > 0, \\
+\teta^T \y & \leq \frac{u_j - \del{\boldsymbol{\Gamma} \y}_j + \rho_j \boldsymbol{\eta}^T \y}{\rho_j}, \quad \text{for } \rho_j < 0, \\
+0 &\geq u_j - \del{\boldsymbol{\Gamma} \y}_j, \quad \text{for } \rho_j < 0,
+\end{align*}
+eller
+\begin{align*}
+\teta^T \y & \geq \mathcal{V}^- \del{\y} = \max_{j: \rho_j > 0} \frac{u_j - \del{\boldsymbol{\Gamma} \y}_j + \rho_j \boldsymbol{\eta}^T \y}{\rho_j},\\
+\teta^T \y & \leq \mathcal{V}^+ \del{\y} = \min_{j: \rho_j < 0} \frac{u_j - \del{\boldsymbol{\Gamma} \y}_j + \rho_j \boldsymbol{\eta}^T \y}{\rho_j}, \\
+0 &\geq \mathcal{V}^0 \del{\y} = \max_{j: \rho_j = 0} u_j - \del{\boldsymbol{\Gamma} \y}_j.
+\end{align*}
+Uafhængigheden mellem \(\del{\mathcal{V}^-\del{\y}, \mathcal{V}^+\del{\y},\mathcal{V}^0\del{\y}}\) og \(\boldsymbol{\eta}^T \y\), kommer af, at \(\mathcal{V}^-, \mathcal{V}^+\) og \(\mathcal{V}^0\) alle er funktioner af \(\y - \frac{ \boldsymbol{\Sigma} \boldsymbol{\eta} \boldsymbol{\eta}^T \y}{\teta^T \boldsymbol{\Sigma} \teta} \), som under antagelsen \(\y \sim N \del{\tmu,  \boldsymbol{\Sigma}}\) er uafhængig af \(\teta^T \y\).
+\end{proof}
+%
+Resultatet i \eqref{eq:post_8} er deterministisk og gælder for alle \(\y\).
 Blot uafhængighedsresultatet afhænger af normaliteten af \(\y\).
 Se figur \ref{fig:polyhedron} for en geometrisk illustration af lemmaet.
 Intuitivt kan resultatet forklares som følgende, hvor vi antager, at \(\boldsymbol{\Sigma}= \mathbf{I}_n\).
 Først dekomponeres \(\y=P_{\boldsymbol{\eta}} \y + P_{\boldsymbol{\eta}^\perp} \y\), hvor \(P_{\boldsymbol{\eta}} \y = \frac{\boldsymbol{\eta} \boldsymbol{\eta}^T \y}{\Vert \boldsymbol{\eta} \Vert_2^2}\) er projektionen af \(\y\) langs \(\boldsymbol{\eta}\) og \(P_{\boldsymbol{\eta}^\perp} \y = \y - P_{\boldsymbol{\eta}} \y\) er projektionen på det ortogonale komplement af \(\boldsymbol{\eta}\).
 Vi kan betragte \(\y\) som en afvigelse fra \(P_{\boldsymbol{\eta}^\perp} \y\) af størrelsen \(\boldsymbol{\eta}^T \y\) langs linjen bestemt af \(\boldsymbol{\eta}\).
-Mængderne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) bestemmer, hvor langt vi kan afvige på hver side af \(P_{\boldsymbol{\eta}^\perp} \y\), inden \(\y\) forlader polyederet, hvoraf vi får uligheden \(\mathcal{V}^- \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+\).
-Nogle flader af polyederet kan være perfekt justeret med \(\boldsymbol{\eta}\), dvs deres normal vektorer kan være ortogonale med \(\boldsymbol{\eta}\).
+Størrelserne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) bestemmer, hvor langt vi kan afvige på hver side af \(P_{\boldsymbol{\eta}^\perp} \y\), inden \(\y\) forlader polyederet, hvoraf vi får uligheden \(\mathcal{V}^- \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+\).
+Nogle flader af polyederet kan være perfekt justeret med \(\boldsymbol{\eta}\), dvs deres normalvektorer kan være ortogonale med \(\boldsymbol{\eta}\).
 Dette kan tjekkes udfra \(\mathcal{V}^0\) ved at \(\y\) ligger på den rigtige side af disse flader.  
 %
 \begin{figure}[H]
@@ -83,7 +119,7 @@ Vi kan udregne \(p\)-værdier for nulhypotesen \(\hyp_0: \boldsymbol{\eta}^T \bo
 
 Herefter betragtes enkelt- og dobbeltsidet inferens.
 %
-\begin{lem} \label{lem:lem3}
+\begin{lem}[Enkeltsidet betinget inferens efter variabeludvælgelsen] \label{lem:lem3}
 Givet \(\boldsymbol{\eta}^T \Sigma \boldsymbol{\eta} \neq 0\), antag at vi vil teste
 \begin{align*}
 \hyp_0: \boldsymbol{\eta}^T \tmu=0 \quad \text{imod} \quad \hyp_1: \boldsymbol{\eta}^T \tmu > 0.
@@ -104,7 +140,7 @@ Definer \(\delta_{\alpha}\), som opfylder, at
 \end{align}
 Da er \(I= [\delta_\alpha, \infty )\) et gyldig enkeltsidet konfidensinterval for \(\teta^T \tmu\) betinget \(\boldsymbol{\Gamma} \y \geq \mathbf{u}\)
 \begin{align}
-\mathbb{P} \del{\boldsymbol{\eta}^T \tmu \geq \delta_\alpha \given \boldsymbol{\Gamma} \y \geq u} = 1- \alpha. \label{eq:post_1.17}
+\mathbb{P} \del{\boldsymbol{\eta}^T \tmu \geq \delta_\alpha \given \boldsymbol{\Gamma} \y \geq \mathbf{u}} = 1- \alpha. \label{eq:post_1.17}
 \end{align}
 \end{lem}
 %
@@ -112,7 +148,7 @@ Vi har styrke imod den enkeltsidet alternativ hypotese \(\hyp_1 : \teta^T \tmu >
 Dette gælder også for konfidensintervallet i \eqref{eq:post_1.16} og \eqref{eq:post_1.17}.
 Herefter betragtes dobbeltsidet inferens.
 %
-\begin{lem} \label{lem:lem4}
+\begin{lem}[Dobbeltsidet betinget inferens efter variabeludvælgelsen] \label{lem:lem4}
 Givet \(\boldsymbol{\eta}^T \boldsymbol{\Sigma} \boldsymbol{\eta} \neq 0\), antag at vi vil teste
 \begin{align*}
 \hyp_0: \boldsymbol{\eta}^T \tmu=0 \quad \text{imod} \quad \hyp_1: \boldsymbol{\eta}^T \tmu \neq 0.
@@ -138,7 +174,7 @@ Da gælder, at
 \end{align}
 \end{lem}
 %
-Teststørrelsen i \eqref{eq:post_1.18}, defineret som 2 multipliceret minimum af fordelingsfunktionen af ----- og overlevelsesfunktionen, har styrke imod den alternative hypotese \(\hyp_1: \boldsymbol{\eta}^T \tmu \neq 0\).
+Teststørrelsen i \eqref{eq:post_1.18}, defineret som 2 multipliceret minimum af fordelingsfunktionen  og overlevelsesfunktionen, har styrke imod den alternative hypotese \(\hyp_1: \boldsymbol{\eta}^T \tmu \neq 0\).
 Beviset for dens nulhypotese i \eqref{eq:post_1.19} kommer af, at hvis \(U\) følger en standard uniform fordeling, da gør \(2 \cdot \min \cbr{U,1-U}\) også.
 Konstruktionen af konfidensintervallet i \eqref{eq:post_20}, \eqref{eq:post_21} og \eqref{eq:post_22} anvender igen monotonicitet af en trunkeret normal overlevelsesfunktion i den underliggende middelværdi parameter.
 
@@ -147,13 +183,10 @@ Konstruktionen af konfidensintervallet i \eqref{eq:post_20}, \eqref{eq:post_21} 
 %APPENDIKS
 
 \subsection{TG test}
-Vi antager, at kolonnerne af \(\X\) er i general position (se definition \ref{defn:general_position}), hvilket medfører, at løsningsstierne for LARS uden og med lasso modifikation er entydige \citep{lasso_unique}. 
-\citep{post_inference} beviste at modeludvælgelsen for LARS og LARS med lasso modifikation kan karakteriseres som et polyeder på formen \(\cbr{\y : \ \Gamma \y \geq 0}\).
-
 Givet antallet af steps \(k\), da kan vi let udregne betinget \(p\)-værdier og konfidensintervaller, efter vi har konstrueret matricen \(\boldsymbol{\Gamma}\) for henholdsvis LARS eller lasso.
-Lad os teste nulhypotesen \(\hyp_0: \ \teta^T \tmu = 0\), hvor \(\teta\) er vilkårlig.
+Lad os teste nulhypotesen \(\hyp_0: \ \teta^T \tmu = 0\), hvor \(\teta\) er arbitrær.
 
-Som specificeret i lemma \ref{lem:polyhedral} udregnes først mængderne
+Som specificeret i lemma \ref{lem:polyhedral} udregnes størrelserne
 \begin{align*}
 \mathcal{V}^- \del{\y} &=  \max_{j: \rho_j > 0} \frac{- \del{\boldsymbol{\Gamma} \y}_j}{\rho_j} + \boldsymbol{\eta}^T \y = \max_{j: \del{\boldsymbol{\Gamma} \teta}_j > 0} - \del{\Gamma \y}_j \cdot \frac{\Vert \teta \Vert_2^2}{\del{\boldsymbol{\Gamma} \teta}_j} + \teta^T \y, \\
 \mathcal{V}^+ \del{\y} &=\min_{j: \del{\boldsymbol{\Gamma} \teta}_j < 0} - \del{\Gamma \y}_j \cdot \frac{\Vert \teta \Vert_2^2}{\del{\Gamma \teta}_j} + \teta^T \y.
@@ -180,11 +213,6 @@ T_k^\text{TG}= 2 \cdot \min \cbr{T_k^{\text{tg}}, 1-T_k^{\text{tg}}}.
 \end{align*}
 Af lemma \ref{lem:lem4} fås samme resultaterne i \eqref{eq:post_32} og \eqref{eq:post_33}, men hvor \(T_k^\text{tg}\) erstattes med \(T_k^\text{TG}\) og \(I_k\) erstattes med \(I_k'= \sbr{\delta_{\frac{\alpha}{2}}, \delta_{1-\frac{\alpha}{2}}}\).
 
-For \(\teta = \del{\X_{\A_k}^+}^T \mathbf{e}_j\), hvor \(\X_{\A_k}^+= \del{\X_{\A_k}^T \X_{\A_k}}^{-1} \X_{\A_k}^T\) er Moore Penrose pseudoinverse af \(\X_{\A_k}\), får vi, at
-\begin{align*}
-\teta^T \tmu = \mathbf{e}_j^T \X_{\A_k}^+ \tmu =  \mathbf{e}_j^T \del{\X_{\A_k}^T \X_{\A_k}}^{-1} \X_{\A_k}^T \X_{\A_k} \tbeta = \beta_j ,
-\end{align*}
-således at nulhypotesen \(\hyp_0: \mathbf{e}_j^T \X_{\A_k}^+ \tmu= 0\), svarer til at teste om koefficienten for den sidst tilføjede variabel er lig 0.
-Men for dette valg af \(\teta\) er det enkeltsidet setup givet ved \(\hyp_0: \teta^T \tmu = 0\) og  \(\hyp_1: \teta^T \tmu > 0\), som ikke giver mening, da der ikke er grund til at tro at \(k\)'te regressionskoefficient \(\mathbf{e}_j^T \X_{\A_k}^+ \boldsymbol{\mu}\) skal være positiv.
+For \(\teta = \del{\X_{\A_k}^+}^T \mathbf{e}_k\) er det enkeltsidet setup givet ved \(\hyp_0: \teta^T \tmu = 0\) og  \(\hyp_1: \teta^T \tmu > 0\), som ikke giver mening, da der ikke er grund til at tro at \(k\)'te regressionskoefficient \(\mathbf{e}_k^T \X_{\A_k}^+ \boldsymbol{\mu}\) skal være positiv.
 Definer istedet \(\teta = s_k \del{\X_{\A_k}^+}^T \mathbf{e}_j\), hvor \(s_k\) er fortegnet af \(j\)'te variabel når den medtages i LARS eller lasso modellen, da er nulhypotesen \(\hyp_0: s_k \mathbf{e}_k^T \X_{\A_k}^+ \tmu = 0\) uændret, men den alternative hypotese \(\hyp_1: s_k \mathbf{e}_k^T \X_{\A_k}^+ \tmu > 0\) har nu en konkret fortolkning.
 Den siger, at regressionskoefficienten af den sidst valgte variabel er ikke-nul og har samme fortegn som koefficienten i den fittede model.

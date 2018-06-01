@@ -1,6 +1,4 @@
 \section{Lasso estimatoren} \label{sec:lasso_estimatoren}
-\textit{Dette afsnit er skrevet udfra kapitel 2 i \citep{hastie}.}
-
 \textit{The Least Absolute Shrinkage Selection Operator}, som forkortes lasso, blev introduceret i \citep{lasso}. 
 \begin{defn}[Lasso]
 Lasso finder løsningen til optimeringsproblemet
@@ -89,7 +87,7 @@ Lasso har et regulært betingelsesområde, hvilket betyder, at hvis løsningen f
 Omvendt har ridge regression et cirkulært betingelsesområde, og derfor vil skæringen med konturkurverne generelt ikke være direkte på en akse.
 Hvis $t$ er tilstrækkelig stor, da vil betingelsesområderne indeholde $\widehat{\tbeta}^{\text{OLS}}$ og derfor vil ridge regression og lasso estimatorerne være lig OLS estimatoren.
 På figur \ref{fig:LassoRig} har vi blot betragtet det simple tilfælde hvor $p=2$. 
-Når \(p>2\) da vil betingelsesområdet for lasso være en polydron med mange hjørner og flader, som betyder, at flere estimerede parametre kan være lig 0.
+Når \(p>2\) da vil betingelsesområdet for lasso være et polyeder med mange hjørner og flader, som betyder, at flere estimerede parametre kan være lig 0.
 %
 %\begin{lem}
 %Givet data \(\del{\y, \X}\), defineres et augmented datasæt
@@ -223,7 +221,7 @@ For tilstrækkelige høje \(\lambda\) værdier er de fleste koefficienter lig $0
 Disse producerer sekventielt hele stien af løsninger ved at starte med nul.
 Stien er stykvis lineær.
 Algoritmen kaldet \textit{least angle regression} (LARS) er en homotopy metode, som effektivt konstruerer den stykvise lineære sti.
-En mere teoretisk gennemgang af coordinate descent og LARS algoritmen er givet i kapitel \ref{kap:optimeringsmetoder}.
+En mere teoretisk gennemgang af coordinate descent og LARS algoritmen er givet i kapitel \ref{ch:optimeringsmetoder}.
 %
 \section{Frihedsgrader}
 Antag vi har \(p\) prædiktorer, og fitter en lineær regressionsmodel udfra \(k\) af disse prædiktorer, hvor \(k <p\).

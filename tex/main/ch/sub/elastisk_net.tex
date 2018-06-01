@@ -359,10 +359,9 @@ Ligning \eqref{eq:EN6} og \eqref{eq:EN7} viser, at reskalere elastisk net er æk
 For coordinat descent algoritmen betragtes naiv elastisk net problemet på Lagrange form \eqref{eq:4.2}, mens LARS algoritmen betragter optimeringsproblemet \eqref{eq:naivEN}.
 %
 \subsubsection{Coordinat descent}
-Opdateringerne for naiv elastisk net i coordinate descent algoritmen er blot en simpel udvidelse af opdateringerne for standard lasso i afsnit \ref{subsec:udregning_lasso}.
 For standardiseret prædiktorer og en centeret responsvariabel er coordinate descent opdateringen for $j$'te koefficient givet ved
 \begin{align}
-\widehat{\beta}^\text{naivEN}_j \del{\lambda}= \frac{S_{\frac{\lambda \alpha}{2n}} \del{\tilde{\beta}_j}}{1 + \lambda (1-\alpha)}, \label{eq:4.4}
+\widehat{\beta}^\text{naivEN}_j \del{\lambda}= \frac{S_{\frac{\alpha \lambda}{2n}} \del{\tilde{\beta}_j}}{1 + \lambda (1-\alpha)}, \label{eq:4.4}
 \end{align}
 hvor \(\tilde{\beta}_j = \frac{1}{n} \sum_{i=1}^n r_{i}^{(j)} x_{ij}\) og \(r_{i}^{(j)} = y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{naivEN}_k \del{\lambda}\) er de partialle residualer.
 Vi gennemløber opdateringen \eqref{eq:4.4} indtil konvergens.

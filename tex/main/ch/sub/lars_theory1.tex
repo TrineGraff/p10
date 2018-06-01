@@ -1,5 +1,4 @@
 \section{LARS}
-LARS algoritmen blev introduceret i \citep{efron}. 
 Først vil vi beskrive LARS algoritmen, hvorefter vi vil introducere en simpel modifikation, som fører til lasso estimater. \\[2mm]
 %
 I grove træk fungerer algoritmen som følgende. 
@@ -78,7 +77,7 @@ Herefter kan vi give en fyldestgørende beskrivelse af LARS algoritmen.
 \begin{enumerate}
 \item Standardisere prædiktorerne og centre responsvariablen. 
 Start med \(\widehat{\boldsymbol{\mu}}_0 = \mathbf{0}\), \(\widehat{\mathbf{c}} = \X^T \y\), og \(\A = \emptyset\).
-\item Find prædiktoren \(\tx_j\) som er mest korreleret med ???? y og noegt residual!!! og definer den aktive mængde \(\A = \cbr{j}\).
+\item Find prædiktoren \(\tx_j\) som er mest korreleret med \(\y\). Definer den aktive mængde \(\A = \cbr{j}\).
 \item Gentag følgende indtil alle prædiktorer er indeholdt i den aktive mængde:
 \begin{itemize}
 \item Antag \(\widehat{\boldsymbol{\mu}}_\A\) er det nuværende LARS estimat og at
@@ -223,18 +222,16 @@ LARS algoritmen med lasso modifikationen tillader den aktive mængde \(\A\) at a
 Antallet er steps i LARS algoritmen med lasso modifikationen er dermed større end \(p\).
 
 
-Lad os opsummere nogle egenskaber af lasso stien
+Lad os opsummere nogle egenskaber af lasso stien.
 Stien \(\widehat{\tbeta}^\text{lasso} \del{\lambda}\) er en kontinuert og stykvis lineære funktion af \(\lambda\) med knuder i \(\lambda_1 \geq \lambda_2 \geq \cdots \geq \lambda_r \geq 0\).
-i \(\lambda = \infty\), har løsningen \(\widehat{\tbeta}^\text{lasso} \del{\infty}\) ingen aktive variable, dvs den aktive mængde er tom. 
+I \(\lambda = \infty\) har løsningen \(\widehat{\tbeta}^\text{lasso} \del{\infty}\) ingen aktive variable, dvs \(\A = \emptyset\). 
 Vi aftager \(\lambda\) og da markerer hver knude \(\lambda_k\) tilføjelsen eller fjernelsen af en variabel i den nuværende aktive mængde.
 Derfor er den aktive mængde og fortegnene af de aktive variable konstant mellem knuderne.
-I ethvert punkt \(\lambda\) i stien,
----
 
 Figur \ref{fig:diabetes_lars} illustrerer koefficientstierne for LARS algoritmen uden og med lasso modifikationen som funktion af fraktion af \(\ell_1\)-norm for diabetes data.
 Af figuren kan vi aflæse rækkefølgen, hvori variablerne medtages i modellen.
 For LARS algoritmen uden lasso modifikationen udføres 10 steps, mens LARS algoritmen med lasso modifikationen udfører 12 steps.
-De 2 ekstra steps som LARS algoritmen med lasso modifikationen udfører kommer af, at variablen \texttt{hdl} fjernes og tilføjes igen i henholdsvis step 11 og 12?
+De 2 ekstra steps som LARS algoritmen med lasso modifikationen udfører kommer af, at variablen \texttt{hdl} fjernes og tilføjes igen i henholdsvis step 11 og 12.
 
 \imgfigh{diabetes_lars.pdf}{0.9}{Koefficientstierne for LARS algoritmen uden og med lasso modifikationen som funktion af fraktion af \(\ell_1\)-normen for diabetes data.}{diabetes_lars}
 %

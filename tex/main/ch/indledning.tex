@@ -1,52 +1,33 @@
 \chapter{Indledning}
-At prædiktere en makroøkonomisk variable har interesse af flere årsager.
-Aktører på finansielle markeder handler på baggrund af forventninger til fremtidige aktiekurser, renter og valutakurser.
+At kunne forudsige udviklingen af en makroøkonomisk variabel har interesse af flere årsager.
+Aktører på de finansielle markeder handler på baggrund af forventninger til fremtidige aktiekurser, renter og valutakurser.
 Erhvervsfolk fastlægger produktion og investeringer på baggrund af den forventede udvikling i efterspørgsel.
-Politiker tager beslutninger om økonomisk politiske indgreb på baggrund af kort- og langsigtede prognoser for økonomien.
-Den enkelte forbruger baserer sine indkøb på indkomst.
-En makroøkonomisk variabel afhænger 
+Politiker tager beslutninger om politiske indgreb på baggrund af kort- og langsigtede prognoser for økonomien.
 
 En central makroøkonomisk variabel er arbejdsløshedsraten.
 Arbejdsløshedsraten betegner den procentvise ledighed af arbejdsstyrken.
 Arbejdsstyrken omfatter andelen af befolkningen, hvis arbejdskraft er til rådighed og som enten i beskæftigelse eller ledige.
 
-Givet et datasæt med et stort antal makroøkonomiske variable, skal vi prædiktere arbejdsløshedsraten.
+Givet et datasæt med et stort antal makroøkonomiske variable, ønsker vi at prædiktere arbejdsløshedsraten.
+Mindste kvadraters metode kan anvendes hertil, men i dette tilfælde hvor vi betragter et relativt stort antal variable, da kan prædiktionen forbedres.
+OLS estimatoren har ofte lav bias, men høj varians.
+Vi kan forbedre bias-variance tradeoff ved at mindske regressionskoefficienterne og endda sætte nogle lig 0.
+Dette vil introducere noget bias, men reducere variansen, og dermed forbedre prædiktionen.
 
-En oplagt metode til at estimere koefficienterne vil være mindste kvadraters metode, som minimerer summen af kvadrerede residualer.
-Men i dette tilfælde hvor vi betragter et stort antal variable, da kan prædiktionen forbedres ved at reducere antallet af variable.
-OLS estimatoren har ofte lav bias, men høj varians, men hvis antallet af variable reduceres, da kan vi reducere variansen på bekostning af lidt bias.
-Dette vil forbedre det bias-varians tradeoff og dermed prædiktionen.?????
-
-Vi betragter lasso estimatoren \citep{lasso}, som er en udvidelse af estimatoren for mindste kvadraters metode, hvor der blot tilføjes en \(\ell_1\)-betingelse.
-Denne betingelse vil mindske koefficienterne og endda sætte nogle lig 0.
+Vi betragter lasso estimatoren \citep{lasso}, som er en udvidelse af OLS estimatoren, hvor der blot tilføjes en \(\ell_1\)-betingelse.
+Denne betingelse vil mindske regressionskoefficienterne og endda sætte nogle lig 0.
 Hermed udfører lasso estimatoren variabeludvælgelse i lineær regression.
+Men lasso estimatoren har nogle ulemper og derfor introduceres nogle generaliseringer af lasso, hvorunder vi kan nævne elastisk net \citep{zou_hastie}, group lasso \citep{group_lasso} og adaptive lasso \citep{adaptive_lasso}.
 
-Lasso estimatoren har dog
-Vi vil også betragte nogle generaliseringer af lasso problemet.
-\citep{zou_hastie} viste at ustabiliteten for variabeludvælgelse af lasso kommer af parameter usikkerheden i at estimere en stor kovariansmatrix.
-Ved at erstatte den empiriske estimator af kovariansmatricen med en skrinkage estimator, viste de at de resulterende regressions koefficienter og variabeludvælgelses proces er mere stabil.
-Dette er ækvivalent med at pålægge en ekstra \(\ell_2\) norm betingelse på lasso problemet.
-Denne metoden er kendt som \textit{elastisk net}, eftersom det er som et net der fanger alle "store fisk" til bedre forecasts.
-
-Da prædiktorerne kan opdeles i blokke, pålægges en sparse betingerlser på disse blokke.
-Dette gøres ved en two-stage procedure.
-I første stage opdeles prædiktorerne i blokkene. I anden stage, group lasso \citep{group_lasso} is lavet således at prædiktorerne i samme block har en tendens til at vælges sammen.
-
-Til slut betragtes også adaptive lasso.
+For at bestemme om de udvalgte variable er de mest relevante, er vi interesseret i nogle statistiske tests, som kan anvendes til at teste om regressionskoefficienterne er signifikante.
+I normal lineær regression kan vi nemt udregne \(p\)-værdier og konstruere konfidensintervaller for regressionskoefficienterne.
+Dette besværliggøres for lasso da variabeludvægelsen afhænger af data.
 
 
-Vi kan reducere dimensionen udfra faktor modellen, som opsummerer al information af variablerne i nogle få underliggende faktorer.
-principale komponenter?
-
-Som det kan ses i den empiriske del, har lasso varianterne tilsvarende out-of-sample forcast og generelt outperformes disse dynamisk faktor model, men elastisk net og group lasso giver mere konsistent variabel udvælgelses resultat over ...
-
-
-
-
-
-Teorien for lasso problemet og dens generalisering er baseret på tværsnitsdata, men anvendes for tidsrækker.
-Teorien for faktor modellen er givet på tidsrække data, men oprindelig også udviklet på tværsnitsdata.
-
-
-Rapporten er struktureret som følgende:
-I kapitel --- præsenteres 
+Rapporten er organiseret som følgende: 
+I kapitel \ref{ch:dfm} præsenteres den klassiske faktor model, som betragtes som benchmark model i den empiriske del.
+I kapitel \ref{ch:lasso} og \ref{ch:generalisering_lasso} beskrives lasso og dens generaliseringer. Dette teori er udviklet på tværsnitsdata, men vi vil anvende det på tidsrækkedata.
+Kapitel \ref{ch:optimeringsmetoder} beskriver optimeringsalgoritmerne coordinate descent og LARS, som kan løse lasso problemet og dens generaliseringer.
+I kapitel \ref{ch:asymptotics} vil vi kort introducere noget aymptotisk teori for lasso estimator. Heri bevises også at adaptive lasso opfylder orakel egenskaberne.
+Herefter præsenteres teorien for statistisk inferens af lasso estimatoren i kapitel \ref{ch:statistisk_inferens}.
+Kapitel \ref{ch:metoder} introducerer nogle metoder, som anvendes til at vælge den optimale model i den empiriske del.

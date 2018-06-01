@@ -17,7 +17,7 @@ getmin_lars = getmin_l(lars_cv$index, lars_cv$cv, lars_cv$cv.error)
 ## tester om de er de samme for en standard afvigelse (det er det)
 test = coef(lars_fit, s = getmin_lars$lambda.1se, mode = "step")
 idx = which(test != 0)
-test[idx]
+round(test[idx], digits = 4)
 
 #omregner til fraction
 s1 = apply(abs(lars_fit$beta), 1, sum) #summere over rækken. dvs vi får summen af koefficienterne

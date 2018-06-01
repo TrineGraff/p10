@@ -1,5 +1,5 @@
 \section{Oversigt over in-sample resultater} 
-For at få et bedre oversigt over vores 14 modeller i in-sample betragtes tabel \ref{tab:topvariable}. Den viser de 12 meste valgte variabler samt beskrivelse. Vi ser at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} bliver valgt af alle 14 modeller, imens de resterende variabler ikke bliver valgt af adaptive lasso med OLS vægte og adaptive lasso med lasso vægte, hvor variablerne er bestemt ud fra  krydsvalidering og BIC. 
+For at få et bedre oversigt over vores 14 modeller i in-sample betragtes tabel \ref{tab:topvariable}. Den viser de 9 meste valgte variabler samt beskrivelse. Vi ser at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} bliver valgt af alle 14 modeller, imens de resterende variabler ikke bliver valgt af adaptive lasso med OLS vægte og adaptive lasso med lasso vægte, hvor variablerne er bestemt ud fra  krydsvalidering og BIC. 
 
 \input{fig/tab/topvariable_insample}
 
@@ -10,16 +10,20 @@ De adaptive lasso modeller i coordinate descent har den laveste log-likelihood, 
 
 Derudover er alle 14 modeller klart bedre i in-sample resultater i forhold til benchmarkmodellen. Det kunne godt tyde på, at vores benchmark model ikke vil præsterer særligt godt out-of-sample. 
 
+\imgfigh{cf_interval.pdf}{1}{95\% konfidensinterval for de 9 meste valgte variabler for lasso, hvor variablerne er valgt ud fra krydsvalidering og lasso, hvor variablerne er er valgt ud fra BIC samt OLS estimeret af de 9 variabler. }{cf_interval}
+
 
 Vi anvender, som nævnt TG testen til lasso løst med coordinate descent og LARS uden lasso modifikation. Vi ser for lasso, at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} er signifikante for både når variablerne er bestemt ud fra krydsvalidering og BIC. 
+
+
+
 
 Generelt for TG-testen anvendt på LARS uden lasso modifikation ser vi, at variablens grænser i endepunkterne ofte indeholder \textit{inf} og/eller \textit{-inf}. 
 Det skyldes at konfidensintervallet er udregnet numerisk, og bliver ustabil når punktet $\boldsymbol{\eta}^T \y$ er for tæt på dens trunkerede interval, altså $\mathcal{V^+}$ og $\mathcal{V^-}$. 
 
 
 
-
-This function should match (in terms of its output) that from the lars package, but returns additional information (namely, the polyhedral constraints) needed for the selective inference calculations.
+%This function should match (in terms of its output) that from the lars package, but returns additional information (namely, the polyhedral constraints) needed for the selective inference calculations.
 
 
 

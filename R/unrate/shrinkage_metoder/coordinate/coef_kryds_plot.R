@@ -16,7 +16,7 @@ coef_lasso[idx_lasso]
 ## adaptive lasso med ols vægte
 fit_ols = lm(y_train ~ 0 + x_train)
 coef = as.data.frame(fit_ols$coefficients)
-v = 1/abs(coef$`fit_ols$coefficients`)
+v = 1/abs(coef$`fit_ols$coefficients`)^0.5
 
 adap_ols_cv = cv.glmnet(x_train, y_train, intercept = FALSE, 
                         family = "gaussian", alpha = 1, standardize = FALSE, 
@@ -25,7 +25,7 @@ adap_ols_cv = cv.glmnet(x_train, y_train, intercept = FALSE,
 adap_ols_fit = glmnet(x_train, y_train, intercept = FALSE, family = "gaussian", alpha = 1, 
                       standardize=FALSE, penalty.factor = v)
 
-coef_adp_ols = as.vector(coef(adap_ols_fit, s = adap_ols_cv$lambda.min)) %>% .[-1]
+coef_adp_ols = as.vector(coef(adap_ols_fit, s = adap_ols_cv$lambda.1se)) %>% .[-1]
 idx_adp_ols = which(coef_adp_ols != 0) 
 coef_adp_ols[idx_adp_ols]    
 
@@ -33,7 +33,7 @@ coef_adp_ols[idx_adp_ols]
 ## adaptive lasso med lasso vægte
 beta_lasso = as.vector(coef(lasso_fit, s = lasso_cv$lambda.1se)) %>% .[-1] #fjerner skæringen 
 idx_beta = which(beta_lasso != 0)
-v_l = 1/abs(beta_lasso[idx_beta]) 
+v_l = 1/abs(beta_lasso[idx_beta])^0.5 
 
 adap_lasso_cv <- cv.glmnet(x_train[,idx_beta], y_train, alpha = 1, standardize = FALSE, intercept = FALSE, 
                              penalty.factor = v_l)
@@ -42,7 +42,7 @@ adap_lasso_fit = glmnet(x_train[,idx_beta], y_train, intercept = FALSE,
                         family = "gaussian", alpha = 1, standardize=FALSE, 
                         penalty.factor = v_l)
 
-coef_adp_lasso = coef(adap_lasso_fit, s = adap_lasso_cv$lambda.min)
+coef_adp_lasso = coef(adap_lasso_fit, s = adap_lasso_cv$lambda.1se)
 idx_adp_lasso = which(coef_adp_lasso != 0) 
 coef_adp_lasso[idx_adp_lasso,]  
 coef_adp_lasso_vec = as.vector(coef(adap_lasso_fit, s = adap_lasso_cv$lambda.min)) %>% .[-1]

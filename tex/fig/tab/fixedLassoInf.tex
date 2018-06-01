@@ -1,26 +1,53 @@
+%\begin{table}[ht] 
+%\centering 
+%%\scalebox{0.8}{
+%\begin{tabular}{lcccc}
+%\toprule
+%Prædiktor & Koefficient & Z-score & \(p\)-værdi & Konfidensinterval \\
+%\midrule
+%\textcolor{red3}{DPCERA3M086SBEA} & -0.002 & -1.365 &  0.666  &  [-0.009; 0.026]  \\
+%\textcolor{chartreuse4}{IPDMAT} & -0.003  &-1.113  & 0.268  &  [-0.012; 0.006]  \\
+%\textcolor{blue3}{HWIURATIO}  & 0.002 &  0.718 &  0.197 &   [-0.003;  0.014]   \\
+%\textcolor{blue3}{CLF16OV} & 0.243 & 36.668  & 0   &  [0.232;  0.259]\\
+%\textcolor{blue3}{CE16OV} &  -0.266 & -37.390 &  0  &  [-0.280 ; -0.254]\\
+%\textcolor{blue3}{UEMPLT5} & 0.001  & 0.241  & 0.402  &  [-0.005  ;  0.008 ] \\
+%\textcolor{blue3}{UEMP5TO14} & 0.000 & -0.118 &  0.429  & [ -0.007  ;  0.004 ]\\
+%\textcolor{blue3}{UEMP15OV}& 0.004  & 1.593  & 0.056 &   [ 0.000  ;  0.009] \\
+%\textcolor{blue3}{PAYEMS} & 0.001 &  0.273  & 0.223  &  [-0.007  ;  0.029 ] \\
+%\textcolor{blue3}{USCONS} & -0.002 & -0.883 &  0.569 &  [ -0.009  ;  0.016] \\
+%\textcolor{orange}{TB6MS} & -0.001 & -0.480 &  0.682 &  [ -0.009  ;  0.026 ] \\
+%\textcolor{orange}{GS5} & -0.003 & -1.131  & 0.219  & [ -0.025  ; 0.007 ] \\
+%\textcolor{orange}{EXUSUKx} & 0.003 &  1.306 &  0.872 &  [ -0.072 ; 0.003 ] \\
+%\textcolor{blue3}{lag 1} & -0.009 & -4.067  & 0.003 &  [ -0.013; -0.004] \\
+%\bottomrule
+%\end{tabular}  
+%%}
+%\caption{\(p\)-værdier og konfidensintervaller for variablerne udvalgt af lasso. Den estimeres standard afvigelse er \(0.043\), og resultaterne er for \(\widehat{\lambda} = \widehat{\lambda}_\text{1sd} \cdot 548 \approx 1.823\) med \(\alpha = 0.1\).} \label{tab:fixedLassoInf}
+%\end{table} 
+
 \begin{table}[ht] 
 \centering 
-%\scalebox{0.8}{
-\begin{tabular}{lcccc}
+\scalebox{0.8}{
+\begin{tabular}{lcccccc}
 \toprule
-Prædiktor & Koefficient & Z-score & \(p\)-værdi & Konfidensinterval \\
+Prædiktor & Koefficient & \(p\)-værdi & Konfidensinterval &  $\boldsymbol{\eta^Ty}$ & Z-score & $\sbr{\mathcal{V}^-;\mathcal{V}^+}$  \\
 \midrule
-\textcolor{red3}{DPCERA3M086SBEA} & -0.002 & -1.365 &  0.666  &  [-0.009; 0.026]  \\
-\textcolor{chartreuse4}{IPDMAT} & -0.003  &-1.113  & 0.268  &  [-0.012; 0.006]  \\
-\textcolor{blue3}{HWIURATIO}  & 0.002 &  0.718 &  0.197 &   [-0.003;  0.014]   \\
-\textcolor{blue3}{CLF16OV} & 0.243 & 36.668  & 0   &  [0.232;  0.259]\\
-\textcolor{blue3}{CE16OV} &  -0.266 & -37.390 &  0  &  [-0.280 ; -0.254]\\
-\textcolor{blue3}{UEMPLT5} & 0.001  & 0.241  & 0.402  &  [-0.005  ;  0.008 ] \\
-\textcolor{blue3}{UEMP5TO14} & 0.000 & -0.118 &  0.429  & [ -0.007  ;  0.004 ]\\
-\textcolor{blue3}{UEMP15OV}& 0.004  & 1.593  & 0.056 &   [ 0.000  ;  0.009] \\
-\textcolor{blue3}{PAYEMS} & 0.001 &  0.273  & 0.223  &  [-0.007  ;  0.029 ] \\
-\textcolor{blue3}{USCONS} & -0.002 & -0.883 &  0.569 &  [ -0.009  ;  0.016] \\
-\textcolor{orange}{TB6MS} & -0.001 & -0.480 &  0.682 &  [ -0.009  ;  0.026 ] \\
-\textcolor{orange}{GS5} & -0.003 & -1.131  & 0.219  & [ -0.025  ; 0.007 ] \\
-\textcolor{orange}{EXUSUKx} & 0.003 &  1.306 &  0.872 &  [ -0.072 ; 0.003 ] \\
-\textcolor{blue3}{lag 1} & -0.009 & -4.067  & 0.003 &  [ -0.013; -0.004] \\
+ \textcolor{red3}{DPCERA3M086SBEA} &0.0003 &  0.671   & $\sbr{-0.009   ;  0.027} $  & 0.002   &$-1.362$  &  $\sbr{0.002;0.004}$ \\
+\textcolor{chartreuse4}{IPDMAT} &$-0.0022$ &  0.265    & $\sbr{-0.012   ;  0.006 } $   &0.003   &$-1.113  $& $\sbr{0.000;0.004} $\\   
+\textcolor{blue3}{HWIURATIO}  &$-0.0016$   & 0.199    & $\sbr{-0.003   ; 0.014 } $  & 0.002  &  0.717 &$\sbr{ -0.002;0.004} $\\
+\textcolor{blue3}{CLF16OV}  & 0.2054 & 0.000   & $\sbr{  0.232 ;   0.259  } $  & 0.243  & 36.671  &  $\sbr{0.203;0.252} $ \\ 
+\textcolor{blue3}{CE16OV}   &$-0.2266$ &  0.000   & $\sbr{-0.280  ; -0.254} $ &0.266 &$ -37.393$   & $\sbr{0.230;0.278} $ \\  
+\textcolor{blue3}{UEMPLT5}& 0.0124 &0.402  &$\sbr{-0.005  ;  0.008 } $   & 0.001    &0.240     & $\sbr{-0.011;0.009 } $\\
+\textcolor{blue3}{UEMP5TO14} &0.0069 &  0.430     &$\sbr{-0.006  ;  0.004 } $  &0.000 &  $-0.118$   &  $\sbr{ -0.010;0.005} $  \\
+ \textcolor{blue3}{UEMP15OV}  &0.0107&0.056  &   $\sbr{0.000   ;  0.009  } $ & 0.004  &  1.593  &  $\sbr{-0.006;0.013} $ \\
+\textcolor{blue3}{PAYEMS} &$-0.0008$ &0.219    & $\sbr{-0.007  ;  0.030      } $ & 0.001   & 0.280  &  $\sbr{-0.002;0.002} $\\
+\textcolor{blue3}{USCONS} &$-0.0008$& 0.566    &$\sbr{ -0.009    ; 0.016  } $ & 0.002  & $-0.883$  & $\sbr{0.001;0.004} $\\
+\textcolor{orange}{TB6MS} &$-0.0009$&0.682  &  $\sbr{ -0.009    ; 0.026  } $ & 0.001  & $-0.480$    &$\sbr{ 0.000;0.004} $\\
+\textcolor{orange}{GS5}  & $-0.0023$&0.219     &$\sbr{-0.025    ;0.007   } $ & 0.003   &$-1.130$   & $\sbr{0.001; 0.004} $\\
+\textcolor{orange}{EXUSUKx}  &0.0002 &0.870    &$\sbr{ -0.071  ;  0.003     } $ & 0.003  &  1.307  &  $\sbr{0.002;0.006} $\\
+\textcolor{blue3}{lag 1}  & $-0.0038$ &  0.003   &  $\sbr{-0.013 ;  -0.004      } $ &0.009  &  $-4.065$   &$\sbr{0.005;0.015} $\\
 \bottomrule
 \end{tabular}  
-%}
+}
 \caption{\(p\)-værdier og konfidensintervaller for variablerne udvalgt af lasso. Den estimeres standard afvigelse er \(0.043\), og resultaterne er for \(\widehat{\lambda} = \widehat{\lambda}_\text{1sd} \cdot 548 \approx 1.823\) med \(\alpha = 0.1\).} \label{tab:fixedLassoInf}
 \end{table} 

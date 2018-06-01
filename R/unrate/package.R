@@ -12,7 +12,6 @@ library(gglasso)
 library(ggplot2)
 
 #lars
-library(elasticnet)
 library(lars)
 
 #forecast

@@ -19,7 +19,7 @@ gglasso_cv <- cv.gglasso(x_train, y_train, group = grp, nfold = 10, intercept = 
 # adaptive lasso m. ols ---------------------------------------------------
 fit_ols = lm(y_train ~ 0 + x_train)
 coef = as.data.frame(fit_ols$coefficients)
-v = 1/abs(coef$`fit_ols$coefficients`)
+v = 1/abs(coef$`fit_ols$coefficients`)^0.5
 adap_ols_cv = cv.glmnet(x_train, y_train, intercept = FALSE, 
                         family = "gaussian", alpha = 1, standardize = FALSE, 
                         penalty.factor = v)
@@ -30,7 +30,7 @@ lasso_fit = glmnet(x_train, y_train, intercept = FALSE, family = "gaussian",
                    alpha = 1, standardize=FALSE)
 beta_hat = as.vector(coef(lasso_fit, s = lasso_cv$lambda.1se)) %>% .[-1]
 idx_hat = which(beta_hat != 0) 
-v_l = 1/abs(beta_hat[idx_hat]) #intercept er inkluderet
+v_l = 1/abs(beta_hat[idx_hat])^0.5 #intercept er inkluderet
 adap_lasso_cv = cv.glmnet(x_train[,idx_hat], y_train, intercept = FALSE, 
                           family = "gaussian", alpha = 1, standardize = FALSE, 
                           penalty.factor = v_l)
@@ -100,7 +100,3 @@ ad_l = ggplot(df_ad_l, aes(log(df_ad_l$adap_lasso_cv.lambda),df_ad_l$adap_lasso_
 cv_plot = grid.arrange(l, r, grp, ad, ad_l, ncol = 2)
 
 
-# Gem resultater ----------------------------------------------------------
-library(broom)
-c <- tidy(coef(lasso_cv, s="lambda.min"))
-write.csv(c, file = "ridge_lambda") 

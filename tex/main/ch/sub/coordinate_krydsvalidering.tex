@@ -3,30 +3,31 @@ Funktionerne \texttt{cv.glmnet} og \texttt{cv.gglasso} fra pakkerne \texttt{glmn
 
 Figur \ref{fig:cv_plot} illustrerer den gennemsnitlige krydsvalideringsfejl samt øvre og nedre standardafvigelse for hver værdier af $\log \del{\lambda}$ for lasso og dens generaliseringer. 
 De to lodrette stiplede linjer indikerer \(\lambda_{\text{min}}\) og \(\lambda_\text{1sd}\), hvor \(\lambda_{\text{min}}\) er værdien af \(\lambda\), som giver den mindste gennemsnitlige krydsvalideringsfejl og \(\lambda_\text{1sd}\) er den største værdi af \(\lambda\), således at fejlen er indenfor en standardafvigelse af minimum. 
-For elastisk net finder vi, at $\alpha =1$ giver den mindste krydsvalideringsfejl for både \(\lambda_\text{min}\) og  \(\lambda_\text{1sd}\), hvilket svarer til lasso modellen.  Derfor betragter vi ikke elastik net. 
+For elastisk net finder vi, at $\alpha =1$ giver den mindste krydsvalideringsfejl, hvilket svarer til lasso modellen. Derfor betragter vi ikke elastik net i dette afsnit. 
+Vi betragter adaptive lasso med OLS vægte og adaptive lasso med lasso vægte, hvor $\gamma = 0.5$, da den giver den mindste krydsvalidering fejl. 
 
-Den mindste krydsvaliderings fejl for $\lambda_\text{1sd}$ er også når $\alpha = 1$. 
 \imgfigh{cv_plot.pdf}{1}{10-fold krydsvalideringsfejl som funktion af $\log \del{\lambda}$ for lasso og den generaliseringer. 
 De stiplede linjer betegner \(\lambda_\text{min}\) og \(\lambda_\text{1sd}\).}{cv_plot}
 %
 
 \input{fig/tab/cv_tab}
 
-For at give et bedre overblik giver tabel \ref{tab:cv_tab} værdierne af $\log \del{ \lambda_{\min}}$ og $\log \del{ \lambda_{1\text{sd}}}$, krydsvalideringsfejlen, antallet af parametre, justerede R$^2$ og log-likelihood for lasso og dens generaliseringer.
+For at give et bedre overblik giver tabel \ref{tab:cv_tab} værdierne af $\log \del{ \lambda_{\min}}$ og $\log \del{ \lambda_{1\text{sd}}}$, krydsvalideringsfejl, antallet af parametre, justerede R$^2$ og log-likelihood for lasso og dens generaliseringer.
 %Den valgte tuning parameter er markeret med tykt for hver metode.   
 
-For lasso ses en markant reducering i antallet af parametre for $\lambda_{1\text{sd}}$ i forhold til $\lambda_{\min}$, dette øger ikke krydsvalideringsfejlen eller justerede R$^2$ betydeligt, og derfor anvendes $\widehat{\lambda}_{1\text{sd}}$ som tuning parameter for lasso. 
-%Ridge regression mindsker blot koefficienter, og derfor vælges alle variable. 
-Vi ser også, at ridge regression har den mindste værdi af justerede R$^2$ samt den højeste værdi af log-likelihood, men modellen mindsker også blot koefficienterne, således at alle variablerne bliver valgt. 
-For ridge regression vælger vi, derfor $\widehat{\lambda}_{\min}$ som tuning parameter, da den har mindst krydsvalideringsfejl.
-For group lasso vælges lidt overraskende alle parametre med \(\lambda_\text{min}\), mens antallet af parametre reduceres med 7 for $\lambda_{1\text{sd}}$. Disse 7 variable tilhører alle gruppe 5.
-Vi lader $\widehat{\lambda}_{1\text{sd}}$ være den optimale tuning parameter for group lasso, da den har det færreste antal parametre. 
+For lasso ses en markant reducering i antallet af parametre for $\lambda_{1\text{sd}}$ i forhold til $\lambda_{\min}$. Dette øger ikke krydsvalideringsfejlen eller justerede R$^2$ betydeligt, og derfor anvendes $\widehat{\lambda}_{1\text{sd}}$ som tuning parameter for lasso. 
 
-Adaptive lasso med OLS og lasso vægte vælger blot to variable for både  $\lambda_{\min}$ og $\lambda_{1\text{sd}}$. 
-%Variablerne er  \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}.
-Vi lader $\widehat{\lambda}_{\min}$ være tuning parameteren for adaptive lasso modellerne. Vi ser også at adaptive lasso med OLS vægte har den højeste justerede R$^2$, men det er også modellen med færreste parametre. 
+Vi ser også, at ridge regression har den mindste værdi af justerede R$^2$ samt den højeste værdi af log-likelihood, men modellen mindsker også blot koefficienterne. 
+For ridge regression vælger vi, derfor $\widehat{\lambda}_{\min}$ som tuning parameter, da den har mindst krydsvalideringsfejl.
+
+For group lasso vælges lidt overraskende alle parametre med \(\lambda_\text{min}\), mens antallet af parametre reduceres med 7 for $\lambda_{1\text{sd}}$. 
+Disse 7 variable tilhører alle gruppe 5.
+Vi anvender $\widehat{\lambda}_{1\text{sd}}$ som turning parameter, da den har færreste antal parametre. 
+
+Adaptive lasso m. OLS vægte og lasso vægte vælger blot to variable for $\lambda_{1\text{sd}}$ uden at det øger deres krydsvalideringsfejl betydeligt. Derfor lader vi $\lambda_{1\text{sd}}$ være tuning parameteren for adaptive lasso modellerne. 
 
 På figur \ref{fig:coef_kryds_coord} vises de 14 estimerede koefficienter for lasso og de 2 estimerede koefficienter for adaptive lasso.
+
 Heraf ses, at lasso hovedsagligt vælger variable i samme gruppe som arbejdsløshedsraten.
 For lasso ses at variablerne valgt af adaptive lasso, \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}, har de største estimerede koefficienter, efterfulgt af \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{UEMPL15OV} og \textcolor{blue3}{lag 1}, mens de øvrige er meget tæt på nul. 
 Figur \ref{fig:coef_ridge_kryds_coord} og \ref{fig:coef_gglasso_kryds_coord} viser de estimerede koefficienter for henholdsvis ridge regression og group lasso.

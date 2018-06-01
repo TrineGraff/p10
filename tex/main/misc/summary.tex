@@ -2,35 +2,39 @@
 %mellem min 1 side og maks 2 sider.
 %indgår i evalueringen
 %
-The object of the master is to predict macroeconomic variables.
+The object of the master is to predict a macroeconomic variable, which we have chosen to be the unemployment rate, from a dataset of 122 variables.
+To improve the prediction accuracy we would like to identify a smaller subset of these variables, which have the greatest impact on the unemployment rate, and also shrinks the coefficients of the variables.
+The report is divided into two parts. 
+First we present the necessary theory and then we include an empirical part, in which we apply the theory.
 
-First the classical factor model is presented, at which we rely some assumptions to ensure uniqueness of the estimators.
+In the theoretical part we first describe the classical factor model, at which we rely some assumptions to ensure uniqueness of the estimators.
 The factor model limits the number of model parameters by collecting information about variance in the explanatory variables in some few underlying factors.
 
-The lasso model is an extension of classic linear regression, in which an \(\ell_1\)-constraint is imposed on the parameter estimates.
-This constraint has the effect of shrinking the coefficients, and even setting some to zero.
-As such the lasso model perform model selection in linear regression.
+Then we present the lasso estimator, which is an extension of classic linear regression, in which an \(\ell_1\)-constraint is imposed on the parameter estimates.
+This constraint shrinks the coefficients, and will set some of them to zero.
+As such the lasso model perform variable selection in linear regression.
 This results in a convex optimzation problem, which can be solved efficiently for large problems.
 
 To solve the lasso problem we consider an algorithm called coordinate descent.
 It is especially attractive for problems such as lasso in which a closed solution does not exits, but a coordinatewise does.
 The coordinate descent algorithm choose a single coordinate to update and the performs a univariate minimization over this coordinate holding the remaining coordinates fixed, and cycle through the coordinates in some fixed order.
-We also consider the least angle regression (LARS), which delivers the entire solution path as a function of the regularization parameter \(\lambda\).
-piecewise construction of the path of the lasso solutions.
+We also consider the least angle regression (LARS), which delivers the entire solution path as a function of a regularization parameter.
+This solution path is continuous and piecewise linear.
 A modification can be applied to the LARS algorithm, such that is can be used to solve the lasso problem.
 
-We will also consider some generalizations of the lasso, which all inherit the two essential features of the standard lasso, namely the shrinkage and selection of variables, or groups of variables.
-A breakdown of the lasso is that it tends to select only one variabel, if there is a group of variables in which the pairwise correlations are very high.
+We will also consider some generalizations of the lasso estimator, which all inherit the two essential features of the standard lasso, which are the shrinkage and selection of variables, or groups of variables.
+A breakdown of the lasso estimator is that it tends to select only one variabel, if there is a group of variables in which the pairwise correlations are very high.
 The elastic net makes a compromise between the ridge and the lasso penalty, and handles highly correlated variables better than lasso. 
-The elastic net has an additional tuning parameter \(\alpha\), that has to be determined. For \(\alpha = 1\), the elastic net reduces to the lasso, and for \(\alpha = 0\) it reduces to ridge regression.
+%The elastic net has an additional tuning parameter \(\alpha\), that has to be determined. For \(\alpha = 1\), the elastic net reduces to the lasso, and for \(\alpha = 0\) it reduces to ridge regression.
 Another generalization of the lasso is group lasso, which is preferred if the covariate have a natural group structure.
 At last we consider the adaptive lasso as a means for fitting models sparser than lasso.
-The adaptive lasso fulfills the socalled oracle properties under some general conditions, which very desirable, as it means the it recovers the true model. 
+The adaptive lasso satisfy the so-called oracle properties under some general conditions, which is very desirable. 
 
-At last some theory for post-selection inference of the lasso is introduced.
-For the LARS algorithm with lasso modification we consider the covarians test.
+We also describe some theory for the inference of the lasso.
+For the LARS algorithm with lasso modification we consider the covariance test.
 The covariance test assigns \(p\)-values to the predictors as the are successively entered by the lasso.
-Next we consider a general scheme for post-selection inference.
+It turns out that the selection event of LARS and lasso can be characterized as a polyhedral.
+From the polyhedral lemma an equivalent respresentation of the polyhedral is given, from which inference of the selected predictors can be made.
 
 In the empirical part the presented models are used to predict the unemployment rate one-step-ahead.
 The dataset that we will consider is gathered from the Federal Reserve Bank of St. Louis and is publicly available.

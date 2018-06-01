@@ -2,11 +2,13 @@
 \textit{Dette afsnit er skrevet udfra kapitel 2 i \citep{hastie}.}
 
 \textit{The Least Absolute Shrinkage Selection Operator}, som forkortes lasso, blev introduceret i \citep{lasso}. 
+\begin{defn}[Lasso]
 Lasso finder løsningen til optimeringsproblemet
 \begin{align}
-\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta \in \R^p} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t, \label{eq:2.3}
+\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta \in \R^p} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t. \label{eq:2.3}
 \end{align} 
-hvor vi bemærker, at betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt som en \(\ell_1\)-norm betingelse $\Vert \tbeta \Vert_1 \leq t$.
+\end{defn}
+Betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt som en \(\ell_1\)-norm betingelse $\Vert \tbeta \Vert_1 \leq t$.
 Værdien af \(t\) begrænser summen af de absolutte værdier af parameter estimaterne og kontrollerer kompleksiteten af modellen. 
 En lav værdi af \(t\) vil begrænse antallet af parametre, hvilket fører til en sparse model, som tilpasser data mindre præcis, mens en høj værdi af \(t\) betyder flere parametre og tillader dermed, at modellen tilpasser data meget præcis.
 
@@ -45,17 +47,14 @@ Ridge regression tilføjer altså en positiv konstant $\lambda$ på diagonalen a
 Dermed er en entydig løsning altid garanteret. 
 %
 \begin{exmp}
-Lad os betragte data givet i tabel \ref{tab:diabetes} af ???
-Datasættet består af målinger på 442 diabetes patienter, hvor responsvariablen er et kvalitativ mål af sygdomsprogressionen et år efter sygdommen er konstateret og følgende 10 prædiktorer: 
+Lad os betragte data givet i tabel \ref{tab:diabetes} fra \citep{efron}.
+Datasættet består af målinger på 442 diabetes patienter, hvor responsvariablen er et kvantitativ mål af sygdom progressionen et år efter sygdommen er konstateret og følgende 10 prædiktorer: 
 \begin{itemize}
 \item \texttt{age}: patientens alder
-\item \texttt{sex}: 1 for kvinde og 0 for mænd??
+\item \texttt{sex}: patientens køn
 \item \texttt{bmi}: body-mass index
 \item \texttt{map}: gennemsnitlig blodtryk
-\item Målinger af blodet:
-\begin{itemize}
-\item \texttt{tc},  \texttt{ldl}, \texttt{hdl}, \texttt{tch}, \texttt{ltg} og \texttt{tglu}
-\end{itemize}
+\item Målinger af blodet:  \texttt{tc},  \texttt{ldl}, \texttt{hdl}, \texttt{tch}, \texttt{ltg} og \texttt{tglu}
 \end{itemize}
 %
 \input{fig/tab/diabetes}

@@ -6,7 +6,7 @@ Givet et initial estimat af regressionskoefficienterne \(\tilde{\tbeta} \in \mat
 \argmin_{\mathbf{c} \in \mathbb{R}^p}  \cbr{ \sum_{i=1}^n \del{y_i - \sum_{j=1}^p c_j x_{ij} \tilde{\beta}_j}^2}, \ \text{underlagt at } \mathbf{c} \geq \mathbf{0} \text{ og } \Vert \mathbf{c} \Vert_1 \leq t, \label{eq:2.19}
 \end{align}
 hvor \(\mathbf{c} \geq \mathbf{0}\) betyder, at elementer af \(\mathbf{c}\) er ikke-negative.
-Lad \(\widehat{\beta}_j^\text{NG} = \widehat{c}_j \cdot \tilde{\beta}_j\), for \(j = 1, \ldots, p\).
+Estimatoren for nonnegative garrote er da givet ved \(\widehat{\beta}_j^\text{NG} = \widehat{c}_j \cdot \tilde{\beta}_j\), for \(j = 1, \ldots, p\).
 \end{defn}
 Der er et ækvivalent Lagrange problem for denne procedure
 \begin{align}

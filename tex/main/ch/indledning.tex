@@ -7,24 +7,21 @@ Den enkelte forbruger baserer sine indkøb på indkomst.
 En makroøkonomisk variabel afhænger 
 
 En central makroøkonomisk variabel er arbejdsløshedsraten.
-Arbejdsløshedsraten betegner den procentvise ledighed.
-%andel af arbejder i arbejdsstyrken der ikke er i job.
-%Arbejdsstyrken omfatter hvis arbejdskraft er til rådighed for arbejdsmarkedet og som enten er i beskæftigelse eller ledige.
+Arbejdsløshedsraten betegner den procentvise ledighed af arbejdsstyrken.
+Arbejdsstyrken omfatter andelen af befolkningen, hvis arbejdskraft er til rådighed og som enten i beskæftigelse eller ledige.
+
 Givet et datasæt med et stort antal makroøkonomiske variable, skal vi prædiktere arbejdsløshedsraten.
 
-En oplagt metoder vil være mindste kvadraters metoder, som minimere summen af kvadrerede residualer.
-Men i dette tilfælde hvor vi betragter et så stort antal variable, da vil .
-Bias-varians tradeoff
-Og hvis antallet af variable er større end antallet af observationer, vil OLS ikke give en entydig løsning.
+En oplagt metode til at estimere koefficienterne vil være mindste kvadraters metode, som minimerer summen af kvadrerede residualer.
+Men i dette tilfælde hvor vi betragter et stort antal variable, da kan prædiktionen forbedres ved at reducere antallet af variable.
+OLS estimatoren har ofte lav bias, men høj varians, men hvis antallet af variable reduceres, da kan vi reducere variansen på bekostning af lidt bias.
+Dette vil forbedre det bias-varians tradeoff og dermed prædiktionen.?????
 
-Istedet er vi interesseret i at reducere antallet af variable.
-Hertil betragtes faktor modellen, som opsummere al information af variablerne i nogle få underliggende faktorer.
-principale komponenter?
+Vi betragter lasso estimatoren \citep{lasso}, som er en udvidelse af estimatoren for mindste kvadraters metode, hvor der blot tilføjes en \(\ell_1\)-betingelse.
+Denne betingelse vil mindske koefficienterne og endda sætte nogle lig 0.
+Hermed udfører lasso estimatoren variabeludvælgelse i lineær regression.
 
-Vi betragter lasso problemet som er en udvidelse af mindste kvadraters metode da der tilføjes en \(\ell_1\)-betingelse problemet.
-Denne betingelse vil shrinke koefficienter og sætte nogle lig 0.
-Dermed udfører lasso modelen variabeludvælgelse i lineær regression.
-
+Lasso estimatoren har dog
 Vi vil også betragte nogle generaliseringer af lasso problemet.
 \citep{zou_hastie} viste at ustabiliteten for variabeludvælgelse af lasso kommer af parameter usikkerheden i at estimere en stor kovariansmatrix.
 Ved at erstatte den empiriske estimator af kovariansmatricen med en skrinkage estimator, viste de at de resulterende regressions koefficienter og variabeludvælgelses proces er mere stabil.
@@ -37,6 +34,10 @@ I første stage opdeles prædiktorerne i blokkene. I anden stage, group lasso \c
 
 Til slut betragtes også adaptive lasso.
 
+
+Vi kan reducere dimensionen udfra faktor modellen, som opsummerer al information af variablerne i nogle få underliggende faktorer.
+principale komponenter?
+
 Som det kan ses i den empiriske del, har lasso varianterne tilsvarende out-of-sample forcast og generelt outperformes disse dynamisk faktor model, men elastisk net og group lasso giver mere konsistent variabel udvælgelses resultat over ...
 
 
@@ -47,8 +48,5 @@ Teorien for lasso problemet og dens generalisering er baseret på tværsnitsdata
 Teorien for faktor modellen er givet på tidsrække data, men oprindelig også udviklet på tværsnitsdata.
 
 
-
-\section{Notation}
-Afslutningsvis vil vi introducere notation som anvendes igennem rapporten:
-
-Gør klar hvad der er række vektor og søjle vektor, angående med transpose.  
+Rapporten er struktureret som følgende:
+I kapitel --- præsenteres 

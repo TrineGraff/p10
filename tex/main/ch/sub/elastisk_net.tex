@@ -13,7 +13,7 @@ Selvom lasso har vist succes i mange tilfælde, har den også nogle begrænsning
 Målet er at finde en metode, som overkommer ovenstående begrænsninger.
 %
 \begin{defn}[Naiv elastisk net]
-Antag responsvariablen er centreret og prædiktorerne er standardiseret, da løser naive elastiske net følgende optimeringsproblem
+Naive elastiske net løser følgende optimeringsproblem
 \begin{align}
 \widehat{\tbeta}^\text{naivEN} = \argmin_{\tbeta} \cbr{\Vert \y - \X \tbeta \Vert_2^2 + \lambda_2 \Vert \tbeta \Vert_2^2 + \lambda_1 \Vert \tbeta \Vert_1}, \label{eq:naivEN}
 \end{align}

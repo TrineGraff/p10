@@ -10,7 +10,7 @@ Formålet er da, at prædiktere responsvariablen $y$ baseret på prædiktorerne 
 \begin{defn}[Group lasso]
 %Givet \(n\) observationer \(\cbr{ \del{y_i, z_{i,1}, z_{i,2}, \ldots, z_{i,J}}}_{i=1}^n\), da løser group lasso følgende optimeringsproblem
 %Givet \(y_i, z_{i1}, z_{i2}, \ldots, z_{iJ}\) for \(i = 1, \ldots, n\), da løser group lasso følgende optimeringsproblem
-Antag responsvariablen er centreret og prædiktorerne er standardiseret, da løser group lasso følgende optimeringsproblem
+Group lasso løser følgende optimeringsproblem
 \begin{align}
 \widehat{\ttheta}_j^{\text{group lasso}} = \argmin_{\ttheta_j \in \R^{p_j}} \cbr{\frac{1}{2} \sum_{i=1}^n \del{y_i - \sum_{j=1}^J z_{ij}^T \ttheta_j}^2 + \lambda \sum_{j=1}^J \Vert \ttheta_j \Vert_2}. \label{eq:4.5}
 \end{align}

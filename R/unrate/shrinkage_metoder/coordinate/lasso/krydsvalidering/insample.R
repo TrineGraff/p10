@@ -7,7 +7,7 @@ source("shrinkage_metoder/adj.r.2.R")
 set.seed(1)
 
 lasso_fit = glmnet(x_train, y_train, family = "gaussian", alpha = 1, intercept = FALSE, standardize=FALSE)
-lasso_cv = cv.glmnet(x_train, y_train, intercept = FALSE, family = "gaussian", alpha = 1, standardize=FALSE)
+lasso_cv = cv.glmnet(x_train, y_train,  family = "gaussian", alpha = 1, standardize=FALSE, intercept = FALSE,)
 
 data.frame(
   lambda = c("min", "1se"), 

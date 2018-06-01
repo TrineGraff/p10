@@ -47,12 +47,13 @@ For teststørrelsen \(\text{T}_\text{max}\) elimineres foruden faktor modellen v
 %
 
 \section{Oversigt over out-of-sample resultater}
-Vi ser, at modellen adaptive lasso med lasso vægte (CV) er den der begår sig bedst i forhold MAE og MSE. Der er dog ikke en stor forskel på de resterende 3 adaptive lasso modeller, de er derudover også de modeller med færreste antal parametre. 
-Ridge regression, som inkluderer alle variabler, er også dem der prædikterer dårligst af lasso og dens generaliseringer. 
-AR(4) er den model, som får de dårligste resultater. 
-Det havde vi også forventet, da det er en meget simple model. 
+Vi ser, at modellen adaptive lasso med lasso vægte (CV) er den der begår sig bedst i forhold MAE og MSE. 
+Der er dog ikke en stor forskel på de resterende 3 adaptive lasso modeller, hvor de også er de modeller med færreste antal parametre. 
 
-Lasso modellen løste vi ud fra coordinate descent og LARS algoritmen, her ser vi at lasso løst ud fra coordinate descent har den mindste MAE og MSE, dog igen er det ikke den helt store forskel der på de to modeller. 
+Ridge regression, som inkluderer alle variabler, er også dem der prædikterer dårligst af lasso og dens generaliseringer. 
+AR(4) er den model, som får de dårligste resultater, hvilket vi nok også havde forventet, da det er en meget simple model. 
+
+Lasso løst med coordinate descent har den mindste MAE og MSE i forhold til lasso løst med LARS. Det er dog ikke den helt store forskel på deres MAE og MSE. 
 
 For hver model estimerede vi tuning parameteren ud fra to forskellige metoder. Vi ser, at lasso, ridge regression, LARS og LARS med lasso modifikation, hvor tuning parameteren er estimeret ud fra BIC har den mindste MAE og MSE i forhold til at anvende krydsvalidering. Det er dog ikke stor en forskel på fejlene og specielt ikke for lasso og dens generaliseringer. 
 

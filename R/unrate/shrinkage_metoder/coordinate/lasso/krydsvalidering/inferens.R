@@ -1,9 +1,10 @@
 source("shrinkage_metoder/coordinate/lasso/krydsvalidering/insample.R")
 
+coef_kryds = coef(lasso_fit, s = lasso_cv$lambda.1se)[-1]
+
 n <- length(y_train)
-coef_kryds = coef(lasso_fit, s = lasso_cv$lambda.1se, exact=TRUE,x=x_train,y=y_train)[-1]
-lambda_kryds = lasso_cv$lambda.1se * n
-fixed_lasso_kryds = fixedLassoInf(x_train, y_train, coef_kryds, lambda = lambda_kryds, 
+lambda = lasso_cv$lambda.1se * n
+fixed_lasso_kryds = fixedLassoInf(x_train, y_train, coef, lambda = lambda, 
                                   intercept = FALSE, alpha = 0.1)
 
 ci_kryds = data.frame(fixed_lasso_kryds$ci, fixed_lasso_kryds$vars)

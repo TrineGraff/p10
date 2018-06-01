@@ -1,4 +1,4 @@
-glmnet_forecast = function(y, x, alpha, idx, lambda){
+Forecast = function(y, x, alpha, idx, lambda){
   n = length(y_test)
   m = 4 #antallet af lags
 

@@ -12,21 +12,28 @@ Vi anvender funktionen \texttt{beta} til at estimere parametrene udfra OLS.
 \rfile[firstline=5,lastline=20]{../R/unrate/autoregressive_model/outsample.R}
 
 \section{Faktor modellen} \label{sec:faktor}
-Funktionerne \texttt{getFactors} og \texttt{estFactors} anvendes til at estimere og identificere faktorerne. 
+Funktionen \texttt{estFactors} bruges til at estimerer faktorerne.
+\rfile[firstline=24,lastline=58]{../R/unrate/faktor_model/insample.R}
+
+\texttt{estFactors} anvendes til identificere faktorerne. 
 %
-\rfile[firstline=6,lastline=21]{../R/unrate/faktor_model/insample.R}
-\rfile[firstline=23,lastline=57]{../R/unrate/faktor_model/insample.R}
+\rfile[firstline=7,lastline=22]{../R/unrate/faktor_model/insample.R}
 %
-Herefter prædikterer faktor modellen arbejdsløshedsraten med følgende funktion.
+Vi anvender \texttt{ForecastFaktort} til prædiktion
 \rfile[firstline=20,lastline=44]{../R/unrate/faktor_model/outsample.R}
 
-
 \section{Lasso og dens generaliseringer} \label{sec:lasso}
+Koderne i dette afsnit er kun for lasso modellen, men i det det er samme princip for de resterende modeller viser vi ikke disse. 
 
-%\subsection{Krydsvalidering} \label{sec:krydsvalidering}
+Vi bruger, som nævnt \texttt{glmnet} og \texttt{cv.glmnet} til at estimerer $\widehat{\lambda}$ ud fra krydsvalidering. 
+\rfile[firstline=9,lastline=10]{../R/unrate/shrinkage_metoder/coordinate/lasso/krydsvalidering/insample.R}
 
-Vi anvender følgende funktion til at estimerer $\widehat{\lambda}$ med BIC
+Vi anvender funktionen \texttt{BIC} til at estimerer $\widehat{\lambda}$ ud fra  BIC
 \rfile[firstline=2,lastline=32]{../R/unrate/shrinkage_metoder/coordinate/bic.R}
+
+Til prædiktion anvender vi funktionen \texttt{Forecast} 
+\rfile[firstline=1,lastline=19]{../R/unrate/shrinkage_metoder/coordinate/forecasts.R}
+
 
 \subsubsection{Inferens} \label{subsubsec:inferens}
 Funktionen \texttt{fixedLassoInf} udregner \(p\)-værdier og konfidensintervaller for lasso estimatet for en fast værdi af tuning parameteren \(\lambda\).
@@ -37,9 +44,9 @@ Funktionen anvender ``standard'' lasso problemet
 Hvorimod \texttt{glmnet} multiplicerer først led med faktoren \(\frac{1}{n}\).
 Dette betyder, at efter vi har kørt \texttt{glmnet}, da skal vi sætte \texttt{beta = coef(obj, s=lambda/n)[-1]}, hvor \texttt{obj} er objektet, som er returneret af \texttt{glmnet} og \texttt{[-1]} fjerner skæringen som \texttt{glmnet} altid giver som første komponent, for at finde det beta der svarer til en lambda værdi.
 %
-\rfile[firstline=53,lastline=62]{../R/unrate/Inferens/selectiveInference.R}
+\rfile[firstline=5,lastline=8]{../R/unrate/shrinkage_metoder/coordinate/lasso/krydsvalidering/inferens.R}
 %
-Koden er her vist for $\widehat{\lambda}$ valgt ud fra krydsvalidering. Det er samme princip for $\widehat{\lambda}$  valgt ud fra BIC,  bare at vi anvender nedenstående kode til at estimerer \texttt{best\_lambda}.
+
 
 
 

@@ -35,14 +35,17 @@ model2Frame <- data.frame(Variable = name,
 
 
 allModelFrame_nu = data.frame(rbind(model1Frame, model2Frame))
-col_plot = c("blue3", "blue3", "orange", "chartreuse4", "blue3", "orange", "blue3", "blue3", "blue3")
+col_plot = c("blue3", "blue3", "red3", "orange", "orange", "chartreuse4", "blue3","blue3", "blue3",
+             "orange", "blue3","blue3","blue3","blue3")
 
-ggplot(allModelFrame_nu, aes(colour = modelName)) + 
+kryds = ggplot(allModelFrame_nu, aes(colour = modelName)) + 
   coord_flip() +
   geom_linerange(aes(x = Variable, ymin = ci_low, ymax = ci_up),
-                 lwd = 1, position = position_dodge(width = 1/2))+
-  geom_point(aes(x = Variable, y = punkt),  position = position_dodge(width = 1/2)) +
+                 lwd = 1, position = position_dodge(width = 1/2)) +
   xlab("") +
-  theme(legend.title=element_blank()) + 
-  theme(axis.text.y = element_text(hjust = 1, colour = col_plot)) 
+  theme(legend.position = "none") + 
+  theme(axis.text.y = element_text(hjust = 1, colour = col_plot)) +
+  ggtitle("Lasso (CV)")
+  
 
+grid.arrange(kryds, bic, ncol = 2)

@@ -2,13 +2,13 @@
 I dette appendiks inkluderes \Rlang-koderne. 
 
 \section{Autoregressiv model} \label{sec:auto}
-Nedenstående funktion anvendes til at bestemme ordenen $p$ af en autoregressiv model.  
+Funktionen \texttt{opt.orden} anvendes til at bestemme ordenen $p$ af en autoregressive model.  
 \rfile[firstline=10,lastline=28]{../R/unrate/autoregressive_model/insample.R}
 %
-Herefter anvender vi følgende funktion til at estimere parametrene udfra OLS. 
+Vi anvender funktionen \texttt{beta} til at estimere parametrene udfra OLS. 
 \rfile[firstline=35,lastline=74]{../R/unrate/autoregressive_model/insample.R}
 
-Den næste funktion anvendes til prædiktion med AR(4) 
+\texttt{ForecastAR} bruges til prædiktion
 \rfile[firstline=5,lastline=20]{../R/unrate/autoregressive_model/outsample.R}
 
 \section{Faktor modellen} \label{sec:faktor}

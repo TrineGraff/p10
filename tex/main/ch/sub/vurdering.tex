@@ -1,30 +1,29 @@
 \chapter{Out-of-sample}
 I dette afsnit vil vi betragte modellernes prædiktion.
-Som nævnt prædikteres arbejdsløshedsraten one-step-ahead for et rolling scheme med expanding window.
+Som nævnt prædikteres arbejdsløshedsraten one-step-ahead med et rullende forecast, hvor vi udvider estimerings vinduet med én observation. 
 
 Arbejdsløshedsraten og de prædikterede værdier sammenlignes med MAE, MSE og forhold i mellem den alternative model og benchmark modellen for både MAE og MSE.
-Som nævnt er faktor modellen valgt udfra informationskriterie 2 benchmark model.
+Benchmark modellen er som nævnt faktor modellen, hvor antallet af faktorer er estimeret ud fra IC$_1$.
 Resultaterne af dette er givet i tabel \ref{tab:mae_mse_vurdering}.
 %
 \input{fig/tab/mae_mse_vurdering}
-LARS algoritmen uden lasso modifikationen, hvor variablerne er valgt ud fra BIC, har den mindste MAE, mens adaptive lasso modellerne har den mindste MSE. 
-%For MAE ses, at LARS algoritmen uden lasso modifikationen, hvor variablerne er valgt udfra BIC, har den mindste MAE, mens adaptive lasso modellerne foretrukket ifølge MSE.
-Først på 7. decimal af MSE for adaptive lasso modellerne ses at adaptive lasso m. OLS vægte valgt udfra BIC faktisk har mindst MSE. 
-% og dermed betragtes som den ``bedste'' out-of-sample.
-I forhold til benchmark modellen har AR(4) den dårligste prædiktion tæt efterfulgt af faktor modellen, mens der for de resterende modeller ses en tydelig forbedring.
-Den indbyrdes forskel i MAE og MSE for lasso modellerne og dens generaliseringer er forholdsvis lille.
+Adaptive lasso med lasso vægte (CV) har den mindste MAE og MSE. 
+Vi ser dog, at MAE og MSE for modellerne adaptive lasso med OLS (CV), adaptive lasso med OLS (BIC) og adaptive lasso med lasso vægte (BIC) er meget tæt på. 
+Generelt kan vi se, at den indbyrdes forskel i MAE og MSE for lasso modellerne og dens generaliseringer er forholdsvis lille.
+ 
+Vi ser, at kun AR(4) og faktor model (IC$_1$) er dårligere end benchmarkmodellen. 
 
 For at vurdere modellernes prædiktion i forhold til benchmark modellen fra måned til måned, betragtes et rullende gennemsnitlig fejl ratio.
 Et rullende gennemsnitlig absolut fejl ratio for samtlige modeller illustreres på figur \ref{fig:rolling_mae}.
 Heraf ses at AR(4) prædikterer dårligere end benchmark modellen over hele testmængden.
-Også faktor modellen valgt udfra IC$_1$ lader til at prædiktere dårligere end benchmark modellen med undtagelse af maj, juni og august i 2006.
+Også faktor modellen valgt udfra IC$_1$ prædiktere dårligere end benchmark modellen med undtagelse af maj, juni og august i 2006.
 Derudover ser vi, at ridge regression modellerne prædikterer bedre end benchmark modellen, mens alle lasso baseret modeller klart har bedre prædiktion end de øvrige modeller.
 %
 \imgfigh{rolling_mae.pdf}{1}{Rullende gennemsnitlige absolutte fejl ratio.}{rolling_mae}
 %
 
 %
-\imgfigh{rolling_mse.pdf}{1}{Rullende gennemsnitlige kvarerede fejl ratio.}{rolling_mse}
+\imgfigh{rolling_mse.pdf}{1}{Rullende gennemsnitlige kvadrerede fejl ratio.}{rolling_mse}
 %
 
 \subsection{Diebold Mariano testen}
@@ -48,38 +47,15 @@ For teststørrelsen \(\text{T}_\text{max}\) elimineres foruden faktor modellen v
 %
 
 \section{Oversigt over out-of-sample resultater}
-Vi ser, at de modeller hvor variablerne er estimeret ud fra BIC har en lidt bedre MAE, på nær for group lasso. 
+Vi ser, at modellen adaptive lasso med lasso vægte (CV) er den der begår sig bedst i forhold MAE og MSE. Der er dog ikke en stor forskel på de resterende 3 adaptive lasso modeller, de er derudover også de modeller med færreste antal parametre. 
+Ridge regression, som inkluderer alle variabler, er også dem der prædikterer dårligst af lasso og dens generaliseringer. 
+AR(4) er den model, som får de dårligste resultater. 
+Det havde vi også forventet, da det er en meget simple model. 
 
- 
+Lasso modellen løste vi ud fra coordinate descent og LARS algoritmen, her ser vi at lasso løst ud fra coordinate descent har den mindste MAE og MSE, dog igen er det ikke den helt store forskel der på de to modeller. 
 
-%Generelt for out-of-sample resultater får vi at lasso og dens generaliseringer er signifikante bedre end benchmark modellen. 
-%Vi
-%
-% da de alle er signifikante forskellige fra benchmark modellen, samt har en markant mindre MSE og MAE end benchmark modellen. 
-%Derudover ser vi, at AR(4) har de dårligste resultater både i in-sample og out-of-sample stærkt efterfulgt af faktor modellen valgt ud fra IC$_1$. 
-%Vi ser også, at de to ridge regression modeller har den største MSE og MAE, efterfulgt af de to group lasso modeller. De fire modeller er også dem med flest parameter. 
-%
-% er den der har størst MSE og MAE, hvor $\widehat{\lambda}$ estimeret ud fra både krydsvalidering og BIC. 
-%Ridge regression er som nævnt også den med fleste variabler, hvor på 
-%
-%
-%af lasso og dens generaliseringer.
-%
-%
-%
-%For lasso og dens generaliseringer, ser vi at ridge regression er den der har størst MSE og MAE, samt at det er den med flest variabler. Vi ser at 
-%
-%
-%
-%
-%Lasso og dens generaliseringer er alle signifikante bedre end benchmark, da vi har at de er alle signifikante forskellige fra benchmark og at de har markant mindre MSE og MAE end benchmark modellen. 
-%
-%AR(4) har de dårligste resultater både i in-sample og out-of-sample stærkt efterfulgt af faktor modellen valgt ud fra IC$_1$.  
-%
-%
-%
-%
-%
+For hver model estimerede vi tuning parameteren ud fra to forskellige metoder. Vi ser, at lasso, ridge regression, LARS og LARS med lasso modifikation, hvor tuning parameteren er estimeret ud fra BIC har den mindste MAE og MSE i forhold til at anvende krydsvalidering. Det er dog ikke stor en forskel på fejlene og specielt ikke for lasso og dens generaliseringer. 
+
 %Overordnet set præsterer AR(4) dårligst både in- og out-of-sample.
 %Faktor modellen valgt udfra IC\(_1\)
 %adaptive lasso inkludere kun 2 prædiktorer og er stadig iblandt de bedste modeller.

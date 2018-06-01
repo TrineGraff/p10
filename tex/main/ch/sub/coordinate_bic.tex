@@ -1,16 +1,21 @@
 \subsection{BIC}
-Hernæst vil vi estimere tuning parameteren \(\widehat{\lambda}\) med BIC, hvortil vi anvender funktionen i appendiks \ref{sub:bic}.
+Hernæst vil vi estimere tuning parameteren \(\widehat{\lambda}\) med BIC, hvortil vi anvender funktionen i appendiks ----.
+
+For elastik net finder vi, at $\alpha = 1$ giver den mindste BIC, hvilket svarer til lasso modellen. Derfor anvender vi igen ikke modellen. 
+Vi betragter adaptive lasso med OLS vægte, hvor $\gamma = 2$, og adaptive lasso med lasso vægte, hvor $\gamma = 0.5$, da de har mindst BIC. 
 
 Tabel \ref{tab:bic_lambda} giver værdierne af $\log \del{ \widehat{\lambda}_\text{BIC}}$, antallet af parametre, BIC, justerede R$^2$ og log-likelihood for lasso og dens generaliseringer. 
-Igen vælges \(\alpha = 1\) for elastik net, og derfor ser vi igen bort fra denne model.
+
 Justerede R$^2$ er igen højst for  lasso og mindst for ridge regression, derudover er log-likelihood højst for Ridge regression. 
-Igen vælger adaptive lasso modellerne variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}.
-Derudover vælger group lasso hele 99 variabler. 
 
 \input{fig/tab/bic_lambda}
 
-På figur \ref{fig:coef_bic_coord} ses de 17 estimerede koefficienter for lasso og 2 estimerede koefficienter for adaptive lasso.
-Igen har variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} de største estimerede koefficienter, mens de resterende estimerede koefficienter er meget tæt på nul. 
+På figur \ref{fig:coef_bic_coord} vises de estimerede koefficienter for lasso, adaptive lasso med OLS vægte og adaptive lasso med lasso vægte.
+De to adaptive lasso vælger begge variablerne  \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}, hvor adaptive lasso med lasso vægte også vælger variablen\textcolor{blue3}{lag1}. 
+De estimerede koefficienter for lasso, og de to adaptive lasso modeller ses i figur \ref{fig:coef_bic_coord}. 
+
+ 
+Vi ser, at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} er de største estimerede koefficienter, mens de resterende estimerede koefficienter er meget tæt på nul. 
 Vi har valgt, ikke at inkludere de estimerede koefficienter for ridge regression og group lasso, da det samme gør sig gældende for disse.
 
 \imgfigh{coef_bic_coord.pdf}{1}{Estimerede koefficienter for lasso og adaptive lasso med OLS og lasso vægte, hvor $\widehat{\lambda}$ er fundet ud fra BIC. 
@@ -19,22 +24,20 @@ Farverne indikerer hvilken gruppe, variabler tilhører og y-aksen er variablerne
 Figurerne \ref{fig:resid_lasso_coord_bic}-\ref{fig:resid_adap_ols_coord_bic} viser en analyse af de standardiserede residualer.
 Vi ser igen lidt af den samme tendens for lasso og dens generaliseringer. 
 Histogrammet og QQ-plottet indikerer tungere haler end normalfordelingen og autokorrelation i det første lag. 
-Dog har ridge regression og group lasso kun få outliers som ses på QQ-plottet. 
+Dog har ridge regression og group lasso kun få outliers ,som ses på QQ-plottet. 
 I tabel \ref{tab:res_shrinkage_tab} ser vi også, at vi ikke kan afvise LB testen omkring normalitet for group lasso når $\widehat{\lambda}$ er bestemt udfra BIC. 
 
-\newpage
 \subsubsection{Inferens}
-På figur \ref{fig:boxplot_lasso_coord_bic} ses bootstrap resultaterne for variablerne udvalgt af lasso.
+På figur \ref{fig:boxplot_lasso_coord_bic} ses bootstrap resultaterne for variablerne udvalgt af lasso og som nævnt tidligere har adaptive lasso har konsistent variabeludvælgelse og derfor laves der ikke bootstrap for disse. 
+
 Variablene \textcolor{cadetblue2}{CPIMEDSL}, \textcolor{orange}{TB6MS}, \textcolor{blue3}{USTRADE} og \textcolor{blue3}{CLAIMSx} fravælges over 50\% af bootstrap realisationerne, mens variablerne \textcolor{blue3}{lag 1}, \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} ofte vælges.
 I forhold til størrelsen af de estimerede koefficienter for lasso er bootstrap resultaterne ikke overraskende. 
-%
-%\imgfigh{bootstrap_alasso.pdf}{0.7}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\tbeta}^{\text{AL}} \del{{\widehat{\lambda}_\text{min}}}$ med OLS vægte, mens plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}{bootstrap_alasso}
-%
 
 Igen anvendes TG testen for de valgte variable med lasso.
 Resultaterne er givet i tabel \ref{tab:fixedLassoInf_bic}.
 Heraf ser vi at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} afviser nulhypotesen, og derfor er signifikante.
-
+Vi observerer et \textit{inf} i den øvre grænse i konfidensintervallet for \textcolor{blue3}{USTRADE}, hvilket skyldes at konfidensintervallet er udregnet numerisk, og bliver ustabil når punktet $\boldsymbol\eta^T \mathbf{y}$ er for tæt på dens trunkerede interval, altså $\mathcal{V}^-$ og $\mathcal{V}^+$. 
+Igen observeres at $Z$-score for variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} er høje i forhold de resterende. 
 
 \input{fig/tab/fixedlasso_bic}
 

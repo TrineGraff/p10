@@ -76,8 +76,8 @@ ggplot(allModelFrame, aes(colour = modelName)) +
 
 # z-score -----------------------------------------------------------------
 zscore = fixed_lasso_kryds$coef0 /fixed_lasso_kryds$sd
-
+?fixed_lasso_kryds
 vmat = fixed_lasso_kryds$vmat
 sd = fixed_lasso_kryds$sigma*sqrt(rowSums(vmat^2)) 
 zscore = fixed_lasso_kryds$coef0 / sd
-
+?fixedLassoInf

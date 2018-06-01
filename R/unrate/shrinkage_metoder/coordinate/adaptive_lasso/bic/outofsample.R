@@ -9,4 +9,4 @@ mae(y_test - adap_lasso_fc)
 mse(adap_lasso_fc - y_test)
 
 c = tidy(adap_lasso_fc)
-write.csv(c, file = "fc_adap_lasso_bic") 
+write.csv(c, file = "fc_adap_lasso_bic.csv") 

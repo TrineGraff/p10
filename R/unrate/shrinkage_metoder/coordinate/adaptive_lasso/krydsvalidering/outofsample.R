@@ -11,5 +11,5 @@ mae(y_test - fc_adap_lasso)
 mse(y_test - fc_adap_lasso)
 
 c = tidy(fc_adap_lasso)
-write.csv(c, file = "fc_adap_lasso_kryds") 
+write.csv(c, file = "fc_adap_lasso_kryds.csv") 
 

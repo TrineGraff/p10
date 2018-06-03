@@ -2,10 +2,10 @@
 I dette afsnit vil vi betragte modellernes prædiktion.
 Som nævnt prædikteres arbejdsløshedsraten one-step-ahead med et rullende forecast, hvor vi udvider estimerings vinduet med én observation. 
 
-Arbejdsløshedsraten og de prædikterede værdier sammenlignes med MAE, MSE og forhold i mellem den alternative model og benchmark modellen for både MAE og MSE.
-Benchmark modellen er som nævnt faktor modellen, hvor antallet af faktorer er estimeret ud fra IC$_1$.
+Arbejdsløshedsraten og de prædikterede værdier sammenlignes med MAE, MSE og et gennemsnitlig tabs ratio mellem hver model og benchmark modellen for både MAE og MSE.
+Som nævnt er faktor modellen valgt udfra IC\(_2\) benchmark model.
 Resultaterne af dette er givet i tabel \ref{tab:mae_mse_vurdering}.
-%
+
 \input{fig/tab/mae_mse_vurdering}
 Adaptive lasso med lasso vægte (CV) har den mindste MAE og MSE. 
 Vi ser dog, at MAE og MSE for modellerne adaptive lasso med OLS (CV), adaptive lasso med OLS (BIC) og adaptive lasso med lasso vægte (BIC) er meget tæt på. 

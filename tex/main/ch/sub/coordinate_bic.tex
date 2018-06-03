@@ -21,11 +21,12 @@ Vi har valgt, ikke at inkludere de estimerede koefficienter for ridge regression
 \imgfigh{coef_bic_coord.pdf}{1}{Estimerede koefficienter for lasso og adaptive lasso med OLS og lasso vægte, hvor $\widehat{\lambda}$ er fundet ud fra BIC. 
 Farverne indikerer hvilken gruppe, variabler tilhører og y-aksen er variablerne udvalgt af lasso.}{coef_bic_coord}
 
-Figurerne \ref{fig:resid_lasso_coord_bic}-\ref{fig:resid_adap_ols_coord_bic} viser en analyse af de standardiserede residualer.
-Vi ser igen lidt af den samme tendens for lasso og dens generaliseringer. 
-Histogrammet og QQ-plottet indikerer tungere haler end normalfordelingen og autokorrelation i det første lag. 
-Dog har ridge regression og group lasso kun få outliers ,som ses på QQ-plottet. 
-I tabel \ref{tab:res_shrinkage_tab} ser vi også, at vi ikke kan afvise LB testen omkring normalitet for group lasso når $\widehat{\lambda}$ er bestemt udfra BIC. 
+Figur \ref{fig:resid_lasso_coord_bic}-\ref{fig:resid_adap_lasso_coord_bic} viser en analyse af de standardiserede residualer for lasso og dens generaliseringer, hvor tuning parametrene vælges udfra BIC.
+For lasso og adaptive lasso modellerne observeres udfra histogrammet og QQ-plottet, at fordelingen af de standardiserede residualer har tungere haler end normalfordelingen.
+For ridge regression og group lasso ses af QQ-plottet blot få outliers.
+Fælles for alle er, at der er autokorrelation i det første lag. 
+I tabel \ref{tab:res_shrinkage_tab} afvises residualerne at være uafhængige og JB testens nulhypotese om normalitet afvises også for alle med undtagelse af group lasso.
+
 
 \subsubsection{Inferens}
 På figur \ref{fig:boxplot_lasso_coord_bic} ses bootstrap resultaterne for variablerne udvalgt af lasso og som nævnt tidligere har adaptive lasso har konsistent variabeludvælgelse og derfor laves der ikke bootstrap for disse. 

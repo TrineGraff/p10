@@ -1,4 +1,4 @@
-\chapter{Out-of-sample}
+\chapter{Out-of-sample} \label{ch:out-of-sample}
 I dette afsnit vil vi betragte modellernes prædiktion.
 Som nævnt prædikteres arbejdsløshedsraten one-step-ahead med et rullende forecast, hvor vi udvider estimerings vinduet med én observation. 
 
@@ -26,7 +26,7 @@ Derudover ser vi, at ridge regression modellerne prædikterer bedre end benchmar
 \imgfigh{rolling_mse.pdf}{1}{Rullende gennemsnitlige kvadrerede fejl ratio.}{rolling_mse}
 %
 
-\subsection{Diebold Mariano testen}
+\section{Diebold Mariano test}
 I tabel \ref{tab:dm_test} ses resultaterne fra Diebold-Mariano testen, hvor hver model testes imod benchmark modellen.
 Heraf ses at nulhypotesen ikke kan afvises for faktor modellen valgt udfra IC\(_1\), hvilket vil sige, at modellen ikke er signifikant forskellig fra benchmark modellen.
 For de resterende modeller afvises nulhypotesen, hvilket betyder, at disse ikke er signifikant forskellige fra benchmark modellen.
@@ -34,7 +34,7 @@ For de resterende modeller afvises nulhypotesen, hvilket betyder, at disse ikke 
 \input{fig/tab/dm_test}
 %
 \newpage
-\subsection{MCS} 
+\section{MCS} 
 Herefter vil vi teste alle modellerne imod hinanden, hvortil vi betragter model confidence procedure.
 Proceduren udføres for \(\alpha = 0.1\) og \(\alpha = 0.2\), teststørrelserne \(\text{T}_\text{R}\) og \(\text{T}_\text{max}\) og 5000 bootstrapped samples.
 I tabel \ref{tab:mcs_tab} er modellerne i 80\% og 90\% MCS angivet for \(\text{T}_\text{R}\) og \(\text{T}_\text{max}\).

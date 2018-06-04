@@ -62,10 +62,10 @@ hvor \(\widehat{\beta}^\text{lasso}_k \del{\lambda}\) er det nuværende estimat 
 \end{enumerate}
 \end{alg}
 %
-Løsningerne udregnes for en aftagende følge af værdier \(\cbr{\lambda_{\ell}}_{\ell = 0}^L\), hvor \(\lambda_0\) vælges således at \(\hat{\tbeta} \del{\lambda_0} =\mathbf{0}\). 
+Løsningerne udregnes for en aftagende følge af værdier \(\cbr{\lambda_{\ell}}_{\ell = 0}^L\), hvor \(\lambda_0\) vælges således at \(\widehat{\tbeta} \del{\lambda_0} =\mathbf{0}\). 
 Algoritmen udnytter \textit{warm start}, hvilket betyder, at \(\widehat{\tbeta} \del{\lambda_\ell}\) anvendes som begyndelsesværdi for løsningen \(\widehat{\tbeta} \del{\lambda_{\ell + 1}}\), dette fører til en mere stabil algoritme. 
-Når \(\widehat{\tbeta} = \mathbf{0}\), har vi af -- at \(\hat{\beta}_j\) vil forblive nul hvis \(\frac{1}{n} \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert < \lambda\). Derfor er \( \lambda_0 = \frac{1}{n} \max_j \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert\).
-Strategien er at vælge en minimum værdi \(\lambda_L = \epsilon \lambda_0\) og konstruere en følge af \(K\) værdier af \(\lambda\) som aftager fra \(\lambda_0\) til \(\lambda_L\) på logskalaen.
+Når \(\widehat{\tbeta} = \mathbf{0}\), har vi at \(\widehat{\beta}_j\) vil forblive nul hvis \(\frac{1}{n} \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert < \frac{\lambda}{2n}\). Derfor er \( \lambda_0 = 2 \max_j \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert\).
+Strategien er at vælge en minimum værdi \(\lambda_L = \epsilon \lambda_0\) og konstruere en følge af \(K\) værdier af \(\lambda\), som aftager fra \(\lambda_0\) til \(\lambda_L\) på logskalaen.
 Typiske værdier er \(\epsilon = 0.001\) og \(K =100\).
 %
 %Den største værdi som betragtes er givet ved \(\lambda_0 = \frac{1}{n} \max_j \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert\), da enhver værdi større end \(\lambda_0\) vil give en tom model.
@@ -82,10 +82,6 @@ Typiske værdier er \(\epsilon = 0.001\) og \(K =100\).
 %Da kan vi mindske \(\lambda\) lidt og køre coordinate descent indtil konvergens.
 %Vi mindsker \(\lambda\) igen og anvende den tidligere løsning som en warm start, da kan vi køre coordinate descent indtil konvergens.
 %Hermed kan vi udregne løsningen over en grid af \(\lambda\) værdier. \\
-
-Coordinate descent kan være hurtigere end LARS algoritmen særligt for store problemer.
-Dette skyldes at \eqref{eq:update_coordinate} hurtigt kan opdateres som \(j\) varierer, og ofte er opdateringen at lade \(\beta_j = 0\).
-Coordinate descent algoritmen for lasso giver ikke den fulde lasso løsningsstil som LARS algoritmen, men kan bruges til at udregne lasso løsningerne for \(\Lambda\).
 
 Den beskrevne coordinate descent algoritmen er implementeret i \Rlang-pakken \texttt{glmnet}.
 Koefficientstierne i figur \ref{fig:diabetes_koef} er fundet udfra denne algoritme.

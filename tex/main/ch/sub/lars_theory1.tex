@@ -1,13 +1,13 @@
 \section{LARS}
-Først vil vi beskrive LARS algoritmen, hvorefter vi vil introducere en simpel modifikation, som fører til lasso estimater. \\[2mm]
+Først vil vi beskrive least angle regression (LARS) algoritmen, hvorefter vi vil introducere en simpel modifikation, som fører til lasso estimater. \\[2mm]
 %
 I grove træk fungerer algoritmen som følgende. 
 Først sættes alle koefficienter lig nul, og vi finder prædiktoren, som er mest korreleret med responsvariablen \(\y\), denne prædiktor betegnes \(x_{j_1}\).
 Der udføres en simpel lineær regression af \(\y\) på \(x_{j_1}\), hvoraf vi finder en residualvektor.
 %som herefter betragtes som responsvariablen.
-Herefter tages det størst mulige step i retningen af denne prædiktor indtil en anden prædiktor, som betegnes \(x_{j_2}\), har samme korrelation med den nuværende residual.
+Herefter tages det størst mulige step i retningen af denne prædiktor indtil en anden prædiktor, som betegnes \(x_{j_2}\), har samme korrelation med den nuværende residualvektor.
 Istedet for at fortsætte langs \(x_{j_1}\) fortsætter LARS i en retning, som er ensvinklet mellem de to prædiktorer, indtil en tredje variabel bliver den mest korreleret mængde.
-LARS fortsætter da ensvinklet imellem \(x_{j_1}\), \(x_{j_2}\) og \(x_{j_3}\), dvs langs ``least angle direction'' indtil en fjerde variable medtages, osv.
+%LARS fortsætter da ensvinklet imellem \(x_{j_1}\), \(x_{j_2}\) og \(x_{j_3}\), dvs langs ``least angle direction'' indtil en fjerde variable medtages, osv.
 
 LARS finder estimaterne \(\widehat{\tmu} = \X \widehat{\tbeta}\) ved at tilføje én prædiktor til modellen i hvert step, således at præcis \(k\) estimater er forskellig fra nul efter \(k\) steps.
 
@@ -47,29 +47,40 @@ For \(p>2\), da vil stepstørrelsen \(\widehat{\gamma}_2\) være mindre, hvilket
 \begin{figure}[H]
 \centering
 \scalebox{0.8}{\input{fig/lars2.tikz}}
-\caption{I hvert step nærmer LARS estimatet \(\hat{\tmu}_k\) sig det tilhørende OLS estimat \(\bar{\y}_k\), men vil aldrig nå det.
+\caption{I hvert step nærmer LARS estimatet \(\widehat{\tmu}_k\) sig det tilhørende OLS estimat \(\bar{\y}_k\), men vil aldrig nå det.
  }\label{fig:lars2}
 \end{figure}
 %
 Vi antager, at prædiktorerne \(\x_1, \ldots, \x_p\) er lineært uafhængige.
-Lad \(\A\) være en delmængde af indekser \(\cbr{1,\ldots, p}\), og definer matricen
+Lad \(\A\) være er en delmængde af indekser \(\cbr{1,\ldots, p}\), og definer matricen
 \begin{align}
 \X_\A = \del{\dots s_j \x_j \dots}_{j \in \A}, \label{eq:lars_2.4}
 \end{align}
 hvor $s_j = \pm 1$, således at \(\X_\A\) er en matrix, som består af søjlerne i \(\X\), der er inkluderet i \(\mathcal{A}\) multipliceret \(s_j\).
 Lad 
 \begin{align}
-N_\A = \X_\A^T \X_\A \quad \text{og} \quad A_\A = \del{\mathbf{1}_\A^T N_\A^{-1} \mathbf{1}_\A}^{-1/2}, \label{eq:lars_2.5}
+\mathbf{N}_\A = \X_\A^T \X_\A \quad \text{og} \quad A_\A = \del{\mathbf{1}_\A^T \mathbf{N}_\A^{-1} \mathbf{1}_\A}^{-1/2}, \label{eq:lars_2.5}
 \end{align}
 hvor \(\mathbf{1}_\A\) er en vektor af 1-taller med en længde lig antallet af elementer i \(\A\).
 Da defineres en såkaldt ``ensvinklet'' vektor
 \begin{align}
-\mathbf{u}_\A = \X_\A \omega_\A, \quad \text{hvor } \omega_\A = A_\A N_\A^{-1} \mathbf{1}_\A, \label{eq:lars_2.6}
+\mathbf{u}_\A = \X_\A \omega_\A, \quad \text{hvor } \omega_\A = A_\A \mathbf{N}_\A^{-1} \mathbf{1}_\A, \label{eq:lars_2.6}
 \end{align}
 som er en enhedsvektor, der gør vinkler mellem søjlerne i \(\X_\A\) lige store, dvs
 %der resulterer i lige store vinkler der er mindre end \(90^0\), med søjlerne i \(\X_\A\), dvs
 \begin{align}
 \X_\A^T \mathbf{u}_\A = A_\A \mathbf{1}_\A \quad \text{og} \quad \Vert \mathbf{u}_\A \Vert_2^2 = 1. \label{eq:lars_2.7}
+\end{align}
+Antag yderligere at \(\widehat{\mathbf{c}}\) er en vektor af nuværende korrelationer, \(\widehat{C}\) er den maksimale nuværende korrelation og \(s_j\) er fortegnet af \(\widehat{c}_j\)
+\begin{align}
+\widehat{\mathbf{c}} &= \X^T \del{\y - \widehat{\boldsymbol{\mu}}_\A}, \nonumber \\
+\widehat{C} &= \max_j \cbr{\abs{\widehat{c}_j}}  \label{eq:lars_2.8}  \\
+s_j &= \text{sign} \cbr{\widehat{c}_j}, \quad j \in \A \nonumber
+\end{align}
+hvor \(\widehat{\boldsymbol{\mu}}_\A = \X_\A \widehat{\tbeta}\) er det nuværende LARS estimat.
+Den aktive mængde \(\A\) defineres som en mængde af indekser svarende til prædiktorerne med størst absolut nuværende korrelationer
+\begin{align}
+\A= \cbr{j: \ \abs{ \widehat{c}_j} = \widehat{C}}. \label{eq:lars_aktive}
 \end{align}
 Herefter kan vi give en fyldestgørende beskrivelse af LARS algoritmen.
 %
@@ -78,22 +89,23 @@ Herefter kan vi give en fyldestgørende beskrivelse af LARS algoritmen.
 \item Standardisere prædiktorerne og centre responsvariablen. 
 Start med \(\widehat{\boldsymbol{\mu}}_0 = \mathbf{0}\), \(\widehat{\mathbf{c}} = \X^T \y\), og \(\A = \emptyset\).
 \item Find prædiktoren \(\tx_j\) som er mest korreleret med \(\y\). Definer den aktive mængde \(\A = \cbr{j}\).
-\item Gentag følgende indtil alle prædiktorer er indeholdt i den aktive mængde:
+\item 
+Gentag følgende indtil alle prædiktorer er indeholdt i den aktive mængde:
 \begin{itemize}
-\item Antag \(\widehat{\boldsymbol{\mu}}_\A\) er det nuværende LARS estimat og at
-\begin{align}
-\widehat{\mathbf{c}} = \X^T \del{\y - \widehat{\boldsymbol{\mu}}_\A}, \label{eq:lars_2.8}
-\end{align} 
-er vektoren af nuværende korrelationer.
-Den aktive mængde \(\A\) er en mængde af indekser svarende til prædiktorer med størst absolut nuværende korrelationer
-\begin{align}
-\widehat{C} = \max_j \cbr{\abs{\widehat{c}_j}} \quad \text{og} \quad \A= \cbr{j: \ \abs{ \widehat{c}_j} = \widehat{C}}. \label{eq:lars_2.9}
-\end{align}
-Lad 
-\begin{align*}
-s_j = \text{sign} \cbr{\widehat{c}_j}, \quad j \in \A,
-\end{align*}
-da udregnes \(\X_\A\), \(A_\A\) og \(\mathbf{u}_\A\) som i \eqref{eq:lars_2.4}-\eqref{eq:lars_2.6} samt
+%%\item Antag \(\widehat{\boldsymbol{\mu}}_\A\) er det nuværende LARS estimat og at
+%%\begin{align}
+%%\widehat{\mathbf{c}} = \X^T \del{\y - \widehat{\boldsymbol{\mu}}_\A}, \label{eq:lars_2.8}
+%%\end{align} 
+%%er vektoren af nuværende korrelationer.
+%%Den aktive mængde \(\A\) er en mængde af indekser svarende til prædiktorer med størst absolut nuværende korrelationer
+%%\begin{align}
+%%\widehat{C} = \max_j \cbr{\abs{\widehat{c}_j}} \quad \text{og} \quad \A= \cbr{j: \ \abs{ \widehat{c}_j} = \widehat{C}}. \label{eq:lars_2.9}
+%%\end{align}
+%%Lad 
+%%\begin{align*}
+%%s_j = \text{sign} \cbr{\widehat{c}_j}, \quad j \in \A,
+%%\end{align*}
+\item Udregn \(\widehat{\mathbf{c}}\), \(\widehat{C}\), \(\X_\A\), \(A_\A\) og \(\mathbf{u}_\A\) som i \eqref{eq:lars_2.4}-\eqref{eq:lars_2.8} samt
 \begin{align*}
 \mathbf{a} = \X^T \mathbf{u}_\A.
 \end{align*}
@@ -103,9 +115,9 @@ da udregnes \(\X_\A\), \(A_\A\) og \(\mathbf{u}_\A\) som i \eqref{eq:lars_2.4}-\
 \end{align}
 hvor 
 \begin{align}
-\widehat{\gamma} = \min_{j \in \A^c}^+ \cbr{ \frac{\widehat{C}- \widehat{c}_j}{A_\A - a_j} , \frac{\widehat{C} + \widehat{c}_j}{A_\A + a_j}}, \label{eq:lars_2.13}
+\widehat{\gamma} = \min_{j \in \A^c} \cbr{ \frac{\widehat{C}- \widehat{c}_j}{A_\A - a_j} , \frac{\widehat{C} + \widehat{c}_j}{A_\A + a_j}}_+, \label{eq:lars_2.13}
 \end{align}
-og hvor \(\min^+\) indikerer, at minimum kun tages over de positive komponenter indenfor valget af \(j\) i \eqref{eq:lars_2.13}.
+og hvor \(\min \cbr{\cdot , \cdot}_+\) indikerer, at minimum kun tages over de positive komponenter indenfor valget af \(j\) i \eqref{eq:lars_2.13}.
 \item Sæt \(\A = \A \cup \cbr{\widehat{j}}\), hvor \(\widehat{j}\) er minimeringsindekset i \eqref{eq:lars_2.13}.
 \end{itemize}
 \end{enumerate}
@@ -120,7 +132,7 @@ for \(\gamma > 0\), således at den nuværende korrelation er givet ved
 \begin{align}
 c_j \del{\gamma} = \x_j^T \del{\y - \tmu \del{\gamma}} = \widehat{c}_j - \gamma a_j. \label{eq:lars_2.15}
 \end{align}
-For \(j \in \A\) giver \eqref{eq:lars_2.7}-\eqref{eq:lars_2.9} at
+For \(j \in \A\) giver \eqref{eq:lars_2.7}-\eqref{eq:lars_2.8} at
 \begin{align}
 \abs{c_j \del{\gamma}} = \widehat{C} - \gamma A_\A,\label{eq:lars_2.16}
 \end{align}
@@ -179,7 +191,7 @@ Da kan det vises, at fortegnet af enhver ikke-nul koefficient \(\widehat{\beta}_
 %\end{lem}
 %
 Denne restriktion er ikke inkluderet i LARS algoritmen, men kan nemt modificeret hertil. 
-Antag vi netop har fuldendt et LARS step, som har givet en ny aktive mængde \(\A\) som i \eqref{eq:lars_2.9}, og at det tilhørende LARS estimat \(\widehat{\tmu}_\A\) svarer til en lasso løsningen \(\widehat{\tmu}^\text{lasso} = \X \widehat{\tbeta}^\text{lasso}\).
+Antag vi netop har fuldendt et LARS step, som har givet en ny aktive mængde \(\A\) som i \eqref{eq:lars_aktive}, og at det tilhørende LARS estimat \(\widehat{\tmu}_\A\) svarer til en lasso løsningen \(\widehat{\tmu}^\text{lasso} = \X \widehat{\tbeta}^\text{lasso}\).
 Lad
 \begin{align*}
 \omega_\A = A_\A N_\A^{-1} \mathbf{1}_\A,
@@ -246,3 +258,9 @@ De 2 ekstra steps som LARS algoritmen med lasso modifikationen udfører kommer a
 %En af dem er, at den giver en ranking af prædiktorer når der bliver tilføjet andre prædiktorer, som ikke er tilfældet med hard treshold. 
 %En anden fordel er at algoritmen undgår streng korrelerede prædiktorer, hvis en af de korrelerede prædiktorer allerede er inkluderet, siden at den nye residual vil have lav korrelation med variabler, som er streng korrelerede variabler, som allerede er inkluderet. 
 %Derudover er LARS algoritmen ikke er 'greedy', som forward regression, fordi den udnytter en god retning til dens maksimum . 
+
+
+
+Coordinate descent kan være hurtigere end LARS algoritmen særligt for store problemer.
+Dette skyldes at \eqref{eq:update_coordinate} hurtigt kan opdateres som \(j\) varierer, og ofte er opdateringen at lade \(\beta_j = 0\).
+Coordinate descent algoritmen for lasso giver ikke den fulde lasso løsningsstil som LARS algoritmen, men kan bruges til at udregne lasso løsningerne for \(\Lambda\).

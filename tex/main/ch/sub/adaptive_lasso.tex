@@ -7,7 +7,7 @@ Den vægtede lasso er givet ved
 \end{align*}
 hvor \(\mathbf{w}\) er en kendt \(p \times 1\) vektor og \(w_j \geq 0\).
 
-Adaptive lasso er blot en vægtet lasso, hvor vægtene \(\mathbf{w}\) er bestemt, således at metoden opfylder orakelegenskaberne.
+Adaptive lasso er blot en vægtet lasso, hvor vægtene \(\mathbf{w}\) er bestemt, således at metoden opfylder orakelegenskaberne, som vi vil bevise i afsnit \ref{subsec:konsistentAL}.
 \begin{defn}[Adaptive lasso]
 Antag \(\tilde{\tbeta}\) er rod-n konsistent til \(\tbeta^*\).
 Vælg \(\gamma>0\) og definer \(\widehat{\mathbf{w}} = \frac{1}{\vert \tilde{\tbeta} \vert^\gamma}\), da er adaptive lasso estimaterne givet ved
@@ -27,15 +27,18 @@ For standardiseret prædiktorer og en centeret responsvariabel er coordinate des
 \end{align}
 hvor \(\tilde{\beta}_j = \frac{1}{n} \sum_{i=1}^n r_{i}^{(j)} x_{ij}\) og \(r_{i}^{(j)} = y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{AL}_k \del{\lambda}\) er de partialle residualer.
 Vi gennemløber opdateringen \eqref{eq:AL_coordinate_update} indtil konvergens.
-%
+
+\begin{eks}
 På figur \ref{fig:diabetes_lasso_adaptivelasso} illustreres koefficientstierne for lasso og adaptive lasso med OLS vægte for diabetes data.
-\imgfigh{diabetes_lasso_adaptivelasso.pdf}{0.9}{Koefficientstierne for lasso og adaptive lasso med OLS vægte som funktion af $\log \del{\lambda}$ for diabetes data.}{diabetes_lasso_adaptivelasso}
+Heraf ses ...
+\imgfigh{diabetes_lasso_adaptivelasso.pdf}{0.9}{Koefficientstierne for lasso og adaptive lasso med OLS vægte og \(\gamma = 1\) som funktion af $\log \del{\lambda}$ for diabetes data.}{diabetes_lasso_adaptivelasso}
+\end{eks}
 
 \subsubsection{LARS}
-Adaptive lasso problemet kan løses med LARS algoritmen \citep{efron}, udfra følgende simple trin
+Adaptive lasso problemet kan løses med LARS algoritmen, udfra følgende simple trin
 \begin{enumerate}
 \item Definer \(\mathbf{x}_j^{*} = \frac{\mathbf{x}_j}{\widehat{w}_j}\) for \(j=1, \ldots, p\)
-\item Løs lasso problemet for alle \(\lambda_n\): \(\widehat{\tbeta}^{*} = \argmin_{\tbeta} \left\Vert \y - \sum_{j=1}^p \mathbf{x}_j^{*} \beta_j \right\Vert^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert\)
+\item Løs lasso problemet for alle \(\lambda_n\): \(\widehat{\tbeta}^{*} = \argmin_{\tbeta \in \R^p} \left\Vert \y - \sum_{j=1}^p \mathbf{x}_j^{*} \beta_j \right\Vert^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert\)
 %\begin{align*}
 %\widehat{\tbeta}^{*} = \argmin_{\tbeta} \left\Vert \y - \sum_{j=1}^p \mathbf{x}_j^{*} \beta_j \right\Vert^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert
 %\end{align*}

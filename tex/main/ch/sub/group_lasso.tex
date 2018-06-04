@@ -3,8 +3,8 @@
 Afsnittet er skrevet udfra kapitel 4 i \citep{hastie} samt \citep{group_lasso}.
 %I mange regressions problemer har prædiktorerne en naturlig grupperet struktur, og da foretrækkes det at alle koefficienter indenfor en gruppe er ikke-nul (eller nul) samtidig.
 
-Betragt en lineær regressionsmodel med $J$ grupper af prædiktorer, og lad $\mathbf{z}_j$ og \(\ttheta_j\) være \(p_j \times 1\) vektorer som repræsenterer prædiktorerne i gruppe $j$ for $j=1, \ldots, J$ og deres koefficienter.
-Formålet er da, at prædiktere responsvariablen $y$ baseret på prædiktorerne $\mathbf{z}_1,\ldots, \mathbf{z}_J$ \footnote{For at undgå forvirring lader vi \(\mathbf{z}_j\) og \(\ttheta_j\) betegne variablerne i gruppe \(j\) og deres koefficienter, istedet for \(\X_j\) og \(\beta_j\) som vi anvender for skalarer}.
+Betragt en lineær regressionsmodel med $J$ grupper af prædiktorer, og lad $\mathbf{z}_j$ og \(\ttheta_j\) være \(p_j \times 1\) vektorer som repræsenterer prædiktorerne i gruppe $j$ for $j=1, \ldots, J$ og deres koefficienter \footnote{For at undgå forvirring lader vi \(\mathbf{z}_j\) og \(\ttheta_j\) betegne variablerne i gruppe \(j\) og deres koefficienter, istedet for \(\X_j\) og \(\beta_j\) som vi anvender for skalarer}.
+%Formålet er da, at prædiktere responsvariablen $y$ baseret på prædiktorerne $\mathbf{z}_1,\ldots, \mathbf{z}_J$ \footnote{For at undgå forvirring lader vi \(\mathbf{z}_j\) og \(\ttheta_j\) betegne variablerne i gruppe \(j\) og deres koefficienter, istedet for \(\X_j\) og \(\beta_j\) som vi anvender for skalarer}.
 %En lineær model for regressions funktionen $\E{Y \vert Z}$ er givet ved \(\theta_0 + \sum_{j=1}^J Z_j^T \theta_j\), hvor $\theta_j \in \R^{p_j}$ repræsenterer en gruppe af $p_j$ regressions koefficienter. 
 
 \begin{defn}[Group lasso]
@@ -17,7 +17,7 @@ Group lasso løser følgende optimeringsproblem
 \end{defn}
 For optimeringsproblemet \eqref{eq:4.5} gælder der, at
 \begin{itemize}
-\item Alle indgange i $\widehat{\ttheta}_j^\text{group lasso}$ vil være lig nul eller ikke-nul afhængig af \(\lambda\)
+\item Alle indgange i $\widehat{\ttheta}_j^\text{group lasso}$ vil være lig nul eller ikke-nul afhængig af \(\lambda\).
 \item Når $p_j=1$, da har vi, at $\Vert \ttheta_j \Vert_2 = \vert \ttheta_j \vert$, således at alle grupper består af én prædiktor, dermed reduceres optimeringsproblemet \eqref{eq:4.5} til standard lasso.
 \end{itemize}
 %Figur \ref{fig:group_lasso} viser betingelsesområderne for henholdsvis group lasso og standard lasso for tre variable.
@@ -57,7 +57,7 @@ Block coordinate descent kan anvendes til at løse disse nul subgradient ligning
 %Hermed udføres block coordinate descent på objektfunktionen af group lasso.
 Da problemet er konveks, og strafleddet kan opdeles efter block, konvergerer algoritmen til et globalt minimum \citep{Tseng_1993}.
 
-Lad $\cbr{\widehat{\ttheta}^\text{group lasso}_k, k \neq j}$ fastholdt, kan vi skrive
+Lad $\cbr{\widehat{\ttheta}^\text{group lasso}_k, k \neq j}$ være fastholdt, da kan vi skrive
 \begin{align*}
 - \mathbf{Z}_{j}^T \del{\mathbf{r}_j - \mathbf{Z}_j \widehat{\ttheta}^\text{group lasso}_j} + \lambda \widehat{\ts}_j = 0,
 \end{align*}

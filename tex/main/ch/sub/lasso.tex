@@ -66,6 +66,7 @@ På figur \ref{fig:diabetes_koef} illustreres koefficientstierne for henholdsvis
 Heraf ses at lasso udfører variabeludvælgelse og mindsker koefficienterne, mens ridge regression blot mindsker koefficienterne.
 %
 \imgfigh{diabetes_lasso_ridge.pdf}{0.9}{Koefficientstierne for lasso og ridge regression som funktion af $\log \del{\lambda}$ for diabetes data.}{diabetes_koef}
+
 \end{eks}
 
 Betingelsesområderne for lasso og ridge regression for \(p=2\) illustreres på figur \ref{fig:LassoRig}.
@@ -192,23 +193,22 @@ Da kan vi omskrive \eqref{eq:2.10} til
 \end{figure}
 %
 \subsubsection{Flere prædiktorer: cyclic coordinate descent}
-Med intuitionen  fra det univariate tilfælde, kan vi nu udvikle et simpel koordinatvis scheme til at løse lasso problemet \eqref{eq:2.5} med flere prædiktorer.
-Vi ``cycle'' gennem prædiktorerne, hvor koefficient \(\beta_j\) opdateres i det \(j\)'te step ved at minimere objektfunktionen i dette koordinat, mens de øvrige koefficienter $\cbr{\widehat{\beta}_k, k \neq j}$ fastholdes i deres nuværende værdier. 
+Med intuitionen  fra det univariate tilfælde, kan vi løse lasso problemet \eqref{eq:2.5} med flere prædiktorer.
+Vi gennemløber prædiktorerne, hvor koefficient \(\beta_j\) opdateres i det \(j\)'te step ved at minimere objektfunktionen i dette koordinat, mens de øvrige koefficienter $\cbr{\widehat{\beta}_k, k \neq j}$ fastholdes i deres nuværende værdier. 
 
 
 Opskriv objektfunktionen i \eqref{eq:2.5} som
 \begin{align*}
 \sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \beta_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert
 \end{align*}
-Definer den partialle residual $r_i^{(j)}=y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}_k$, som fjerner nuværende fit fra alle undtagen $j$'te prædiktor.
+Definer den partialle residual $r_i^{(j)}=y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}_k$, som trækker fittet fra responsvariablen med undtagelse af \(j\)'te prædiktor.
 Den j'te koefficient opdateret ved
 \begin{align}
 \widehat{\beta}_j = S_{\frac{\lambda}{2n}} \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{r}^{(j)} \right\rangle}. \label{eq:2.14}
 \end{align}
 %hvor \(r_i = y_i - \sum_{j = 1}^p x_{ij} \widehat{\beta}_j \) er de fulde residualer.
-Den beskrevne algoritme svarer til metoden \textit{cyclical coordinate descent}, som separat minimerer en konveks objektfunktion langs hver koordinat.
-Under milde regularitetsbetingelser konvergerer løsningen til et global optimum.
-Fra opdateringen \eqref{eq:2.14} ser vi, at algoritmen foretager en univariat regression af den partial residual på hver prædiktor, cycling gennem prædiktorerne indtil konvergens.
+Den beskrevne algoritme svarer til metoden \textit{cyclical coordinate descent}.
+Fra opdateringen \eqref{eq:2.14} ser vi, at algoritmen foretager en univariat regression af den partial residual på hver prædiktor, og gennemløber prædiktorerne indtil konvergens.
 
 %Hvis prædiktorerne er ortogonale, dvs $\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{x}_k \right\rangle = 0$ for alle $j \neq k$, da reduceres opdateringen \eqref{eq:2.14} til
 %\begin{align}
@@ -218,7 +218,7 @@ Fra opdateringen \eqref{eq:2.14} ser vi, at algoritmen foretager en univariat re
 
 Coordinate descent er særlig hurtig til at løse lasso problemet, da den koordinatvise minimizers er tilgængelig \eqref{eq:2.14}, og dermed er en iterativ søgning langs hver koordinat ikke nødvendig.
 Derudover udnytter coordinat descent at lasso giver sparse løsninger.
-For tilstrækkelige høje \(\lambda\) værdier er de fleste koefficienter lig $0$.
+For tilstrækkelige høje værdier af \(\lambda\) er de fleste koefficienter lig $0$.
 
 \textit{Homotopy metoder} er en alternativ teknisk til at løse lasso problemet. 
 Disse producerer sekventielt hele stien af løsninger ved at starte med nul.
@@ -229,7 +229,7 @@ En mere teoretisk gennemgang af coordinate descent og LARS algoritmen er givet i
 \section{Frihedsgrader}
 Antag vi har \(p\) prædiktorer, og fitter en lineær regressionsmodel udfra \(k\) af disse prædiktorer, hvor \(k <p\).
 Hvis disse \(k\) prædiktorer vælges uafhængigt af responsvariablen, da kan man sige, at fitting proceduren anvender \(k\) frihedsgrader.
-Dette svarer løst sagt til, at teststørrelsen for at teste nulhypotesen om at alle \(k\) koefficienter er 0, har en \(\chi^2\) fordeling med \(k\) frihedsgrader.
+Dette svarer løst sagt til, at teststørrelsen, for at teste nulhypotesen om at alle \(k\) koefficienter er 0, har en \(\chi^2\) fordeling med \(k\) frihedsgrader.
 
 Men hvis valget af de \(k\) prædiktorer afhænger af responsvariablen, da forventes det, at fitting proceduren anvender mere end \(k\) frihedsgrader. 
 Sådan en fitting procedure kaldes \textit{adaptiv}, og tydeligvis er lasso et eksempel herpå.
@@ -239,23 +239,20 @@ Sådan en fitting procedure kaldes \textit{adaptiv}, og tydeligvis er lasso et e
 Men for lasso gælder, at antallet af frihedsgrader er lig antallet af ikke-nul koefficienter, som vi nu vil beskrive.
 
 Lad os først definere hvad vi mener med frihedsgrader for en adaptiv fitted model. 
-Antag at, vi har en additive-error model
+Antag
 \begin{align*}
 y_i = f \del{x_i} + \epsilon_i, \quad i = 1, \ldots, n,
 \end{align*}
-hvor \(f\) er ukendt og \(\epsilon_i \sim iid \del{0, \sigma^2}\).
+hvor \(f\) er ukendt og \(\epsilon_i \sim \text{iid} \del{0, \sigma^2}\).
 Givet en model fitting metode \(\delta\), lad \(\widehat{\y} = \delta \del{\y}\), da defineres frihedsgraderne for \(\delta\) 
 \begin{align}
 \text{df}\del{\widehat{\y}} := \frac{1}{\sigma^2} \sum_{i=1}^n \text{Cov}\del{\widehat{y}_i, y_i}. \label{eq:df_lasso}
 \end{align}
-Kovariansen tages her over det stokastiske i responsvariablerne \(\cbr{y_i}_{i=1}^n\) hvor prædiktorerne fastholdes.
-Antal frihedsgrader svarer da til indflydelsen hver responsvariabel har på dens prædiktion.
+Antallet af frihedsgrader svarer derfor til indflydelsen hver responsvariabel har på dens prædiktion.
 Desto bedre modellen tilpasser data, desto højere antal frihedsgrader.
 Det kan vises, at for lasso med en fast strafparameter \(\lambda\) er antallet af ikke-nul koefficienter \(k_\lambda\) et unbiased estimat af antallet af frihedsgrader \citep{df_lasso}.
 %
 %Som nævnt ovenfor anvender forward-stepwise regression mere end \(k\) frihedsgrader efter \(k\) step.
-Lasso udvælger ikke blot prædiktorer, som bekendt øger antallet af frihedsgrader, men shrinks også koefficienterne mod 0 relativ til mindste kvadraters estimaterne.
-Denne skrinkage er netop tilstrækkelig til at bringe antallet af frihedsgrader til \(k\).
-Dette resultat er særligt nyttig, da det giver et kvalitativ mål af mængden af fitting som vi har opnået ved ethvert punkt på lasso stien.
+Lasso udvælger ikke blot prædiktorer, som bekendt øger antallet af frihedsgrader, men mindsker også koefficienterne mod 0, hvilket netop er tilstrækkelig til at bringe antallet af frihedsgrader ned til \(k\).
 
 I afsnit \ref{subsec:kovarians_test} beskrives \textit{kovarians testen}, som er et naturligt analog til frihedsgrader, der tester om prædiktorerne udvalgt af lasso er signifikante.

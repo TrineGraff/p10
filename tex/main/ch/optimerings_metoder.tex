@@ -8,11 +8,12 @@ Betragt optimeringsproblemet
 \argmin_{\tbeta \in \R^p} f \del{\tbeta}, \text{ underlagt at } \tbeta \in \mathcal{C}, \label{eq:5.2}
 \end{align}
 hvor \(f: \R^p \rightarrow \R\) er en konveks funktion og \(\mathcal{C}\) er en konveks mængde (se definition \ref{defn:konveksm} og \ref{defn:konveksfkt}).
-Hvis \(f\) er differentiabel, da er en nødvendig og tilstrækkelig betingelse for, at en vektor \(\tbeta^* \in \mathcal{C}\) er et globalt optimum, at
+Hvis \(f\) er differentiabel, da skal første ordens betingelsen
 \begin{align}
-\nabla f \del{\tbeta^*}^T \del{ \tbeta - \tbeta^*} \geq 0 \label{eq:5.3}
+\nabla f \del{\tbeta^*}^T \del{ \tbeta - \tbeta^*} \geq 0, \label{eq:5.3}
 \end{align}
-for alle \(\tbeta \in \mathcal{C}\). 
+%en nødvendig og tilstrækkelig betingelse 
+være opfyldt, for at en vektor \(\tbeta^* \in \mathcal{C}\) er et globalt optimum for alle \(\tbeta \in \mathcal{C}\). 
 Hvis \(\mathcal{C} = \R^p\), da er optimeringsproblemet \eqref{eq:5.2} ikke begrænset, og første ordens betingelsen reduceres til \(\nabla f \del{\tbeta^*} = \mathbf{0}\).
 Ofte kan betingelsesmængden \(\mathcal{C}\) beskrives ved nogle konvekse betingelsesfunktioner, således at optimeringsproblemet \eqref{eq:5.2} kan omskrives til
 \begin{align}
@@ -22,9 +23,9 @@ hvor \(g_j\) for \(j=1, \ldots, m\) er konvekse funktioner, som betegner betinge
 Lad \(f^*\) betegne den optimale værdi af optimeringsproblemet \eqref{eq:5.5}.
 Lagrange funktionen \(L: \R^p \times \R^m_+ \rightarrow \R\) for problem \eqref{eq:5.5} er defineret ved
 \begin{align*}
-L \del{\tbeta, \lambda} = f \del{\tbeta} + \sum_{j=1}^m \lambda_j g_j \del{\tbeta}.
+L \del{\tbeta, \lambda} = f \del{\tbeta} + \sum_{j=1}^m \lambda_j g_j \del{\tbeta},
 \end{align*}
-Vægtene \(\lambda \geq 0\) kaldes Lagrange multipliers.
+hvor vægtene \(\lambda \geq 0\) kaldes Lagrange multipliere.
 Hvis betingelsen \(g_j \del{\tbeta} \leq \mathbf{0}\) ikke er opfyldt, da vil multiplieren \(\lambda_j\) pålægger en straf.
 Af teorien for Lagrange dualiteten garanteres, at der eksisterer en optimal vektor \(\boldsymbol{\lambda}^* \geq 0\) af Lagrange multipliers, således at 
 \(f^* = \argmin_{\tbeta \in \R^p} L \del{\tbeta^*; \boldsymbol{\lambda}^*}\).
@@ -45,9 +46,9 @@ Disse KKT betingelser er nødvendige og tilstrækkelige for at \(\tbeta^*\) er e
 \subsection{Subgradienter}
 Som nævnt i underafsnittet \ref{subsec:udregning_lasso} er \(\ell_1\)-normen \(g \del{\tbeta} = \sum_{j=1}^p \vert \beta_j \vert\) konveks, men ikke differentialbel i ethvert punkt, hvor mindst et koordinat \(\beta_j = 0\).
 For sådan et problem er første ordens betingelsen \eqref{eq:5.3} og Lagrange betingelsen \eqref{eq:5.8} ikke gældende, da de betragter gradienter af \(f\) og \(g\).
-Heldigvis findes der en naturlig generalisering af begrebet gradient for konvekse funktioner.
+Men der findes en naturlig generalisering af begrebet gradient for konvekse funktioner.
 
-For differentiable, konvekse funktioner giver tangent approksimationen af første ordens en nedre grænse.
+For differentiable, konvekse funktioner giver tangent approksimationen af første orden en nedre grænse.
 %Begrebet subgradient er baseret på en generalisering af dette.
 Givet en konveks funktion \(f: \ \R^p \rightarrow \R\), siges \(\tz \in \R^p\) at være en subgradient af \(f\) i \(\tbeta\) hvis
 \begin{align*}
@@ -75,21 +76,21 @@ Antag mindst en af funktionerne \(\cbr{f, g_j}\) er konvekse, men ikke different
 hvor gradienterne i KKT betingelsen \eqref{eq:5.8} erstattes med subdifferentialerne.
 Da subdifferentialet er en mængde, betyder \eqref{eq:5.11}, at alle nul vektorer tilhører summen af subdifferentialerne.
 
-\begin{exmp}[Lasso og subgradienter]
-Betragt lasso problemet
-\begin{align*}
-\argmin_{\tbeta} \cbr{ \Vert \y - \X \tbeta \Vert_2^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert - R \leq 0,
-\end{align*}
-hvor \(R\) er en positiv konstant.
-Betingelsen \( \sum_{j=1}^p \vert \beta_j \vert - R \leq 0\) er ækvivalent med at kræve at \(\tbeta\) tilhører en \(\ell_1\) kugle med radius \(R\).
-Betingelse \eqref{eq:5.11} er da
-\begin{align*}
-\nabla f \del{\tbeta^*} + \lambda^* \tz^* = 0,
-\end{align*}
-hvor 
-%subgradient vektoren opfylder, at \(z_j^* \in \text{sign} \del{\beta_j^*}\) for \(j = 1, \ldots, p\).
-\(z_j =\text{sign} \del{\beta_j^*}\) hvis \(\beta_j^* \neq 0\) og \(z_j \in \sbr{-1,1}\) hvis \(\beta_j^* = 0\).
-\end{exmp}
+%\begin{exmp}[Lasso og subgradienter]
+%Betragt lasso problemet
+%\begin{align*}
+%\argmin_{\tbeta} \cbr{ \Vert \y - \X \tbeta \Vert_2^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert - R \leq 0,
+%\end{align*}
+%hvor \(R\) er en positiv konstant.
+%Betingelsen \( \sum_{j=1}^p \vert \beta_j \vert - R \leq 0\) er ækvivalent med at kræve at \(\tbeta\) tilhører en \(\ell_1\) kugle med radius \(R\).
+%Betingelse \eqref{eq:5.11} er da
+%\begin{align*}
+%\nabla f \del{\tbeta^*} + \lambda^* \tz^* = 0,
+%\end{align*}
+%hvor 
+%%subgradient vektoren opfylder, at \(z_j^* \in \text{sign} \del{\beta_j^*}\) for \(j = 1, \ldots, p\).
+%\(z_j =\text{sign} \del{\beta_j^*}\) hvis \(\beta_j^* \neq 0\) og \(z_j \in \sbr{-1,1}\) hvis \(\beta_j^* = 0\).
+%\end{exmp}
 
 \input{main/ch/sub/coordinate_descent}
 \input{main/ch/sub/lars_theory1}

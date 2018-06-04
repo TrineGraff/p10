@@ -8,16 +8,16 @@ Givet et initial estimat af regressionskoefficienterne \(\tilde{\tbeta} \in \mat
 hvor \(\mathbf{c} \geq \mathbf{0}\) betyder, at elementer af \(\mathbf{c}\) er ikke-negative.
 Estimatoren for nonnegative garrote er da givet ved \(\widehat{\beta}_j^\text{NG} = \widehat{c}_j \cdot \tilde{\beta}_j\), for \(j = 1, \ldots, p\).
 \end{defn}
-Der er et ækvivalent Lagrange problem for denne procedure
-\begin{align}
-\argmin_{\mathbf{c} \in \mathbb{R}^p}  \cbr{\Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \mathbf{c} \Vert_1}, \ \text{underlagt at } \mathbf{c} \geq \mathbf{0}, \label{eq:nonnegative_garrote}
-\end{align}
-hvor \(\lambda \geq 0\).
+Der er et ækvivalent Lagrange problem for denne procedure med straf \(\lambda \Vert \mathbf{c} \Vert_1\) for \(\lambda \geq 0\) plus de ikke-negative betingelser.
+%\begin{align}
+%\argmin_{\mathbf{c} \in \mathbb{R}^p}  \cbr{\Vert \y - \sum_{j=1}^p c_j \x_j \tilde{\beta}_j \Vert_2^2 + \lambda \sum_{j=1}^p c_j}, \ \text{underlagt at } c_j \geq 0, \label{eq:nonnegative_garrote}
+%\end{align}
+%hvor \(\lambda \geq 0\).
 I den originale artikel \citep{nonnegative_garrote}, vælges \(\tilde{\tbeta}\) til at være \(\widehat{\tbeta}^\text{OLS}\).
  
 Antag \(\X\) er ortogonal, og \(t\) er valgt, således at betingelsen \(\Vert \mathbf{c} \Vert_1 = t\) er opfyldt, da er
 \begin{align*}
-\widehat{c}_j = \del{1 - \frac{\lambda}{\tilde{\beta}_j^2}}_+, \ j = 1, \ldots, p,
+\widehat{c}_j = \del{1 - \frac{\lambda}{2\tilde{\beta}_j^2}}_+, \ j = 1, \ldots, p,
 \end{align*}
 hvor \(\lambda\) er valgt, således at \(\Vert \widehat{\mathbf{c}} \Vert_1 = t\).
 Hvis koefficienten \(\tilde{\beta}_j\) er høj, da vil faktoren \(\widehat{c}_j\) være tæt på 1 og omvendt hvis \(\tilde{\beta}_j\) er lav, da vil \(\widehat{c}_j\) blive trukket mod 0.
@@ -26,7 +26,7 @@ På figur \ref{fig:nonnegative_garrote} ses, at nonnegative garrote straffer lav
 \begin{figure}[H]
 \centering
 \scalebox{0.8}{\input{fig/nonnegative_garrote.tikz}}
-\caption[optional short text]{Straf af lasso (\tikz[baseline]{\draw[dashed] (0,.5ex)--++(.5,0) ;}) og nonnegative garrote (\tikz[baseline]{\draw[dotted] (0,.5ex)--++(.5,0) ;}) for en variabel. 
+\caption{Straffen af lasso og nonnegative garrote for en variabel. 
 %Da parametriseringen af \(\lambda\) er forskellig, har vi anvendt \(\lambda = 2\) for lasso og \(\lambda = 7\) for nonnegative garrote, således at de kan sammenlignes.
 %Eksakte løsninger for lasso (\tikz[baseline]{\draw[dashed] (0,.5ex)--++(.5,0) ;}) og nonnegative garrote (\tikz[baseline]{\draw[dotted] (0,.5ex)--++(.5,0) ;})
 } \label{fig:nonnegative_garrote}

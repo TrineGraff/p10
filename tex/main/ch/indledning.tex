@@ -1,15 +1,15 @@
 \chapter{Indledning}
-At kunne forudsige udviklingen af en makroøkonomisk variabel har interesse af flere årsager.
+At kunne forudsige udviklingen af en makroøkonomisk variabel er interessant af flere årsager.
 Aktører på de finansielle markeder handler på baggrund af forventninger til fremtidige aktiekurser, renter og valutakurser.
 Erhvervsfolk fastlægger produktion og investeringer på baggrund af den forventede udvikling i efterspørgsel.
 Politiker tager beslutninger om politiske indgreb på baggrund af kort- og langsigtede prognoser for økonomien.
 
 En central makroøkonomisk variabel er arbejdsløshedsraten.
 Arbejdsløshedsraten betegner den procentvise ledighed af arbejdsstyrken.
-Arbejdsstyrken omfatter andelen af befolkningen, hvis arbejdskraft er til rådighed og som enten i beskæftigelse eller ledige.
+Arbejdsstyrken omfatter andelen af befolkningen, hvis arbejdskraft er til rådighed og som enten er i beskæftigelse eller ledige.
 
 Givet et datasæt med et stort antal makroøkonomiske variable, ønsker vi at prædiktere arbejdsløshedsraten.
-Mindste kvadraters metode kan anvendes hertil, men i dette tilfælde hvor vi betragter et relativt stort antal variable, da kan prædiktionen forbedres.
+Mindste kvadraters metode kan anvendes hertil, men i dette tilfælde, hvor vi betragter et relativt stort antal variable, kan prædiktionen forbedres.
 OLS estimatoren har ofte lav bias, men høj varians.
 Vi kan forbedre bias-variance tradeoff ved at mindske regressionskoefficienterne og endda sætte nogle lig 0.
 Dette vil introducere noget bias, men reducere variansen, og dermed forbedre prædiktionen.
@@ -26,8 +26,11 @@ Dette besværliggøres for lasso da variabeludvægelsen afhænger af data.
 
 Rapporten er organiseret som følgende: 
 I kapitel \ref{ch:dfm} præsenteres den klassiske faktor model, som betragtes som benchmark model i den empiriske del.
-I kapitel \ref{ch:lasso} og \ref{ch:generalisering_lasso} beskrives lasso og dens generaliseringer. Dette teori er udviklet på tværsnitsdata, men vi vil anvende det på tidsrækkedata.
+I kapitel \ref{ch:lasso} og \ref{ch:generalisering_lasso} beskrives lasso estimatoren og dens generaliseringer. Dette teori er udviklet på tværsnitsdata, men vi vil anvende det på tidsrækkedata.
 Kapitel \ref{ch:optimeringsmetoder} beskriver optimeringsalgoritmerne coordinate descent og LARS, som kan løse lasso problemet og dens generaliseringer.
-I kapitel \ref{ch:asymptotics} vil vi kort introducere noget aymptotisk teori for lasso estimator. Heri bevises også at adaptive lasso opfylder orakel egenskaberne.
+I kapitel \ref{ch:asymptotics} vil vi kort introducere noget asymptotisk teori for lasso estimatoren, med henblik på at bevise at adaptive lasso opfylder orakelegenskaberne.
 Herefter præsenteres teorien for statistisk inferens af lasso estimatoren i kapitel \ref{ch:statistisk_inferens}.
 Kapitel \ref{ch:metoder} introducerer nogle metoder, som anvendes til at vælge den optimale model i den empiriske del.
+Første kapitel i den empiriske del, som svarer til kapitel \ref{ch:data}, præsenterer datasættet.
+I kapitel \ref{ch:benhcmarkmodel} udvælges benchmark modellen, mens kapitel \ref{ch:shrinkage_metoder} og \ref{ch:out-of-sample} betragter modellerne i in-sample og out-of-sample.
+

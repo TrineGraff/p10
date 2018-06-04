@@ -3,7 +3,7 @@
 %
 Det essentielle formål med faktor analyse er at beskrive kovariansen mellem et stort antal variable udfra få underliggende faktorer.
 Faktor modellen er motiveret af følgende argument: antag variablerne kan opdeles i grupper udfra deres korrelation, således at variable i en gruppe har høj parvis korrelation, men variablerne har relativ lav korrelation med variabler i andre grupper.
-Da vil hver gruppe af variable repræsenter én underliggende faktor.
+Da vil hver gruppe af variable repræsentere én underliggende faktor.
 Nedenfor introduceres den generelle definition af faktor modellen.
 %
 \begin{defn}[Faktor model] \label{def:faktor_model}
@@ -21,17 +21,16 @@ Der antages, at
 \end{align*}
 \end{defn}
 %
-I kapitlet betragter vi også følgende notation for faktor modellen
+Lad \(x_{jt}\), \( e_{jt}\) og \(F_{jt}\) være \(j\)'te element af henholdsvis \(\X_t\), \(\te_t\) og \(\tF_t\) og lad \(\boldsymbol{\lambda}_j \) være \(j\)'te række af \(\tLambda\), hvor \(\lambda_{jl}\) betegner \(l\)'te element af \(\boldsymbol{\lambda}_j \), da kan \eqref{eq:factor_model} opskrives elementvis
+%I kapitlet betragter vi også følgende notation for faktor modellen
 \begin{align*}
-x_{jt} = \boldsymbol{\lambda}_j \tF_t + e_{jt} = \lambda_{jm}F_{jt} + e_{jt}, \quad j = 1, \ldots, p, \text{ og } m = 1, \ldots, r,
+x_{jt} = \boldsymbol{\lambda}_j \tF_t + e_{jt} = \lambda_{jl}F_{jt} + e_{jt}, \quad j = 1, \ldots, p, \text{ og } l = 1, \ldots, r.
 \end{align*} 
-hvor \(x_{jt}\), \( e_{jt}\) og \(F_{jt}\) er \(j\)'te element af henholdsvis \(\X_t\), \(\te_t\) og \(\tF_t\), \(\boldsymbol{\lambda}_j \) er \(j\)'te række af \(\tLambda\), mens \(\lambda_{jm}\) betegner \(m\)'te element af \(\boldsymbol{\lambda}_j \).
-Derudover betragtes faktor modellen på matrix-vektor form
+Lad \(\X\) og \(\mathbf{e}\) være \(T \times p\) matricer med \(t\)'te række henholdsvis \(\X_t^T\) og \(\te_t^T\) og lad \(\tF\) være en \(T \times r\) matrix med \(t\)'te række \(\tF_t^T\), da kan vi skrive \eqref{eq:factor_model} på matrix-vektor form
 \begin{align*}
-\X = \tF \tLambda^T + \mathbf{e},
+\X = \tF \tLambda^T + \mathbf{e}.
 \end{align*}
-hvor \(\X\) og \(\mathbf{e}\) er \(T \times p\) matricer med \(t\)'te række henholdsvis \(\X_t^T\) og \(\te_t^T\) og \(\tF\) er en \(T \times r\) matrix med \(t\)'te række \(\tF_t^T\).
-For at finde kovariansmatricen af \(\X_t\), betragtes
+For at finde kovariansmatricen af \(\X_t\) betragtes
 \begin{align*}
 \X_t \X_t^T &= \del{ \tLambda \tF_t + \te_t} \del{ \tLambda \tF_t + \te_t}^T \\
 &= \tLambda \tF_t \del{\tLambda \tF_t }^T + \te_t \del{\tLambda \tF_t}^T + \tLambda \tF_t \te_t^T + \te_t \te_t^T,
@@ -53,7 +52,7 @@ Lad \(y_t, \X_t, \tw_t\) være givet for \(t = 1, \ldots, T\), da vil vi prædik
 Maksimum likelihood estimation kan anvendes til at estimere faktorerne, men i dette tilfælde hvor vi betragter et relativt stort antal variable, skal mange parametre estimeres, hvilket er beregningsmæssigt tungt.
 Istedet anvendes \textit{principal component estimation}.
 Proceduren transformerer et antal korreleret variable til et mindre antal ukorreleret variable, som kaldes principale komponenter.
-Denne transformation defineres, således at første komponent har den størst mulige varians, og hver efterfølgende komponent har igen den størst mulige varians givet de foregående komponenter er ortogonale.
+Denne transformation defineres, således at første komponent har den størst mulige varians, og hver af de efterfølgende komponent har størst mulige varians under betingelse af at de foregående komponenter er ortogonale.
 %Vi antager, at data er stationært, og at variablerne er standardiseret samt responsvariablen centreret.
 
 Lad os betragte minimeringsproblemet
@@ -62,32 +61,32 @@ Lad os betragte minimeringsproblemet
 \end{align}
 Objektfunktionen omskrives på matrix-vektor form
 \begin{align*}
-V \del{\tF, \tLambda} = \del{pT}^{-1} \text{Trace} \sbr{ \del{\X - \tF \tLambda^T}^T \del{\X - \tF \tLambda^T}}.
+V \del{\tF, \tLambda} = \del{pT}^{-1} \text{tr} \sbr{ \del{\X - \tF \tLambda^T}^T \del{\X - \tF \tLambda^T}},
 \end{align*}
-For at løse optimeringsproblemet \eqref{eq:dfm11} differentieres objektfunktionen mht \(\tF\), dette udtryk sættes lig 0 og vi isoleres for \(\tF\), hvoraf vi får, at
+hvor \(\text{tr} \del{\cdot}\) betegner trace operatoren.
+For at løse optimeringsproblemet \eqref{eq:dfm11} differentieres objektfunktionen mht \(\tF\), dette udtryk sættes lig 0 og vi isolerer for \(\tF\), hvoraf vi får, at
 \begin{align*}
 \frac{\partial}{\partial \tF} \del{\del{\X - \tF \tLambda^T}^T \del{\X - \tF \tLambda^T}} = -2 \X \tLambda + 2 \tF \tLambda^T \tLambda \quad \Longrightarrow \quad \widehat{\tF} = \X \tLambda \del{\tLambda^T \tLambda}^{-1} .
 \end{align*}
-Lad \(p^{-1} \tLambda^T \tLambda = \mathbf{I}_r\), som antages i antagelse \ref{ass:faktor}a), da har vi, at \(\widehat{\tF} = p^{-1} \X \tLambda\).
+Lad \(p^{-1} \tLambda^T \tLambda = \mathbf{I}_r\), da har vi, at \(\widehat{\tF} = p^{-1} \X \tLambda\).
 Hvis \(\widehat{\tF}\) indsættes i \eqref{eq:dfm11} får vi, at
 \begin{align*}
-&\argmin_{\tLambda} \cbr{\text{Trace} \sbr{ \del{\X - p^{-1} \X \tLambda \tLambda^T}^T \del{\X - p^{-1} \X \tLambda \tLambda^T}}} \\
-&\argmin_{\tLambda} \cbr{ \text{Trace} \sbr{\X^T \X - p^{-1} \tLambda \tLambda^T \X^T \X - p^{-1} \X^T \X \tLambda \tLambda^T + p^{-2} \tLambda \tLambda^T \X^T \X \tLambda \tLambda^T}},
+&\argmin_{\tLambda} \cbr{\text{tr} \sbr{ \del{\X - p^{-1} \X \tLambda \tLambda^T}^T \del{\X - p^{-1} \X \tLambda \tLambda^T}}} \\
+&\argmin_{\tLambda} \cbr{ \text{tr} \sbr{\X^T \X - p^{-1} \tLambda \tLambda^T \X^T \X - p^{-1} \X^T \X \tLambda \tLambda^T + p^{-2} \tLambda \tLambda^T \X^T \X \tLambda \tLambda^T}},
 \end{align*}
-hvor der gælder at \(p^{-2} \tLambda \tLambda^T \X^T \X \tLambda \tLambda^T = p^{-1} \X^T \X \tLambda \tLambda^T\) og vi får da
+hvor \(p^{-2} \tLambda \tLambda^T \X^T \X \tLambda \tLambda^T = p^{-1} \X^T \X \tLambda \tLambda^T\) og vi får da
 \begin{align*}
-\argmin_{\tLambda} \cbr{ \text{Trace} \sbr{\X^T \X - p^{-1} \tLambda \tLambda^T \X^T \X}}
+\argmin_{\tLambda} \cbr{ \text{tr} \sbr{\X^T \X - p^{-1} \tLambda \tLambda^T \X^T \X}}
 \end{align*}
 som er ækvivalent med
 \begin{align*}
-\argmax_{\tLambda} \cbr{ \text{Trace} \sbr{\tLambda^T \X^T \X \tLambda}}.
+\argmax_{\tLambda} \cbr{ \text{tr} \sbr{\tLambda^T \X^T \X \tLambda}}.
 \end{align*}
-Løsningen til dette problem findes ved at sætte \(\widehat{\tLambda}\) lig med de skalerede egenvektorer af \(\X^T \X\), svarende til dens \(r\) største egenværdier.
-Dvs \(\hat{\tLambda} = \sqrt{n} \cdot \boldsymbol{\nu}_r\), hvor \(\boldsymbol{\nu}_r\) er egenvektorerne svarende til de \(r\) største egenværdier af \(\X^T \X\).
+Løsningen til dette problem findes ved at sætte \(\widehat{\tLambda} =\sqrt{n} \cdot \boldsymbol{\nu}_r\), hvor \(\boldsymbol{\nu}_r\) er egenvektorerne svarende til de \(r\) største egenværdier af \(\X^T \X\).
 Herefter vi kan udregne \(\widehat{\tF} = p^{-1} \X \widehat{\tLambda}\), som altså kræver egenvektorerne af \(\X^T \X\).
 
 %Hvis \(p > T\), kan løsningen udregnes simplere ved at koncentrere \(\tLambda\) ud istedet for \(\tF\), og da vil minimeringsproblemet \eqref{eq:dfm11} være ækvivalent med maksimeringsproblemet \\
-%\(\argmax_{\tF} \cbr{ \text{Trace} \sbr{ \tF^T \X \X^T \tF}}\) underlagt at \(T^{-1} \tF^T \tF = \mathbf{I}_r\).
+%\(\argmax_{\tF} \cbr{ \text{tr} \sbr{ \tF^T \X \X^T \tF}}\) underlagt at \(T^{-1} \tF^T \tF = \mathbf{I}_r\).
 %Dette giver estimatoren \(\overset{\smile}{\tF}\), som er en matrix af egenvektorer svarende til de \(r\) største egenværdier af \(\X \X^T\).
 %Da søjlerummene for \(\widehat{\tF}\) og \(\overset{\smile}{\tF}\) er ækvivalent, kan disse bruges i flæng, når der forecastes.
 %
@@ -97,7 +96,7 @@ Herefter vi kan udregne \(\widehat{\tF} = p^{-1} \X \widehat{\tLambda}\), som al
 
 \subsection{Entydighed af estimatorer}
 I dette underafsnit introduceres nogle antagelser, som sikrer, at estimatorerne er entydige.
-Der gælder, at faktorer og faktor loadings ikke er entydige, som vi først vil beskrive. 
+Uden yderligere antagelser er faktorer og faktor loadings ikke entydige, som vi først vil vise. 
 
 Lad \(\tR\) være en \(r \times r\) ortogonal matrix, således at \(\tR \tR^T = \tR^T \tR = \mathbf{I}_r\), da kan \eqref{eq:factor_model} skrives som
 \begin{align*}
@@ -109,7 +108,7 @@ Faktorerne \(\tF_t\) og \(\tF^*_t\) har samme statistiske egenskaber, og generer
 \begin{align*}
 \boldsymbol{\Sigma}_{\X \X} = \tLambda \tR \tR^T \tLambda^T + \boldsymbol{\Psi} = \tLambda^* \tLambda^{*^T} + \boldsymbol{\Psi}.
 \end{align*}
-Derfor kan faktor loadings \(\tLambda\) kun bestemmes op til en ortogonal matrix \(\tR\), hvorfor der pålægges nogle betingelser, således at \(\tLambda\) entydigt kan bestemmes.
+Derfor kan faktor loadings \(\tLambda\) kun bestemmes op til en ortogonal matrix \(\tR\).
 %derfor skal der anvendes en normalisering for entydigt at definere faktorerne.
 %Denne ikke-entydighed kan løses ved at roterer faktorerne således at faktor loadings opfylder følgende betingelser
 Nedenfor introduceres nogle modelantagelser, som er nødvendige til at identificere entydige faktorer.
@@ -118,13 +117,13 @@ Nedenfor introduceres nogle modelantagelser, som er nødvendige til at identific
 \begin{enumerate}[label=\alph*)]
 \item \(\lim_{p \rightarrow \infty} p^{-1} \tLambda^T \tLambda = \mathbf{I}_r\). 
 \item \(\E{\tF_t \tF_t^T} = \boldsymbol{\Sigma}_{\tF\tF}\), hvor \(\boldsymbol{\Sigma}_{\tF\tF}\) er en diagonalmatrix med indgange \(\sigma_{ii} > \sigma_{jj} > 0\) for \(i < j\).
-\item \(\abs{\lambda_{jm}} \leq M < \infty\) for \(j = 1, \ldots, p\) og \(m = 1, \ldots, r\), hvor \(M\) er en konstant.
+\item \(\abs{\lambda_{jl}} \leq M < \infty\) for \(j = 1, \ldots, p\) og \(l= 1, \ldots, r\), hvor \(M\) er en konstant.
 \item \(T^{-1} \sum_{t=1}^T \tF_t \tF_t^T \overset{p}{\rightarrow} \boldsymbol{\Sigma}_{\tF\tF}\).
 \end{enumerate}
 \end{ass}
 %
-Antagelse \ref{ass:faktor}.a) medfører, at \(\lim_{p \rightarrow \infty} p^{-1} \tLambda^{*^T} \tLambda^* = \mathbf{I}_r\) og dermed at \(\lim_{p \rightarrow \infty} p^{-1} \tR^T \tLambda{^T} \tLambda \tR = \tR^T \tR = \mathbf{I}_r\), som restringerer \(\tR\) til at være en ortonormal matrix.
-Af antagelse \ref{ass:faktor}.b) har vi, at
+Hvis antagelse \ref{ass:faktor}.a) er opfyldt, da vil \(\lim_{p \rightarrow \infty} p^{-1} \tLambda^{*^T} \tLambda^* = \mathbf{I}_r\) og dermed at \(\lim_{p \rightarrow \infty} p^{-1} \tR^T \tLambda{^T} \tLambda \tR = \tR^T \tR = \mathbf{I}_r\), som restringerer \(\tR\) til at være en ortonormal matrix.
+Af antagelse \ref{ass:faktor}.b) er kovariansmatricen af \(\X_t\) givet ved
 \begin{align*}
 \boldsymbol{\Sigma}_{\X \X} &=  \tLambda  \boldsymbol{\Sigma}_{\tF\tF} \tLambda^T + \boldsymbol{\Psi} \\
 &= \tLambda^* \boldsymbol{\Sigma}_{\tF\tF} \tLambda^{*^T} + \boldsymbol{\Psi} \\
@@ -141,8 +140,8 @@ Spektral dekomposition sætningen giver så, at diagonal elementerne i \(\boldsy
 %Antagelse \ref{ass:faktor} giver en normalisering asymptotisk ved at forbinde \(\tLambda\) med de ordnede ortonormal egenvektorer af \(\del{p T}^{-1} \sum_{t=1}^T \tLambda \tF_t \tF_t^T \tLambda^T\) og \(\tF_t\) med de principale komponenter af \(\tLambda \tF_t\) for \(j=1, \ldots, T\).
 %Diagonal elementerne af \(\boldsymbol{\Sigma}_{\tF \tF}\) svarer til grænsende egenværdier af \(\del{p T}^{-1} \sum_{t=1}^T \tLambda \tF_t \tF_t^T \tLambda^T\).
 
-I den klassiske faktor model \ref{def:faktor_model} antages fejlleddene at være iid, men for makroøkonomiske tidsrækker er dette urealistisk, da tidsrækkerne er autokorreleret og nogle forklarende variable kan være krydskorreleret. 
-Derfor har vi følgende antagelser for fejlleddene.
+I den klassiske faktor model i definition \ref{def:faktor_model} antages fejlleddene at være uafhængige og identisk fordelte, men for makroøkonomiske tidsrækker er dette urealistisk, da tidsrækkerne er autokorreleret og nogle forklarende variable kan være krydskorreleret. 
+Derfor introducerer vi følgende mildere antagelser for fejlleddene.
 %
 \begin{ass}[Momenter af fejlene \(\te_t\)] \label{ass:momenter_fejl}
 Lad \(e_{jt}\) betegne \(j\)'te element af \(\te_t\), da antages, at
@@ -160,8 +159,7 @@ Vi antager ikke normalitet, men antagelse \ref{ass:faktor}.c) begrænser større
 %\section{Prædiktion med faktor modellen}
 %Først estimeres tidsrækkerne af faktorer udfra de forklarende variable, og herefter kan relationen mellem responsvariablen og faktorerne estimeres vha OLS.
 %
-For prædiktionsligningen \eqref{eq:factor_model_forecast} antages, at hvis \(\tF_t\) er observeret, da vil OLS give konsistente estimatorer af regressionskoefficienterne.
-Nedenfor gives de specifikke antagelser for prædiktionsligningen.
+For prædiktionsligningen \eqref{eq:factor_model_forecast} betragter vi følgende antagelser.
 %
 \begin{ass}[Prædiktionsligning] \label{ass:forecasting_ligning}
 Lad \(\tz_t = \del{\tF_t^T \boldsymbol{\omega}_t^T}^T\) og \(\tbeta = \del{\tbeta_{\tF}^T \tbeta_{\boldsymbol{\omega}}^T}^T\) være \(\del{r+m} \times 1\) vektorer, da gælder følgende
@@ -177,8 +175,8 @@ Lad \(\tz_t = \del{\tF_t^T \boldsymbol{\omega}_t^T}^T\) og \(\tbeta = \del{\tbet
 \end{enumerate}
 \end{ass}
 %
-Antagelse \ref{ass:forecasting_ligning}.a)-\ref{ass:forecasting_ligning}.c) medfører, at regressionen af \(y_{t+h}\) på \(\tz_t^T\) giver konsistente OLS estimatorer givet ved \(\widehat{\tbeta} = \del{\sum_{t=1}^{T-h} \widehat{\tz}_t \widehat{\tz}_t^T}^{-1} \del{\sum_{t=1}^{T-h} \widehat{\tz}_t y_{t+h}}\).
-De yderligere antagelser er nødvendige for at sikre konsistente OLS estimatorer af regressionen af \(y_{t+h}\) på \(\widehat{\tz}_t^T =\del{\widehat{\tF}_t^T \tw_t^T}\), hvor \(\tF_t\) altså ikke er observeret.
+Antagelse \ref{ass:forecasting_ligning}.a)-\ref{ass:forecasting_ligning}.c) medfører, at regressionen af \(y_{t+h}\) på \(\tz_t^T\) giver konsistente OLS estimatorer.
+De yderligere antagelser er nødvendige for at sikre konsistente OLS estimatorer af regressionen af \(y_{t+h}\) på \(\widehat{\tz}_t^T =\del{\widehat{\tF}_t^T \tw_t^T}\), hvor \(\tF_t\) altså ikke er observeret, der er givet ved \(\widehat{\tbeta} = \del{\sum_{t=1}^{T-h} \widehat{\tz}_t \widehat{\tz}_t^T}^{-1} \del{\sum_{t=1}^{T-h} \widehat{\tz}_t y_{t+h}}\).
 %Inden prædiktionen skal vi estimere faktorerne og bestemme antallet af faktorer.
 
 \subsection{Konsistens af estimatorer}
@@ -211,7 +209,7 @@ Beviset undlades, men vi refererer til (R14), (R15) og (R19) s. 1176 i \citep{st
 %Da både \(\tF\) og \(\tLambda\) er ukendt, kræves at \(p, T \rightarrow \infty\), hvilket er betydeligt sværere at bevise.
 %Strategien for beviset er, at vise at de \(r\) første egenvektorer af \(\del{pT}^{-1} \X^T \X\) opfører sig, som de \(r\) første egenvektorer af \(\del{pT}^{-1} \tLambda^T \tF^T \tF \tLambda\), og da vise at disse egenvektorer kan bruges til at konstruere en konsistent estimator af \(\tF\).
 %
-Hernæst introduceres et lemma, som anvendes ofte i beviset for sætning \ref{thm:factorthm2}.
+Hernæst introduceres et lemma, som anvendes i beviset for sætning \ref{thm:factorthm2}.
 %
 \begin{lem} \label{lem:factorlem1}
 Lad \(q_t\) betegne en følge af stokastiske variable, hvor \(T^{-1} \sum_{t=1}^T q_t^2 \overset{p}{\rightarrow} \sigma_q^2\) og \(T^{-1} \sum_{t=1}^T \tF_t q_t \overset{p}{\rightarrow} \Sigma_{\tF q}\).
@@ -249,16 +247,17 @@ Dette er tab af generalitet, da flere metoder konsistent estimerer antallet af f
 %
 \begin{thm} \label{thm:factorthm2}
 Lad antagelse \ref{ass:forecasting_ligning} og betingelserne i sætning \ref{thm:factorthm1} være opfyldt. 
-Lad \(\widehat{\tbeta}_{\tF}\) og \(\widehat{\tbeta}_{\tw}\) betegne OLS estimaterne af \(\tbeta_{\tF}\) og \(\tbeta_{\tw}\) fra regressionen af \(y_{t+h}\) på \(\widehat{\tz}_t^T\) for \(t=1, \ldots, T-h\). Da gælder følgende
+Lad \(\widehat{\tbeta} = \del{\widehat{\tbeta}_{\tF}^T \widehat{\tbeta}_{\tw}^T}^T\) betegne OLS estimaterne af \(\tbeta = \del{\tbeta_{\tF}^T \tbeta_{\tw}^T}^T\) fra regressionen af \(y_{t+h}\) på \(\widehat{\tz}_t^T\) for \(t=1, \ldots, T-h\).
+%Lad \(\widehat{\tbeta}_{\tF}\) og \(\widehat{\tbeta}_{\tw}\) betegne OLS estimaterne af \(\tbeta_{\tF}\) og \(\tbeta_{\tw}\)
+Da gælder følgende
 \begin{enumerate}[label=\alph*)]
 \item \(\del{\widehat{\tbeta}_{\tF}^T \widehat{\tF}_T + \widehat{\tbeta}^T_{\tw} \tw_T} - \del{\tbeta_{\tF}^T \tF_T + \tbeta_{\tw}^T \tw_T} \overset{p}{\rightarrow} 0\).
-\item \(\widehat{\tbeta}_{\tw} - \tbeta_{\tw} \overset{p}{\rightarrow} \mathbf{0}\) og \(S_j\) defineret i sætning \ref{thm:factorthm1} kan vælges således at \(S_j \widehat{\beta}_{j \tF} - \beta_{j \tF} \overset{p}{\rightarrow} 0\) for \(j = 1, \ldots, r\).
+\item \(\widehat{\tbeta}_{\tw} - \tbeta_{\tw} \overset{p}{\rightarrow} \mathbf{0}\) og \(S_j\) defineret i sætning \ref{thm:factorthm1} kan vælges, således at \(S_j \widehat{\beta}_{j \tF} - \beta_{j \tF} \overset{p}{\rightarrow} 0\) for \(j = 1, \ldots, r\).
 \end{enumerate}
 \end{thm}
 %
 \begin{proof}
 Først bevises b). 
-Lad \(\widehat{\tbeta} = \del{\widehat{\tbeta}_{\tF}^T \widehat{\tbeta}_{\tw}^T}^T\), da skal vi vise, at \(\widehat{\tbeta}_{\tw} - \tbeta_{\tw} \overset{p}{\rightarrow} \mathbf{0}\) og \(S_j \widehat{\beta}_{j \tF} - \beta_{j \tF} \overset{p}{\rightarrow} 0\) for \(j = 1, \ldots, r\).
 Vi har, at
 \begin{align*}
 \begin{pmatrix}
@@ -293,7 +292,7 @@ T^{-1} \sum_{t=1}^T \tw_t \tF_t^T & T^{-1} \sum_{t=1}^T \tw_t \tw_t^T
 \tbeta_{\tF} \\ \tbeta_{\tw}
 \end{pmatrix}  + \begin{pmatrix}
 T^{-1} \mathbf{S} \sum_{t=1}^T\widehat{\tF}_t \epsilon_{t+h} \\ T^{-1} \sum_{t=1}^T \tw_t \epsilon_{t+h},
-\end{pmatrix} }
+\end{pmatrix} },
 \end{align*}
 som omskrives til
 \begin{align*}
@@ -320,7 +319,7 @@ Af lemma \ref{lem:factorlem1} har vi, at: \\
 \(T^{-1} \sum_{t=1}^T \widehat{\tF}_t \widehat{\tF}_t^T \rightarrow \boldsymbol{\Sigma}_{\tF \tF}\) for \(q_t = S_j \widehat{F}_{jt}\), da \(T^{-1} \sum_{t=1}^T \widehat{F}_{jt}^2 \overset{p}{\rightarrow} \sigma_{jj}\), som følger af (R13) s. 1175-1176 i \citep{stock_watson_2002a}, og da \(T^{-1} \sum_{t=1}^T \mathbf{S} \widehat{\tF}_t \tF_t \overset{p}{\rightarrow} \boldsymbol{\Sigma}_{\tF \tF}\), som også følger af samme lemma for \(q_t =F_{jt}\) for \(j=1,\ldots, r\), da antagelse \ref{ass:faktor}.d) opfylder \(T^{-1} \sum_{t=1}^T \tF_t \tF_t^T \overset{p}{\rightarrow} \boldsymbol{\Sigma}_{\tF\tF}\). \\ 
 Lemma \ref{lem:factorlem1} giver også, at 
 \(T^{-1} \mathbf{S} \sum_{t=1}^T \widehat{\tF}_t \tw_t^T \overset{p}{\rightarrow} \boldsymbol{\Sigma}_{\tF \tw}\) for \(q_t = w_{jt}\), hvor antagelse \ref{ass:forecasting_ligning}.b) giver at \(T^{-1} \sum_{t=1}^T \tz_t \tz_t^T \overset{p}{\rightarrow} \boldsymbol{\Sigma}_{\tz \tz}\). \\
-Igen af lemma \ref{lem:factorlem1} har vi, at \(T^{-1} \mathbf{S} \sum_{t=1}^T \widehat{\tF}_t \epsilon_{t+h} \overset{p}{\rightarrow} 0\) for \(q_t = \epsilon_{t+h}\), hvor antagelse \ref{ass:forecasting_ligning}.c) og \ref{ass:forecasting_ligning}.d) giver at \(T^{-1} \sum_{t=1}^T \tz_t \epsilon_{t+h}^2 \overset{p}{\rightarrow} \mathbf{0}\) og \(T^{-1} \sum_{t=1}^T \epsilon_{t+h}^2 \overset{p}{\rightarrow} \sigma^2\). \\
+Igen af lemma \ref{lem:factorlem1} har vi, at \(T^{-1} \mathbf{S} \sum_{t=1}^T \widehat{\tF}_t \epsilon_{t+h} \overset{p}{\rightarrow} \mathbf{0}\) for \(q_t = \epsilon_{t+h}\), hvor antagelse \ref{ass:forecasting_ligning}.c) og \ref{ass:forecasting_ligning}.d) giver at \(T^{-1} \sum_{t=1}^T \tz_t \epsilon_{t+h}^2 \overset{p}{\rightarrow} \mathbf{0}\) og \(T^{-1} \sum_{t=1}^T \epsilon_{t+h}^2 \overset{p}{\rightarrow} \sigma^2\). \\
 Af antagelse \ref{ass:forecasting_ligning}.a) er \(\boldsymbol{\Sigma}_{\tz \tz}\) invertibel og resultatet følger af Slutskys sætning \ref{thm:slutsky}.
 
 Herefter bevises a), hvor vi skal vise, at \(\widehat{\tbeta}^T \widehat{\tz}_T - \tbeta^T \tz_T \overset{p}{\rightarrow} 0\).

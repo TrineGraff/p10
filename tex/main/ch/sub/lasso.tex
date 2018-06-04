@@ -8,7 +8,7 @@ Lasso finder løsningen til optimeringsproblemet
 \end{defn}
 Betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt som en \(\ell_1\)-norm betingelse $\Vert \tbeta \Vert_1 \leq t$.
 Værdien af \(t\) begrænser summen af de absolutte værdier af parameter estimaterne og kontrollerer kompleksiteten af modellen. 
-En lav værdi af \(t\) vil begrænse antallet af parametre, hvilket fører til en sparse model, som tilpasser data mindre præcis, mens en høj værdi af \(t\) betyder flere parametre og tillader dermed, at modellen tilpasser data meget præcis.
+En lav værdi af \(t\) vil begrænse antallet af parametre, hvilket fører til en sparse model, som tilpasser data mindre præcis, mens en høj værdi af \(t\) betyder flere parametre og tillader dermed, at modellen tilpasser data mere præcis.
 
 Lasso problemet kan omskrives til et Lagrange problem
 \begin{align}
@@ -18,9 +18,10 @@ hvor $\lambda \geq 0$ er en såkaldt strafparameter.
 Der er en en-til-en korrespondance mellem det betingede problem \eqref{eq:2.3} og Lagrange problemet \eqref{eq:2.5}. 
 For hver værdi af \(t\) hvor \(\Vert \tbeta \Vert_1 \leq t\) er opfyldt, da findes en tilhørende værdi af $\lambda$ som giver den samme løsning for \eqref{eq:2.5}.
 Omvendt gælder der, at løsningen $\widehat{\tbeta}_\lambda$ til \eqref{eq:2.5} løser grænseproblemet med $t=\Vert \widehat{\tbeta}_\lambda \Vert_1$.
-Værdien af \(\lambda\) skal specificeres ved en ekstern procedure kaldet \textit{krydsvalidering}, som vil blive diskuteret i kapitel \ref{ch:metoder}.
+Værdien af \(\lambda\) kan specificeres ved en ekstern procedure kaldet \textit{krydsvalidering} og \textit{BIC}, som vil blive diskuteret i kapitel \ref{ch:metoder}.
 
-I andre beskrivelser af lasso estimatoren kan en faktor indsættes foran summeringen \eqref{eq:2.3} eller den euklidiske norm \eqref{eq:2.5} givet ved \(\frac{1}{2n}\) eller \(\frac{1}{2}\).
+I andre beskrivelser af lasso estimatoren kan en faktor indsættes foran summeringen i \eqref{eq:2.3} eller den euklidiske norm i \eqref{eq:2.5} givet ved \(\frac{1}{2n}\) eller \(\frac{1}{2}\).
+Dette gør ingen forskel i \eqref{eq:2.3} og svarer blot til en simpel reparametrisering af \(\lambda\) i \eqref{eq:2.5}.
 %Dette gør ingen forskel i \eqref{eq:2.3} og svarer blot til en simpel reparametrisering af \(\lambda\) i \eqref{eq:2.5}.
 %Dette gør værdierne for \(\lambda\) sammenlignelige for stikprøver af forskellige størrelse, som er brugbart i krydsvalidering.
 
@@ -44,12 +45,12 @@ Estimatoren findes ved at differentiere \(\del{\y - \X \tbeta}^T \del{\y - \X \t
 Ridge regression tilføjer altså en positiv konstant $\lambda$ på diagonalen af $\X^T \X$, hvilket medfører, at \(\X^T \X + \lambda \mathbf{I}_p\) er invertibel, selvom $\X$ ikke har fuld rang. 
 Dermed er en entydig løsning altid garanteret. 
 %
-\begin{exmp}
+\begin{exmp}[Diabetes data]
 Lad os betragte data givet i tabel \ref{tab:diabetes} fra \citep{efron}.
 Datasættet består af målinger på 442 diabetes patienter, hvor responsvariablen er et kvantitativ mål af sygdom progressionen et år efter sygdommen er konstateret og følgende 10 prædiktorer: 
 \begin{itemize}
-\item \texttt{age}: patientens alder
-\item \texttt{sex}: patientens køn
+\item \texttt{age}: alder
+\item \texttt{sex}: køn
 \item \texttt{bmi}: body-mass index
 \item \texttt{map}: gennemsnitlig blodtryk
 \item Målinger af blodet:  \texttt{tc},  \texttt{ldl}, \texttt{hdl}, \texttt{tch}, \texttt{ltg} og \texttt{tglu}
@@ -60,10 +61,12 @@ Datasættet består af målinger på 442 diabetes patienter, hvor responsvariabl
 Datasættet, som vi betegner diabetes data, er inkluderet for at underbygge teorien og vi vil løbende i rapporten referere til det.
 \end{exmp}
 %
+\begin{eks}
 På figur \ref{fig:diabetes_koef} illustreres koefficientstierne for henholdsvis lasso og ridge regression for diabetes data.
 Heraf ses at lasso udfører variabeludvælgelse og mindsker koefficienterne, mens ridge regression blot mindsker koefficienterne.
 %
 \imgfigh{diabetes_lasso_ridge.pdf}{0.9}{Koefficientstierne for lasso og ridge regression som funktion af $\log \del{\lambda}$ for diabetes data.}{diabetes_koef}
+\end{eks}
 
 Betingelsesområderne for lasso og ridge regression for \(p=2\) illustreres på figur \ref{fig:LassoRig}.
 %

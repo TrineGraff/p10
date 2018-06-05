@@ -1,8 +1,9 @@
 \section{Nonnegative garrote} \label{sec:asymptotics_nonnegative}
-Nonnegative garrote, som blev præsenteret i afsnit \ref{sec:nonnegativegarrote}, er givet ved \(\widehat{\beta}_j^\text{NG} = c_j \widehat{\beta}_j^\text{OLS}\), hvor
+Nonnegative garrote, som blev præsenteret i afsnit \ref{sec:nonnegativegarrote}, finder en mængde af ikke-negative faktorer udfra
 \begin{align}
 \argmin_{\mathbf{c} \in \R^p} \cbr{\Vert \y - \sum_{j=1}^p \x_j \widehat{\beta}_j^\text{OLS} c_j \Vert_2^2 + \lambda_n \sum_{j=1}^p c_j}, \ \text{underlagt at } c_j \geq 0 \text{ for alle} j. \label{eq:nongarotte_om}
 \end{align}
+Estimaterne for nonnegative garrote er da givet ved \(\widehat{\beta}_j^\text{NG} = c_j \widehat{\beta}_j^\text{OLS}\).
 Nonnegative garrote er tæt relateret til et special tilfælde af adaptive lasso.
 Antag \(\gamma=1\) og vælg \(\widehat{\mathbf{w}}=\frac{1}{\vert \widehat{\tbeta}^{\text{OLS}} \vert}\), da løser adaptive lasso følgende optimeringsproblem
 \begin{align}

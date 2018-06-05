@@ -1,21 +1,18 @@
-For en estimator, som udfører variabeludvælgelse, findes nogle såkaldte \textit{orakelegenskaber}.
-En estimator, som opfylder disse egenskaber, er konsistent i variabeludvælgelse og følger asymptotisk en normalfordeling.
-
-Lad $\mathcal{A} =\cbr{j:\beta_j^* \neq 0}$ betegne den aktive mængde, hvor $\beta_j^*$ betegner koefficienten af $\mathbf{x}_j$ i den sande model og antag at $\vert \mathcal{A} \vert=p_0 <p$, således at den sande model blot afhænger af en delmængde af prædiktorerne. 
+Lad $\mathcal{A} =\cbr{j:\beta_j^* \neq 0}$ betegne den aktive mængde, hvor $\beta_j^*$ betegner koefficienten af $\mathbf{x}_j$ i den sande model og antag at $\abs{ \mathcal{A}}=p_0 <p$, således at den sande model blot afhænger af en delmængde af prædiktorerne.
+Nedenfor introduceres orakelegenskaberne. 
 \begin{defn}[Orakelegenskaber]
 \begin{itemize}
 \item Variabeludvælgelsen er konsistent, dvs for
 \begin{align*}
-\mathcal{A}_n=\lbrace j :\widehat{\beta}_j \neq 0 \rbrace \ \text{og} \ \mathcal{A} =\{j:\beta_j^* \neq 0\},
+\mathcal{A}_n=\cbr{ j :\widehat{\beta}_j \neq 0} \quad \text{og} \quad \mathcal{A} =\cbr{j:\beta_j^* \neq 0},
 \end{align*}
-gælder der, at $\lim_{n \rightarrow \infty }P(\mathcal{A}_n=\mathcal{A})=1$.
+gælder der, at $\lim_{n \rightarrow \infty }P\del{\mathcal{A}_n=\mathcal{A}}=1$.
 \item Estimatoren er asymptotisk normalfordelt, dvs
 \begin{align*}
-\sqrt{n}(\widehat{\boldsymbol{\beta}}_\mathcal{A}-\boldsymbol{\beta}^*_\mathcal{A}) \overset{d}{\rightarrow} N(\mathbf{0}, \boldsymbol{\Sigma}^*_I),
+\sqrt{n}\del{\widehat{\boldsymbol{\beta}}_\mathcal{A}-\boldsymbol{\beta}^*_\mathcal{A}} \overset{d}{\rightarrow} N \del{\mathbf{0}, \boldsymbol{\Sigma}^*_I},
 \end{align*}
-hvor $\boldsymbol{\beta}^*_\mathcal{A}=\{ \beta_j^*, j \in \mathcal{A} \}$ og $\boldsymbol{\Sigma}^*_I$ er kovariansmatricen, hvor vi antager, at vi kender den sande model.
+hvor $\boldsymbol{\beta}^*_\mathcal{A}=\cbr{ \beta_j^*, j \in \mathcal{A}}$ og $\boldsymbol{\Sigma}^*_I$ er den sande kovariansmatrix.
 \end{itemize}
 \end{defn}
-En god procedure bør have disse orakelegenskaber.
-Dog bør proceduren have nogle ekstra betingelser udover orakelegenskaberne for at være optimal.
+En god procedure bør have disse orakelegenskaber, dog bør proceduren have nogle ekstra betingelser udover orakelegenskaberne for at være optimal.
 Derfor er det vigtigt at understrege, at orakelegenskaber ikke alene resulterer i en optimal procedure.

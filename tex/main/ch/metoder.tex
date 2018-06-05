@@ -7,7 +7,7 @@ Observationerne i træningsmængden betragtes som in-sample observationer og anv
 Observationerne i testmængden betragtes som out-of-sample observationer og anvendes til at vurdere modellen. 
  
 \section{In-sample metoder}
-For faktor modellen skal vi bestemme antallet af faktorer og for lasso modellen og dens generaliseringer skal vi estimere tuning parameteren.
+For faktor modellen skal vi bestemme antallet af faktorer, mens vi for lasso og dens generaliseringer skal estimere tuning parameteren.
 
 \subsection{Valg af antal faktorer} \label{sec:faktorer}
 %Antallet af faktorer kan bestemmes udfra informationskriterier, som betragter et tradeoff mellem at inkludere en ekstra faktor, dvs en ekstra parameter i modellen, mod omkostningen af at øge variabiliteten, som kommer af at estimere en ekstra parameter.
@@ -26,12 +26,12 @@ Informationskriterierne giver konsistent estimation af antallet af faktorer i fa
 %For \(p = T\) fås at \(g_2 \del{T,T} = 2 T^{-1} \ln \del{T}\), som bekendt er \(2\) gange straffaktoren for BIC.
 
 \subsection{Valg af tuning parameter}
-I dette underafsnit introduceres to metoder til at estimere tuning parameteren \(\lambda\) i lasso modellen og den generaliseringer, nemlig krydsvalidering og BIC. 
+I dette underafsnit introduceres to metoder til at estimere tuning parameteren i lasso modellen og den generaliseringer, nemlig krydsvalidering og BIC. 
 Krydsvalidering finder modellen med mindst prædiktionsfejl, mens BIC vælger den model, som giver det bedste fit i forhold til modellens kompleksitet. 
 %For elastisk net problemet \eqref{eq:4.2} betragtes to tuning parametre \(\lambda\) og \(\alpha\).
 
 \subsubsection{Krydsvalidering}
-\textit{Dette afsnit er baseret på s. 175-184 i \citep{james}.}
+\textit{Dette afsnit er baseret på s. 178-186 i \citep{james}.}
 %\textit{En af de simpleste og oftest anvendte metoder til at estimere prædiktions fejlen er krydsvalidering. 
 %Dette afsnit giver en kort introduktion af krydsvalidering og er baseret på s. 175-184 i \citep{james}.}
 
@@ -67,11 +67,11 @@ Figur \ref{fig:cv_teori} illustrerer en 5-fold krydsvalidering.
 \caption{5-fold krydsvalidering. I dette tilfælde fittes modellen i første, anden, fjerde og femte gruppe af data og udregner prædiktionsfejlen af den fittede model for tredje gruppe.} \label{fig:cv_teori}
 \end{figure} 
 %
-Et $k$-fold krydsvalidering har en lav varians, da \eqref{eq:cv_k} tager det gennemsnitlige output af $k$ fittede modeller, som har en lav korrelation, siden vi har et relativt lille overlap mellem træningsmængden i hver model. 
-Bias kunne være et problem i forhold til hvordan vi vælger vores træningsmængde. Hvis vi ikke har nok observationer i træningsmængden vil $k$-fold krydsvalidering have høj bias. Derfor er der også en bias-varians trade-off med valget af $k$. 
+Et $k$-fold krydsvalidering har en lav varians, da \eqref{eq:cv_k} tager det gennemsnitlige output af $k$ fittede modeller, som har en lav korrelation, siden vi har et relativt lille overlap mellem træningsmængderne i hver model. 
+Bias kunne være et problem i forhold til hvordan vi vælger vores træningsmængde. Hvis vi ikke har nok observationer i træningsmængden vil $k$-fold krydsvalidering have høj bias. Derfor er der også en bias-variance trade-off med valget af $k$. 
 
 \subsubsection{BIC}
-Tuning parametrene kan også vælges udfra Bayesian informationskriteriet.
+Tuning parameteren kan også vælges udfra Bayesian informationskriteriet.
 Vi betragter dens skalerede version.
 %
 \begin{defn}[Bayesian informationskriteriet (BIC)] \label{def:bic}
@@ -84,7 +84,7 @@ hvor \(\widehat{\ell}\) er den maksimerede log-likehood, \(p\) er antallet af pa
 %BIC vil være større des lavere log-likehood eller jo flere parametre der er i modellen.
 Modellen med den laveste BIC vælges, da det indikerer, at modellen giver en god tilnærmelse af data i forhold til modellens kompleksitet. 
 
-Lad fejlledene være iid og normalfordelte, da er maksimum likelihood estimatoren for variansen defineret som
+Lad fejlledene være uafhængige og normalfordelte, da er maksimum likelihood estimatoren for variansen defineret som
 \begin{align*}
 \widehat{\sigma}_p^2 = \frac{1}{T} \sum_{t=1}^{T} \del{y_t - \sum_{j=1}^p x_{tj}\beta_j}^2,
 \end{align*}
@@ -94,22 +94,23 @@ og BIC kan omskrives til
 \end{align*}
 
 \section{Out-of-sample metoder}
-I den empiriske del betragtes et rolling scheme forecast med expanding estimerings windows.
-For at vurdere en models prædiktion betragtes den gennemsnitlige kvadrede fejl (MSE) og den gennemsnitlige absolutte fejl (MAE)
+I den empiriske del betragter vi en one-step-ahead prædiktion, hvor estimeringsvinduet udvides med én observerede observation per prædiktion.
+%Dermed prædikteres \(y_{t+1}\) udfra de observerede observation fra \(1\) til \(t\), mens  \(y_{t+2}\) prædiktion er baseret på de observerede observationer fra \(1\) til \(t+1\).
+For at vurdere en models prædiktion betragtes den gennemsnitlige absolutte fejl (MAE) og den gennemsnitlige kvadrede fejl (MSE)
 \begin{align}
-\text{MSE} & =  \frac{1}{T} \sum_{t=1}^{T} \del{y_{t} - \widehat{y}_{t}}^2 \label{eq:mse}, \\
-\text{MAE} & =  \frac{1}{T} \sum_{t=1}^{T} \abs{y_{t} - \widehat{y}_{t}}, \label{eq:mae} ,
+\text{MAE} & =  \frac{1}{T} \sum_{t=1}^{T} \abs{y_{t} - \widehat{y}_{t}} \label{eq:mae} , \\
+\text{MSE} & =  \frac{1}{T} \sum_{t=1}^{T} \del{y_{t} - \widehat{y}_{t}}^2 \label{eq:mse},
 \end{align} 
 hvor $T$ er antallet af observationer i testmængden, $y_{t}$ er observationen til tid $t$ og $\widehat{y}_{t}$ er prædiktionen af $y_{t}$.
-MSE og MAE kan betragtes som tabsfunktioner, da de måler en afvigelse fra de observerede værdier.
-Tabsfunktionerne vil være lig 0 for en perfekt prædiktion, og ellers vil de have en positiv værdi, derfor foretrækkes modeller med lav MSE eller MAE.
+MAE og MSE kan betragtes som tabsfunktioner, da de måler en afvigelse fra de observerede værdier.
+Tabsfunktionerne vil være lig 0 for en perfekt prædiktion, og ellers vil de have en positiv værdi, derfor foretrækkes modeller med lav MAE eller MSE.
 
 Udfra tabsfunktionerne kan vi betragte et gennemsnitlig tabs ratio mellem en given model og benchmark modellen, som er givet ved
 \begin{align*}
-R^{\text{\text{MSE}}} = \frac{\text{MSE}^{\text{Alternativ}}}{\text{MSE}^{\text{Benchmark}}}, \qquad R^{\text{MAE}} = \frac{\text{MAE}^{\text{Alternativ}}}{\text{MAE}^{\text{Benchmark}}}.
+R^{\text{MAE}} = \frac{\text{MAE}^{\text{Alternativ}}}{\text{MAE}^{\text{Benchmark}}} \qquad R^{\text{\text{MSE}}} = \frac{\text{MSE}^{\text{Alternativ}}}{\text{MSE}^{\text{Benchmark}}}.
 \end{align*} 
 Hvis et gennemsnitlig tabs ratio er mindre end 1, da er den alternative model bedre end benchmark modellen og omvendt hvis værdien er større end 1. 
-Derudover vil vi betragte et rullende tabs ratio, som vi betegner $R_{t}^\text{MSE}$ og $R_t^\text{MAE}$, for at vurdere modellernes prædiktion fra observation til observation.
+Derudover vil vi betragte et rullende gennemsnitlig tabs ratio, som vi betegne $R_t^\text{MAE}$ og $R_{t}^\text{MSE}$, for at vurdere modellernes prædiktion fra observation til observation.
 %
 %For at vurdere modellernes prædiktion i forhold til benchmark modellen fra observation til observation, defineres et rullende gennemsnitlig tabs ratio, som er givet ved
 %\begin{align*}
@@ -118,7 +119,7 @@ Derudover vil vi betragte et rullende tabs ratio, som vi betegner $R_{t}^\text{M
 %hvor $\text{MSE}_t = \frac{1}{T} \sum_{t =1}^{T} \del{y_t - \widehat{y}_t}^2$ og $\text{MAE}_t = \frac{1}{T} \sum_{t = 1}^{T} \abs{y_t - \widehat{y}_t}$.
 %Hvis et rullende gennemsnitlig tabs ratio er mindre end 1, da prædikterer den alternative model gennemsnitlig bedre end benchmark modellen til tid \(t\) og omvendt hvis værdien er større end 1.
 
-Foruden MSE og MAE betragtes \textit{Diebold-Mariano} testen samt \textit{model confidence set} (MCS) proceduren.
+Foruden MAE og MSE betragtes \textit{Diebold-Mariano} testen samt \textit{model confidence set} (MCS) proceduren.
 Diebold-Mariano testen kan anvendes til at teste om én model er signifikant bedre end en anden model, mens MCS proceduren identificerer en mængde af modeller, som er signifikant bedre end de øvrige modeller, men ikke signifikant bedre end de øvrige modeller i mængden.
 Nedenfor introduceres kort Diebold-Mariano testen samt general teori for MCS.
 

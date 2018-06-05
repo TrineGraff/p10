@@ -68,7 +68,7 @@ Heraf ses det, at OLS estimatoren er rod-\(n\)-konsistent.
 \section{Lasso}
 Lad os betragte lasso estimatoren
 \begin{align*}
-\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert},
+\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert},
 \end{align*}
 hvor \(\lambda_n\) varierer med \(n\).
 Lad \(\A_n^\text{lasso} = \cbr{j : \widehat{\beta}_j^\text{lasso} \neq 0}\) betegne den aktive mængde for lasso estimatoren.
@@ -76,7 +76,7 @@ Lad \(\A_n^\text{lasso} = \cbr{j : \widehat{\beta}_j^\text{lasso} \neq 0}\) bete
 \begin{lem}\label{lem:lasso_consistency1}
 Hvis $\frac{\lambda_n}{n} \rightarrow \lambda_0 \geq 0$, da vil
 \begin{align*}
-\widehat{\tbeta}^\text{lasso} \overset{p}{\rightarrow} \argmin \cbr{ \del{\mathbf{u} - \tbeta^*}^T \mathbf{C} \del{\mathbf{u} - \tbeta^*} + \lambda_0 \sum_{j=1}^p \vert u_j \vert}.
+\widehat{\tbeta}^\text{lasso} \overset{p}{\rightarrow} \argmin_{\tbeta \in \R^p} \cbr{ \del{\mathbf{u} - \tbeta^*}^T \mathbf{C} \del{\mathbf{u} - \tbeta^*} + \lambda_0 \sum_{j=1}^p \vert u_j \vert}.
 \end{align*}
 \end{lem}
 \begin{proof}
@@ -91,7 +91,7 @@ Sætning \ref{thm:asymp_lasso} indikerer, at \(\lambda_n = O \del{\sqrt{n}}\) kr
 \begin{thm}[Asymptotisk fordeling af lasso estimatoren] \label{thm:asymp_lasso}
 Hvis $\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0$, da er den asymptotiske fordeling af \(\widehat{\tbeta}^\text{lasso}\) givet ved
 \begin{align*}
-\sqrt{n} \del{\widehat{\tbeta}^\text{lasso} - \tbeta^*} \overset{d}{\rightarrow} \argmin \cbr{ -2 \mathbf{u}^T \mathbf{W} + \mathbf{u}^T \mathbf{C} \mathbf{u} + \lambda_0 \sum_{j=1}^p \sbr{u_j \text{sign} \del{\beta^*_j} \mathbb{1} \del{\beta_j^* \neq 0} + \vert u_j \vert \mathbb{1} \del{\beta_j^* = 0}}},
+\sqrt{n} \del{\widehat{\tbeta}^\text{lasso} - \tbeta^*} \overset{d}{\rightarrow} \argmin_{\tbeta \in \R^p} \cbr{ -2 \mathbf{u}^T \mathbf{W} + \mathbf{u}^T \mathbf{C} \mathbf{u} + \lambda_0 \sum_{j=1}^p \sbr{u_j \text{sign} \del{\beta^*_j} \mathbb{1} \del{\beta_j^* \neq 0} + \vert u_j \vert \mathbb{1} \del{\beta_j^* = 0}}},
 \end{align*}
 hvor \(\mathbf{W} = N\del{\mathbf{0}, \sigma^2 \mathbf{C}}\).
 \end{thm}
@@ -103,6 +103,9 @@ Proposition \ref{prop:asymp_lasso} medfører, at når \(\lambda_n = O \del{\sqrt
 \begin{prop} \label{prop:asymp_lasso}
 Hvis \(\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0\), da er \(\lim \sup_n P \del{\A_n^\text{lasso} = \A} \leq c <1\), hvor \(c\) er en positiv konstant, der afhænger af den sande model.
 \end{prop}
+\begin{proof}
+Beviset undlades, men vi refererer til s. 1425-1426 i \citep{adaptive_lasso}.
+\end{proof}
 
 \cite{adaptive_lasso} beviste en nødvendig betingelse for at variabeludvælgelse for lasso estimatoren er konsistent. 
 %
@@ -130,7 +133,7 @@ Hvis betingelse \eqref{eq:betingelse_konsistent} ikke er opfyldt, da er lasso va
 %\end{proof}
 
 Hvis \(\X\) er ortogonal, da er den nødvendige betingelse \eqref{eq:betingelse_konsistent} og dermed konsistent variabeludvælgelse for lasso estimatoren garanteret.
-Derudover hvis \(p=2\), er den nødvendige betingelse altid opfyldt, da \(\left\vert \mathbf{C}_{21} \mathbf{C}_{11}^{-1} \text{sign} \del{\beta^*_\A} \right\vert\) reduceres til \(\vert \rho \vert\), som er korrelationen imellem prædiktorerne.
+Hvis \(p=2\), er den nødvendige betingelse altid opfyldt, da \(\left\vert \mathbf{C}_{21} \mathbf{C}_{11}^{-1} \text{sign} \del{\beta^*_\A} \right\vert\) reduceres til \(\vert \rho \vert\), som er korrelationen imellem prædiktorerne.
 
 
 

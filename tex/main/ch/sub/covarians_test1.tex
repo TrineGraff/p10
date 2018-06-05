@@ -14,7 +14,7 @@ Den aktive mængde betegner somsagt prædiktorerne med ikke-nul koefficienter, o
 Lad \(\A_{k-1}\) betegne den aktive mængde i step \(k-1\) inden prædiktoren tilføjes, og lad \(\tilde{\tbeta}^\text{lasso}_{\A_{k-1}} \del{\lambda_{k+1}}\) være løsningen i \(\lambda_{k+1}\) ved kun at anvende prædiktorerne i \(\A_{k-1}\).
 Denne løsning er eksplicit givet ved 
 \begin{align*}
-\tilde{\tbeta}^\text{lasso}_{\A_{k-1}} \del{\lambda_{k+1}} = \argmin_{\tbeta_{\A_{k-1}} \in \R^{\vert \A_{k-1} \vert}} \cbr{\frac{1}{2} \left\Vert \y - \X_{\A_{k-1}} \tbeta_{\A_{k-1}} \right\Vert_2^2 + \lambda_{k+1} \left\Vert \tbeta_{\A_{k-1}} \right\Vert_1},
+\tilde{\tbeta}^\text{lasso}_{\A_{k-1}} \del{\lambda_{k+1}} = \argmin_{\tbeta_{\A_{k-1}} \in \R^{\vert \A_{k-1} \vert}} \cbr{ \left\Vert \y - \X_{\A_{k-1}} \tbeta_{\A_{k-1}} \right\Vert_2^2 + \lambda_{k+1} \left\Vert \tbeta_{\A_{k-1}} \right\Vert_1},
 \end{align*}
 hvor \(\X_{\A_{k-1}}\) er en matrix, der består af søjlerne i \(\X\), som svarer til prædiktorerne i \(\A_{k-1}\).
 Lad \(\widehat{\tbeta}^\text{lasso} \del{\lambda_{k+1}}\) betegne løsningen i \(\lambda_{k+1}\) udfra prædiktorerne \(\A_{k-1} \cup \cbr{j}\).
@@ -24,7 +24,7 @@ T_k^\text{cov} = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \widehat{\tbeta}^\
 \end{align}
 Intuitivt er teststørrelsen af kovarians testen i \eqref{eq:6.5} en funktion af differensen mellem \(\X \widehat{\tbeta}^\text{lasso}\) og \(\X_{\A_{k-1}} \tilde{\tbeta}^\text{lasso}_{\A_{k-1}}\), dvs de fittede værdier givet ved at inkludere og undlade \(j\)'te prædiktor i den nuværende aktive mængde.
 Navnet af testen kommer af, at tælleren i \eqref{eq:6.5} kan betragtes som differensen mellem empiriske (ikke-centreret) kovarianser og et lille led. 
-\footnote{Lad \(\y = \y - \tmu + \tmu\) med \(\tmu = \X \tbeta^*\), da kan tælleren af \eqref{eq:6.5} omskrives \(T_k^\text{cov} = \left\langle \y - \tmu, \X \widehat{\tbeta} \del{\lambda_{k+1}} \right\rangle - \left\langle \y - \tmu, \X_{\A_{k-1}} \tilde{\tbeta}_{\A_{k-1}} \del{\lambda_{k+1}} \right\rangle + \left\langle \tmu, \X \widehat{\tbeta} \del{\lambda_{k+1}} - \X_{\A_{k-1}} \tilde{\tbeta}_{\A_{k-1}} \del{\lambda_{k+1}} \right\rangle\).
+\footnote{Lad \(\y = \y - \tmu + \tmu\) med \(\tmu = \X \tbeta^*\), da kan tælleren af \eqref{eq:6.5} omskrives \(T_k^\text{cov} = \left\langle \y - \tmu, \X \widehat{\tbeta}^\text{lasso} \del{\lambda_{k+1}} \right\rangle - \left\langle \y - \tmu, \X_{\A_{k-1}} \tilde{\tbeta}^\text{lasso}_{\A_{k-1}} \del{\lambda_{k+1}} \right\rangle + \left\langle \tmu, \X \widehat{\tbeta}^\text{lasso} \del{\lambda_{k+1}} - \X_{\A_{k-1}} \tilde{\tbeta}^\text{lasso}_{\A_{k-1}} \del{\lambda_{k+1}} \right\rangle\).
 De første to led er empiriske kovarianser og det sidste led er typisk lille.}
 Desto større kovarians af \(\y\) og \(\X \widehat{\tbeta}^\text{lasso}\) sammenlignet med \(\X_{\A_{k-1}} \tilde{\tbeta}^\text{lasso}_{\A_{k-1}}\), desto vigtigere er \(j\)'te prædiktor i modellen \(\A_{k-1} \cup \cbr{j}\).
 %Kovarians teststørrelsen evalueres i næste knot \(\lambda_{k+1}\), da \(j\)'te koefficient stadig er lig nul i \(\lambda_k\).
@@ -43,6 +43,7 @@ Vi henviser til s. 425-441 i \citep{lockhart}, hvor resultatet bevises.
 Hvis \(\sigma^2\) er ukendt, kan den estimeres under den fulde model \(\widehat{\sigma}^2 = \frac{1}{n-p} \text{SSR}_p\). 
 Dette indsættes i \eqref{eq:6.5}, og eksponential testen bliver en eksakt \(F_{2,n-p}\) test. \\[2mm]
 
+\begin{eks}
 For diabetes data ønsker vi at udregne \(p\)-værdien for prædiktoren \texttt{hdl}, som tilføjes til den aktive mængde i fjerde step af LARS algoritmen (se figur \ref{fig:diabetes_covTest}). 
 Da skal vi udregne kovariansen i \(\lambda_5\), der er givet ved \(\left\langle \y, \X \widehat{\tbeta}^\text{lasso} \del{\lambda_5} \right\rangle\).
 Herefter fjernes prædiktoren \texttt{hdl}, hvilket giver den aktive mængde \(\A_{3}\), vi refitter i \(\lambda_5\) og udregner igen kovariansen i \(\lambda_5\), der er givet ved \(\left\langle  \y, \X_{\A_{3}} \tilde{\tbeta}^\text{lasso}_{\mathcal{A}_{3}} \del{\lambda_{5}} \right\rangle\).
@@ -58,11 +59,11 @@ T_4^\text{cov} = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \widehat{\tbeta}^\
 \end{figure}
 %
 Resultatet af kovarians testen anvendt på diabetes data er givet i tabel \ref{tab:diabetes_covTest}.
-Nulhypotesen afvises for \texttt{bmi}, \texttt{ltg}, \texttt{map} og \texttt{hdl} som tilføjes til den aktive mængde i step 1-4, hvilket betyder, at disse prædiktorer er signifikante.
+Nulhypotesen afvises for \texttt{bmi}, \texttt{ltg}, \texttt{map} og \texttt{hdl}, som tilføjes til den aktive mængde i step 1-4, hvilket betyder, at disse prædiktorer er signifikante.
 For de resterende prædiktorer kan nulhypotesen ikke afvises.
 %
 \input{fig/tab/diabetes_covTest}
-
+\end{eks}
 
 Kovarians testen er det naturlige analog til resultaterne for frihedsgrader for lasso og LARS.
 Som nævnt tidligere har lasso med \(k\) ikke-nul koefficienter \(k\) frihedsgrader, mens LARS anvender en frihedsgrad for hvert step.

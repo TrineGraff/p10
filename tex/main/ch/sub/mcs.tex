@@ -8,7 +8,7 @@ Proceduren kræver ikke en benchmark model, da alle modellerne testes imod hinan
 Vi betragter en endelig mængde af indekser \(\mathcal{M}_0 = \cbr{1, \ldots, m_0}\), hvor hvert indeks svarer til en model.
 Lad \(y_t\) være den observerede værdi til tid \(t\) og lad \(\widehat{y}_{i,t}\) være \(i\)'te models prædiktion af \(y_t\).  
 
-Tabet for model \(i\) til tid \(t\) betragtes ved en givet tabsfunktion \(L \del{y_t, \widehat{y}_{i,t}}\), hvor den absolutte og kvadrede fejl igen betragtes, som er givet i \eqref{eq:lossMAE} og \eqref{eq:lossMSE}.
+Tabet for model \(i\) til tid \(t\) betragtes ved en given tabsfunktion \(L \del{y_t, \widehat{y}_{i,t}}\), hvor den absolutte og kvadrede fejl igen betragtes, som er givet i \eqref{eq:lossMAE} og \eqref{eq:lossMSE}.
 Differencen mellem tabsfunktionerne af model \(i\) og \(j\) er givet ved
 \begin{align*}
 d_{ij,t} = L \del{y_t, \widehat{y}_{i,t}} - L \del{y_t, \widehat{y}_{j,t}}, \quad i, j \in \mathcal{M}_0, \quad t = 1, \ldots, T.
@@ -32,11 +32,11 @@ for en mængde af modeller \(\mathcal{M} \subset \mathcal{M}_0\).
 Nulhypotesen testes imod den alternative hypotese \(\hyp_A: \mu_{ij} \neq 0\) for nogle \(i, j \in \mathcal{M}\).
 Den første test er for den fulde mængde af modeller, dvs \(\mathcal{M} = \mathcal{M}_0\), hvis \(\hyp_0\) afvises, da elimineres den dårligste model fra \(\mathcal{M}\).
 Testen gentages indtil første gang nulhypotesen ikke kan afvises, og den resterende mængde af modeller er da den estimerede MCS, \(\widehat{\mathcal{M}}^*\).
-Med et fast \(\alpha\), da konstrueres et \(\del{1-\alpha}\)-confidence mængde, \(\widehat{M}^*_{1-\alpha}\), for de bedste modeller i \(\mathcal{M}_0\).
+Med et fast \(\alpha\), da konstrueres et \(\del{1-\alpha}\)-konfidensmængde, \(\widehat{M}^*_{1-\alpha}\), for de bedste modeller i \(\mathcal{M}_0\).
 
 \subsubsection{Teste konstrueret fra bootstrap}
 I dette afsnit introduceres to teste, som er baseret på multiple \(t\)-teststørrelser, som findes udfra bootstrap.
-Definer \(\bar{d}_{ij} = \frac{1}{T} \sum_{t = 1}^T d_{ij,t}\) og \(\bar{d_{i.}} = \frac{1}{m} \sum_{j \in \mathcal{M}} \bar{d}_{ij}\) for \(i,j \in \mathcal{M}\), hvor \(\bar{d}_{ij}\) måler det relative empiriske tab mellem model \(i\) og \(j\) og \(\bar{d_{i.}}\) er det empirisk tab af model \(i\) relativ til gennemsnittet af modellerne i \(\mathcal{M}\). 
+Definer \(\bar{d}_{ij} = \frac{1}{T} \sum_{t = 1}^T d_{ij,t}\) og \(\bar{d_{i.}} = \frac{1}{m} \sum_{j \in \mathcal{M}} \bar{d}_{ij}\) for \(i,j \in \mathcal{M}\), hvor \(\bar{d}_{ij}\) måler det relative empiriske tab mellem model \(i\) og \(j\) og \(\bar{d_{i.}}\) er det empiriske tab af model \(i\) relativ til gennemsnittet af modellerne i \(\mathcal{M}\). 
 Herudfra konstrueres \(t\)-teststørrelserne
 \begin{align}
 t_{ij} = \frac{\bar{d}_{ij}}{\sqrt{\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{ij}}}} \quad \text{og} \quad t_{i.} = \frac{\bar{d}_{i.}}{\sqrt{\widehat{\mathrm{Var}}\!\sbr{\bar{d}_{i.}}}}, \quad \text{for } i,j \in \mathcal{M}, \label{eq:t_statistics}

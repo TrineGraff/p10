@@ -1,23 +1,6 @@
 \chapter{Generelle statistiske begreber}
-I dette appendiks defineres generelle statistiske begreber, som anvendes igennem rapporten.
+I dette appendiks introduces nogle definitioner og sætninger, som anvendes igennem rapporten.
 %
-%Løst sagt, siges en estimator at være konsistent, hvis følgen $\boldsymbol{\theta}_n(\mathbf{Y})$ af estimatorer for parameteren $\boldsymbol{\theta}$ konvergerer i sandsynlighed mod den sande værdi $\boldsymbol{\theta}$. 
-%% 
-%\begin{defn}[Svag konsistens] \label{def:konsistent}
-%Lad $\{ \boldsymbol{\hat{\theta}}_n \}$ være en følge af estimatorer. Da siges $ \{ \boldsymbol {\hat{\theta}}_n \}$ at være konsistens for $\boldsymbol{\theta}$ hvis
-%\begin{align*}
-%\boldsymbol{\hat{\theta}} \overset{p}{\rightarrow} \boldsymbol{\theta}.
-%%\underset{n \rightarrow \infty}{\lim} P \left( \vert \boldsymbol{\hat{\theta}}_n - \boldsymbol{\theta} \vert \leq \epsilon \right) =1
-%\end{align*}
-%\end{defn}
-%
-\begin{defn}[Rod-n-konsistent estimator] \label{def:rodn}
-En estimator \(\widehat{\tbeta}_n\) for \(\tbeta\) er rod-n-konsistent hvis
-\begin{align*}
-\boldsymbol {\hat{\theta}}_n  - \boldsymbol{\theta} = O \left( \frac{1}{\sqrt{n}} \right).
-\end{align*}
-\end{defn}
-
 \begin{thm}[Slutsky's Theorem] \label{thm:slutsky}
 Hvis $X_n \overset{d}{\rightarrow} X$ og $Y_n \overset{p}{\rightarrow} c$, hvor $X$ er en stokastisk variabel og $c$ er en konstant, da gælder, at
 \begin{align*}
@@ -28,16 +11,6 @@ Hvis $X_n \overset{d}{\rightarrow} X$ og $Y_n \overset{p}{\rightarrow} c$, hvor 
 \end{thm}
 Sætning \ref{thm:slutsky} tillader at finde grænsefordelingen af $X_n$ og sandsynlighedsgrænsen af $Y_n$ separat.
 %
-\newpage
-\begin{defn}[General position] \label{defn:general_position}
-Søjlerne i en \(n \times p\) matrix \(\X\) siges at være i general position, hvis der ikke findes et  \(k\)-dimensionel underrum \(L \subset \R^n\), hvor \(k < \min \cbr{n,p}\), som indeholder mere end \(k+1\) elementer af mængden \(\cbr{\pm \x_1, \ldots, \pm \x_p}\) med undtagelse af par af antipodal punkter.
-Sagt med andre ord: det affine spænd af enhver \(k+1\) punkter \(s_1 \x_{i_1}, \ldots, s_{k+1} \x_{i_{k+1}}\) ikke indeholder ethvert element af mængden \(\cbr{\pm \x_i : \ i \neq i_1, \ldots, i_{k+1}}\) for ethvert fortegn \(s_1, \ldots, s_{k+1} \in \cbr{-1,1}\).
-\end{defn}
-%
-Antagelsen om at søjlerne i \(\X\) er i general position er svag, langt svagere end antagelsen om at \(\text{rang} \del{\X} = p\).
-Hvis indgangene af \(\X\) er fra en kontinuert sandsynlighedsfordeling på \(\R^{np}\), da er søjlerne i \(\X\) i general position næsten sikkert uanset størrelsen af \(n\) og \(p\) \citep{lasso_unique}. 
-At kolonnerne af model matrix er i generel position, sikrer lasso løsningen er entydig \citep{lasso_unique}.
-
 \begin{defn}[Konveks mængde] \label{defn:konveksm}
 En mængde \(\mathcal{C} \subseteq \R^p\) er konveks, hvis der for alle \(\tbeta, \tbeta' \in \mathcal{C}\) og alle skalarer \(s \in \sbr{0,1}\) gælder, at alle vektorer på formen
 \begin{align*}
@@ -45,7 +18,7 @@ En mængde \(\mathcal{C} \subseteq \R^p\) er konveks, hvis der for alle \(\tbeta
 \end{align*}
 tilhører \(\mathcal{C}\).
 \end{defn}
-
+%
 \begin{defn}[Konveks funktion] \label{defn:konveksfkt}
 En funktion \(f: \ \R^p \rightarrow \R\) er konveks, hvis der for \(\tbeta\), \(\tbeta'\) i definitionsmængden af \(f\) og enhver skalar \(s \in \del{0,1}\) gælder
 \begin{align*}
@@ -61,6 +34,22 @@ Uligheden sikrer, at en konveks funktion ikke kan have et lokalt minimum, som ik
 \caption{For en konveks funktion ligger linjen \(s f \del{\beta} + \del{1-s} f \del{\beta'}\) altid over funktionsværdien \(f \del{s \beta + \del{1-s} \beta'}\).} \label{fig:konveks}
 \end{figure}
 %
+\begin{defn}[General position] \label{defn:general_position}
+Søjlerne i en \(n \times p\) matrix \(\X\) siges at være i general position, hvis der ikke findes et  \(k\)-dimensionel underrum \(L \subset \R^n\), hvor \(k < \min \cbr{n,p}\), som indeholder mere end \(k+1\) elementer af mængden \(\cbr{\pm \x_1, \ldots, \pm \x_p}\) med undtagelse af par af antipodal punkter.
+Sagt med andre ord: det affine spænd af enhver \(k+1\) punkter \(s_1 \x_{i_1}, \ldots, s_{k+1} \x_{i_{k+1}}\) ikke indeholder ethvert element af mængden \(\cbr{\pm \x_i : \ i \neq i_1, \ldots, i_{k+1}}\) for ethvert fortegn \(s_1, \ldots, s_{k+1} \in \cbr{-1,1}\).
+\end{defn}
+%
+Antagelsen om at søjlerne i \(\X\) er i general position er svag, langt svagere end antagelsen om at \(\text{rang} \del{\X} = p\).
+Hvis indgangene af \(\X\) er fra en kontinuert sandsynlighedsfordeling på \(\R^{np}\), da er søjlerne i \(\X\) i general position næsten sikkert uanset størrelsen af \(n\) og \(p\) \citep{lasso_unique}. 
+At kolonnerne af model matrix er i generel position, sikrer lasso løsningen er entydig \citep{lasso_unique}.
+%
+\begin{defn}[Rod-n-konsistent estimator] \label{def:rodn}
+En estimator \(\widehat{\tbeta}\) for \(\tbeta\) er rod-n-konsistent hvis
+\begin{align*}
+\widehat{\tbeta}  - \tbeta = O \left( \frac{1}{\sqrt{n}} \right).
+\end{align*}
+\end{defn}
+%
 \begin{defn} \label{defn:supp}
 Antag \(f: \X \rightarrow \R\), hvor \(\X\) er en vilkårlig mængde.
 Støtte mængden af \(f\), som skrives \(\text{supp} \del{f}\), er en mængde af punkter i \(\X\), hvor \(f\) er ikke-nul
@@ -69,26 +58,15 @@ Støtte mængden af \(f\), som skrives \(\text{supp} \del{f}\), er en mængde af
 \end{align*}
 \end{defn}
 %
+%
 \begin{defn}[En autoregressiv model af orden $p$] \label{def:ar}
 En autoregressiv model af orden $p$, som betegnes AR($p$), er givet ved
 \begin{align*}
 y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \dots + \phi_p y_{t-p} + \omega_t, \qquad t = p+1, \dots, T,  
 \end{align*}
-hvor $y_t$ er stationær og $\phi_1 , \phi_2, \dots, \phi_p $ er konstanter  $\del{ \phi_p \neq 0}$ og $\omega_t \sim iid\del{0, \sigma_\omega^2}$, hvis ikke andet er angivet.  
+hvor $y_t$ er stationær og $\phi_1 , \phi_2, \dots, \phi_p $ er konstanter  $\del{ \phi_p \neq 0}$ og $\omega_t \sim \text{iid}\del{0, \sigma_\omega^2}$.  
 \end{defn}
-
-\begin{defn}[Justerede R$^2$] \label{def:adjr2}
-Justerede R$^2$ er givet ved
-\begin{align*}
-R^2_{\text{adj}} = 1 - \sbr{\frac{(1 - R)(n-1)}{n - p -1}},
-\end{align*}
-hvor $n$ er antallet af observationer, $p$ er antallet af prædiktorer og 
-\begin{align*}
-R = 1 - \frac{\sum_{i = 1}^n \del{y_i - \sum_{j=1}^px_{ij} \beta_j}}{\sum_{i = 1}^n \del{y_i - \bar{y}}}.
-\end{align*}
-\end{defn}
- 
-
+%
 \begin{defn}[Jarque-Bera test] \label{def:jbtest}
 Betragt \(\hyp_0: \) data er normalfordelt imod \(\hyp_1:\) data er ikke normalfordelt.
 Teststørrelsen for Jarque-Bera testen er givet ved
@@ -99,7 +77,7 @@ hvor \(n\) er antallet af observationer, \(S\) er den empiriske skewness, \(C\) 
 \end{defn}
 Under \(\hyp_0\) følger teststørrelsen \(\text{JB}\) en \(\chi_{\del{2}}^2\)-fordeling.
 For et signifikant niveau \(\alpha\), afvises hypotesen hvis \(\text{JB} > \chi_{1-\alpha,2}^2\), hvor \(\chi_{1-\alpha,2}^2\) er en \(1 - \alpha\) kvantil af \(\chi^2\)-fordelingen med \(2\) frihedsgrader.
-
+%
 \begin{defn}[Ljung-Box test] \label{def:lbtest}
 Betragt \(\hyp_0 :\) data er uafhængig fordelt imod \(\hyp_1 :\) data er ikke uafhængig fordelt.
 Teststørrelse for Ljung-Box testen er givet ved
@@ -110,5 +88,3 @@ hvor \(n\) er antallet af observationer, \(\widehat{\rho}_k^2\) er den empiriske
 \end{defn}
 Under \(\hyp_0\) følger teststørrelsen \(\text{LB}\) en \(\chi_{\del{h}}^2\)-fordeling.
 For et signifikant niveau \(\alpha\), afvises hypotesen hvis \(\text{LB} > \chi_{1-\alpha,h}^2\), hvor \(\chi_{1-\alpha,h}^2\) er en \(1 - \alpha\) kvantil af \(\chi^2\)-fordelingen med \(h\) frihedsgrader.
-
-

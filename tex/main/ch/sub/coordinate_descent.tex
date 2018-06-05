@@ -1,4 +1,4 @@
-\section{Coordinate descent}
+\section{Coordinate descent} \label{sec:theory_coordinatedescent}
 %Ideen bag coordinat descent er, at optimere en target funktion mht én parameter mens de resterende parametre fastholdes. 
 %Vi gennemløber alle parametre iterativ indtil konvergens.
 %Coordinate descent er specielt attraktiv for problemer som lasso, som har en simpel lukket løsning for en dimension, men ikke for flere dimensioner.
@@ -64,7 +64,7 @@ hvor \(\widehat{\beta}^\text{lasso}_k \del{\lambda}\) er det nuværende estimat 
 %
 Løsningerne udregnes for en aftagende følge af værdier \(\cbr{\lambda_{\ell}}_{\ell = 0}^L\), hvor \(\lambda_0\) vælges således at \(\widehat{\tbeta} \del{\lambda_0} =\mathbf{0}\). 
 Algoritmen udnytter \textit{warm start}, hvilket betyder, at \(\widehat{\tbeta} \del{\lambda_\ell}\) anvendes som begyndelsesværdi for løsningen \(\widehat{\tbeta} \del{\lambda_{\ell + 1}}\), dette fører til en mere stabil algoritme. 
-Når \(\widehat{\tbeta} = \mathbf{0}\), har vi at \(\widehat{\beta}_j\) vil forblive nul hvis \(\frac{1}{n} \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert < \frac{\lambda}{2n}\). Derfor er \( \lambda_0 = 2 \max_j \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert\).
+Når \(\widehat{\tbeta} = \mathbf{0}\), har vi, at \(\widehat{\beta}_j\) vil forblive nul hvis \(\frac{1}{n} \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert < \frac{\lambda}{2n}\). Derfor er \( \lambda_0 = 2 \max_j \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert\).
 Strategien er at vælge en minimum værdi \(\lambda_L = \epsilon \lambda_0\) og konstruere en følge af \(K\) værdier af \(\lambda\), som aftager fra \(\lambda_0\) til \(\lambda_L\) på logskalaen.
 Typiske værdier er \(\epsilon = 0.001\) og \(K =100\).
 %

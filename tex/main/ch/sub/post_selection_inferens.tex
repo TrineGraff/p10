@@ -1,4 +1,5 @@
 \section{Inferens baseret på polyeder lemmaet} \label{subsec:teste_polyhedron}
+Variabeludvælgelsen af LARS og lasso kan karakteriseres som et polyeder jævnfør \citep{post_inference}, og derfor vil vi i dette afsnit betragte polyeder lemmaet, hvorudfra vi udfører inferens.
 Lad os antage
 \begin{align*}
 \y \sim N \del{\tmu,  \boldsymbol{\Sigma}},
@@ -10,8 +11,6 @@ Betragt et polyeder
 \mathcal{P} = \cbr{\y : \ \boldsymbol{\Gamma} \y \geq \mathbf{u}},
 \end{align*}
 hvor \(\boldsymbol{\Gamma}\) er en \(m \times n\) matrix, \(\mathbf{u}\) er en \(m \times 1\) vektor og uligheden skal fortolkes elementvis.
-
-På s. 606-607 i \citep{post_inference} bevises, at variabeludvælgelsen af LARS algoritmen uden og med lasso modifikationen kan karakteriseres som et polyeder.
 
 %Lasso løsningen for en fast værdi af \(\lambda\) er karakteriseret ved en mængde af aktive variable og fortegnene af deres koefficienter.
 %Det viser sig at udvælgelsen af variable kan skrives på formen \(\cbr{\boldsymbol{\Gamma} \y \geq \mathbf{u}}\).
@@ -41,7 +40,7 @@ Nedenfor gives en alternativ repræsentation af \(\mathcal{P}\).
 \begin{lem}[Polyeder lemma] \label{lem:polyhedral}
 For ethvert \(\boldsymbol{\Sigma}\) og \(\teta\) hvor \(\teta^T \boldsymbol{\Sigma} \teta \neq 0\), gælder der, at
 \begin{align}
-\boldsymbol{\Gamma} \y \geq \mathbf{u} \ \Longleftrightarrow \ \mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}, \quad  \mathcal{V}^0 \del{\y} \leq 0, \label{eq:post_8}
+\boldsymbol{\Gamma} \y \geq \mathbf{u} \ \Longleftrightarrow \ \mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}, \quad \mathcal{V}^0 \del{\y} \leq 0, \label{eq:post_8}
 \end{align}
 hvor
 \begin{align}
@@ -91,14 +90,14 @@ Dette kan tjekkes udfra \(\mathcal{V}^0\) ved at \(\y\) ligger på den rigtige s
 \begin{figure}[H]
 \centering
 \scalebox{1}{\input{fig/polyhedron.tikz}}
-\caption{Geometri af polyeder udvælgelsen som trunkering. For simplicitet antages at \(\boldsymbol{\Sigma} = \mathbf{I}_n\). Det blå område er polyederet \(\cbr{\y : \ \boldsymbol{\Gamma} \y \geq \mathbf{u}}\).
+\caption{Illustration af polyeder lemmaet for \(p=2\). For simplicitet antages at \(\boldsymbol{\Sigma} = \mathbf{I}_n\). Det blå område er polyederet \(\cbr{\y : \ \boldsymbol{\Gamma} \y \geq \mathbf{u}}\).
 Ved at dekomponere \(\y\) til dens projektion på \(\teta\) og dens projektion på det ortogonale komplement af \(\teta\), ses at \(\boldsymbol{\Gamma} \y \geq \mathbf{u}\) er opfyldt, hvis og kun hvis \(\teta^T \y\) ikke afviger for langt fra \(P_{\boldsymbol{\eta}^\perp} \y\), dvs den skal fastholdes imellem grænserne \(\mathcal{V}^-\) og \(\mathcal{V}^+\).
 Yderligere er grænserne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) kun funktioner af \(P_{\boldsymbol{\eta}^\perp} \y\), derfor er de uafhængige af \(\teta^T \y\) under normalitet.} \label{fig:polyhedron}
 \end{figure}
 %
 Af lemma \ref{lem:polyhedral} kan fordelingen af enhver lineær funktion \(\boldsymbol{\eta}^T \y\) betinget \(\boldsymbol{\Gamma} \y \geq \mathbf{u}\) skrives som følgende betinget fordeling
 \begin{align*}
-\boldsymbol{\eta}^T \y \given \mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}, \ \mathcal{V}^0 \del{\y} \leq 0.
+\boldsymbol{\eta}^T \y \given \mathcal{V}^- \del{\y} \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+ \del{\y}, \quad \mathcal{V}^0 \del{\y} \leq 0.
 \end{align*}
 Da \(\boldsymbol{\eta}^T \y\) er normalfordelt, er ovenstående trunkeret normalfordelt.
 %
@@ -136,7 +135,7 @@ Da er \(T\) en gyldig \(p\)-værdi for \(\hyp_0\) betinget \(\boldsymbol{\Gamma}
 for ethvert \(0 \leq \alpha \leq 1\). 
 Definer \(\delta_{\alpha}\), som opfylder, at
 \begin{align}
-1-F_{\delta_{\alpha}, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= \alpha. \label{eq:post_1.16}
+1-F_{\delta_{\alpha}, \boldsymbol{\eta}^T \Sigma \boldsymbol{\eta}}^{\sbr{\mathcal{V}^-, \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= \alpha. \label{eq:post_1.16}
 \end{align}
 Da er \(I= [\delta_\alpha, \infty )\) et gyldig enkeltsidet konfidensinterval for \(\teta^T \tmu\) betinget \(\boldsymbol{\Gamma} \y \geq \mathbf{u}\)
 \begin{align}
@@ -165,8 +164,8 @@ Da er \(T\) en gyldig \(p\)-værdi for \(\hyp_0\) betinget \(\boldsymbol{\Gamma}
 for ethvert \(0 \leq \alpha \leq 1\). 
 Definer \(\delta_{\frac{\alpha}{2}}, \delta_{1-\frac{\alpha}{2}}\) som opfylder, at
 \begin{align}
-1-F_{\delta_{\frac{\alpha}{2}}, \boldsymbol{\eta}^T \boldsymbol{\Sigma} \boldsymbol{\eta}}^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= \frac{\alpha}{2}, \label{eq:post_20} \\
-1-F_{\delta_{1-\frac{\alpha}{2}}, \boldsymbol{\eta}^T \boldsymbol{\Sigma} \boldsymbol{\eta} }^{\sbr{\mathcal{V}^- \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= 1-\frac{\alpha}{2}. \label{eq:post_21}
+1-F_{\delta_{\frac{\alpha}{2}}, \boldsymbol{\eta}^T \boldsymbol{\Sigma} \boldsymbol{\eta}}^{\sbr{\mathcal{V}^-, \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= \frac{\alpha}{2}, \label{eq:post_20} \\
+1-F_{\delta_{1-\frac{\alpha}{2}}, \boldsymbol{\eta}^T \boldsymbol{\Sigma} \boldsymbol{\eta} }^{\sbr{\mathcal{V}^-, \mathcal{V}^+}} \del{\boldsymbol{\eta}^T \y} &= 1-\frac{\alpha}{2}. \label{eq:post_21}
 \end{align}
 Da gælder, at
 \begin{align}

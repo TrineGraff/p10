@@ -9,6 +9,7 @@ fit_lasso = glmnet(x_train, y_train, family = "gaussian", alpha = 1,
 fit_bic_lasso = lassoBIC(y_train, x_train, fit_lasso)
 
 beta_hat = as.vector(coef(fit_lasso, s = fit_bic_lasso$lambda)) %>% .[-1]
+
 # residualer --------------------------------------------------------------
 tmp = data.frame(Date = as.Date(dato_train), y = fit_bic_lasso$scale_res)
 

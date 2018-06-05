@@ -37,3 +37,5 @@ lars = ggplot(to_plot, aes(x = feature, y = coefficient)) +
   theme(plot.margin=unit(c(0,0,0.3,0),"inches"))+ 
   theme(axis.text.y = element_text(hjust = 1, colour = colplot))
 
+
+grid.arrange(lasso, lars)

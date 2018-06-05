@@ -42,9 +42,9 @@ coef_adap_lasso = c(rep(0, 21), coef_adap_lasso_vec[3], coef_adap_lasso_vec[4], 
 
 # plots -------------------------------------------------------------------
 ## lasso, elnet, adaptiv lasso
-coef = data.table("Lasso" = coef_lasso,
-                  "Adap. lasso m. OLS vægte" = coef_adap_ols,
-                  "Adap. lasso m. lasso vægte" = coef_adap_lasso)
+coef = data.table("Lasso (BIC)" = coef_lasso,
+                  "Adap. lasso m. OLS vægte (BIC)" = coef_adap_ols,
+                  "Adap. lasso m. lasso vægte (BIC)" = coef_adap_lasso)
 coef[, feature := colnames(x_train)]
 idx = which(test != 0)
 

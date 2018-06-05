@@ -44,7 +44,7 @@ Funktionen anvender ``standard'' lasso problemet
 Hvorimod \texttt{glmnet} multiplicerer først led med faktoren \(\frac{1}{n}\).
 Dette betyder, at efter vi har kørt \texttt{glmnet}, da skal vi sætte \texttt{beta = coef(obj, s=lambda/n)[-1]}, hvor \texttt{obj} er objektet, som er returneret af \texttt{glmnet} og \texttt{[-1]} fjerner skæringen som \texttt{glmnet} altid giver som første komponent, for at finde det beta der svarer til en lambda værdi.
 %
-\rfile[firstline=5,lastline=8]{../R/unrate/shrinkage_metoder/coordinate/lasso/krydsvalidering/inferens.R}
+\rfile[firstline=5,lastline=8]{../R/unrate/shrinkage_metoder/coordinate/lasso/krydsvalidering/TG/inferens.R}
 %
 
 

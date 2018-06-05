@@ -2,15 +2,15 @@
 %Da den autoregressive model valgte en orden på 4, tilføjes som sagt fire variable med laggede værdier af arbejdsløshedsraten til de øvrige 122 variable.
 Da den autoregressive model valgte en orden på 4, tilføjes som nævnt 
 4 variabler med tidligere perioders værdier af arbejdsløshedsraten til de øvrige 122 variabler. 
-Dette introducerer nogle observeret værdier, og derfor fjernes de første 4 observationer af hver tidsrækkede.
+Dette introducerer nogle uobserverede værdier, og derfor fjernes de første 4 observationer af hver tidsrækkede.
 De tilføjede tidsrækker inkluderes i gruppe 2, hvor også arbejdsløshedsraten er inkluderet (se appendiks \ref{app:data}).
 %De tilføjede laggede tidsrækker inkluderes i gruppe 2, hvor også arbejdsløshedsraten er inkluderet (se appendiks \ref{app:data}).
 I dette kapitel betragter vi derfor 126 variable i perioden fra 1. maj 1960 til 1. december 2005 svarende til 448 observationer, som er vores træningsdata. 
 
 Lasso problemet og dens generaliseringer kan løses med coordinate descent algoritmen og LARS algoritmen.
 Vi vil anvende coordinate descent algoritmen til at løse lasso, ridge regression, elastisk net, group lasso og adaptive lasso med henholdsvis OLS og lasso vægte.
-Men vi har blot valgt at betragte LARS algoritmen uden og med lasso modifikationen.
-Det skal dog bemærkes, at LARS algoritmen uden lasso modifikation ikke er en af lassos generaliseringer. Men da det ikke kun er en metode til at løse lasso, men også en lineær regressionsmodel vil vi derfor anvende LARS algoritmen, som en model i analysen.  Derfor vil lasso og dens generaliseringer også referer til LARS algoritmen uden lasso modifikation.  
+Men vi har blot valgt, at betragte LARS algoritmen uden og med lasso modifikationen.
+Det skal dog bemærkes, at LARS algoritmen uden lasso modifikation ikke er en af lassos generaliseringer. Men da det ikke kun er en optimeringsmetode, men også en lineær regressionsmodel vil vi derfor anvende LARS algoritmen, som en model i analysen.  Derfor vil lasso og dens generaliseringer også refererer til LARS algoritmen uden lasso modifikation.  
 
 \input{main/ch/sub/coordinate}
 \input{main/ch/sub/lars}

@@ -1,45 +1,44 @@
 \subsection{BIC}
-Hernæst vil vi estimere tuning parameteren \(\widehat{\lambda}\) med BIC, hvortil vi anvender funktionen i appendiks ----.
+Hernæst vil vi estimere tuning parameteren \(\lambda\) med BIC, hvortil vi anvender funktionen i appendiks \ref{sec:lasso}.
+For elastisk net finder vi, at $\alpha = 1$ giver den mindste BIC, hvilket svarer til lasso modellen. Derfor anvender vi igen ikke modellen. 
+For adaptive lasso med OLS vægte (BIC) finder vi, at $\gamma = 2$ giver den mindste BIC, og for adaptive lasso lasso vægte (BIC), får vi at $\gamma = 0.5$ giver den mindste BIC. 
 
-For elastik net finder vi, at $\alpha = 1$ giver den mindste BIC, hvilket svarer til lasso modellen. Derfor anvender vi igen ikke modellen. 
-Vi betragter adaptive lasso med OLS vægte, hvor $\gamma = 2$, og adaptive lasso med lasso vægte, hvor $\gamma = 0.5$, da de har mindst BIC. 
+Tabel \ref{tab:bic_lambda} giver værdierne af $\log \del{ \lambda_\text{BIC}}$, antallet af parametre, BIC, justeret R$^2$ og log-likelihood for lasso og dens generaliseringer. 
 
-Tabel \ref{tab:bic_lambda} giver værdierne af $\log \del{ \widehat{\lambda}_\text{BIC}}$, antallet af parametre, BIC, justerede R$^2$ og log-likelihood for lasso og dens generaliseringer. 
-
-Justerede R$^2$ er igen højst for  lasso og mindst for ridge regression, derudover er log-likelihood højst for Ridge regression. 
+Justeret R$^2$ er igen højst for  lasso (BIC) og mindst for ridge regression (BIC), derudover er log-likelihood højst for ridge regression (BIC). 
 
 \input{fig/tab/bic_lambda}
 
-På figur \ref{fig:coef_bic_coord} vises de estimerede koefficienter for lasso, adaptive lasso med OLS vægte og adaptive lasso med lasso vægte.
-De to adaptive lasso vælger begge variablerne  \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}, hvor adaptive lasso med lasso vægte også vælger variablen\textcolor{blue3}{lag1}. 
-De estimerede koefficienter for lasso, og de to adaptive lasso modeller ses i figur \ref{fig:coef_bic_coord}. 
+På figur \ref{fig:coef_bic_coord} vises de estimerede koefficienter for lasso (BIC), adaptive lasso med OLS vægte (BIC) og adaptive lasso med lasso vægte (BIC).
+De to adaptive lasso vælger begge variablerne  \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}, hvor adaptive lasso med lasso vægte  (BIC) også vælger variablen \textcolor{blue3}{lag1}. 
+De estimerede koefficienter for lasso (BIC), og de to adaptive lasso modeller (BIC) ses i figur \ref{fig:coef_bic_coord}. 
 
- 
 Vi ser, at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} er de største estimerede koefficienter, mens de resterende estimerede koefficienter er meget tæt på nul. 
-Vi har valgt, ikke at inkludere de estimerede koefficienter for ridge regression og group lasso, da det samme gør sig gældende for disse.
+Vi har valgt, ikke at inkludere de estimerede koefficienter for ridge regression (BIC) og group lasso (BIC), da det samme gør sig gældende for disse.
 
-\imgfigh{coef_bic_coord.pdf}{1}{Estimerede koefficienter for lasso og adaptive lasso med OLS og lasso vægte, hvor $\widehat{\lambda}$ er fundet ud fra BIC. 
-Farverne indikerer hvilken gruppe, variabler tilhører og y-aksen er variablerne udvalgt af lasso.}{coef_bic_coord}
+\imgfigh{coef_bic_coord.pdf}{1}{Estimerede koefficienter for lasso (BIC) og adaptive lasso med OLS vægte (BIC) og adaptive lasso med lasso vægte (BIC). 
+Farverne indikerer hvilken gruppe, variabler tilhører og y-aksen er variablerne udvalgt af lasso (BIC).}{coef_bic_coord}
 
 Figur \ref{fig:resid_lasso_coord_bic}-\ref{fig:resid_adap_lasso_coord_bic} viser en analyse af de standardiserede residualer for lasso og dens generaliseringer, hvor tuning parametrene vælges udfra BIC.
-For lasso og adaptive lasso modellerne observeres udfra histogrammet og QQ-plottet, at fordelingen af de standardiserede residualer har tungere haler end normalfordelingen.
-For ridge regression og group lasso ses af QQ-plottet blot få outliers.
+For lasso (BIC) og adaptive lasso modellerne (BIC) observeres udfra histogrammet og QQ-plottet, at fordelingen af de standardiserede residualer har tungere haler end normalfordelingen.
+For ridge regression (BIC) og group lasso (BIC) ses af QQ-plottet blot få outliers.
 Fælles for alle er, at der er autokorrelation i det første lag. 
-I tabel \ref{tab:res_shrinkage_tab} afvises residualerne at være uafhængige og JB testens nulhypotese om normalitet afvises også for alle med undtagelse af group lasso.
+I tabel \ref{tab:res_shrinkage_tab} afvises residualerne at være uafhængige og JB testens nulhypotese om normalitet afvises også for alle med undtagelse af group lasso (BIC).
 
-
-\subsubsection{Inferens}
-På figur \ref{fig:boxplot_lasso_coord_bic} ses bootstrap resultaterne for variablerne udvalgt af lasso og som nævnt tidligere har adaptive lasso har konsistent variabeludvælgelse og derfor laves der ikke bootstrap for disse. 
+På figur \ref{fig:boxplot_lasso_coord_bic} ses bootstrap resultaterne for variablerne udvalgt af lasso (BIC) og som nævnt tidligere har adaptive lasso konsistent variabeludvælgelse og derfor laves der ikke bootstrap for adaptive lasso med OLS vægte (BIC) og adaptive lasso med lasso vægte (BIC). 
 
 Variablene \textcolor{cadetblue2}{CPIMEDSL}, \textcolor{orange}{TB6MS}, \textcolor{blue3}{USTRADE} og \textcolor{blue3}{CLAIMSx} fravælges over 50\% af bootstrap realisationerne, mens variablerne \textcolor{blue3}{lag 1}, \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} ofte vælges.
-I forhold til størrelsen af de estimerede koefficienter for lasso er bootstrap resultaterne ikke overraskende. 
+I forhold til størrelsen af de estimerede koefficienter for lasso (BIC) er bootstrap resultaterne ikke overraskende. 
 
-Igen anvendes TG testen for de valgte variable med lasso.
+\subsubsection{TG testen}
+Vi lader igen $\boldsymbol{\eta} = s_k \del{\textbf{X}^+_{\mathcal{A}_k}}^T \mathbf{e_k}$, da er $\mathcal{H}_0: \beta_k = 0$ jævnfør \ref{eq:tg_beta}. 
 Resultaterne er givet i tabel \ref{tab:fixedLassoInf_bic}.
 Heraf ser vi at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} afviser nulhypotesen, og derfor er signifikante.
-Vi observerer et \textit{inf} i den øvre grænse i konfidensintervallet for \textcolor{blue3}{USTRADE}, hvilket skyldes at konfidensintervallet er udregnet numerisk, og bliver ustabil når punktet $\boldsymbol\eta^T \mathbf{y}$ er for tæt på dens trunkerede interval, altså $\mathcal{V}^-$ og $\mathcal{V}^+$. 
+Vi observerer et $\infty$ i den øvre grænse i konfidensintervallet for \textcolor{blue3}{USTRADE}, hvilket skyldes at konfidensintervallet er udregnet numerisk, og bliver ustabil når punktet $\boldsymbol\eta^T \mathbf{y}$ er for tæt på dens trunkerede interval, altså $\mathcal{V}^-$ og $\mathcal{V}^+$. 
 Igen observeres at $Z$-score for variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} er høje i forhold de resterende. 
 
+Figur \ref{fig:resid_tg_bic} viser en analyse af de standardiserede fejl for lasso$_{TG}$ (BIC). Vi ser, at QQ-plottet indikerer tungere haler end normalfordeling og autokorrelation i de to første lags. 
+Dette bekræftes også i tabel \ref{tab:res_shrinkage_tab}.
 \input{fig/tab/fixedlasso_bic}
 
 

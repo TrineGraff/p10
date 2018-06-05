@@ -9,7 +9,7 @@ hvor \(\mathbf{w}\) er en kendt \(p \times 1\) vektor og \(w_j \geq 0\).
 
 Adaptive lasso er blot en vægtet lasso, hvor vægtene \(\mathbf{w}\) er bestemt, således at metoden opfylder orakelegenskaberne, som vi vil bevise i afsnit \ref{subsec:konsistentAL}.
 \begin{defn}[Adaptive lasso]
-Antag \(\tilde{\tbeta}\) er rod-n konsistent til \(\tbeta^*\).
+Antag \(\tilde{\tbeta}\) er rod-n konsistent til \(\tbeta^*\) (se definition \ref{def:rodn}).
 Vælg \(\gamma>0\) og definer \(\widehat{\mathbf{w}} = \frac{1}{\vert \tilde{\tbeta} \vert^\gamma}\), da er adaptive lasso estimaterne givet ved
 \begin{align}
 \widehat{\tbeta}^\text{AL} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{ \vert \beta_j \vert}{\vert \tilde{\beta}_j \vert^\gamma}}. \label{eq:4.76}

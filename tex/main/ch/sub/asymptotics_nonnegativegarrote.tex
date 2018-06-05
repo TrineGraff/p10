@@ -1,17 +1,17 @@
 \section{Nonnegative garrote} \label{sec:asymptotics_nonnegative}
 Nonnegative garrote, som blev præsenteret i afsnit \ref{sec:nonnegativegarrote}, finder en mængde af ikke-negative faktorer udfra
 \begin{align}
-\argmin_{\mathbf{c} \in \R^p} \cbr{\Vert \y - \sum_{j=1}^p \x_j \widehat{\beta}_j^\text{OLS} c_j \Vert_2^2 + \lambda_n \sum_{j=1}^p c_j}, \ \text{underlagt at } c_j \geq 0 \text{ for alle} j. \label{eq:nongarotte_om}
+\widehat{\mathbf{c}} = \argmin_{\mathbf{c} \in \R^p} \cbr{\Vert \y - \sum_{j=1}^p \x_j \widehat{\beta}_j^\text{OLS} c_j \Vert_2^2 + \lambda_n \sum_{j=1}^p c_j}, \ \text{u.h.t. at } c_j \geq 0 \text{ for alle} j. \label{eq:nongarotte_om}
 \end{align}
-Estimaterne for nonnegative garrote er da givet ved \(\widehat{\beta}_j^\text{NG} = c_j \widehat{\beta}_j^\text{OLS}\).
-Nonnegative garrote er tæt relateret til et special tilfælde af adaptive lasso.
-Antag \(\gamma=1\) og vælg \(\widehat{\mathbf{w}}=\frac{1}{\vert \widehat{\tbeta}^{\text{OLS}} \vert}\), da løser adaptive lasso følgende optimeringsproblem
+Estimaterne for nonnegative garrote er da givet ved \(\widehat{\beta}_j^\text{NG} = \widehat{c}_j \widehat{\beta}_j^\text{OLS}\).
+Nonnegative garrote er tæt relateret til et specialtilfælde af adaptive lasso.
+Antag \(\gamma=1\) og vælg \(\widehat{\mathbf{w}}=\frac{1}{\abs{ \widehat{\tbeta}^{\text{OLS}} }}\), da løser adaptive lasso følgende optimeringsproblem
 \begin{align}
-\widehat{\tbeta}^\text{AL} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \frac{\vert \beta_j \vert}{\vert \widehat{\beta}_j^\text{OLS} \vert}} \label{eq:AL8}
+\widehat{\tbeta}^\text{AL} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \frac{\abs{ \beta_j }}{\abs{ \widehat{\beta}_j^\text{OLS}}}} \label{eq:AL8}
 \end{align}
-Da \(c_j = \frac{\widehat{\beta}_j^\text{NG}}{\widehat{\beta}_j^\text{OLS}}\), kan \eqref{eq:nongarotte_om} omskrives til
+Da \(\widehat{c}_j = \frac{\widehat{\beta}_j^\text{NG}}{\widehat{\beta}_j^\text{OLS}}\), kan \eqref{eq:nongarotte_om} omskrives til
 \begin{align*}
-\widehat{\tbeta}^\text{NG} =\argmin_{\tbeta \in \mathbb{R}^p}  \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p  \frac{\vert \beta_j\vert}{\vert\widehat{\beta}_j^\text{OLS}\vert}}, \ \text{underlagt at } \beta_j \widehat{\beta}_j^\text{OLS} \geq 0 \text{ for alle } j.
+\widehat{\tbeta}^\text{NG} =\argmin_{\tbeta \in \mathbb{R}^p}  \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p  \frac{\abs{ \beta_j}}{\abs{\widehat{\beta}_j^\text{OLS}}}}, \ \text{u.h.t. at } \beta_j \widehat{\beta}_j^\text{OLS} \geq 0 \text{ for alle } j.
 \end{align*}
 Dermed kan nonnegative garrote betragtes som adaptive lasso, hvor \(\gamma=1\) og med en ekstra fortegnsbetingelse.
 %
@@ -21,10 +21,10 @@ Hvis vi vælger \(\lambda_n\), således at \(\frac{\lambda_n}{\sqrt{n}} \rightar
 %
 \begin{proof}
 Lad \(\widehat{\tbeta}^\text{AL}\) være adaptive lasso estimatoren i \eqref{eq:AL8}.
-Af sætning \ref{thm:ALoracle} opfylder \(\widehat{\tbeta}^\text{AL}\) orakelegenskaberne, hvis \(\frac{\lambda_n}{\sqrt{n}} \rightarrow 0\) og \(\lambda_n \rightarrow \infty\).
-For at vise at variabeludvælgelsen af nonnegative garrote er konsistent, er det tilstrækkeligt at vise, at \(\widehat{\tbeta}^\text{AL}\) opfylder fortegnsbetingelsen, \(\beta_j \widehat{\beta}_j^\text{OLS} \geq 0 \), med sandsynlighed gående mod 1.
-Vælg ethvert \(j\).
-Hvis \(j \in \A\), da \(\widehat{\beta}_j^\text{AL} \widehat{\beta}_j^\text{OLS} \overset{p}{\rightarrow} \del{\beta_j^*}^2 > 0\), dvs \(P \del{\widehat{\beta}_j^\text{AL} \widehat{\beta}_j^\text{OLS} \geq 0} \rightarrow 1\).
-Hvis \(j \notin \A\), da \(P \del{\widehat{\beta}_j^\text{AL} \widehat{\beta}_j^\text{OLS} \geq 0} \geq P \del{\widehat{\beta}_j^\text{AL} = 0} \rightarrow 1\).
-I begge tilfælde vil \(P \del{\widehat{\beta}_j^\text{AL} \widehat{\beta}_j^\text{OLS} \geq 0} \rightarrow 1\) for ethvert \(j = 1, \ldots, p\).
+Fra sætning \ref{thm:ALoracle} ved vi, at \(\widehat{\tbeta}^\text{AL}\) opfylder orakelegenskaberne, hvis \(\frac{\lambda_n}{\sqrt{n}} \rightarrow 0\) og \(\lambda_n \rightarrow \infty\).
+For at vise at variabeludvælgelsen af nonnegative garrote er konsistent, er det tilstrækkeligt at vise, at \(\widehat{\tbeta}^\text{AL}\) opfylder fortegnsbetingelsen, \(\beta_j \widehat{\beta}_j^\text{OLS} \geq 0 \), med en sandsynlighed gående mod 1.
+Vælg et vilkårligt \(j\).
+Hvis \(j \in \A\), da \(\widehat{\beta}_j^\text{AL} \widehat{\beta}_j^\text{OLS} \overset{p}{\rightarrow} \del{\beta_j^*}^2 > 0\), dvs \(\mathbb{P} \del{\widehat{\beta}_j^\text{AL} \widehat{\beta}_j^\text{OLS} \geq 0} \rightarrow 1\).
+Hvis \(j \notin \A\), da \(\mathbb{P} \del{\widehat{\beta}_j^\text{AL} \widehat{\beta}_j^\text{OLS} \geq 0} \geq \mathbb{P} \del{\widehat{\beta}_j^\text{AL} = 0} \rightarrow 1\).
+I begge tilfælde vil \(\mathbb{P} \del{\widehat{\beta}_j^\text{AL} \widehat{\beta}_j^\text{OLS} \geq 0} \rightarrow 1\) for ethvert \(j = 1, \ldots, p\).
 \end{proof}

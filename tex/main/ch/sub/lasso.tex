@@ -3,7 +3,7 @@
 \begin{defn}[Lasso]
 Lasso finder løsningen til optimeringsproblemet
 \begin{align}
-\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta \in \R^p} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \vert \beta_j \vert \leq t. \label{eq:2.3}
+\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta \in \R^p} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{u.h.t. at } \sum_{j=1}^p \vert \beta_j \vert \leq t. \label{eq:2.3}
 \end{align} 
 \end{defn}
 Betingelsen $\sum_{j=1}^p \vert \beta_j \vert \leq t$ kan skrives mere kompakt som en \(\ell_1\)-norm betingelse $\Vert \tbeta \Vert_1 \leq t$.
@@ -27,7 +27,7 @@ Dette gør ingen forskel i \eqref{eq:2.3} og svarer blot til en simpel reparamet
 
 \textit{Ridge regression} estimatoren findes udfra 
 \begin{align} 
-\widehat{\tbeta}^\text{ridge} = \argmin_{\tbeta \in \R^p} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{underlagt at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
+\widehat{\tbeta}^\text{ridge} = \argmin_{\tbeta \in \R^p} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{u.h.t. at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
 \end{align} 
 hvor betingelsen $\sum_{j=1}^p \beta_j^2 \leq t$ kan skrives mere kompakt som en \(\ell_2\)-norm betingelse $\Vert \tbeta \Vert_2^2 \leq t$.
 Ridge regression problemet kan også omskrives til et Lagrange problem

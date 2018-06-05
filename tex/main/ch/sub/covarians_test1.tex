@@ -10,14 +10,14 @@ hvor \(\y\) er en \(n \times 1\) vektor med responsvariablen, \(\X\) er en \(n \
 
 Vi antager, at søjlerne i \(\X\) er i generel position, for at sikre at løsningsstien for LARS algoritmen med lasso modifikationen er entydig (se definition \ref{defn:general_position}).
 Vi ønsker, at teste om prædiktoren, som tilføjes til den aktive mængde i step \(k\), er signifikant.
-Den aktive mængde betegner somsagt prædiktorerne med ikke-nul koefficienter, og igen lader vi \(\lambda_k\) betegne \(k\)'te step i løsningsstien.
+Den aktive mængde betegner somsagt prædiktorerne med ikke-nul koefficienter, og vi lader \(\lambda_k\) betegne \(k\)'te step i løsningsstien.
 Lad \(\A_{k-1}\) betegne den aktive mængde i step \(k-1\) inden prædiktoren tilføjes, og lad \(\tilde{\tbeta}^\text{lasso}_{\A_{k-1}} \del{\lambda_{k+1}}\) være løsningen i \(\lambda_{k+1}\) ved kun at anvende prædiktorerne i \(\A_{k-1}\).
 Denne løsning er eksplicit givet ved 
 \begin{align*}
 \tilde{\tbeta}^\text{lasso}_{\A_{k-1}} \del{\lambda_{k+1}} = \argmin_{\tbeta_{\A_{k-1}} \in \R^{\vert \A_{k-1} \vert}} \cbr{ \left\Vert \y - \X_{\A_{k-1}} \tbeta_{\A_{k-1}} \right\Vert_2^2 + \lambda_{k+1} \left\Vert \tbeta_{\A_{k-1}} \right\Vert_1},
 \end{align*}
-hvor \(\X_{\A_{k-1}}\) er en matrix, der består af søjlerne i \(\X\), som svarer til prædiktorerne i \(\A_{k-1}\).
-Lad \(\widehat{\tbeta}^\text{lasso} \del{\lambda_{k+1}}\) betegne løsningen i \(\lambda_{k+1}\) udfra prædiktorerne \(\A_{k-1} \cup \cbr{j}\).
+hvor \(\X_{\A_{k-1}}\) er en matrix, der består af de søjler i \(\X\), som svarer til prædiktorerne i \(\A_{k-1}\).
+Lad \(\widehat{\tbeta}^\text{lasso} \del{\lambda_{k+1}}\) betegne løsningen i \(\lambda_{k+1}\) udfra prædiktorerne i \(\A_{k-1} \cup \cbr{j}\).
 Da kan vi definere teststørrelsen af kovarians testen
 \begin{align}
 T_k^\text{cov} = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \widehat{\tbeta}^\text{lasso} \del{\lambda_{k+1}} \right\rangle - \left\langle  \y, \X_{\A_{k-1}} \tilde{\tbeta}^\text{lasso}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}. \label{eq:6.5}
@@ -54,7 +54,7 @@ T_4^\text{cov} = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \widehat{\tbeta}^\
 %
 \begin{figure}[H]
 \centering
-\scalebox{0.6}{\includegraphics{fig/img/diabetes_covTest.pdf}}
+\scalebox{0.7}{\includegraphics{fig/img/diabetes_covTest.pdf}}
 \caption{Illustration af kovarians testen for prædiktoren \texttt{hdl}.} \label{fig:diabetes_covTest}
 \end{figure}
 %

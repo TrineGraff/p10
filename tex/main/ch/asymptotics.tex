@@ -23,52 +23,11 @@ Under denne antagelse er den asymptotiske fordeling af OLS estimatoren givet ved
 \sqrt{n}(\widehat{\boldsymbol{\beta}}^{\text{OLS}}-\boldsymbol{\beta}^*) \overset{d}{\rightarrow} N \del{\mathbf{0},\sigma^2 \mathbf{C}^{-1}}.
 \end{align*}
 Heraf ses det, at OLS estimatoren er rod-\(n\)-konsistent.
-%Følgende antagelser vil blive anvendt igennem afsnittet.
-%\begin{ass} \label{ass:konsistens}
-%\begin{enumerate}[label=\alph*)]
-%%\item Designmatricen $\textbf{X}$ har fuld rang.
-%\item Stabilitet af prædiktorer:
-%$\frac{1}{n} \textbf{X}^T \textbf{X} \overset{p}{\rightarrow} E[\textbf{X}^T \textbf{X}] = \textbf{C}$, hvor $\textbf{C}$ eksisterer og er en positiv definit matrix.
-%%\item Ortogonalitets betingelse:
-%%$\frac{1}{n} \textbf{X}^T \boldsymbol{\epsilon} \overset{p}{\rightarrow} E[\textbf{X}^T \boldsymbol{\epsilon}] = \textbf{0} $.
-%\item $\frac{1}{\sqrt{n}} \mathbf{X}^T \boldsymbol{\epsilon} \overset{d}{\rightarrow} \mathbf{W}=N(\mathbf{0},\sigma^2 \mathbf{C})$.
-%\end{enumerate}
-%\end{ass}
-%Bemærk, at antagelse \ref{ass:konsistens}.e) er indeholdt i antagelse \ref{ass:konsistens}.f). \\
-%Antagelse \ref{ass:konsistens}.d) og \ref{ass:konsistens}.e) er en anvendelse af store tals lov, som siger at den empiriske middelværdi konvergerer i sandsynlighed mod den sande middelværdi, når $n \rightarrow \infty$. Antagelse \ref{ass:konsistens}.f) er en anvendelse af den centrale grænseværdi sætning, som løst sagt siger, at en stokastisk variabel under givne betingelser konvergerer i fordeling mod en normalfordeling, når $n \rightarrow \infty$. 
-
-%\subsection{OLS estimatoren}
-%I dette afsnit introduceres den asymptotiske fordeling af OLS estimatoren.
-%Som bekendt er OLS estimatoren svagt konsistent.
-%\begin{thm}[Asymptotisk fordeling af OLS estimatoren] \label{thm:asymp_ols}
-%Under antagelse \ref{ass:konsistens}.a) og \ref{ass:konsistens}.b) er den asymptotiske fordeling af $\boldsymbol{\widehat{\beta}}^{\text{OLS}}$ givet ved
-%\begin{align*}
-%\sqrt{n}(\widehat{\boldsymbol{\beta}}^{\text{OLS}}-\boldsymbol{\beta}) \overset{d}{\rightarrow} N(\mathbf{0},\sigma^2 \mathbf{C}^{-1}).
-%\end{align*}
-%\end{thm}
-%\begin{proof}
-%Lad os omskrive OLS estimatoren
-%\begin{align*}
-%\widehat{\boldsymbol{\beta}}^{\text{OLS}}  &= (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y} \\
-%&= (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T (\textbf{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}) \\
-%&= \boldsymbol{\beta} + (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T \boldsymbol{\epsilon},
-%\end{align*}
-%som yderligere kan omskrives til
-%\begin{align}
-%\widehat{\boldsymbol{\beta}}^{\text{OLS}}  &=\boldsymbol{\beta} + \left( \frac{1}{n} \mathbf{X}^T \mathbf{X} \right)^{-1} \left( \frac{1}{n} \mathbf{X}^T \boldsymbol{\epsilon} \right) \nonumber \\
-%\sqrt{n}(\hat{\boldsymbol{\beta}}^{\text{OLS}} -\boldsymbol{\beta})&=\left( \frac{1}{n} \mathbf{X}^T \mathbf{X} \right)^{-1} \left( \frac{1}{\sqrt{n}} \mathbf{X}^T \boldsymbol{\epsilon} \right). \label{eq:OLSasymp}
-%\end{align}
-%Af antagelse \ref{ass:konsistens}.a) ved vi, at første del i \eqref{eq:OLSasymp} konvergerer i sandsynlighed mod $\mathbf{C}^{-1}$, mens antagelse \ref{ass:konsistens}.b) giver, at anden del konvergerer i fordeling mod $N(\mathbf{0},\sigma^2 \mathbf{C})$. Af Slutskys sætning \ref{thm:slutsky} finder vi, at den asymptotiske fordeling for OLS estimatoren er
-%\begin{align*}
-%\sqrt{n}(\hat{\boldsymbol{\beta}}^{\text{OLS}}-\boldsymbol{\beta}) \overset{d}{\rightarrow} N(\mathbf{0},\sigma^2 \mathbf{C}^{-1} \mathbf{C} \mathbf{C}^{-1})=N(\mathbf{0},\sigma^2 \mathbf{C}^{-1}).
-%\end{align*}
-%Heraf ses det at OLS estimatoren er \(\sqrt{n}\)-konsistent.
-%\end{proof}
 
 \section{Lasso}
 Lad os betragte lasso estimatoren
 \begin{align*}
-\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert},
+\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \abs{ \beta_j }},
 \end{align*}
 hvor \(\lambda_n\) varierer med \(n\).
 Lad \(\A_n^\text{lasso} = \cbr{j : \widehat{\beta}_j^\text{lasso} \neq 0}\) betegne den aktive mængde for lasso estimatoren.
@@ -76,7 +35,7 @@ Lad \(\A_n^\text{lasso} = \cbr{j : \widehat{\beta}_j^\text{lasso} \neq 0}\) bete
 \begin{lem}\label{lem:lasso_consistency1}
 Hvis $\frac{\lambda_n}{n} \rightarrow \lambda_0 \geq 0$, da vil
 \begin{align*}
-\widehat{\tbeta}^\text{lasso} \overset{p}{\rightarrow} \argmin_{\tbeta \in \R^p} \cbr{ \del{\mathbf{u} - \tbeta^*}^T \mathbf{C} \del{\mathbf{u} - \tbeta^*} + \lambda_0 \sum_{j=1}^p \vert u_j \vert}.
+\widehat{\tbeta}^\text{lasso} \overset{p}{\rightarrow} \argmin_{\tbeta \in \R^p} \cbr{ \del{\mathbf{u} - \tbeta^*}^T \mathbf{C} \del{\mathbf{u} - \tbeta^*} + \lambda_0 \sum_{j=1}^p \abs{ u_j }}.
 \end{align*}
 \end{lem}
 \begin{proof}
@@ -91,26 +50,25 @@ Sætning \ref{thm:asymp_lasso} indikerer, at \(\lambda_n = O \del{\sqrt{n}}\) kr
 \begin{thm}[Asymptotisk fordeling af lasso estimatoren] \label{thm:asymp_lasso}
 Hvis $\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0$, da er den asymptotiske fordeling af \(\widehat{\tbeta}^\text{lasso}\) givet ved
 \begin{align*}
-\sqrt{n} \del{\widehat{\tbeta}^\text{lasso} - \tbeta^*} \overset{d}{\rightarrow} \argmin_{\tbeta \in \R^p} \cbr{ -2 \mathbf{u}^T \mathbf{W} + \mathbf{u}^T \mathbf{C} \mathbf{u} + \lambda_0 \sum_{j=1}^p \sbr{u_j \text{sign} \del{\beta^*_j} \mathbb{1} \del{\beta_j^* \neq 0} + \vert u_j \vert \mathbb{1} \del{\beta_j^* = 0}}},
+\sqrt{n} \del{\widehat{\tbeta}^\text{lasso} - \tbeta^*} \overset{d}{\rightarrow} \argmin_{\tbeta \in \R^p} \cbr{ -2 \mathbf{u}^T \mathbf{W} + \mathbf{u}^T \mathbf{C} \mathbf{u} + \lambda_0 \sum_{j=1}^p \sbr{u_j \text{sign} \del{\beta^*_j} \mathbb{1} \del{\beta_j^* \neq 0} + \abs{u_j} \mathbb{1} \del{\beta_j^* = 0}}},
 \end{align*}
-hvor \(\mathbf{W} = N\del{\mathbf{0}, \sigma^2 \mathbf{C}}\).
+hvor \(\mathbf{W} \sim N\del{\mathbf{0}, \sigma^2 \mathbf{C}}\).
 \end{thm}
 \begin{proof}
 Beviset undlades, men der henvises til s. 1359 i \citep{adaptive_lasso_knight}.
 \end{proof}
 %
-Proposition \ref{prop:asymp_lasso} medfører, at når \(\lambda_n = O \del{\sqrt{n}}\), da kan \(\A_n^\text{lasso}\) ikke være \(\A\) med en positiv sandsynlighed. 
 \begin{prop} \label{prop:asymp_lasso}
-Hvis \(\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0\), da er \(\lim \sup_n P \del{\A_n^\text{lasso} = \A} \leq c <1\), hvor \(c\) er en positiv konstant, der afhænger af den sande model.
+Hvis \(\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0\), da er \(\lim \sup_n \mathbb{P} \del{\A_n^\text{lasso} = \A} \leq c <1\), hvor \(c\) er en positiv konstant, der afhænger af den sande model.
 \end{prop}
 \begin{proof}
 Beviset undlades, men vi refererer til s. 1425-1426 i \citep{adaptive_lasso}.
 \end{proof}
-
+Proposition \ref{prop:asymp_lasso} medfører, at når \(\lambda_n = O \del{\sqrt{n}}\), da kan \(\A_n^\text{lasso}\) ikke være \(\A\) med sandsynlighed 1. 
 \cite{adaptive_lasso} beviste en nødvendig betingelse for at variabeludvælgelse for lasso estimatoren er konsistent. 
 %
-\begin{thm}[Nødvendig betingelse]
-Antag at \(\lim_{n \rightarrow \infty} P \del{\A_n^\text{lasso} = \A}=1\), da eksisterer en fortegnsvektor \(\mathbf{s} = \del{s_1, \ldots, s_{p_0}}\), hvor \(s_j\) er lig \(1\) eller \(-1\), således at
+\begin{thm}[Nødvendig betingelse for at variabeludvælgelse for lasso estimatoren er konsistent]
+Antag at \(\lim_{n \rightarrow \infty} \mathbb{P} \del{\A_n^\text{lasso} = \A}=1\), da eksisterer en fortegnsvektor \(\mathbf{s} = \del{s_1, \ldots, s_{p_0}}\), hvor \(s_j\) er lig \(1\) eller \(-1\), således at
 \begin{align}
 \left\vert \mathbf{C}_{21} \mathbf{C}_{11}^{-1} \mathbf{s} \right\vert \leq 1. \label{eq:betingelse_konsistent}
 \end{align}

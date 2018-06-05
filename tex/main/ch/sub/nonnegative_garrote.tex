@@ -1,11 +1,10 @@
 \section{Nonnegative garrote} \label{sec:nonnegativegarrote}
 \textit{Nonnegative garrote}, introduceret i \citep{nonnegative_garrote}, er en to-trins procedure, som er tæt relateret til lasso. \footnote{\citep{nonnegative_garrote} var inspirationen til \citep{lasso}} 
 \begin{defn}[Nonnegative garrote]
-Givet et initial estimat af regressionskoefficienterne \(\tilde{\tbeta} \in \mathbb{R}^p\), kan vi løse optimeringsproblemet
+Givet et initialt estimat af regressionskoefficienterne \(\tilde{\tbeta} \in \mathbb{R}^p\), kan vi løse optimeringsproblemet
 \begin{align}
-\argmin_{\mathbf{c} \in \mathbb{R}^p}  \cbr{ \sum_{i=1}^n \del{y_i - \sum_{j=1}^p c_j x_{ij} \tilde{\beta}_j}^2}, \ \text{underlagt at } \mathbf{c} \geq \mathbf{0} \text{ og } \Vert \mathbf{c} \Vert_1 \leq t, \label{eq:2.19}
+\widehat{\mathbf{c}} = \argmin_{\mathbf{c} \in \mathbb{R}^p}  \cbr{ \sum_{i=1}^n \del{y_i - \sum_{j=1}^p c_j x_{ij} \tilde{\beta}_j}^2}, \ \text{u.h.t. at } \mathbf{c} \geq \mathbf{0} \text{ og } \Vert \mathbf{c} \Vert_1 \leq t. \label{eq:2.19}
 \end{align}
-hvor \(\mathbf{c} \geq \mathbf{0}\) betyder, at elementer af \(\mathbf{c}\) er ikke-negative.
 Estimatoren for nonnegative garrote er da givet ved \(\widehat{\beta}_j^\text{NG} = \widehat{c}_j \cdot \tilde{\beta}_j\), for \(j = 1, \ldots, p\).
 \end{defn}
 Der er et ækvivalent Lagrange problem for denne procedure med straf \(\lambda \Vert \mathbf{c} \Vert_1\) for \(\lambda \geq 0\) plus de ikke-negative betingelser.

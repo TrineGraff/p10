@@ -68,6 +68,15 @@ Når \(\widehat{\tbeta} = \mathbf{0}\), har vi, at \(\widehat{\beta}_j\) vil for
 Strategien er at vælge en minimum værdi \(\lambda_L = \epsilon \lambda_0\) og konstruere en følge af \(K\) værdier af \(\lambda\), som aftager fra \(\lambda_0\) til \(\lambda_L\) på logskalaen.
 Typiske værdier er \(\epsilon = 0.001\) og \(K =100\).
 %
+
+\begin{defn}[Aktive mængde]
+Efter én iteration gennem \(p\) variable i den nye værdi \(\lambda_\ell\) som starter fra warm start \(\widehat{\beta} \del{\lambda}_{\ell -1}\), defineres den \textit{aktive mængde}
+\begin{align*}
+\mathcal{A} = \cbr{j : \widehat{\beta}_j \neq 0},
+\end{align*}
+som indeks af prædiktorerne med ikke-nul koefficienter.
+\end{defn}
+%
 %Den største værdi som betragtes er givet ved \(\lambda_0 = \frac{1}{n} \max_j \left\vert \left\langle \mathbf{x}_j, \mathbf{y} \right\rangle \right\vert\), da enhver værdi større end \(\lambda_0\) vil give en tom model.
 %I \texttt{glmnet} bestemmes en aftagende følgen af værdier \(\cbr{\lambda_{\ell}}_{\ell = 0}^L\) fra \(\lambda_0\) til \(\lambda_L = \epsilon \lambda_0 \sim 0\) på en log skala.
 %Løsningen \(\widehat{\beta} \del{\lambda_\ell}\) er typisk en god \textit{warm start}  for løsningen \(\widehat{\beta} \del{\lambda_{\ell + 1}}\), som fører til en mere stabil algoritme. 

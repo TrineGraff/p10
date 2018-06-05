@@ -2,15 +2,15 @@
 I dette afsnit vil vi bevise, at adaptive lasso estimaterne opfylder orakelegenskaberne for et passende valg af \(\lambda_n\). 
 Lad os betragte adaptive lasso estimatoren
 \begin{align*}
-\widehat{\tbeta}^\text{AL} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \widehat{w}_j \vert \beta_j \vert},
+\widehat{\tbeta}^\text{AL} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \widehat{w}_j \abs{ \beta_j}},
 \end{align*}
-hvor \(\lambda_n\) varierer med \(n\).
+hvor \(\widehat{w}_j = \frac{1}{\abs{\tilde{\beta}_j}^\gamma}\) for \(\gamma > 0\) og \(\lambda_n\) varierer med \(n\).
 Lad \(\mathcal{A}_n^\text{AL} = \cbr{j \ : \widehat{\beta}_j^{\text{AL}} \neq 0 }\) betegne den aktive mængde for adaptive lasso estimatoren.
 %
 \begin{thm}\label{thm:ALoracle}
 Antag $\frac{\lambda_n}{\sqrt{n}} \rightarrow 0$ og $\lambda_n n^\frac{\gamma-1}{2} \rightarrow \infty$, da opfylder adaptive lasso estimaterne følgende:
 \begin{itemize}
-\item Konsistent variabeludvælgelsen: $\lim_{n \rightarrow \infty} P(\mathcal{A}_n^\text{AL}=\mathcal{A})=1$.
+\item Konsistent variabeludvælgelsen: $\lim_{n \rightarrow \infty} \mathbb{P}(\mathcal{A}_n^\text{AL}=\mathcal{A})=1$.
 \item Asymptotisk normalitet: $\sqrt{n}\left( \widehat{\boldsymbol{\beta}}_\mathcal{A}^{\text{AL}}-\boldsymbol{\beta}_\mathcal{A}^* \right) \overset{d}{\rightarrow} N(\textbf{0},\sigma^2 \boldsymbol{C}_{11}^{-1}).$
 \end{itemize} 
 \end{thm}
@@ -55,14 +55,14 @@ V(\mathbf{u})^{(n)} & = \textbf{u}^T \left(\frac{1}{n}\textbf{X}^T\textbf{X}\rig
 \right). \label{eq:V_4}
 \end{align}
 %
-For første led i \eqref{eq:V_4} gælder der, at $\frac{1}{n} \mathbf{X}^T \mathbf{X} \overset{p}{\rightarrow} \mathbf{C}$ og for andet led har vi, at $\frac{\boldsymbol{\epsilon}^T \mathbf{X}}{\sqrt{n}} \overset{d}{\rightarrow} \textbf{W}=N(\textbf{0},\sigma^2 \boldsymbol{C})$. 
+For første led i \eqref{eq:V_4} gælder der, at $\frac{1}{n} \mathbf{X}^T \mathbf{X} \rightarrow \mathbf{C}$ og for andet led har vi, at $\frac{\boldsymbol{\epsilon}^T \mathbf{X}}{\sqrt{n}} \overset{d}{\rightarrow} \textbf{W}\sim N(\textbf{0},\sigma^2 \boldsymbol{C})$. 
 Lad os betragte sidste led i \eqref{eq:V_4}. \\
 Hvis $\beta_j^{*} \neq 0$, da har vi, at $\widehat{w}_j \overset{p}{\rightarrow} \left\vert \beta_j^{*} \right\vert^{-\gamma}$. Yderligere har vi, at 
 \begin{align*}
 \lim_{n\rightarrow \infty}
 \frac{\left\vert \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert}{\frac{u_j}{\sqrt{n}}} =\frac{\partial}{\partial \beta_j^{*}} \left\vert \beta_j^{*} \right\vert =\text{sign}\left(\beta_j^{*} \right),
 \end{align*} 
-hvoraf der gælder, at $\lim_{n\rightarrow \infty} \sqrt{n} \left( \left\vert \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert \right) = u_j \text{sign}\left(\beta_j^{*} \right)$.
+hvoraf det følger, at $\lim_{n\rightarrow \infty} \sqrt{n} \left( \left\vert \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert \right) = u_j \text{sign}\left(\beta_j^{*} \right)$.
 Af Slutskys sætning \ref{thm:slutsky} har vi, at 
 \begin{align*}
 \frac{ \lambda_n}{\sqrt{n}} \widehat{w}_j \sqrt{n} \left(\left\vert \beta_j^{*} +\frac{u_j}{\sqrt{n}} \right\vert - \left\vert \beta_j^{*} \right\vert \right) \overset{p}{\rightarrow} 0.
@@ -80,15 +80,15 @@ V(\textbf{u}) = \begin{cases}
     \infty & \text{hvis } \exists u_j \neq 0, \ j \notin \mathcal{A} .
   \end{cases}
 \end{align*}
-Da funktionen $V^{(n)}$ er konveks, og $(\mathbf{C}_{11}^{-1} \mathbf{W_\mathcal{A}},0)^T$ er et entydig minimum af $V$, følger det af \citep{adaptive_lasso} at 
+Da funktionen $V^{(n)}$ er konveks, og $ \del{\mathbf{C}_{11}^{-1} \mathbf{W_\mathcal{A}},0}^T$ er et entydig minimum af $V$, følger det af \citep{adaptive_lasso} at 
 $\arg\min V^{(n)} \rightarrow \arg\min V$.
 Derfor får vi
 \begin{align}
 \widehat{\mathbf{u}}_\mathcal{A}^{(n)} \overset{d}{\rightarrow} \mathbf{C}_{11}^{-1} \mathbf{W}_\mathcal{A} \quad \text{og} \quad \widehat{\mathbf{u}}_{\mathcal{A}^C}^{(n)} \overset{d}{\rightarrow} \mathbf{0}. \label{eq:minUA}
 \end{align}
-Vi observerer, at $\mathbf{W}_\mathcal{A}=N(\mathbf{0}, \sigma^2 \mathbf{C}_{11})$, og da har vi bevist asymptotisk normalitet. \\
+Vi observerer, at $\mathbf{W}_\mathcal{A} \sim N(\mathbf{0}, \sigma^2 \mathbf{C}_{11})$, og da har vi bevist asymptotisk normalitet. \\
 
-Herefter vil vi bevise, at variabeludvælgelsen er konsistent. For alle $j \in \mathcal{A}$ giver den asymptotiske normalitet, at $\widehat{\beta}_j^{\text{AL}} \overset{p}{\rightarrow}\beta_j^{*}$, dvs $P \del{j \in \mathcal{A}_n^{\text{AL}}} \rightarrow 1$. Derfor er det tilstrækkeligt at vise, at for alle $j' \notin \mathcal{A}$, da vil $P \del{j' \in \mathcal{A}_n^{\text{AL}}} \rightarrow 0$. \\
+Herefter vil vi bevise, at variabeludvælgelsen er konsistent. For alle $j \in \mathcal{A}$ giver den asymptotiske normalitet, at $\widehat{\beta}_j^{\text{AL}} \overset{p}{\rightarrow}\beta_j^{*}$, dvs $\mathbb{P} \del{j \in \mathcal{A}_n^{\text{AL}}} \rightarrow 1$. Derfor er det tilstrækkeligt at vise, at for alle $j' \notin \mathcal{A}$, da vil $\mathbb{P} \del{j' \in \mathcal{A}_n^{\text{AL}}} \rightarrow 0$. \\
 Vi betragter $j' \in \mathcal{A}_n^{\text{AL}}$, således at $\widehat{\beta}_{j'}^{\text{AL}} \neq 0$. Af KKT betingelserne har vi, at 
 \begin{align*}
 2 \mathbf{x}_{j'}^T  \left( \mathbf{y}-\mathbf{X}\widehat{\boldsymbol{\beta}}^{\text{AL}} \right)=\lambda_n \widehat{w}_{j'} \left\vert \text{sign} \del{\widehat{\beta}_{j'}^\text{AL}} \right\vert,
@@ -106,7 +106,7 @@ Vi fandt, at $\frac{\lambda_n}{\sqrt{n}} \widehat{w}_{j'} \overset{p}{\rightarro
 \end{align*}
 Af \eqref{eq:minUA} og Slutskys sætning \ref{thm:slutsky}, ved vi at $ 2 \frac{\mathbf{x}_{j'}^T \mathbf{X} \sqrt{n} \left(\boldsymbol{\beta}^*-\widehat{\boldsymbol{\beta}}^{\text{AL}}\right)}{n}$ konvergerer i fordeling mod en normalfordeling og $2\frac{\mathbf{x}_{j'}^T \boldsymbol{\epsilon}}{\sqrt{n}} \overset{d}{\rightarrow} N \left(\mathbf{0}, 4 \Vert \mathbf{x}_{j'} \Vert^2 \sigma^2 \right)$. Dermed har vi, at
 \begin{align*}
-P\left(j' \in \mathcal{A}_n^{\text{AL}}\right) \leq P\left(2 \mathbf{x}_{j'}^T \left(\mathbf{y}-\mathbf{X} \widehat{\boldsymbol{\beta}}^{\text{AL}}\right)=\lambda_n \widehat{w}_{j'} \right) \rightarrow 0.
+\mathbb{P} \left(j' \in \mathcal{A}_n^{\text{AL}}\right) \leq \mathbb{P} \left(2 \mathbf{x}_{j'}^T \left(\mathbf{y}-\mathbf{X} \widehat{\boldsymbol{\beta}}^{\text{AL}}\right)=\lambda_n \widehat{w}_{j'} \right) \rightarrow 0.
 \end{align*}
 \end{proof}
 %

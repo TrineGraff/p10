@@ -22,7 +22,7 @@ for \(\lambda_1, \lambda_2 \geq 0\).
 %
 Lad \(\alpha = \frac{\lambda_1}{\lambda_1 + 2\lambda_2}\), da er \eqref{eq:naivEN} ækvivalent med optimeringsproblemet
 \begin{align*}
-\widehat{\tbeta}^\text{naivEN} = \argmin_{\tbeta \in \R^p} \cbr{\Vert \y - \X \tbeta \Vert_2^2}, \ \text{underlagt at } \frac{1}{2}\del{1-\alpha} \Vert \tbeta \Vert_2^2 + \alpha \Vert \tbeta \Vert_1 \leq t,
+\widehat{\tbeta}^\text{naivEN} = \argmin_{\tbeta \in \R^p} \cbr{\Vert \y - \X \tbeta \Vert_2^2}, \ \text{u.h.t. at } \frac{1}{2}\del{1-\alpha} \Vert \tbeta \Vert_2^2 + \alpha \Vert \tbeta \Vert_1 \leq t,
 \end{align*}
 som kan omskrives til et Lagrange problem
 \begin{align}

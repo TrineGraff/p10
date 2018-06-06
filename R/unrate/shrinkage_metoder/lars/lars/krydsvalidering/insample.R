@@ -107,5 +107,5 @@ lars = ggplot(df_lars, aes(df_lars$f, df_lars$cv)) +
   labs(x = expression(f==abs(beta)/max(abs(beta))), y = "MSE", color = "") + 
   geom_vline(aes(xintercept= df_lars$f[28], col = "blue"), linetype="dotted") +
   geom_vline(aes(xintercept= df_lars$f[20], col = "brown"), linetype="dotted") +
-  ggtitle("LARS (CV)") + scale_color_manual(labels = c(expression(f[min]), expression(f[1][sd])), values = c("blue", "brown"))
+  ggtitle("LARS") + scale_color_manual(labels = c(expression(f[min]), expression(f[1][sd])), values = c("blue", "brown"))
 

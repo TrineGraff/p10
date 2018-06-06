@@ -15,7 +15,7 @@ Prædiktor & Cov test & \(p\)-værdi \\
 \textcolor{blue3}{lag1}       &      0.8897 & 0.4115\\
 \textcolor{orange}{TB6MS}  &    0.0419 & 0.9590\\
 \textcolor{blue3}{USCONS} &    0.0132&  0.9869\\
-\textcolor{blue3}{ DPCERA3M086SBEA}          &  0.0254 & 0.9750\\
+\textcolor{red3}{ DPCERA3M086SBEA}          &  0.0254 & 0.9750\\
 \textcolor{orange}{ EXUSUKx} &     0.2309 & 0.7939\\
 \textcolor{blue3}{CLAIMSx} &      0.0082 &  0.9919\\
 \textcolor{red3}{ AMDMNOx}  &     0.0464 & 0.9546\\
@@ -23,6 +23,6 @@ Prædiktor & Cov test & \(p\)-værdi \\
 \textcolor{cadetblue2}{CPIMEDSL}  &   0.0719&  0.9307\\
 \textcolor{blue3}{USTRADE}   &     0.0029 &  0.9971\\ \bottomrule
 \end{tabular}
-\caption{Kovarians testen for LARS algoritmen med lasso modifikation.
-Vi viser kun \(p\)-værdier for prædiktorer som medtages og bliver i modellen for \(\widehat{f}_{1\text{sd}}=0.2604\), dvs hvis en prædiktor medtages i et step og senere forlader modellen, vises denne prædiktor ikke.} \label{tab:covTest_bic}
+\caption{Kovarians testen for lasso LARS (BIC).
+Vi viser kun \(p\)-værdier for prædiktorer som medtages og bliver i modellen, dvs hvis en prædiktor medtages i et trin og senere forlader modellen, vises denne prædiktor ikke.} \label{tab:covTest_bic}
 \end{table} 

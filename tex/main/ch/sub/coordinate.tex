@@ -18,7 +18,9 @@ Her lader vi $\gamma$ være lig 0.5, 1 og 2, som er forslået af \citep{adaptive
 For adaptive lasso betragtes OLS og lasso vægte, således at for adaptive lasso med lasso vægte anvender vi kun de forklarende variable, som lasso har valgt. 
 
 I kapitel \ref{ch:statistisk_inferens} introduceres TG testen, som udfører inferens i lasso modellen for en fast værdi af tuning parameteren.
+Vi lader $\boldsymbol{\eta} = s_k \del{\textbf{X}^+_{\mathcal{A}_k}}^T \mathbf{e}_k$, således at nulhypotesen svarer til, at teste om koefficienten af den sidst tilføjede variabel er lig 0.
 Hertil anvendes funktionen \texttt{fixedLassoInf} fra \Rlang-pakken \texttt{selectiveInference}, som udregner \(p\)-værdier og konfidensintervaller for lasso estimatet.
+
 %Funktionen tager som input tuning parameteren og regressionskoefficienterne returneret af \textttt{glmnet} og estimerer parametrene jævnfør \eqref{eq:tg_beta}, hvilket resulterer i en ny model.
 Funktionen kan kun anvendes for lasso modellen og ikke dens generaliseringer. 
 \Rlang-koden for dette er givet i \ref{subsubsec:inferens}.

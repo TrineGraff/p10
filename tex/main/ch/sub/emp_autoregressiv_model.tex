@@ -1,12 +1,12 @@
 \section{Autoregressiv model}
-Den autoregressive model af orden \(p\) estimeres med OLS, og ordenen bestemmes udfra BIC.
+Den autoregressive model af orden \(p\) estimeres med OLS, hvor ordenen bestemmes udfra BIC.
 Vi lader $p = 1, \ldots, p_{\max}$, hvor \(p_\text{max}=12\), da vi mener, at arbejdsløshedsraten ikke vil påvirkes mere end et år tilbage.
 BIC vælger \(p=4\) og tabel \ref{tab:est_ar} giver estimeringsresultaterne for en \(\text{AR} \del{4}\). \footnote{For en ARMA(p,q) hvor $p_{\max} = 12$ og $q_{\max} = 12$, hvor parametrene estimeres med MLE, vælger BIC også en AR(4).}
 %
 \input{fig/tab/est_ar}
 
-Alle koefficienterne med undtagelse af $\widehat\phi_1$ er signifikante ved et 0.1 \% niveau. 
-Vi ser også, at justerede $R^2$ kun er 12.30\% (se definition \ref{def:adjr2}), hvilket indikerer, at en autoregressiv model af orden 4 ikke er en optimal model for arbejdsløshedsraten. 
+Alle koefficienter med undtagelse af $\widehat\phi_1$ er signifikante ved et 0.1 \% niveau. 
+Vi ser også, at justeret $R^2$ kun er 12.30\%, hvilket indikerer, at en autoregressiv model af orden 4 ikke er en optimal model for arbejdsløshedsraten. 
 
 \input{fig/tab/test_ar}
 
@@ -16,13 +16,12 @@ Derudover observeres få signifikante autokorrelationer.
 Dette bekræftes i tabel \ref{tab:test_ar}, som viser skewness, excess kurtosis og \(p\)-værdier for Jarque-Bera og Ljung-Box testen (se definition \ref{def:jbtest} og \ref{def:lbtest}) for de standardiserede residualer. 
 Vi ser, at skewness og kurtosis er positive, JB testen afviser nulhypotesen om normalitet og LB testen i lag 10 afviser nulhypotesen om uafhængighed.
 
-
-Forecast er som nævnt opnået ved et rolling scheme med expanding estimerings window. 
-Figur \ref{fig:fc_ar} viser arbejdsløshedsraten og den prædikterede arbejdsløshedsrate med en AR\(\del{4}\).
-Vi kan se, at en AR(4) ikke fanger udsvingene, hvilket igen tyder på, at det ikke er en særlig god model. 
-For AR(4) fås en MAE på 0.1312 og MSE på 0.0272.
+Arbejdsløshedsraten prædikteres som nævnt one-step-ahead, hvor estimeringsvinduet udvides med én observeret observation per prædiktion.
+Figur \ref{fig:fc_ar} viser arbejdsløshedsraten og den prædikterede arbejdsløshedsrate. 
+Heraf ses, at modellen ikke fanger udsvingene, hvilket igen tyder på, at det ikke er en særlig god model for arbejdsløshedsraten. 
+Vi finder, at MAE er lig 0.1312 og MSE er lig 0.0272.
 %I tabel \ref{tab:tabs_ar} er MAE og MSE udregnet for modellen. 
 %\input{fig/tab/ar_rmse_mae}
 
-\imgfigh{fc_ar.pdf}{1}{Arbejdsløshedsraten og prædiktion af arbejdsløshedsraten med en \(\text{AR} \del{4}\).}{fc_ar}
+\imgfigh{fc_ar.pdf}{1}{Arbejdsløshedsraten og prædiktionen af arbejdsløshedsraten med en \(\text{AR} \del{4}\).}{fc_ar}
 \newpage

@@ -1,16 +1,14 @@
 \chapter{Lasso modellen og dens generaliseringer} \label{ch:shrinkage_metoder}
 %Da den autoregressive model valgte en orden på 4, tilføjes som sagt fire variable med laggede værdier af arbejdsløshedsraten til de øvrige 122 variable.
-Da den autoregressive model valgte en orden på 4, tilføjes som nævnt 
-4 variabler med tidligere perioders værdier af arbejdsløshedsraten til de øvrige 122 variabler. 
-Dette introducerer nogle uobserverede værdier, og derfor fjernes de første 4 observationer af hver tidsrækkede.
+Da den autoregressive model valgte en orden på 4 tilføjes som nævnt 4 variable med tidligere værdier af arbejdsløshedsraten til de øvrige 122 variable. 
+Dette introducerer nogle uobserverede værdier, og derfor fjernes de første 4 observationer af hver tidsrække.
 De tilføjede tidsrækker inkluderes i gruppe 2, hvor også arbejdsløshedsraten er inkluderet (se appendiks \ref{app:data}).
-%De tilføjede laggede tidsrækker inkluderes i gruppe 2, hvor også arbejdsløshedsraten er inkluderet (se appendiks \ref{app:data}).
-I dette kapitel betragter vi derfor 126 variable i perioden fra 1. maj 1960 til 1. december 2005 svarende til 448 observationer, som er vores træningsdata. 
+I dette kapitel betragter vi derfor 126 variable og en træningsmængde fra 1. maj 1960 til 1. december 2005 svarende til 548 observationer. 
 
 Lasso problemet og dens generaliseringer kan løses med coordinate descent algoritmen og LARS algoritmen.
-Vi vil anvende coordinate descent algoritmen til at løse lasso, ridge regression, elastisk net, group lasso og adaptive lasso med henholdsvis OLS og lasso vægte.
-Men vi har blot valgt, at betragte LARS algoritmen uden og med lasso modifikationen.
-Det skal dog bemærkes, at LARS algoritmen uden lasso modifikation ikke er en af lassos generaliseringer. Men da det ikke kun er en optimeringsmetode, men også en lineær regressionsmodel vil vi derfor anvende LARS algoritmen, som en model i analysen.  Derfor vil lasso og dens generaliseringer også refererer til LARS algoritmen uden lasso modifikation.  
+Vi vil anvende coordinate descent algoritmen til at løse lasso, ridge regression, elastisk net, group lasso og adaptive lasso med henholdsvis OLS og lasso vægte, mens LARS algoritmen anvendes til at løse lasso. 
+Da LARS algoritmen er en variabeludvælgelses metode, betragtes den også som en model.
+Selvom LARS algoritmen ikke er en af generaliseringerne af lasso, er den stadig inkluderet i dette kapitel, og derfor vil lasso og dens generaliseringer også referere til LARS algoritmen.  
 
 \input{main/ch/sub/coordinate}
 \input{main/ch/sub/lars}

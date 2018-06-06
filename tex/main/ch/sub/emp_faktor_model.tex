@@ -1,33 +1,33 @@
-\section{Faktor modellen}
-Parametrene i for faktor modellen estimeres udfra følgende procedure:
+\section{Faktor model}
+Parametrene i faktor modellen estimeres udfra følgende procedure:
 \begin{enumerate}
-\item Estimer $k$ faktorer for $k = 1, \dots, k_{\max}$, hvor $k_{\max} = 20$.  
-\item Vælg $\widehat{k}$ udfra informationskriterierne givet i \eqref{eq:ic1}-\eqref{eq:ic3}.
-\item Lad \(\widehat{\textbf{Z}} = \del{\widehat{{\textbf{F}}}^T\boldsymbol{\omega}^T}^T\) være en \(\del{\widehat{k}+m} \times T\) matrix, hvor \(\widehat{{\textbf{F}}}\) er en \(T \times \widehat{k}\) matrix af estimerede faktorer og \(\boldsymbol{\omega}\) er en \(T \times m\) matrix af laggede værdier af arbejdsløshedsraten.
+\item Estimér $k$ faktorer for $k = 1, \dots, k_{\max}$, hvor $k_{\max} = 20$.  
+\item Vælg $k$ udfra informationskriterierne givet i \eqref{eq:ic1}-\eqref{eq:ic3}.
+\item Lad \(\widehat{\textbf{Z}} = \del{\widehat{{\textbf{F}}}^T \ \boldsymbol{\omega}^T}^T\) være en \(\del{k+m} \times T\) matrix, hvor \(\widehat{{\textbf{F}}}\) er en \(T \times k\) matrix af estimerede faktorer og \(\boldsymbol{\omega}\) er en \(T \times m\) matrix af laggede værdier af arbejdsløshedsraten.
 Vi lader \(m = 4\), da den autoregressive model valgte en orden på 4.
-Dette medfører nogle uobserveret værdier, og derfor fjernes de første 4 rækker i \(\widehat{\textbf{Z}}\).
-\item Estimer parametrene $\widehat{\boldsymbol{\beta}} = \del{ \widehat{\boldsymbol{\beta}}^T_{\textbf{F}} \widehat{\boldsymbol{\beta}}^T_{\boldsymbol{\omega}}}^T$ med OLS.
+Dette medfører nogle uobserverede værdier, og derfor fjernes de første 4 rækker i \(\widehat{\textbf{Z}}\).
+\item Estimér parametrene $\widehat{\boldsymbol{\beta}} = \del{ \widehat{\boldsymbol{\beta}}^T_{\textbf{F}} \ \widehat{\boldsymbol{\beta}}^T_{\boldsymbol{\omega}}}^T$ med OLS.
 \end{enumerate}
 
-Tabel \ref{tab:est_faktor} viser antallet af faktorer, værdien af informationskriteriet for dette antal faktorer, justerede \(R^2\) samt log-likelihood for hver af de tre informationskriterier. 
+Tabel \ref{tab:est_faktor} viser antallet af faktorer, værdien af informationskriteriet, justeret \(R^2\) samt log-likelihood for hver af de tre informationskriterier. 
 
 \input{fig/tab/est_faktor}
-Vi observerer, at IC$_1$ vælger den mindst komplekse model, da den vælger det færreste antal faktorer, mens IC$_3$ vælger det maksimale antal faktorer \footnote{For \(k_\text{max} = 50\) vælger IC\(_3\) stadig det maksimale antal faktorer, som er i modstrid med at \(0<k<k_\text{max}\), derfor betragtes faktor modellen valgt udfra IC\(_3\) ikke.}. 
-Justerede \(R^2\) og log-likelihood er størst for modellen valgt af IC$_3$ og mindst for modellen valgt af IC$_1$.
+Vi observerer, at IC$_1$ vælger den mindst komplekse model, da den vælger det færreste antal faktorer, mens IC$_3$ vælger det maksimale antal faktorer. \footnote{For \(k_\text{max} = 50\) vælger IC\(_3\) stadig det maksimale antal faktorer. Da \(k<k_\text{max}\) betragtes faktor modellen valgt udfra IC\(_3\) ikke.} 
 
 Figur \ref{fig:ic1_res} og \ref{fig:ic2_res} viser en analyse af de standardiserede residualer for faktor modellerne.
-QQ-plottet viser, at residualerne har tungere haler end normalfordelingen, og ganske få signifikante autokorrelationer.
+Vi observerer ganske få signifikante autokorrelationer, og af QQ-plottet ses, at residualerne har tungere haler end normalfordelingen.
+%
 \input{fig/tab/tab_faktor}
-
-Dette bekræftes i tabel \ref{tab:test_faktor}, hvor vi observerer lave værdier for skewness og excess kurtosis. 
-For JB-testen afvises nulhypotesen om normalitet mens, LB-testens nulhypotesen om uafhængighed ikke kan afvises. 
+%
+Dette bekræftes i tabel \ref{tab:test_faktor}, hvor vi observerer lav skewness og excess kurtosis. 
+For JB testen afvises nulhypotesen om normalitet, mens LB testens nulhypotesen om uafhængighed ikke kan afvises. 
 
 Tabel \ref{tab:factor_mse_tab} viser MAE og MSE for faktor modellernes prædiktion.
-Heraf ses at faktor modellen valgt udfra IC\(_2\) har mindst MAE og MSE.
+Heraf ses at faktor model (IC\(_2\)) har mindst MAE og MSE.
 
 \input{fig/tab/factor_mse}
 
-Figur \ref{fig:fc_benchmark2} viser arbejdsløshedsraten og den prædikterede arbejdsløshedsrate med faktor modellen valgt udfra IC\(_2\).
-\imgfigh{fc_benchmark2.pdf}{1}{Arbejdsløshedsraten og prædiktion af arbejdsløshedsraten med faktor modellen valgt udfra IC\(_2\).}{fc_benchmark2}
+Figur \ref{fig:fc_benchmark2} viser arbejdsløshedsraten og den prædikterede arbejdsløshedsrate med faktor model (IC\(_2\)).
+\imgfigh{fc_benchmark2.pdf}{1}{Arbejdsløshedsraten og prædiktionen af arbejdsløshedsraten med faktor model (IC\(_2\)).}{fc_benchmark2}
 
-Vi vælger faktor modellen valgt udfra IC\(_2\) som benchmark model, da den har størst justerede \(R^2\) og mindst MAE og MSE i forhold til AR(4) og faktor modellen valgt udfra IC\(_1\).
+Vi vælger faktor model (IC\(_2\)) som benchmark model, da den har mindst MAE og MSE og størst justeret \(R^2\) sammenlignet med AR(4) og faktor model (IC\(_1\)).

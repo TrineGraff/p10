@@ -1,24 +1,27 @@
 \section{Coordinate descent}
 I dette afsnit vil vi finde den optimale model for lasso og dens generaliseringer udfra coordinate descent.
 For lasso, ridge regression, elastisk net og adaptive lasso anvendes funktionen \texttt{glmnet} fra \Rlang-pakken af samme navn.
-Funktionen genererer en følge med 100 værdier af $\lambda$, og fitter en model til hver af disse ved maksimum likelihood estimation.
-For group lasso har vi anvendt funktionen \texttt{gglasso} fra \Rlang-pakken også med samme navn. 
-Funktionen generer også en følge med 100 værdier af $\lambda$, men anvender i stedet algoritmen block coordinate descent. Her anvendes kvadratroden af gruppens størrelse som straffaktor, som anbefales af \citep{group_lasso}.
-Funktionen kræver at variablerne er opdelt i grupper, hvortil vi betragter grupperne som er forslået af Michael McCracken, som ses i appendiks \ref{app:app_data}. 
+Funktionen genererer en følge med 100 værdier af $\lambda$ og fitter en model til hver af disse med maksimum likelihood estimation.
+For group lasso har vi anvendt funktionen \texttt{gglasso} fra \Rlang-pakken med samme navn. 
+Funktionen genererer også en følge med 100 værdier af $\lambda$, men anvender i stedet algoritmen block coordinate descent. 
+Her anvendes kvadratroden af gruppens størrelse som straffaktor, som anbefales af \citep{group_lasso}.
+Funktionen kræver, at variablerne er opdelt i grupper, hvortil vi betragter grupperne, som er forslået af Michael McCracken, som ses i appendiks \ref{app:app_data}. 
 
 For at finde den optimale model anvendes 10-fold krydsvalidering og BIC til at estimere tuning parameteren $\lambda$.
 Bemærk at for elastisk net og adaptive lasso har vi to tuning parametre, som skal estimeres. 
-For elastik net er det parmetrene $\alpha$ og $\lambda$, hvor vi vælger 10 værdier af \(\alpha\), hvor $\alpha \in \sbr{0,1}$.  Så for hvert  \(\alpha\) finder vi \(\lambda_\alpha\) udfra krydsvalidering og BIC, hvor vi hernæst vil vælge den optimale $\lambda \in \lambda_{\alpha}$.  
-For adaptive lasso er det parametrene $\gamma$ og $\lambda$, som skal estimeres.
-Vi lader $\gamma$ være 0.5, 1 og 2, som er forslået af \citep{adaptive_lasso}, hvor vi for hver værdi af $\gamma$ finder \(\lambda_\gamma\) udfra krydsvalidering og BIC, hvor vi så vil vælge den optimale $\lambda \in \lambda_\gamma$.
+For elastik net betragtes tuning parmetrene $\alpha$ og $\lambda$.
+Vi vælger en følge af 10 værdier af \(\alpha\), hvor $\alpha \in \sbr{0,1}$.
+For hvert \(\alpha\) finder \(\lambda_\alpha\) udfra krydsvalidering og BIC.
+Dette giver en følge af 10 værdier af \(\lambda_\alpha\), hvorfra vi finder den optimale \(\lambda \in \lambda_\alpha\).
+Tilsvarende for adaptive lasso, hvor vi betragter tuning parametrene $\gamma$ og $\lambda$.
+Her lader vi $\gamma$ være lig 0.5, 1 og 2, som er forslået af \citep{adaptive_lasso}, og følger samme procedure.
+For adaptive lasso betragtes OLS og lasso vægte, således at for adaptive lasso med lasso vægte anvender vi kun de forklarende variable, som lasso har valgt. 
 
-Derudover betragter vi to vægte for adaptive lasso, nemlig OLS og lasso vægte, så for adaptive lasso med lasso vægte anvender vi kun de forklarende variable, som lasso har valgt til at estimere $\lambda$. 
-
-I kapitel \ref{kap:statistisk_inferens} introduceres TG testen, som udfører inferens for lasso modellen for en fast værdi af tuning parameteren.
+I kapitel \ref{ch:statistisk_inferens} introduceres TG testen, som udfører inferens i lasso modellen for en fast værdi af tuning parameteren.
 Hertil anvendes funktionen \texttt{fixedLassoInf} fra \Rlang-pakken \texttt{selectiveInference}, som udregner \(p\)-værdier og konfidensintervaller for lasso estimatet.
-\Rlang-koden for dette er givet i appendiks \ref{subsubsec:inferens}.
-Funktionen kan dog kun anvendes for lasso modellen og ikke dens generaliseringer. 
-
+%Funktionen tager som input tuning parameteren og regressionskoefficienterne returneret af \textttt{glmnet} og estimerer parametrene jævnfør \eqref{eq:tg_beta}, hvilket resulterer i en ny model.
+Funktionen kan kun anvendes for lasso modellen og ikke dens generaliseringer. 
+\Rlang-koden for dette er givet i \ref{subsubsec:inferens}.
 \input{main/ch/sub/coordinate_krydsvalidering}
 \input{main/ch/sub/coordinate_bic}
 

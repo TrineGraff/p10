@@ -1,6 +1,5 @@
 \subsection{Krydsvalidering}
 Funktionerne \texttt{cv.glmnet} og \texttt{cv.gglasso} fra pakkerne \texttt{glmnet} og \texttt{gglasso} udfører 10-fold krydsvalidering.
-
 Figur \ref{fig:cv_plot} illustrerer den gennemsnitlige krydsvalideringsfejl samt øvre og nedre standardafvigelse for hver værdier af $\log \del{\lambda}$ for lasso og dens generaliseringer. 
 De to lodrette stiplede linjer indikerer \(\lambda_{\text{min}}\) og \(\lambda_\text{1sd}\), hvor \(\lambda_{\text{min}}\) er værdien af \(\lambda\), som giver den mindste gennemsnitlige krydsvalideringsfejl og \(\lambda_\text{1sd}\) er den største værdi af \(\lambda\), således at fejlen er indenfor en standardafvigelse af minimum. 
 For elastisk net finder vi, at $\alpha =1$ giver den mindste krydsvalideringsfejl, som svarer til lasso modellen, derfor betragter vi ikke elastik net i dette afsnit. 

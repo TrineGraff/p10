@@ -1,29 +1,28 @@
 \section{LARS}
-I dette afsnit vil vi finde den optimale model udfra LARS algoritmen uden og med lasso modifikation. 
+I dette afsnit vil vi finde den optimale model for LARS og LARS algoritmen med lasso modifikation, som vi betegner lasso LARS. 
 Hertil anvendes funktionen \texttt{lars} fra \Rlang-pakken af samme navn.
-Mens \texttt{glmnet} fitter en model for 100 værdier af \(\lambda\), fitter \texttt{lars} en model for hvert step.
-For LARS algoritmen tilføjes en variabel i hvert step, mens variable kan tilføjes og fjernes i hvert step for LARS algoritmen med lasso modifikationen.
+Mens \texttt{glmnet} fitter en model for 100 værdier af \(\lambda\), fitter \texttt{lars} en model for hvert trin.
+For LARS algoritmen tilføjes en variabel i hvert trin, mens variable kan tilføjes og fjernes i hvert trin for LARS algoritmen med lasso modifikationen.
+Da første trin svarer til, at alle koefficienter er lig 0, foretager LARS algoritmen 127 trin, mens LARS algoritmen med lasso modifikationen udfører 192 trin.
 
 For at finde den optimale model anvendes igen 10-fold krydsvalidering og BIC til at estimere tuning parameteren, som for LARS algoritmen er fraktion af \(\ell_1\) norm, der er givet ved \(f = \frac{\abs{\tbeta}}{\max \abs{\tbeta}}\), hvor \(f \in \sbr{0,1}\).
 
 Vi anvender TG testen for LARS og kovarians testen for LARS med lasso modifikation.   
 Hertil anvender vi funktionerne \texttt{larInf} fra \Rlang-pakken \texttt{selectiveInference} og \texttt{covTest} fra \Rlang-pakken af samme navn. 
-\Rlang-koden for dette er givet i appendiks \ref{subsubsec:inferens}.
-
+\Rlang-koderne for dette afsnit er givet i \ref{subsubsec:inferens}.
 
 \subsection{Krydsvalidering}
 Funktionen \texttt{cv.lars} fra \Rlang-pakken \texttt{lars} udfører 10-fold krydsvalidering.
+For LARS algoritmen betragtes en følge med 127 værdier af $f$, dvs at vi får en værdi af den gennemsnitlige krydsvalideringsfejl, når en variabel tilføjes.
+For LARS algoritmen med lasso modifikation betragtes en følge med 100 værdier af $f$, og dermed får vi ikke en gennemsnitlig krydsvalideringsfejl for hver gang en variable tilføjes eller fjernes.
 
-For LARS algoritmen betragtes en følge af 127 værdier af $f$, dvs at vi får en værdi af den gennemsnitlige krydsvaliderings fejl når en variable tilføjes, hvor den første værdi er når ingen variabler er tilføjet. 
-For LARS algoritmen med lasso modifikation betragtes en følge af 100 værdier af $f$, dvs vi får ikke en gennemsnitlige krydsvaliderings fejl for hver gang en variable bliver tilføjet eller fjernet. 
-
-Figur \ref{fig:lars_kryds} illustrerer den gennemsnitlige krydsvalideringsfejl samt nedre og øvre standardafvigelse for hver værdier af $f$ for LARS uden og med lasso modifikationen.
+Figur \ref{fig:lars_kryds} illustrerer den gennemsnitlige krydsvalideringsfejl samt nedre og øvre standardafvigelse for hver værdier af $f$ for LARS og LARS algoritmen med lasso modifikation (lasso LARS).
 Hvis $f = 0$ er der ingen variabler tilføjet og hvis $f=1$ er alle variabler tilføjet. 
 De to lodrette stiplede linjer indikerer \(f_{\text{min}}\) og \(f_\text{1sd}\), hvor \(f_{\text{min}}\) er værdien af \(f\), som giver den mindste gennemsnitlige krydsvalideringsfejl og \(f_\text{1sd}\) er den mindste værdi af \(f\), således at fejlen er indenfor en standardafvigelse af minimum. 
 
-\imgfigh{lars_kryds.pdf}{1}{10-fold krydsvalideringsfejl som funktion af fraktion af \(\ell_1\)-norm for LARS algoritmen uden og med lasso modifikation. De stiplede linjer indikerer \(f_\text{min}\) og \(f_\text{1sd}\).}{lars_kryds}
+\imgfigh{lars_kryds.pdf}{1}{10-fold krydsvalideringsfejl som funktion af fraktion af \(\ell_1\)-norm LARS og LARS algoritmen med lasso modifikation. De stiplede linjer indikerer \(f_\text{min}\) og \(f_\text{1sd}\).}{lars_kryds}
 
-Tabel \ref{tab:lars_lasso_tab} giver fraktion af \(\ell_1\)-normen, gennemsnitlige krydsvalideringsfejl, antallet af parametre og justerede R$^2$ for LARS algoritmen uden og med lasso modifikationen. 
+Tabel \ref{tab:lars_lasso_tab} giver fraktion af \(\ell_1\)-normen, gennemsnitlige krydsvalideringsfejl, antallet af parametre, justeret R$^2$ og log-likelihood for LARS og LARS algoritmen med lasso modifikation. 
 For begge metoder afviger krydsvalideringsfejlen først på 5. decimal, derfor vælger vi modellerne med det færreste antal parametre. 
 
 

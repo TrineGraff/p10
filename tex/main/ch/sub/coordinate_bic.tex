@@ -30,11 +30,12 @@ Som nævnt tidligere har adaptive lasso konsistent variabeludvælgelse og derfor
 \subsubsection{TG testen}
 Vi lader igen $\boldsymbol{\eta} = s_k \del{\textbf{X}^+_{\mathcal{A}_k}}^T \mathbf{e}_k$, da er $\mathcal{H}_0: \beta_k = 0$ jævnfør \eqref{eq:tg_beta}. 
 Resultaterne for TG testen er givet i tabel \ref{tab:fixedLassoInf_bic}.
-Heraf ser vi at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} afviser nulhypotesen, og derfor er signifikante.
-Vi observerer et $\infty$ i den øvre grænse i konfidensintervallet for \textcolor{blue3}{USTRADE}, hvilket skyldes at konfidensintervallet er udregnet numerisk, og bliver ustabil når punktet $\boldsymbol\eta^T \mathbf{y}$ er for tæt på dens trunkerede interval, altså $\mathcal{V}^-$ og $\mathcal{V}^+$. 
-Igen observeres at $Z$-score for variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} er høje i forhold de resterende. 
+Heraf ser vi, at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} afviser nulhypotesen, og derfor er signifikante.
+For \textcolor{blue3}{USTRADE} observeres et $\infty$ i den øvre grænse i konfidensintervallet, hvilket skyldes, at konfidensintervallet er udregnet numerisk og bliver ustabil, når punktet $\boldsymbol\eta^T \mathbf{y}$ er for tæt på dets trunkerede interval, altså $\mathcal{V}^-$ og $\mathcal{V}^+$. 
+Variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} har de største estimerede koefficienter og $Z$-score.
 
-Figur \ref{fig:resid_tg_bic} viser en analyse af de standardiserede fejl for lasso$_{TG}$ (BIC). Vi ser, at QQ-plottet indikerer tungere haler end normalfordeling og autokorrelation i de to første lags. 
+Figur \ref{fig:resid_tg_bic} viser en analyse af de standardiserede fejl for lasso$_{TG}$ (BIC). 
+Vi observerer, autokorrelation i de to første lags og igen indikerer QQ-plottet tungere haler end normalfordelingen. 
 Dette bekræftes også i tabel \ref{tab:res_shrinkage_tab}.
 \input{fig/tab/fixedlasso_bic}
 

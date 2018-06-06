@@ -4,7 +4,7 @@ coef_kryds = coef(lasso_fit, s = lasso_cv$lambda.1se)[-1]
 
 n <- length(y_train)
 lambda = lasso_cv$lambda.1se * n
-fixed_lasso_kryds = fixedLassoInf(x_train, y_train, coef, lambda = lambda, 
+fixed_lasso_kryds = fixedLassoInf(x_train, y_train, coef_kryds, lambda = lambda, 
                                   intercept = FALSE, alpha = 0.1)
 
 ci_kryds = data.frame(fixed_lasso_kryds$ci, fixed_lasso_kryds$vars)

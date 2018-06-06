@@ -51,9 +51,9 @@ coef_adap_lasso = c(rep(0, 21), coef_adp_lasso_vec [4], coef_adp_lasso_vec [5], 
 
 # plots -------------------------------------------------------------------
 ## lasso, elnet, adaptiv lasso
-coef = data.table("Lasso" = coef_lasso,
-                  "Adap. lasso m. OLS vægte" = coef_adp_ols,
-                  "Adap. lasso m. lasso vægte" = coef_adap_lasso)
+coef = data.table("Lasso (CV)" = coef_lasso,
+                  "Adap. lasso m. OLS vægte (CV)" = coef_adp_ols,
+                  "Adap. lasso m. lasso vægte (CV)" = coef_adap_lasso)
 coef[, feature := colnames(x_train)]
 
 koef <- coef[feature == "DPCERA3M086SBEA" | feature == "IPDMAT" | feature == "HWIURATIO" 

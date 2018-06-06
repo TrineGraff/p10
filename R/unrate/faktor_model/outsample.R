@@ -17,7 +17,7 @@ getFactors <- function(X, r) {
   return(list.out)
 }
 
-factorForecast <- function(y, X, idx = idx, m = 4, r.hat) {
+ForecastFaktor <- function(y, X, idx = idx, m = 4, r.hat) {
   df.y.lags = foreach(i = 1:m, .combine = cbind) %do%{
     lag(y, i) 
   }

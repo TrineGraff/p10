@@ -30,10 +30,10 @@ For begge metoder afviger krydsvalideringsfejlen først på 5. decimal, derfor v
 %
 \input{fig/tab/lars_lasso_tab}
 %
-På figur \ref{fig:coef_lars_kryds} vises de 19 estimerede koefficienter for LARS uden lasso modifikation og de 13 estimerede koefficienter for LARS med lasso modifikation. 
+På figur \ref{fig:coef_lars_kryds} vises de 19 estimerede koefficienter for LARS uden lasso modifikation (CV) og de 13 estimerede koefficienter for LARS med lasso modifikation (CV). 
 De største estimerede koefficienter er givet for variablerne \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV}, efterfulgt af \textcolor{blue3}{UEMPLT5} \textcolor{blue3}{UEMP5TO14} og \textcolor{blue3}{UEMP15OV}, mens de resterende estimerede koefficienter er meget tæt på nul. 
 
-\imgfigh{coef_lars_kryds.pdf}{1}{Estimerede koefficienter for LARS algoritmen uden og med lasso modifikationen, hvor $\widehat{f}$ er fundet ud fra krydsvalidering.
+\imgfigh{coef_lars_kryds.pdf}{1}{Estimerede koefficienter for LARS algoritmen uden og med lasso modifikationen (CV).
 Farverne indikerer hvilken gruppe, variablerne tilhører.}{coef_lars_kryds}
 
 Figur \ref{fig:lars_kryds_res} og \ref{fig:lars_lasso_kryds_res} viser en analyse af de standardiserede residualer, hvor vi igen ser tungere haler end normalfordelingen og autokorrelation i det første lag. 

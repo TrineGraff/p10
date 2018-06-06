@@ -15,7 +15,7 @@ coef_lars = coef(lars_fit, s = getmin_lars$lambda.1se, mode = "step")
 idx_lars = which(coef_lars != 0)
 length(idx_lars)
 
-coef = data.table("LARS" = coef_lars)
+coef = data.table("LARS (CV)" = coef_lars)
 coef[, feature := colnames(x_train)]
 
 koef <- coef[feature == "DPCERA3M086SBEA" | feature == "INDPRO" |feature == "IPDMAT" 

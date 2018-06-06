@@ -7,21 +7,22 @@ Dette appendiks indeholder nogle tabeller og figurer, som anvendes i den empiris
 
 %%%%%%% Faktor modellen %%%%%%%
 
-\imgfigh{ic1_res.pdf}{0.7}{Analyse af de standardiserede residualer for faktor modellen valgt udfra IC$_1$. }{ic1_res}
-%
-\imgfigh{ic2_res.pdf}{0.7}{Analyse af de standardiserede residualer for faktor modellen valgt udfra IC$_2$. }{ic2_res}
+\imgfigh{ic1_res.pdf}{0.7}{Analyse af de standardiserede residualer for faktor model (IC$_1$). }{ic1_res}
+
+\imgfigh{ic2_res.pdf}{0.7}{Analyse af de standardiserede residualer for faktor model (IC$_2$). }{ic2_res}
 
 %%%%%%% Krydsvalidering %%%%%%%
 
-\imgfigh{resid_lasso_coord_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for lasso (CV) løst med optimeringsmetoden coodinate descent. }{resid_lasso_coord_kryds}
+\imgfigh{resid_lasso_coord_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for lasso (CV). }{resid_lasso_coord_kryds}
 
-\imgfigh{resid_ridge_coord_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for ridge regression (CV) løst med optimeringsmetoden coodinate descent. }{resid_ridge_coord_kryds}
+\imgfigh{resid_ridge_coord_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for ridge regression (CV). }{resid_ridge_coord_kryds}
 
-\imgfigh{resid_grp_coord_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for group lasso (CV) løst med optimeringsmetoden coodinate descent. }{resid_grp_coord_kryds}
+\imgfigh{resid_grp_coord_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for group lasso (CV). }{resid_grp_coord_kryds}
 
-\imgfigh{resid_adap_ols_coord_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med OLS vægte (CV)  løst med optimeringsmetoden coodinate descent.}{resid_adap_ols_coord_kryds}
+\imgfigh{resid_adap_ols_coord_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med OLS vægte (CV).}{resid_adap_ols_coord_kryds}
 
-\imgfigh{resid_adap_lasso_coord_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med lasso vægte (CV) løst med optimeringsmetoden coodinate descent. }{resid_adap_ols_coord_kryds}
+\imgfigh{resid_adap_lasso_coord_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med lasso vægte (CV).}{resid_adap_ols_coord_kryds}
+
 \input{fig/tab/res_shrinkage_tab}
 
 \begin{landscape}
@@ -43,50 +44,49 @@ Dette appendiks indeholder nogle tabeller og figurer, som anvendes i den empiris
 \end{landscape}
 
 \imgfigh{boxplot_lasso_coord_kryds.pdf}{1}{
-Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\tbeta}^{\text{lasso}} \del{CV} $. Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}{boxplot_lasso_coord_kryds}
+Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\tbeta}^{\text{lasso}} \del{\lambda_{\text{1sd}}} $. Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}{boxplot_lasso_coord_kryds}
 
 %%%%%%% TG Krydsvalidering %%%%%%%
 
-\imgfigh{resid_tg_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for lasso$_{TG}$ (CV) løst med \ref{eq:tg_beta} }{resid_tg_kryds}
+\imgfigh{resid_tg_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for lasso$_{TG}$ (CV).}{resid_tg_kryds}
 
 
 %%%%% BIC %%%%%%%
 
-\imgfigh{resid_lasso_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for lasso (BIC) løst med optimeringsmetoden coodinate descent. }{resid_lasso_coord_bic}
+\imgfigh{resid_lasso_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for lasso (BIC). }{resid_lasso_coord_bic}
 
-\imgfigh{resid_ridge_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for ridge regression (BIC) løst med optimeringsmetoden coodinate descent. }{resid_ridge_coord_bic}
+\imgfigh{resid_ridge_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for ridge regression (BIC).}{resid_ridge_coord_bic}
 
-\imgfigh{resid_grp_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for group lasso (BIC) løst med optimeringsmetoden coodinate descent. }{resid_grp_coord_bic}
+\imgfigh{resid_grp_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for group lasso (BIC).}{resid_grp_coord_bic}
 
-\imgfigh{resid_adap_ols_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med OLS vægte (BIC) løst med optimeringsmetoden coodinate descent. }{resid_adap_ols_coord_bic}
+\imgfigh{resid_adap_ols_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med OLS vægte (BIC).}{resid_adap_ols_coord_bic}
 
-\imgfigh{resid_adap_lasso_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med lasso vægte (BIC) løst med optimeringsmetoden coodinate descent. }{resid_adap_lasso_coord_bic}
+\imgfigh{resid_adap_lasso_coord_bic.pdf}{0.7}{Analyse af de standardiserede residualer for adaptive lasso med lasso vægte (BIC).}{resid_adap_lasso_coord_bic}
 
 
-\imgfigh{boxplot_lasso_coord_bic.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{lasso}} \del{\text{BIC}} $.
-Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul}{boxplot_lasso_coord_bic}
+\imgfigh{boxplot_lasso_coord_bic.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{lasso}} \del{\lambda_\text{BIC}} $.
+Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}{boxplot_lasso_coord_bic}
 
 %%%%%%% TG BIC %%%%%%%
 
-\imgfigh{resid_tg_bic.pdf}{0.7}{Analyse af de standardiserede residualer for lasso$_{TG}$ (BIC) løst med \ref{eq:tg_beta} }{resid_tg_bic}
+\imgfigh{resid_tg_bic.pdf}{0.7}{Analyse af de standardiserede residualer for lasso$_{TG}$ (BIC).}{resid_tg_bic}
 
 %%%%% LARS kryds %%%%%%%
 \imgfigh{lars_kryds_res.pdf}{0.7}{Analyse af de standardiserede residualer for LARS (CV). }{lars_kryds_res}
 
-\imgfigh{lars_lasso_kryds_res.pdf}{0.7}{Analyse af de standardiserede residualer for lasso LARS(CV). }{lars_lasso_kryds_res}
+\imgfigh{lars_lasso_kryds_res.pdf}{0.7}{Analyse af de standardiserede residualer for lasso LARS (CV).}{lars_lasso_kryds_res}
 
-\imgfigh{boxplot_lars_kryds.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisatioer af $\widehat{\boldsymbol{\beta}}^{LARS} \del{CV}$. Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}{boxplot_lars_kryds}
+\imgfigh{boxplot_lars_kryds.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{LARS}} \del{f_\text{1sd}} $.
+Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}{boxplot_lars_kryds}
 
 
-\imgfigh{boxplot_lasso_kryds.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisatioer af $\widehat{\boldsymbol{\beta}}^{lasso}  \del{CV}$. Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}{boxplot_lars_lasso_kryds}
+\imgfigh{boxplot_lasso_kryds.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{lasso}} \del{f_\text{1sd}} $.
+Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}{boxplot_lars_lasso_kryds}
 
 
 %%%%%%% TG LARS kryds %%%%%%%
 
-\imgfigh{resid_lars_tg_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for LARS$_{TG}$ (CV) løst med \ref{eq:tg_beta} }{resid_lars_tg_kryds}
-
-
-
+\imgfigh{resid_lars_tg_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for LARS$_{TG}$ (CV).}{resid_lars_tg_kryds}
 
 \input{fig/tab/lars_kryds_res}
 
@@ -94,18 +94,18 @@ Til højere illustreret andelen af bootstrap realisationer, hvor parameter estim
 
 \imgfigh{lars_bic_res.pdf}{0.7}{Analyse af de standardiserede residualer for LARS (BIC). }{lars_bic_resid}
 
-\imgfigh{lars_lasso_bic_resid.pdf}{0.7}{Analyse af de standardiserede residualer for lasso LARS (BIC). }{lars_lasso_bic_resid}
+\imgfigh{lars_lasso_bic_resid.pdf}{0.7}{Analyse af de standardiserede residualer for lasso LARS (BIC).}{lars_lasso_bic_resid}
 
-\imgfigh{boxplot_lars_bic.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $ \widehat{\boldsymbol{\beta}}^{LARS}\del{\text{BIC}}$. Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul. }{boxplot_lars_bic}
+\imgfigh{boxplot_lars_bic.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{LARS}} \del{f_\text{BIC}} $.
+Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}{boxplot_lars_bic}
 
-
-\imgfigh{boxplot_lars_lasso_bic.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $ \widehat{\boldsymbol{\beta}}^{lasso} \del{\text{BIC}}$. Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul. }{boxplot_lars_lasso_bic}
+\imgfigh{boxplot_lars_lasso_bic.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{lasso}} \del{f_\text{BIC}} $.
+Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul. }{boxplot_lars_lasso_bic}
 
 %%%%%%% TG LARS BIC  %%%%%%%
 
-\imgfigh{resid_lars_tg_bic.pdf}{0.7}{Analyse af de standardiserede residualer for LARS$_{TG}$ (BIC) løst med \ref{eq:tg_beta} }{resid_lars_tg_bic}
+\imgfigh{resid_lars_tg_bic.pdf}{0.7}{Analyse af de standardiserede residualer for LARS$_{TG}$ (BIC).}{resid_lars_tg_bic}
 
-%\input{fig/tab/lars_bic_res_tab}
 
 
 

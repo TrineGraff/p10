@@ -1,29 +1,31 @@
 \section{Oversigt over in-sample resultater} 
-For at forsimple formuleringer anvender vi CV og BIC efter modellerne til at betegne, hvordan modellernes tuning parametre er estimeret.
-
-For at få et bedre oversigt over vores 14 modeller i in-sample betragtes tabel \ref{tab:topvariable}.
-Den viser de 9 mest valgte variable samt beskrivelse. Vi ser at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} bliver valgt af alle 14 modeller, imens \textcolor{blue3}{lag1} ikke blev valgt af adaptive lasso med OLS vægte (CV), adaptive lasso med lasso vægte (CV) og adaptive lasso med OLS vægte (BIC). 
-De resterende variabler bliver ikke valgt af adaptive lasso modellerne. 
+For at få et bedre overblik over de valgte prædiktorer for de 16 modeller betragtes tabel \ref{tab:topvariable}.
+Tabellen viser de 9 hyppigst valgte variable samt beskrivelse. 
+Heraf observeres, at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} bliver valgt af alle modeller.
+Prædiktorerne \textcolor{chartreuse4}{IPDMAT}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{UEMP15OV}, \textcolor{orange}{TB6MS} og \textcolor{orange}{GS5} vælges af alle undtagen adaptive lasso modellerne, mens \textcolor{blue3}{lag 1} også vælges af adaptive lasso med lasso vægte (BIC).
 
 \input{fig/tab/topvariable_insample}
 
-I forhold til den justerede R$^2$ ser vi, at ridge regression (BIC) og ridge regression (CV) har samme værdi, som også er den laveste for alle 14 modeller. 
-Den højeste  justerede R$^2$  har lasso (BIC) og lasso (CV).
-Adaptive lasso med lasso vægte (BIC) har den laveste log-likelihood efterfyldt af de 3 andre adaptive lasso modeller, hvor ridge regression (CV) og ridge regression (BIC) har den største log-likelihood. 
+Justeret R$^2$ er mindst for ridge regression modellerne og størst for lasso modellerne med undtagelse af lasso LARS (CV).
+Krydsvalidering tager ikke højde for en models kompleksitet, men idet vi vælger \(\lambda_\text{1sd}\) for alle med undtagelse af ridge regression, vælger vi i virkeligheden på baggrund af modellens kompleksitet.
+Dette kan skyldes, at vi ikke umiddelbart observerer en forskel i justeret \(R^2\) ved at anvende krydsvalidering fremfor BIC for coordinate descent algoritmen.
+Dog ses en lille forbedring for LARS algoritmen, hvis vi betragter BIC fremfor krydsvalidering.
+
+På trods af forskellige optimeringsalgoritmer vælger krydvalidering henholdsvis 13 og 14 variable, mens BIC vælger 17 for lasso problemet.
+Vi observerer, at optimeringsalgoritmerne giver omtrent samme justeret \(R^2\) for lasso problemet.
+
+
+På figur \ref{fig:cf_interval} vises det betingede 95\% konfidensinterval for lasso\(_{TG}\) (CV) og lasso\(_{TG}\) (BIC), som er givet i tabel \ref{tab:fixedLassoInf} og \ref{tab:fixedLassoInf_bic}, samt 95\% konfidensinterval for OLS estimatorerne for de udvalgte variable af lasso modellerne. 
+For lasso\(_{TG}\) (CV) observeres, at konfidensintervallerne er approksimativt ens for høje estimerede koefficienter, dvs for variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}, mens  konfidensintervallet for lasso\(_{TG}\) (CV) er større end OLS konfidensintervallet for lave estimerede koefficienter.
+Konfidensintervallet for de estimerede koefficienter af lasso\(_{TG}\) (BIC) er generelt større end konfidensintervallet for OLS estimatorerne for disse prædiktorer.
+
+\imgfigh{cf_interval.pdf}{1}{Betinget 95\% konfidensinterval for lasso\(_{TG}\) (CV) og lasso\(_{TG}\) (BIC) (rød) og 95\% konfidensinterval for OLS estimatorerne for de udvalgte prædiktorer (blå).}{cf_interval}
+
+For LARS\(_{TG}\) (CV) og LARS\(_{TG}\) (BIC) observeres, at grænserne i  konfidensintervallerne ofte er uendelige, og derfor betragter vi ikke disse.
+
+
 
 %Derudover er alle 14 modeller klart bedre i in-sample resultater i forhold til benchmarkmodellen. Det kunne godt tyde på, at vores benchmark model ikke vil præsterer særligt godt out-of-sample. 
-
-På figur \ref{fig:cf_interval} har vi den betinget 95\%  konfidensinterval udregnet ved anvendelse af TG-testen for lasso (CV) og lasso (BIC), samt det 95\% konfidensinterval for OLS, som er estimeres ud fra de udvalgte variabler af lasso (CV) og lasso (BIC). 
-For lasso (CV), ser vi at de to konfidensintervaller næsten er ens når vi har høje koefficienter, imens for de lave koefficienter er konfidensintervallet for lasso størst. 
-For lasso (BIC) ser vi at konfidensintervallet er generelt større end konfidens intervallet for OLS.
-
-\imgfigh{cf_interval.pdf}{1}{Betinget 95 \% konfidensinterval for lasso (CV) og lasso (BIC). De blå linjer er 95 \% konfidensinterval for OLS ved anvendelse af de valgte variabler for henholdsvis lasso (CV) og lasso (BIC). }{cf_interval}
-
-Generelt for TG-testen anvendt på LARS uden lasso modifikation ser vi, at variablens grænser i endepunkterne ofte indeholder \textit{inf} og/eller \textit{-inf}, derfor har vi ikke plottet det betinget 95 \% konfidensinterval. 
-
-
-
-
 
 
 

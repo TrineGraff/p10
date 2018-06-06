@@ -1,6 +1,6 @@
 \chapter{Metoder til valg af model} \label{ch:metoder}
 I dette kapitel vil vi redegøre for nogle metoder, som anvendes til at udvælge den ``bedste'' model. 
-Vi er interesseret i en model, der er god til at prædiktere, som ikke er for kompleks.
+Vi er interesseret i en model, der er god til at prædiktere, og som ikke er for kompleks.
 
 Datasættet opdeles i en træningsmængde og en testmængde. 
 Observationerne i træningsmængden betragtes som in-sample observationer og anvendes primært til at identificere modellen og estimere parametrene. 
@@ -71,10 +71,10 @@ Et $k$-fold krydsvalidering har en lav varians, da \eqref{eq:cv_k} tager det gen
 Bias kunne være et problem i forhold til hvordan vi vælger vores træningsmængde. Hvis vi ikke har nok observationer i træningsmængden vil $k$-fold krydsvalidering have høj bias. Derfor er der også en bias-variance trade-off med valget af $k$. 
 
 \subsubsection{BIC}
-Tuning parameteren kan også vælges udfra Bayesian informationskriteriet.
+Tuning parameteren kan også vælges udfra Bayes informationskriteriet.
 Vi betragter dens skalerede version.
 %
-\begin{defn}[Bayesian informationskriteriet (BIC)] \label{def:bic}
+\begin{defn}[Bayes informationskriteriet (BIC)] \label{def:bic}
 \begin{align*}
 \text{BIC} =  \frac{- 2 \widehat{\ell}}{T} + \frac{p \log T}{T}, 
 \end{align*}
@@ -94,9 +94,9 @@ og BIC kan omskrives til
 \end{align*}
 
 \section{Out-of-sample metoder}
-I den empiriske del betragter vi en one-step-ahead prædiktion, hvor estimeringsvinduet udvides med én observerede observation per prædiktion.
+I den empiriske del betragter vi en one-step-ahead prædiktion, hvor estimeringsvinduet udvides med én observeret observation per prædiktion.
 %Dermed prædikteres \(y_{t+1}\) udfra de observerede observation fra \(1\) til \(t\), mens  \(y_{t+2}\) prædiktion er baseret på de observerede observationer fra \(1\) til \(t+1\).
-For at vurdere en models prædiktion betragtes den gennemsnitlige absolutte fejl (MAE) og den gennemsnitlige kvadrede fejl (MSE)
+For at vurdere en models prædiktion betragtes den gennemsnitlige absolutte fejl (MAE) og den gennemsnitlige kvadrerede fejl (MSE)
 \begin{align}
 \text{MAE} & =  \frac{1}{T} \sum_{t=1}^{T} \abs{y_{t} - \widehat{y}_{t}} \label{eq:mae} , \\
 \text{MSE} & =  \frac{1}{T} \sum_{t=1}^{T} \del{y_{t} - \widehat{y}_{t}}^2 \label{eq:mse},
@@ -110,7 +110,7 @@ Udfra tabsfunktionerne kan vi betragte et gennemsnitlig tabs ratio mellem en giv
 R^{\text{MAE}} = \frac{\text{MAE}^{\text{Alternativ}}}{\text{MAE}^{\text{Benchmark}}} \qquad R^{\text{\text{MSE}}} = \frac{\text{MSE}^{\text{Alternativ}}}{\text{MSE}^{\text{Benchmark}}}.
 \end{align*} 
 Hvis et gennemsnitlig tabs ratio er mindre end 1, da er den alternative model bedre end benchmark modellen og omvendt hvis værdien er større end 1. 
-Derudover vil vi betragte et rullende gennemsnitlig tabs ratio, som vi betegne $R_t^\text{MAE}$ og $R_{t}^\text{MSE}$, for at vurdere modellernes prædiktion fra observation til observation.
+Derudover vil vi betragte et rullende gennemsnitligt tabs ratio, som vi betegner $R_t^\text{MAE}$ og $R_{t}^\text{MSE}$, for at vurdere modellernes prædiktion fra observation til observation.
 %
 %For at vurdere modellernes prædiktion i forhold til benchmark modellen fra observation til observation, defineres et rullende gennemsnitlig tabs ratio, som er givet ved
 %\begin{align*}
@@ -121,7 +121,7 @@ Derudover vil vi betragte et rullende gennemsnitlig tabs ratio, som vi betegne $
 
 Foruden MAE og MSE betragtes \textit{Diebold-Mariano} testen samt \textit{model confidence set} (MCS) proceduren.
 Diebold-Mariano testen kan anvendes til at teste om én model er signifikant bedre end en anden model, mens MCS proceduren identificerer en mængde af modeller, som er signifikant bedre end de øvrige modeller, men ikke signifikant bedre end de øvrige modeller i mængden.
-Nedenfor introduceres kort Diebold-Mariano testen samt general teori for MCS.
+Nedenfor introduceres kort Diebold-Mariano testen samt den generelle teori for MCS.
 
 \input{main/ch/sub/diebold_mariano}
 \input{main/ch/sub/mcs}

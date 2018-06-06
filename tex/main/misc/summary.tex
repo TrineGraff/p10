@@ -2,7 +2,8 @@
 %mellem min 1 side og maks 2 sider.
 %indgår i evalueringen
 %
-The object of this master thesis is to predict a macroeconomic variable, which we have chosen to be the unemployment rate, from a dataset of 122 variables.
+The object of this master thesis is to use various shrinkage methods to predict macroeconomic variables, in this case the unemployment rate.
+We use a dataset of 122 variables.
 To improve the prediction accuracy we would like to identify a smaller subset of these variables, which have the greatest impact on the unemployment rate, and also shrinks the coefficients of the variables.
 The report is divided into two parts. 
 At first we present the necessary theory and then we include an empirical part, in which we apply the theory.
@@ -17,7 +18,7 @@ This results in a convex optimization problem, which can be solved efficiently f
 
 To solve the lasso problem we consider an algorithm called coordinate descent.
 It is especially attractive for problems such as lasso in which a closed solution does not exists, but a coordinatewise does.
-The coordinate descent algorithm choose a single coordinate to update and then performs a univariate minimization over this coordinate holding the remaining coordinates fixed, and cycle through the coordinates in some fixed order.
+The coordinate descent algorithm chooses a single coordinate to update and then performs a univariate minimization over this coordinate holding the remaining coordinates fixed, and cycle through the coordinates in some fixed order.
 We also consider the least angle regression (LARS), which delivers the entire solution path as a function of a regularization parameter.
 This solution path is continuous and piecewise linear.
 A modification can be applied to the LARS algorithm, such that it can be used to solve the lasso problem.
@@ -40,7 +41,7 @@ In the empirical part the presented models are used to predict the unemployment 
 The dataset that we will consider is gathered from the Federal Reserve Bank of St. Louis and is publicly available.
 It consists of 122 monthly macroeconomic variables and covers the period from January 1, 1959 to November 1, 2017, corresponding to 707 observations.
 
-The autoregressive model is included as an argument for the number of lagged values for the unemployment rate to included in the model matrix.
+The autoregressive model is included as a tool to determine the number of lagged values for the unemployment rate to be included in the model matrix.
 As a benchmark model we will consider the factor model.
 
 The optimal model for the lasso problem and its generalizations is found by a 10-fold crossvalidation and BIC.

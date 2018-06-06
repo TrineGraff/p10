@@ -1,5 +1,5 @@
 \chapter{Faktor modellen} \label{ch:dfm}
-\textit{I dette kapitel gives en kort introduktion af faktor modellen. Kapitlet er hovedsagligt baseret på \citep{stock_watson_2002a} og kapitel 9 i \citep{faktorbook}.} \\[4mm]
+\textit{I dette kapitel gives en kort introduktion af faktor modellen, da den betrages som benchmark model. Kapitlet er hovedsagligt baseret på \citep{stock_watson_2002a} og kapitel 9 i \citep{faktorbook}.} \\[4mm]
 %
 Det essentielle formål med faktor analyse er at beskrive kovariansen mellem et stort antal variable udfra få underliggende faktorer.
 Faktor modellen er motiveret af følgende argument: antag variablerne kan opdeles i grupper udfra deres korrelation, således at variable i en gruppe har høj parvis korrelation, men variablerne har relativ lav korrelation med variabler i andre grupper.
@@ -7,13 +7,13 @@ Da vil hver gruppe af variable repræsentere én underliggende faktor.
 Nedenfor introduceres den generelle definition af faktor modellen.
 %
 \begin{defn}[Faktor model] \label{def:faktor_model}
-Lad \(\X_t\) være en stokastisk \(p \times 1\) vektor af observeret forklarende variable til tid \(t\) med middelværdi \(\mathbf{0}\) og kovariansmatrix \(\boldsymbol{\Sigma}_{\X \X}\).
+Lad \(\X_t\) være en stokastisk \(p \times 1\) vektor af observerede forklarende variable til tid \(t\) med middelværdi \(\mathbf{0}\) og kovariansmatrix \(\boldsymbol{\Sigma}_{\X \X}\).
 Faktor modellen er givet ved
 \begin{align}
 \X_t = \tLambda \tF_t + \te_t, \label{eq:factor_model}
 \end{align}
 hvor \(\tF_t\) er en stokastisk \(r \times 1\) vektor af uobserveret faktorer, \(\tLambda\) er en \(p \times r\) matrix med faktor loadings og \(\te_t\) er en \(p \times 1\) vektor af fejlled.
-Der antages, at
+Det antages, at
 \begin{align*}
 \text{cov} \sbr{\te_t, \tF_t} &= \mathbf{0}, \\
 \E{\tF_t} &= \mathbf{0}, \quad \text{cov}\sbr{\tF_t} = \mathbf{I}_r, \\
@@ -51,7 +51,7 @@ Lad \(y_t, \X_t, \tw_t\) være givet for \(t = 1, \ldots, T\), da vil vi prædik
 \section{Estimation af faktorer}
 Maksimum likelihood estimation kan anvendes til at estimere faktorerne, men i dette tilfælde hvor vi betragter et relativt stort antal variable, skal mange parametre estimeres, hvilket er beregningsmæssigt tungt.
 Istedet anvendes \textit{principal component estimation}.
-Proceduren transformerer et antal korreleret variable til et mindre antal ukorreleret variable, som kaldes principale komponenter.
+Proceduren transformerer et antal korrelerede variable til et mindre antal ukorrelerede variable, som kaldes principale komponenter.
 Denne transformation defineres, således at første komponent har den størst mulige varians, og hver af de efterfølgende komponent har størst mulige varians under betingelse af at de foregående komponenter er ortogonale.
 %Vi antager, at data er stationært, og at variablerne er standardiseret samt responsvariablen centreret.
 
@@ -98,7 +98,7 @@ Herefter vi kan udregne \(\widehat{\tF} = p^{-1} \X \widehat{\tLambda}\), som al
 I dette underafsnit introduceres nogle antagelser, som sikrer, at estimatorerne er entydige.
 Uden yderligere antagelser er faktorer og faktor loadings ikke entydige, som vi først vil vise. 
 
-Lad \(\tR\) være en \(r \times r\) ortogonal matrix, således at \(\tR \tR^T = \tR^T \tR = \mathbf{I}_r\), da kan \eqref{eq:factor_model} skrives som
+Lad \(\tR\) være en \(r \times r\) ortonormal matrix, således at \(\tR \tR^T = \tR^T \tR = \mathbf{I}_r\), da kan \eqref{eq:factor_model} skrives som
 \begin{align*}
 \X_t = \tLambda \tR \tR^T \tF_t + \te_t = \tLambda^* \tF_t^* + \te_t,
 \end{align*}
@@ -108,10 +108,10 @@ Faktorerne \(\tF_t\) og \(\tF^*_t\) har samme statistiske egenskaber, og generer
 \begin{align*}
 \boldsymbol{\Sigma}_{\X \X} = \tLambda \tR \tR^T \tLambda^T + \boldsymbol{\Psi} = \tLambda^* \tLambda^{*^T} + \boldsymbol{\Psi}.
 \end{align*}
-Derfor kan faktor loadings \(\tLambda\) kun bestemmes op til en ortogonal matrix \(\tR\).
+Derfor kan faktor loadings \(\tLambda\) kun bestemmes op til en ortonormal matrix \(\tR\), dvs en rotation.
 %derfor skal der anvendes en normalisering for entydigt at definere faktorerne.
 %Denne ikke-entydighed kan løses ved at roterer faktorerne således at faktor loadings opfylder følgende betingelser
-Nedenfor introduceres nogle modelantagelser, som er nødvendige til at identificere entydige faktorer.
+Nedenfor introduceres nogle modelantagelser til \eqref{eq:factor_model}, som er nødvendige for at identificere entydige faktorer.
 %
 \begin{ass}[Faktorer og faktor loadings] \label{ass:faktor}
 \begin{enumerate}[label=\alph*)]
@@ -131,7 +131,7 @@ Af antagelse \ref{ass:faktor}.b) er kovariansmatricen af \(\X_t\) givet ved
 \end{align*}
 hvilket betyder, at \(\boldsymbol{\Sigma}_{\tF\tF} = \tR \boldsymbol{\Sigma}_{\tF\tF} \tR^T\) og dermed restringerer antagelse \ref{ass:faktor}.b) yderligere \(\tR\) til at være en diagonal matrix med diagonal elementerne \(\pm 1\).
 Dette identificerer faktorerne op til en fortegnsfejl.
-Antagelse \ref{ass:faktor}.b) tillader også faktorerne at være korreleret.
+%Antagelse \ref{ass:faktor}.b) tillader også faktorerne at være korreleret.
 %
 Lad os betragte \(\del{pT}^{-1} \sum_{t=1}^T \tLambda \tF_t \tF_t^T \tLambda^T\), som vi tager middelværdien af og lader \(T \rightarrow \infty\), da får vi af antagelse \ref{ass:faktor}.d), at
 \(\lim_{T \rightarrow \infty} p^{-1} \tLambda \del{T^{-1} \sum_{t=1}^T \E{\tF_t \tF_t^T}} \tLambda^T = p^{-1} \tLambda \boldsymbol{\Sigma}_{\tF\tF} \tLambda^T\).
@@ -242,12 +242,16 @@ Beviset undlades, men vi refererer til (R16) s. 1176 i \citep{stock_watson_2002a
 Næste sætning viser, at prædiktionen, som konstrueres udfra de estimerede faktorer og estimerede parametre, er asymptotisk efficient.
 Yderligere vises, at estimatorerne for regressionskoefficienterne er konsistente.
 
-Resultatet antager, at prædiktionsligningen \eqref{eq:factor_model_forecast} er estimeret med det sande antal faktorer, dvs \(k=r\).
+Resultatet antager, at prædiktionsligningen \eqref{eq:factor_model_forecast} er estimeret med det sande antal faktorer givet, dvs \(k=r\).
 Dette er tab af generalitet, da flere metoder konsistent estimerer antallet af faktorer.
 %
 \begin{thm} \label{thm:factorthm2}
 Lad antagelse \ref{ass:forecasting_ligning} og betingelserne i sætning \ref{thm:factorthm1} være opfyldt. 
-Lad \(\widehat{\tbeta} = \del{\widehat{\tbeta}_{\tF}^T \widehat{\tbeta}_{\tw}^T}^T\) betegne OLS estimaterne af \(\tbeta = \del{\tbeta_{\tF}^T \tbeta_{\tw}^T}^T\) fra regressionen af \(y_{t+h}\) på \(\widehat{\tz}_t^T\) for \(t=1, \ldots, T-h\).
+Lad \(\widehat{\tbeta} =\begin{pmatrix}
+\widehat{\tbeta}_{\tF}^T & \widehat{\tbeta}_{\tw}^T
+\end{pmatrix}^T\) betegne OLS estimaterne af  \(\tbeta =\begin{pmatrix}
+\tbeta_{\tF}^T & \tbeta_{\tw}^T
+\end{pmatrix}^T\) fra regressionen af \(y_{t+h}\) på \(\widehat{\tz}_t^T\) for \(t=1, \ldots, T-h\).
 %Lad \(\widehat{\tbeta}_{\tF}\) og \(\widehat{\tbeta}_{\tw}\) betegne OLS estimaterne af \(\tbeta_{\tF}\) og \(\tbeta_{\tw}\)
 Da gælder følgende
 \begin{enumerate}[label=\alph*)]

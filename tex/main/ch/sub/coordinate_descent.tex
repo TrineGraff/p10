@@ -3,8 +3,7 @@
 %Vi gennemløber alle parametre iterativ indtil konvergens.
 %Coordinate descent er specielt attraktiv for problemer som lasso, som har en simpel lukket løsning for en dimension, men ikke for flere dimensioner.
 %
-Coordinate descent er en første ordens algoritme.
-Algoritmen opdaterer fra \(\tbeta^t\) til \(\tbeta^{t+1}\) ved at vælge én koordinat som opdateres, og da udføres en univariat minimering over dette koordinat.
+Coordinate descent er en iterativ algoritme, som opdaterer fra \(\tbeta^t\) til \(\tbeta^{t+1}\) ved at vælge én koordinat som opdateres, og da udføres en univariat minimering over denne koordinat.
 Hvis koordinat $k$ er valgt i iteration $t$, da er opdateringen givet ved
 \begin{align}
 \beta_k^{t+1} =\underset{ \beta_k}{\arg \min}  f\del{ \beta_1^t, \beta_2^t, \dots, \beta_{k-1}^t, \beta_k, \beta_{k+1}^t, \dots, \beta_p^t  }, \label{eq:5.36}
@@ -13,7 +12,7 @@ hvor $\beta_j^{t+1} = \beta_j^t$ for $j \neq k$.
 Typisk gennemløbes koordinaterne i en forudbestemt rækkefølge.
 Dette kan generaliseres til \textit{block coordinate descent}, som anvendes for group lasso, hvor prædiktorerne er opdelt i ikke-overlappende blocks, og da udføres en minimering over en enkelt block for hvert koordinat.
 
-For at algoritmen konvergerer til det globale minimum af en konveks funktion, skal funktionen være kontinuert differentiabel og streng konveks i hver koordinat. 
+For at algoritmen konvergerer til det globale minimum af en konveks funktion, skal funktionen være kontinuert differentiabel og strengt konveks i hver koordinat. 
 Men som nævnt er strafleddet for lasso ikke differentiabel.
 
 For mange optimeringsproblemer kan objektfunktionen dekomponeres
@@ -23,9 +22,9 @@ f(\beta_1, \dots, \beta_p) = g(\beta_1, \dots, \beta_p) + \sum_{j = 1}^p h_j \de
 hvor \(g: \R^p \rightarrow \R\) er differentiabel og konveks og \(h_j: \R \rightarrow \R\) er konveks, men ikke nødvendigvis differentiabel.
 Bemærk at lasso problemet \eqref{eq:2.5} kan dekomponeres som \eqref{eq:5.37} med \(g \del{\tbeta} =\Vert \y - \X \tbeta \Vert_2^2\) og \(h_j \del{\beta_j} = \lambda \vert \beta_j \vert\).
 \citep{Tseng_coordinate} viste, at for enhver konveks funktion \(f\) som kan opdeles som \eqref{eq:5.37}, vil coordinate descent algoritmen \eqref{eq:5.36} konvergere til det globale minimum. 
-Nøgleegenskaben bag dette resultat er, at den ikke-differentiabel komponent \(h \del{\beta} = \sum_{j=1}^p h_j \del{\beta_j}\), kan adskilles som summen af funktioner af hver individuel parameter.
-Resultatet betyder, at coordinate descent kan bruges til at løse lasso og dens generaliseringer, som beskrives senere i rapporten.
-Hvis den ikke-differentiable komponent \(h\) ikke kan adskilles, da kan det ikke garanteres at coordinate descent konvergerer.
+Nøgleegenskaben bag dette resultat er, at den ikke-differentiable komponent \(h \del{\beta} = \sum_{j=1}^p h_j \del{\beta_j}\), kan opsplittes som summen af funktioner af hver individuel parameter.
+Resultatet betyder, at coordinate descent kan bruges til at løse lasso og dens generaliseringer, som beskrives senere i specialet.
+Hvis den ikke-differentiable komponent \(h\) ikke kan opsplittes, da kan det ikke garanteres at coordinate descent konvergerer.
 
 %\subsubsection{Lineær regression og lasso}
 %Optimalitets betingelserne for lasso problemet \eqref{eq:2.5} er
@@ -43,9 +42,9 @@ Hvis den ikke-differentiable komponent \(h\) ikke kan adskilles, da kan det ikke
 %
 \begin{alg} [Coordinate descent for lasso problemet]
 \begin{enumerate}
-\item Standardisere prædiktorerne \(\x_1, \ldots, \x_p\) og centre responsvariablen.
+\item Standardisér prædiktorerne \(\x_1, \ldots, \x_p\) og centrér responsvariablen.
 Definer en følge af værdier \(\lambda_0 > \lambda_1 > \ldots > \lambda_L\), hvor \(\lambda_0\) vælges, således at \(\widehat{\tbeta}^\text{lasso} \del{\lambda_0} =\mathbf{0}\).
-\item For hvert \(\lambda \in \cbr{\lambda_0, \ldots, \lambda_L}\), gentages følgende steps over \(j = 1, \ldots, p\) indtil konvergens:
+\item For hvert \(\lambda \in \cbr{\lambda_0, \ldots, \lambda_L}\), gentages følgende trin for \(j = 1, \ldots, p\) indtil konvergens:
 \begin{itemize}
 \item Opskriv lasso problemet \eqref{eq:2.5}
 \begin{align*}
@@ -53,7 +52,7 @@ Definer en følge af værdier \(\lambda_0 > \lambda_1 > \ldots > \lambda_L\), hv
 \end{align*}
 hvor \(\widehat{\beta}^\text{lasso}_k \del{\lambda}\) er det nuværende estimat for \(\beta_k\) for et given \(\lambda\), hvor \(k \neq j\).
 \item Udregn de partielle residualer: \(r_{i}^{(j)} = y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{lasso}_k \del{\lambda}\) for alle \(i\)
-\item Udregn koefficienten af en simpel lineær regression af det partial residual på \(j\)'te prædiktor: \(\tilde{\beta}_j = \frac{1}{n} \sum_{i=1}^n r_{i}^{(j)} x_{ij}\) 
+\item Udregn koefficienten af en simpel lineær regression af den partialle residual på \(j\)'te prædiktor: \(\tilde{\beta}_j = \frac{1}{n} \sum_{i=1}^n r_{i}^{(j)} x_{ij}\) 
 \item Opdater det nuværende estimat \(\widehat{\beta}^\text{lasso}_j\) udfra soft-thresholding operatoren
 \begin{align}
 \widehat{\beta}^\text{lasso}_j \del{\lambda}= S_{\frac{\lambda}{2n}} \del{\tilde{\beta}_j}. \label{eq:update_coordinate}
@@ -92,5 +91,5 @@ som indeks af prædiktorerne med ikke-nul koefficienter.
 %Vi mindsker \(\lambda\) igen og anvende den tidligere løsning som en warm start, da kan vi køre coordinate descent indtil konvergens.
 %Hermed kan vi udregne løsningen over en grid af \(\lambda\) værdier. \\
 
-Den beskrevne coordinate descent algoritmen er implementeret i \Rlang-pakken \texttt{glmnet}.
+Den beskrevne coordinate descent algoritme er implementeret i \Rlang-pakken \texttt{glmnet}.
 Koefficientstierne i figur \ref{fig:diabetes_koef} er fundet udfra denne algoritme.

@@ -25,9 +25,9 @@ Lagrange funktionen \(L: \R^p \times \R^m_+ \rightarrow \R\) for problem \eqref{
 \begin{align*}
 L \del{\tbeta, \lambda} = f \del{\tbeta} + \sum_{j=1}^m \lambda_j g_j \del{\tbeta},
 \end{align*}
-hvor vægtene \(\lambda \geq 0\) kaldes Lagrange multipliere.
-Hvis betingelsen \(g_j \del{\tbeta} \leq \mathbf{0}\) ikke er opfyldt, da vil multiplieren \(\lambda_j\) pålægger en straf.
-Af teorien for Lagrange dualiteten garanteres, at der eksisterer en optimal vektor \(\boldsymbol{\lambda}^* \geq 0\) af Lagrange multipliers, således at 
+hvor vægtene \(\lambda \geq 0\) kaldes Lagrange multiplikatorer.
+Hvis betingelsen \(g_j \del{\tbeta} \leq \mathbf{0}\) ikke er opfyldt, da vil multiplikatoren \(\lambda_j\) pålægge en straf.
+Fra dualitetsbegrebet i teorien for Lagrange funktioner og -multiplikatorer, ved vi, at der eksisterer en optimal vektor \(\boldsymbol{\lambda}^* \geq 0\) af Lagrange multiplikatorer, således at 
 \(f^* = \argmin_{\tbeta \in \R^p} L \del{\tbeta^*; \boldsymbol{\lambda}^*}\).
 Derfor må ethvert optimum \(\tbeta^*\) af \eqref{eq:5.5}, også være et nulgradient punkt af Lagrange funktionen, og dermed opfylde ligningen 
 \begin{align}
@@ -35,20 +35,20 @@ Derfor må ethvert optimum \(\tbeta^*\) af \eqref{eq:5.5}, også være et nulgra
 \end{align}
 Hvis der blot er en enkelt betingelsesfunktion \(g\), da reduceres denne betingelse til \(\nabla f \del{\tbeta^*} = - \lambda^* \nabla g \del{\tbeta^*}\).
 
-Karush-Kuhn-Tucker (KKT) betingelserne relaterer den optimale Lagrange multiplier vektor \(\boldsymbol{\lambda}^* \geq 0\) til den optimale vektor \(\tbeta^* \in \R^p\):
+Karush-Kuhn-Tucker (KKT) betingelserne relaterer den optimale Lagrange multiplikator vektor \(\boldsymbol{\lambda}^* \geq 0\) til den optimale vektor \(\tbeta^* \in \R^p\):
 \begin{itemize}
 \item \(g_j \del{\tbeta^*} \leq 0\) for alle \(j = 1, \ldots, m\)
 \item \(\lambda_j^* g_j \del{\tbeta} = 0\) for alle \(j = 1, \ldots, m\)
 \item \(\del{\tbeta^*, \boldsymbol{\lambda}^*}\) opfylder betingelse \eqref{eq:5.8}
 \end{itemize}
-Disse KKT betingelser er nødvendige og tilstrækkelige for at \(\tbeta^*\) er et globalt optimum, når optimeringsproblemet opfylder en regularitetsbetingelse kaldet strong duality.
+Disse KKT betingelser er nødvendige og tilstrækkelige for at \(\tbeta^*\) er et globalt optimum, når optimeringsproblemet opfylder en regularitetsbetingelse kaldet \textit{strong duality}.
 %
 \subsection{Subgradienter}
 Som nævnt i underafsnittet \ref{subsec:udregning_lasso} er \(\ell_1\)-normen \(g \del{\tbeta} = \sum_{j=1}^p \vert \beta_j \vert\) konveks, men ikke differentialbel i ethvert punkt, hvor mindst et koordinat \(\beta_j = 0\).
 For sådan et problem er første ordens betingelsen \eqref{eq:5.3} og Lagrange betingelsen \eqref{eq:5.8} ikke gældende, da de betragter gradienter af \(f\) og \(g\).
-Men der findes en naturlig generalisering af begrebet gradient for konvekse funktioner.
+Men der findes en naturlig generalisering af begrebet gradient for ikke-differentiable, konvekse funktioner.
 
-For differentiable, konvekse funktioner giver tangent approksimationen af første orden en nedre grænse.
+For differentiable, konvekse funktioner giver tangentapproksimationen af første orden en nedre grænse.
 %Begrebet subgradient er baseret på en generalisering af dette.
 Givet en konveks funktion \(f: \ \R^p \rightarrow \R\), siges \(\tz \in \R^p\) at være en subgradient af \(f\) i \(\tbeta\) hvis
 \begin{align*}
@@ -57,7 +57,7 @@ f \del{\tbeta'} \geq f \del{\tbeta} + \tz^T \del{ \tbeta' - \tbeta},
 for alle \(\tbeta' \in \R^p\).
 %Geometrisk er subgradient vektoren \(\tz\) normal til et hyperplan som understøtter ---.
 Mængden af alle subgradienter af \(f\) i \(\tbeta\) kaldes \textit{subdifferentialet} og betegnes \(\partial f \del{\tbeta}\).
-Når \(f\) er differentialble i \(\tbeta\), da reduceres subdifferentialet til én vektor, givet ved \(\partial f \del{\tbeta} = \cbr{\nabla f \del{\tbeta}}\).
+Når \(f\) er differentialbel i \(\tbeta\), da reduceres subdifferentialet til én vektor, givet ved \(\partial f \del{\tbeta} = \cbr{\nabla f \del{\tbeta}}\).
 I punkter hvor \(f\) ikke er differentialbel, da er subdifferentialet en konveks mængde bestående af alle mulige subgradienter.
 
 Figur \ref{fig:subgradients} viser en funktion \(f : \R \rightarrow \R\) og nogle eksempler på subgradienter i punkterne \(\beta_1\) og \(\beta_2\).

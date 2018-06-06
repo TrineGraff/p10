@@ -63,7 +63,7 @@ Figur \ref{fig:elastisk} illustrerer betingelsesområderne for ridge regression,
 %\label{fig:elastisk_net}
 %\end{figure}
 %
-Det viser sig, at optimeringsproblemet for naiv elastisk net kan transformeres til et ækvivalent lasso problem på augmented data.
+Nedenstående lemma viser, at optimeringsproblemet for naiv elastisk net kan transformeres til et ækvivalent lasso problem på augmented data.
 %
 \begin{lem} \label{lem:elastisk_net}
 Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), defineres et augmented datasæt 
@@ -123,7 +123,7 @@ Hvis \(\X\) er ortogonal, da gælder, at
 \end{lem}
 %
 \begin{proof}
-Estimatoren for ridge regression i det ortogonale tilfælde \eqref{eq:orto_ridge} følger direkte udfra ridge estimatoren \eqref{eq:ridge_estimator}, da \(\X^T \X = \mathbf{I}_p\) og \(\widehat{\tbeta}^\text{OLS} = \X^T \y\).
+Estimatoren for ridge regression i det ortogonale tilfælde \eqref{eq:orto_ridge} følger direkte udfra ridge regression estimatoren \eqref{eq:ridge_estimator}, da \(\X^T \X = \mathbf{I}_p\) og \(\widehat{\tbeta}^\text{OLS} = \X^T \y\).
 For at bevise lasso estimatoren i det ortogonale tilfælde \eqref{eq:orto_lasso}, omskrives lasso problemet \eqref{eq:2.5} til følgende
 \begin{align*}
 \widehat{\tbeta}^\text{lasso} &= \argmin_{\tbeta \in \R^p} \cbr{\del{\y - \X \tbeta}^T \del{\y - \X \tbeta} + \lambda_1 \Vert \tbeta \Vert_1} \\
@@ -132,11 +132,11 @@ For at bevise lasso estimatoren i det ortogonale tilfælde \eqref{eq:orto_lasso}
 \end{align*}
 Lad os blot betragte \(j\)'te indeks af lasso estimatoren
 \begin{align*}
-\widehat{\beta}_j^\text{lasso} = \argmin_{\beta_j} \cbr{ - 2 \beta_j \widehat{\beta}_j^\text{OLS} + \beta_j^2 + \lambda_1 \vert \beta_j \vert}.
+\widehat{\beta}_j^\text{lasso} = \argmin_{\beta_j} \cbr{ - 2 \beta_j \widehat{\beta}_j^\text{OLS} + \beta_j^2 + \lambda_1 \abs{ \beta_j }}.
 \end{align*}
 Vi differentierer
 \begin{align*}
-\frac{\partial}{\partial \beta_j} \del{- 2 \beta_j \widehat{\beta}_j^\text{OLS} + \beta_j^2 + \lambda_1 \vert \beta_j \vert}
+\frac{\partial}{\partial \beta_j} \del{- 2 \beta_j \widehat{\beta}_j^\text{OLS} + \beta_j^2 + \lambda_1 \abs{ \beta_j }}
 =-2\widehat{\beta}^\text{OLS} + 2\beta_j + \begin{cases}
 -\lambda_1 \quad &\beta_j < 0 \\
 [-\lambda_1, \lambda_1] & \beta_j = 0 \\
@@ -363,7 +363,7 @@ For standardiseret prædiktorer og en centeret responsvariabel er coordinate des
 \begin{align}
 \widehat{\beta}^\text{naivEN}_j \del{\lambda}= \frac{S_{\frac{\alpha \lambda}{2n}} \del{\tilde{\beta}_j}}{1 + \lambda (1-\alpha)}, \label{eq:4.4}
 \end{align}
-hvor \(\tilde{\beta}_j = \frac{1}{n} \sum_{i=1}^n r_{i}^{(j)} x_{ij}\) og \(r_{i}^{(j)} = y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{naivEN}_k \del{\lambda}\) er de partialle residualer.
+hvor \(\tilde{\beta}_j = \frac{1}{n} \sum_{i=1}^n r_{i}^{(j)} x_{ij}\) og \(r_{i}^{(j)} = y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{naivEN}_k \del{\lambda}\) er de partielle residualer.
 Vi gennemløber opdateringen \eqref{eq:4.4} indtil konvergens.
 
 \begin{eks}

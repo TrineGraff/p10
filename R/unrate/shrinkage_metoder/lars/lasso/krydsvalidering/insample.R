@@ -71,8 +71,8 @@ lasso = ggplot(df_la, aes(df_la$lasso_cv.index,df_la$lasso_cv.cv)) +
   labs(x = expression(f==abs(beta)/max(abs(beta))), y = "MSE", color = "") + 
   geom_vline(aes(xintercept= getmin$lambda.min, col = "blue"), linetype="dotted") +
   geom_vline(aes(xintercept= getmin$lambda.1se, col = "brown"), linetype="dotted") +
-  ggtitle("LARS med lasso modifikation") + scale_color_manual(labels = c(expression(f[min]), expression(f[1][sd])), values = c("blue", "brown"))
+  ggtitle("LARS med lasso modifikation (CV)") + scale_color_manual(labels = c(expression(f[min]), expression(f[1][sd])), values = c("blue", "brown"))
 
-#grid.arrange(lars, lasso, ncol = 2)
+grid.arrange(lars, lasso, ncol = 2)
 
 

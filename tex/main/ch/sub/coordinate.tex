@@ -10,7 +10,7 @@ For at finde den optimale model anvendes 10-fold krydsvalidering og BIC til at e
 Bemærk at for elastisk net og adaptive lasso har vi to tuning parametre, som skal estimeres. 
 For elastik net er det parmetrene $\alpha$ og $\lambda$, hvor vi vælger 10 værdier af \(\alpha\), hvor $\alpha \in \sbr{0,1}$.  Så for hvert  \(\alpha\) finder vi \(\lambda_\alpha\) udfra krydsvalidering og BIC, hvor vi hernæst vil vælge den optimale $\lambda \in \lambda_{\alpha}$.  
 For adaptive lasso er det parametrene $\gamma$ og $\lambda$, som skal estimeres.
-Vi lader $\gamma$ være 0.5, 1 og 2, som er forslået af \citep{adaptive_lasso}, hvor vi for hver værdi af $\gamma$ finder \(\lambda_\gamma\) udfra krydsvalidering og BIC, hvor vi så vil vælge den optimale $lambda \in \lambda_gamma$.
+Vi lader $\gamma$ være 0.5, 1 og 2, som er forslået af \citep{adaptive_lasso}, hvor vi for hver værdi af $\gamma$ finder \(\lambda_\gamma\) udfra krydsvalidering og BIC, hvor vi så vil vælge den optimale $\lambda \in \lambda_\gamma$.
 
 Derudover betragter vi to vægte for adaptive lasso, nemlig OLS og lasso vægte, så for adaptive lasso med lasso vægte anvender vi kun de forklarende variable, som lasso har valgt til at estimere $\lambda$. 
 

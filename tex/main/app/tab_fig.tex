@@ -71,14 +71,21 @@ Til højere illustreret andelen af bootstrap realisationer, hvor parameter estim
 \imgfigh{resid_tg_bic.pdf}{0.7}{Analyse af de standardiserede residualer for lasso$_{TG}$ (BIC) løst med \ref{eq:tg_beta} }{resid_tg_bic}
 
 %%%%% LARS kryds %%%%%%%
-\imgfigh{lars_kryds_res.pdf}{0.7}{Analyse af de standardiserede residualer for LARS uden modifikation, hvor krydsvalidering  er brugt til at estimere $\widehat{s}$. }{lars_kryds_res}
+\imgfigh{lars_kryds_res.pdf}{0.7}{Analyse af de standardiserede residualer for LARS (CV). }{lars_kryds_res}
 
-\imgfigh{lars_lasso_kryds_res.pdf}{0.7}{Analyse af de standardiserede residualer for LARS med lasso modifikation, hvor krydsvalidering  er brugt til at estimere $\widehat{f}$. }{lars_lasso_kryds_res}
+\imgfigh{lars_lasso_kryds_res.pdf}{0.7}{Analyse af de standardiserede residualer for LARS med lasso modifikation (CV). }{lars_lasso_kryds_res}
 
-\imgfigh{boxplot_lars_kryds.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisatioer af $\widehat{\boldsymbol{\beta}}^{LARS} \del{\widehat{f}_{\text{1sd}}}$. Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}{boxplot_lars_kryds}
+\imgfigh{boxplot_lars_kryds.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisatioer af $\widehat{\boldsymbol{\beta}}^{LARS} \del{CV}$. Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}{boxplot_lars_kryds}
 
 
-\imgfigh{boxplot_lasso_kryds.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisatioer af $\widehat{\boldsymbol{\beta}}^{lasso}  \del{\widehat{f}_{\text{1sd}}}$. Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}{boxplot_lars_lasso_kryds}
+\imgfigh{boxplot_lasso_kryds.pdf}{1}{Til venstre vises et boxplot af 1000 bootstrap realisatioer af $\widehat{\boldsymbol{\beta}}^{lasso}  \del{CV}$. Til højere illustreret andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}{boxplot_lars_lasso_kryds}
+
+
+%%%%%%% TG LARS kryds %%%%%%%
+
+\imgfigh{resid_lars_tg_kryds.pdf}{0.7}{Analyse af de standardiserede residualer for LARS$_{TG}$ (CV) løst med \ref{eq:tg_beta} }{resid_lars_tg_kryds}
+
+
 
 
 \input{fig/tab/lars_kryds_res}

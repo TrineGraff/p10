@@ -3,9 +3,9 @@
 \scalebox{0.8}{
 \begin{tabular}{lccccc| lccccc} 
 \toprule
-\multicolumn{6}{c}{LARS}  & \multicolumn{6}{c}{LARS med lasso modifikation} \\ \midrule
+\multicolumn{6}{c}{LARS (BIC)}  & \multicolumn{6}{c}{LARS med lasso modifikation (BIC)} \\ \midrule
 & Værdi & BIC & $p$ & R$^2_{\text{adj}}$ & LogLik& & Værdi & BIC & $p$ & R$^2_{\text{adj}}$ & LogLik \\
-$\widehat{f}_\text{BIC}$ & 0.2623 & $-6.0925$ & 20 &94.43  \% & 975.2909  &$\widehat{f}_\text{BIC}$ &  0.2604 &$-6.1627$& 17 &  94.46 \% & 974.9938 \\ \bottomrule
+$f_\text{BIC}$ & 0.2623 & $-6.0925$ & 20 &94.43  \% & 975.2909  &$f_\text{BIC}$ &  0.2604 &$-6.1627$& 17 &  94.46 \% & 974.9938 \\ \bottomrule
  \end{tabular}}
-\caption{Værdien af $\widehat{f}_\text{BIC}$, antallet af parametre, BIC, justerede R$^2$  og log-likelihood for R$^2$ for LARS uden og med lasso modifikation.} \label{tab:bic_lars}
+\caption{Værdien af $f_\text{BIC}$, antallet af parametre, BIC, justerede R$^2$  og log-likelihood for R$^2$ for LARS uden og med lasso modifikation.} \label{tab:bic_lars}
 \end{table}

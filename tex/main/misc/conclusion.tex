@@ -12,11 +12,16 @@ For at finde den optimale model anvendes en 10-fold krydsvalidering og BIC.
 Desuden udføres inferens i lasso modellen.
 
 
+
+
+
 Algoritmerne returnerer omtrent samme resultat for lasso problemet.
 Out-of-sample finder vi, at adaptive lasso modellerne er bedst, efterfulgt af lasso modellerne.
 Som benchmark model betragtes en faktor modellen.
 Vi finder at en autoregressiv model af orden 4 er signifikant dårligere end benchmark modellen, mens alle lasso baseret modellerne er signifikant bedre end benchmark modellen.
 
+
+Dårlig benchmark model
 
 \paragraph{}
 Vi kunne også have løst elastisk net, group lasso og adaptive lasso med LARS algoritmen, og sammenlignet resultaterne herfor, med resultaterne returneret af coordinate descent.

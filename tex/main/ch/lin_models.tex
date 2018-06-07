@@ -10,7 +10,7 @@ Lad \(y_i\) betegne responsvariablen og lad \(\tx_i\) være en \(p \times 1\) ve
 \widehat{\tbeta}^\text{OLS} = \argmin_{\beta_0, \tbeta \in \R^p} \cbr{\sum_{i=1}^n \del{y_i - \beta_0 - \sum_{j=1}^p x_{ij} \beta_j}^2}. \label{eq:OLS}
 \end{align}
 %
-Ofte standardiseres prædiktorerne, således at de er centreret \( \del{\frac{1}{n} \sum_{i=1}^n x_{ij} = 0}\) og varians lig 1 \( \del{\frac{1}{n} \sum_{i=1}^n x_{ij}^2=1}\).
+Ofte standardiseres prædiktorerne, således at de er centreret \( \del{\frac{1}{n} \sum_{i=1}^n x_{ij} = 0}\) og har varians lig 1 \( \del{\frac{1}{n} \sum_{i=1}^n x_{ij}^2=1}\).
 Hvis ikke prædiktorerne standardiseres, da vil estimaterne afhænge af enhederne, som prædiktorerne er målt i.
 For fuldstændighed centreres responsvariablen også \( \del{\frac{1}{n} \sum_{i=1}^n y_{i} = 0} \).
 Hermed kan vi se bort fra skæringen $\beta_0$ i det givne optimeringsproblem.
@@ -30,7 +30,7 @@ Som bekendt er løsningen hertil givet ved
 OLS estimatoren er unbiased, men har ofte høj varians. 
 Prædiktionen af responsvariablen kan ofte forbedres, hvis koefficienterne mindskes eller sættes lig 0.
 Dette vil give estimatoren lidt bias, men reducere variansen, hvilket forbedrer bias-variance tradeoff og dermed også prædiktionen.
-En anden årsag til, at vi leder efter alternativer til OLS er, at med et højt antal prædiktorer ønsker vi, at bestemme en mindre delmængde af disse, som siger mest om responsvariablen, dvs forbedre fortolkningen.
+En anden årsag til, at vi leder efter alternativer til OLS er, at vi ønsker at udvælge en delmængde af de forklarende variable, som har størst betydning for responsvariablen, dvs forbedre fortolkningen.
 
 Hvis \(p > n\), da kan \(\X\) ikke have fuld rang.
 Det betyder, at $\X^T \X$ er singulær, og der findes derfor ikke en entydig estimator for OLS.

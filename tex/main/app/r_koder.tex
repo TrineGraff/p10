@@ -45,7 +45,7 @@ Funktionen \texttt{fixedLassoInf} fra \Rlang-pakken \texttt{selectiveInference} 
 \begin{align*}
 \argmin_{\tbeta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \tbeta \Vert_1}.
 \end{align*}
-Hvorimod \texttt{glmnet} multiplicerer først led med faktoren \(\frac{1}{n}\).
+Hvorimod \texttt{glmnet} multiplicerer første led med faktoren \(\frac{1}{n}\).
 Dette betyder, at efter vi har kørt \texttt{glmnet}, da skal vi sætte \texttt{beta = coef(obj, s=lambda/n)[-1]}, hvor \texttt{obj} er objektet, som er returneret af \texttt{glmnet} og \texttt{[-1]} fjerner skæringen, som \texttt{glmnet} altid giver som første komponent, for at finde det beta der svarer til en lambda værdi.
 %
 \rfile[firstline=3,lastline=7]{../R/Rkoder/unrate/shrinkage_metoder/coordinate/lasso/krydsvalidering/TG/insample.R}

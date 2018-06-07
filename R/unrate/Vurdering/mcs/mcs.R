@@ -1,4 +1,4 @@
-source("../scripts/setup_data.R")
+source("setup_data.R")
 library(tidyverse)
 library(gglasso)
 library(MCS)

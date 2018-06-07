@@ -2,7 +2,7 @@
 \textit{I dette kapitel gives en kort introduktion af faktor modellen, da den betrages som benchmark model. Kapitlet er hovedsagligt baseret på \citep{stock_watson_2002a} og kapitel 9 i \citep{faktorbook}.} \\[4mm]
 %
 Det essentielle formål med faktor analyse er at beskrive kovariansen mellem et stort antal variable udfra få underliggende faktorer.
-Faktor modellen er motiveret af følgende argument: antag variablerne kan opdeles i grupper udfra deres korrelation, således at variable i en gruppe har høj parvis korrelation, men variablerne har relativ lav korrelation med variabler i andre grupper.
+Faktor modellen er motiveret af følgende argument: antag variablerne kan opdeles i grupper udfra deres korrelation, således at variable i en gruppe har høj parvis korrelation, mens variablerne har relativ lav korrelation med variabler i andre grupper.
 Da vil hver gruppe af variable repræsentere én underliggende faktor.
 Nedenfor introduceres den generelle definition af faktor modellen.
 %
@@ -162,7 +162,7 @@ Vi antager ikke normalitet, men antagelse \ref{ass:faktor}.c) begrænser større
 For prædiktionsligningen \eqref{eq:factor_model_forecast} betragter vi følgende antagelser.
 %
 \begin{ass}[Prædiktionsligning] \label{ass:forecasting_ligning}
-Lad \(\tz_t = \del{\tF_t^T \boldsymbol{\omega}_t^T}^T\) og \(\tbeta = \del{\tbeta_{\tF}^T \tbeta_{\boldsymbol{\omega}}^T}^T\) være \(\del{r+m} \times 1\) vektorer, da gælder følgende
+Lad \(\tz_t = \del{\tF_t^T \ \boldsymbol{\omega}_t^T}^T\) og \(\tbeta = \del{\tbeta_{\tF}^T \ \tbeta_{\boldsymbol{\omega}}^T}^T\) være \(\del{r+m} \times 1\) vektorer, da gælder følgende
 \begin{enumerate}[label=\alph*)]
 \item \(\E{\tz_t \tz_t^T} = \boldsymbol{\Sigma}_{\tz \tz} = \begin{pmatrix}
 \boldsymbol{\Sigma}_{\tF \tF} & \boldsymbol{\Sigma}_{\tF \tw} \\
@@ -176,7 +176,7 @@ Lad \(\tz_t = \del{\tF_t^T \boldsymbol{\omega}_t^T}^T\) og \(\tbeta = \del{\tbet
 \end{ass}
 %
 Antagelse \ref{ass:forecasting_ligning}.a)-\ref{ass:forecasting_ligning}.c) medfører, at regressionen af \(y_{t+h}\) på \(\tz_t^T\) giver konsistente OLS estimatorer.
-De yderligere antagelser er nødvendige for at sikre konsistente OLS estimatorer af regressionen af \(y_{t+h}\) på \(\widehat{\tz}_t^T =\del{\widehat{\tF}_t^T \tw_t^T}\), hvor \(\tF_t\) altså ikke er observeret, der er givet ved \(\widehat{\tbeta} = \del{\sum_{t=1}^{T-h} \widehat{\tz}_t \widehat{\tz}_t^T}^{-1} \del{\sum_{t=1}^{T-h} \widehat{\tz}_t y_{t+h}}\).
+De yderligere antagelser er nødvendige for at sikre konsistente OLS estimatorer af regressionen af \(y_{t+h}\) på \(\widehat{\tz}_t^T =\del{\widehat{\tF}_t^T \ \tw_t^T}\), hvor \(\tF_t\) altså ikke er observeret, der er givet ved \(\widehat{\tbeta} = \del{\sum_{t=1}^{T-h} \widehat{\tz}_t \widehat{\tz}_t^T}^{-1} \del{\sum_{t=1}^{T-h} \widehat{\tz}_t y_{t+h}}\).
 %Inden prædiktionen skal vi estimere faktorerne og bestemme antallet af faktorer.
 
 \subsection{Konsistens af estimatorer}
@@ -247,11 +247,9 @@ Dette er tab af generalitet, da flere metoder konsistent estimerer antallet af f
 %
 \begin{thm} \label{thm:factorthm2}
 Lad antagelse \ref{ass:forecasting_ligning} og betingelserne i sætning \ref{thm:factorthm1} være opfyldt. 
-Lad \(\widehat{\tbeta} =\begin{pmatrix}
-\widehat{\tbeta}_{\tF}^T & \widehat{\tbeta}_{\tw}^T
-\end{pmatrix}^T\) betegne OLS estimaterne af  \(\tbeta =\begin{pmatrix}
-\tbeta_{\tF}^T & \tbeta_{\tw}^T
-\end{pmatrix}^T\) fra regressionen af \(y_{t+h}\) på \(\widehat{\tz}_t^T\) for \(t=1, \ldots, T-h\).
+Lad \(\widehat{\tbeta} =\del{
+\widehat{\tbeta}_{\tF}^T \ \widehat{\tbeta}_{\tw}^T}^T\) betegne OLS estimaterne af  \(\tbeta =\del{
+\tbeta_{\tF}^T \ \tbeta_{\tw}^T}^T\) fra regressionen af \(y_{t+h}\) på \(\widehat{\tz}_t^T\) for \(t=1, \ldots, T-h\).
 %Lad \(\widehat{\tbeta}_{\tF}\) og \(\widehat{\tbeta}_{\tw}\) betegne OLS estimaterne af \(\tbeta_{\tF}\) og \(\tbeta_{\tw}\)
 Da gælder følgende
 \begin{enumerate}[label=\alph*)]

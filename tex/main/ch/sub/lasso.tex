@@ -64,7 +64,7 @@ Datasættet, som vi betegner diabetes data, er inkluderet for at underbygge teor
 \begin{eks}
 På figur \ref{fig:diabetes_koef} illustreres koefficientstierne for henholdsvis lasso og ridge regression for diabetes data.
 Heraf ses at lasso udfører variabeludvælgelse og mindsker koefficienterne, mens ridge regression blot mindsker koefficienterne.
-Koefficientstierne udregnes med coordinat descent, som vil vi beskrive i afsnit \ref{sec:theory_coordinatedescent}.
+Koefficientstierne udregnes med coordinate descent, som vil vi beskrive i afsnit \ref{sec:theory_coordinatedescent}.
 %
 \imgfigh{diabetes_lasso_ridge.pdf}{0.9}{Koefficientstierne for lasso og ridge regression som funktion af $\log \del{\lambda}$ for diabetes data.}{diabetes_koef}
 
@@ -195,7 +195,7 @@ Da kan vi omskrive \eqref{eq:2.10} til
 %
 \subsubsection{Flere prædiktorer: cyclic coordinate descent}
 Med intuitionen  fra det univariate tilfælde, kan vi løse lasso problemet \eqref{eq:2.5} med flere prædiktorer.
-Vi gennemløber prædiktorerne, hvor koefficient \(\beta_j\) opdateres i det \(j\)'te step ved at minimere objektfunktionen i dette koordinat, mens de øvrige koefficienter $\cbr{\widehat{\beta}_k, k \neq j}$ fastholdes i deres nuværende værdier. 
+Vi gennemløber prædiktorerne, hvor koefficient \(\beta_j\) opdateres i det \(j\)'te trin ved at minimere objektfunktionen i dette koordinat, mens de øvrige koefficienter $\cbr{\widehat{\beta}_k, k \neq j}$ fastholdes i deres nuværende værdier. 
 
 
 Opskriv objektfunktionen i \eqref{eq:2.5} som
@@ -209,7 +209,7 @@ Den j'te koefficient opdateret ved
 \end{align}
 %hvor \(r_i = y_i - \sum_{j = 1}^p x_{ij} \widehat{\beta}_j \) er de fulde residualer.
 Den beskrevne algoritme svarer til metoden \textit{cyclical coordinate descent}.
-Fra opdateringen \eqref{eq:2.14} ser vi, at algoritmen foretager en univariat regression af den partial residual på hver prædiktor, og gennemløber prædiktorerne indtil konvergens.
+Fra opdateringen \eqref{eq:2.14} ser vi, at algoritmen foretager en univariat regression af den partielle residual på hver prædiktor, og gennemløber prædiktorerne indtil konvergens.
 
 %Hvis prædiktorerne er ortogonale, dvs $\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{x}_k \right\rangle = 0$ for alle $j \neq k$, da reduceres opdateringen \eqref{eq:2.14} til
 %\begin{align}
@@ -217,8 +217,8 @@ Fra opdateringen \eqref{eq:2.14} ser vi, at algoritmen foretager en univariat re
 %\end{align}
 %dermed er $\widehat{\beta}_j$ blot soft-thresholded version af det univariate mindste kvadraters estimat af $\mathbf{y}$ regresseret imod $\mathbf{x}_j$, som bevises i ---. 
 
-Coordinate descent er særlig hurtig til at løse lasso problemet, da den koordinatvise minimizers er tilgængelig \eqref{eq:2.14}, og dermed er en iterativ søgning langs hver koordinat ikke nødvendig.
-Derudover udnytter coordinat descent at lasso giver sparse løsninger.
+Coordinate descent er særlig hurtig til at løse lasso problemet, da en iterativ søgning langs hver koordinat ikke er nødvendig, idet vi betragter \eqref{eq:2.14}.
+Derudover udnytter coordinate descent, at lasso giver sparse løsninger.
 For tilstrækkelige høje værdier af \(\lambda\) er de fleste koefficienter lig $0$.
 
 \textit{Homotopy metoder} er en alternativ teknisk til at løse lasso problemet. 
@@ -249,8 +249,8 @@ Givet en model fitting metode \(\delta\), lad \(\widehat{\y} = \delta \del{\y}\)
 \begin{align}
 \text{df}\del{\widehat{\y}} := \frac{1}{\sigma^2} \sum_{i=1}^n \text{Cov}\del{\widehat{y}_i, y_i}. \label{eq:df_lasso}
 \end{align}
-Antallet af frihedsgrader svarer derfor til indflydelsen hver responsvariabel har på dens prædiktion.
-Desto bedre modellen tilpasser data, desto højere antal frihedsgrader.
+Antallet af frihedsgrader svarer derfor til, hvor meget indflydelse hver responsvariabel har på sin prædiktion.
+Desto bedre modellen tilpasser data, desto større antal frihedsgrader.
 Det kan vises, at for lasso med en fast strafparameter \(\lambda\) er antallet af ikke-nul koefficienter \(k_\lambda\) et unbiased estimat af antallet af frihedsgrader \citep{df_lasso}.
 %
 %Som nævnt ovenfor anvender forward-stepwise regression mere end \(k\) frihedsgrader efter \(k\) step.

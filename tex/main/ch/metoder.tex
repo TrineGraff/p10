@@ -106,9 +106,9 @@ MAE og MSE kan betragtes som tabsfunktioner, da de måler en afvigelse fra de ob
 Tabsfunktionerne vil være lig 0 for en perfekt prædiktion, og ellers vil de have en positiv værdi, derfor foretrækkes modeller med lav MAE eller MSE.
 
 Udfra tabsfunktionerne kan vi betragte et gennemsnitlig tabs ratio mellem en given model og benchmark modellen, som er givet ved
-\begin{align*}
-R^{\text{MAE}} = \frac{\text{MAE}^{\text{Alternativ}}}{\text{MAE}^{\text{Benchmark}}} \qquad R^{\text{\text{MSE}}} = \frac{\text{MSE}^{\text{Alternativ}}}{\text{MSE}^{\text{Benchmark}}}.
-\end{align*} 
+\begin{align}
+R^{\text{MAE}} = \frac{\text{MAE}^{\text{Alternativ}}}{\text{MAE}^{\text{Benchmark}}} \qquad R^{\text{\text{MSE}}} = \frac{\text{MSE}^{\text{Alternativ}}}{\text{MSE}^{\text{Benchmark}}}. \label{eq:gennemsnitligtabsratio}
+\end{align} 
 Hvis et gennemsnitlig tabs ratio er mindre end 1, da er den alternative model bedre end benchmark modellen og omvendt hvis værdien er større end 1. 
 Derudover vil vi betragte et rullende gennemsnitligt tabs ratio, som vi betegner $R_t^\text{MAE}$ og $R_{t}^\text{MSE}$, for at vurdere modellernes prædiktion fra observation til observation.
 %

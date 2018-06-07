@@ -1,38 +1,18 @@
-\chapter{Conclusion}
+\chapter{Konklusion}
 
-In this project we modelled the realized volatility of day-ahead electricity prices for six markets, following the methodology of \citep{wiley17}.
-While the established theory mainly consider intraday returns due to their continuous behaviour, we applied the same theory for day-ahead prices and achieved similar results.
-We considered two transformations of RV, the logarithm and the square root, and we observed the logarithmic RV to have long memory, while the square root did not.
+Problematikken som betragtes i speciale et at præcisere prædiktionen af en makroøkonomisk variabel som afhænger af et størst antal forklarende variable.
 
-We modelled the logarithmic RV with ARFIMA, HAR-RV, and HAR-CV-JV models.
-Since the square root of RV only had very short memory, none of the models performed well, and we focused on the logarithmic RV.
-For the HAR-CV-JV models we applied three different decompositions, based on different, jump-robust tests.
-Out of these, we saw the CPR decomposition of \citep{corsi} to be the test that lead to the best performing models, both in- and out-of-sample.
-In the set of superior models for forecasting, the ADS and BNS based models appeared only scarcely, while the CPR based models were considered superior for all markets.
 
-For error distributions, we considered both normal and GARCH innovations.
-Here, we observed GARCH innovations to improve the in-sample fit, but when forecasting, the GARCH models only performed slightly better or on par with models with normal errors.
-EGARCH innovations, which could account for leverage effects, resulted in models that generally performed similarly to models with regular GARCH innovations.
-The leverage parameter was estimated to be positive, implying an inverse leverage effect, i.e. positive shocks had a greater effect than negative shocks.
+Faktor modellen er 
+Vi finder, at lasso
 
-ARFIMA models were included due to the observed long memory.
-We found the HAR models to perform on par or better than the ARFIMA models both in- and out-of-sample, making them preferable for practical applications, as they generally were faster to estimate than the ARFIMA models.
+
+
+Adaptive lasso som opfylder orakelegenskaberne.
+
 
 \paragraph{}
-Overall, we saw the stylized facts reflected in the models that performed the best in our analysis;
-the most important aspect of the models was their ability to capture jumps, and the CPR based HAR models, which were especially good at identifying jump days, indeed outperformed the other models overall.
-Error distributions were found to be non-normal and heavy-tailed, so GARCH extensions, especially those conditionally Student's t-distributed, improved the models some.
+Specialet kan udvides ved at betragte 
 
-\newpage
-\section{Topics for Further Research}
-
-We considered a simple dummy approach for capturing the seasonality in the RV, but as the descriptive statistics of residual revealed, seasonal behaviour appeared to persist.
-Extensions to the HAR models with a stronger ability to model seasonality could be considered.
-
-Since day-ahead prices are determined 24 hours at a time, one could investigate a different way of modelling them that did not assume them to follow a continuous process.
-Modelling a day of prices could be done by considering them to be panel data, or as a 24-dimensional time series.
-
-Additionally, one could try modelling the prices directly, and in doing so include external regressors such as fundamentals.
-
-Where we considered the markets independently of each other, in reality the prices of a country affects the prices of the neighbouring countries.
-An interesting extension could be to model the prices of several countries simultaneously, and see how they correlate.
+Vi kunne også have løst elastisk net, group lasso og adaptive lasso med LARS algoritmen.
+Prædikteret flere period frem

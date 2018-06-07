@@ -1,53 +1,61 @@
 \chapter{Out-of-sample} \label{ch:out-of-sample}
-I dette afsnit vil vi betragte modellernes prædiktion.
-Som nævnt prædikteres arbejdsløshedsraten one-step-ahead med et rullende forecast, hvor vi udvider estimerings vinduet med én observation. 
+I dette kapitel vil vi betragte modellernes prædiktion.
+Som nævnt prædikteres arbejdsløshedsraten one-step-ahead, hvor estimeringsvinduet udvides med én observeret observation per prædiktion.
 
-Arbejdsløshedsraten og de prædikterede værdier sammenlignes med MAE, MSE og et gennemsnitlig tabs ratio mellem hver model og benchmark modellen for både MAE og MSE.
-Som nævnt er faktor modellen valgt udfra IC\(_2\) benchmark model.
+Arbejdsløshedsraten og de prædikterede værdier sammenlignes med MAE, MSE og et gennemsnitlig tabs ratio mellem hver model og benchmark modellen givet i \eqref{eq:gennemsnitligtabsratio}.
+Faktor modellen valgt udfra IC\(_2\) betragtes somsagt som benchmark model.
 Resultaterne af dette er givet i tabel \ref{tab:mae_mse_vurdering}.
 
 \input{fig/tab/mae_mse_vurdering}
-Adaptive lasso med lasso vægte (CV) har den mindste MAE og MSE. 
-Vi ser dog, at MAE og MSE for modellerne adaptive lasso med OLS (CV), adaptive lasso med OLS (BIC) og adaptive lasso med lasso vægte (BIC) er meget tæt på. 
+
+Adaptive lasso med lasso vægte (CV) har mindst MAE og MSE.
+
+, tæt efterfulgt af adaptive lasso med OLS vægte (CV), adaptive lasso med OLS vægte (BIC) og adaptive lasso med lasso vægte (BIC). 
 Generelt kan vi se, at den indbyrdes forskel i MAE og MSE for lasso modellerne og dens generaliseringer er forholdsvis lille.
  
 Vi ser, at kun AR(4) og faktor model (IC$_1$) er dårligere end benchmarkmodellen. 
+Ifølge begge tabsfunktioner præsterer  ......
 
-For at vurdere modellernes prædiktion i forhold til benchmark modellen fra måned til måned, betragtes et rullende gennemsnitlig fejl ratio.
-Et rullende gennemsnitlig absolut fejl ratio for samtlige modeller illustreres på figur \ref{fig:rolling_mae}.
-Heraf ses at AR(4) prædikterer dårligere end benchmark modellen over hele testmængden.
+For at vurdere modellernes prædiktion i forhold til benchmark modellens fra måned til måned betragtes et rullende gennemsnitlig tabs ratio.
+Figur \ref{fig:rolling_mae} illustrerer et rullende gennemsnitlig absolut tabs ratio for hver model. 
+Heraf ses, at AR(4) prædikterer dårligere end benchmark modellen over hele testmængden.
 Også faktor modellen valgt udfra IC$_1$ prædiktere dårligere end benchmark modellen med undtagelse af maj, juni og august i 2006.
 Derudover ser vi, at ridge regression modellerne prædikterer bedre end benchmark modellen, mens alle lasso baseret modeller klart har bedre prædiktion end de øvrige modeller.
 %
-\imgfigh{rolling_mae.pdf}{1}{Rullende gennemsnitlige absolutte fejl ratio.}{rolling_mae}
+\imgfigh{rolling_mae.pdf}{1}{Rullende gennemsnitlig absolut tabs ratio.}{rolling_mae}
 %
 
+Et rullende gennemsnitlig kvadreret tabs ratio viser samme konklusion og er dermed undladt.
 %
 \imgfigh{rolling_mse.pdf}{1}{Rullende gennemsnitlige kvadrerede fejl ratio.}{rolling_mse}
 %
 
 \section{Diebold Mariano test}
 I tabel \ref{tab:dm_test} ses resultaterne fra Diebold-Mariano testen, hvor hver model testes imod benchmark modellen.
-Heraf ses at nulhypotesen ikke kan afvises for faktor modellen valgt udfra IC\(_1\), hvilket vil sige, at modellen ikke er signifikant forskellig fra benchmark modellen.
+Heraf ses at nulhypotesen ikke kan afvises for faktor model (IC\(_1\)), hvilket vil sige, at modellen ikke er signifikant forskellig fra benchmark modellen.
 For de resterende modeller afvises nulhypotesen, hvilket betyder, at disse ikke er signifikant forskellige fra benchmark modellen.
 %
 \input{fig/tab/dm_test}
 %
 \newpage
 \section{MCS} 
-Herefter vil vi teste alle modellerne imod hinanden, hvortil vi betragter model confidence procedure.
+Herefter vil vi teste alle modeller imod hinanden, hvortil vi betragter model confidence proceduren.
 Proceduren udføres for \(\alpha = 0.1\) og \(\alpha = 0.2\), teststørrelserne \(\text{T}_\text{R}\) og \(\text{T}_\text{max}\) og 5000 bootstrapped samples.
 I tabel \ref{tab:mcs_tab} er modellerne i 80\% og 90\% MCS angivet for \(\text{T}_\text{R}\) og \(\text{T}_\text{max}\).
 Vi har testet for absolutte fejl og kvadrerede fejl, hvilket gav samme resultat.
-For alle teste elimineres faktor modellen valgt udfra IC\(_1\) fra MCS.
-For teststørrelsen \(\text{T}_\text{R}\) elimineres yderligere ridge regression med CV og BIC for både \(\alpha = 0.1\) og \(\alpha = 0.2\).
-For teststørrelsen \(\text{T}_\text{max}\) elimineres foruden faktor modellen valgt udfra IC\(_1\) også LARS algoritmen med lasso modifikation med CV for \(\alpha = 0.2\), men kun faktor modellen valgt udfra IC\(_1\) for \(\alpha = 0.1\).
+For alle teste elimineres faktor model (IC\(_1\)) fra MCS.
+For teststørrelsen \(\text{T}_\text{R}\) elimineres yderligere ridge regression (CV) og ridge regression (BIC) for både \(\alpha = 0.1\) og \(\alpha = 0.2\).
+For teststørrelsen \(\text{T}_\text{max}\) elimineres foruden faktor model (IC\(_1\)) også lasso LARS (CV) for \(\alpha = 0.2\), men kun faktor model (IC\(_1\)) for \(\alpha = 0.1\).
 %
 \input{fig/tab/mcs_tab}
 %
 
 \section{Oversigt over out-of-sample resultater}
-Vi ser, at modellen adaptive lasso med lasso vægte (CV) er den der begår sig bedst i forhold MAE og MSE. 
+Ifølge MAE og MSE prædikterer adaptive lasso med lasso vægte (CV) bedst.
+
+Kun faktor model (IC\(_1\)) kan ikke afvises til at være signifikant fra benchmark modellen.
+For MCS proceduren elimineres faktor model (IC\(_1\)) i alle tilfælde.
+
 Der er dog ikke en stor forskel på de resterende 3 adaptive lasso modeller, hvor de også er de modeller med færreste antal parametre. 
 
 Ridge regression, som inkluderer alle variabler, er også dem der prædikterer dårligst af lasso og dens generaliseringer. 

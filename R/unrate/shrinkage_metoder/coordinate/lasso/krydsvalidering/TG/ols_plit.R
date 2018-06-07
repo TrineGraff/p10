@@ -24,15 +24,13 @@ model1Frame <- data.frame(Variable = name,
                           ci_low = ci_kryds[,1],
                           ci_up = ci_kryds[,2],
                           modelName = "Lasso (CV) interval",
-                          punkt = coef_1sd[idx_hat], 
-                          par_punkt = fixed_lasso_kryds$coef0)
+                          punkt = fixed_lasso_kryds$coef0)
 
 model2Frame <- data.frame(Variable = name,
                           ci_low = cf_lm[,1],
                           ci_up = cf_lm[,2],
                           modelName = "OLS interval", 
-                          punkt = lm$coefficients, 
-                          par_punkt = fixed_lasso_kryds$coef0)
+                          punkt = fixed_lasso_kryds$coef0)
 
 
 allModelFrame_nu = data.frame(rbind(model1Frame, model2Frame))
@@ -43,10 +41,11 @@ kryds = ggplot(allModelFrame_nu, aes(colour = modelName)) +
   coord_flip() +
   geom_linerange(aes(x = Variable, ymin = ci_low, ymax = ci_up),
                  lwd = 1, position = position_dodge(width = 1/2)) +
-  xlab("") +
+  geom_point(aes(x = Variable, y = punkt), lwd = 1, position = position_dodge(width = 1/2)) +
+  xlab("") + ylab(" ") +
   theme(legend.position = "none") + 
   theme(axis.text.y = element_text(hjust = 1, colour = col_plot)) +
-  ggtitle("Lasso (CV)")
-  
+  ggtitle(expression(Lasso[TG](CV)))
+
 
 grid.arrange(kryds, bic, ncol = 2)

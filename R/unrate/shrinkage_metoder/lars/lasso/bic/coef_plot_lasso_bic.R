@@ -6,7 +6,7 @@ source("shrinkage_metoder/lars/lasso/bic/insample.R")
 coef_lasso = coef(lasso_fit, s = lasso_bic$f_hat , mode = "fraction")
 which(coef_lasso != 0)
 
-coef_lasso = data.table("LARS med lasso modifikation" = coef_lasso)
+coef_lasso = data.table("lasso LARS (BIC)" = coef_lasso)
 coef_lasso[, feature := colnames(x_train)]
 
 koef_lasso <- coef_lasso[feature == "DPCERA3M086SBEA" |feature == "IPDMAT" 
@@ -21,8 +21,8 @@ koef_lasso <- coef_lasso[feature == "DPCERA3M086SBEA" |feature == "IPDMAT"
 
 to_plot_lasso <- melt(koef_lasso, id.vars = "feature", variable.names = "variable", value.name = "coefficient")
 col_plot_lasso = c("red3", "blue3", "blue3", "blue3", "cadetblue2", "red3", "orange", "orange",
-                   "chartreuse4", "blue3", "blue3", "orange", "blue3", "blue3", "blue3" )
-
+                   "chartreuse4", "blue3", "blue3", "orange", "blue3", "blue3", "blue3", "blue3", "blue3" )
+length(col_plot_lasso)
 lasso = ggplot(to_plot_lasso, aes(x = feature, y = coefficient)) + 
   coord_flip() +
   geom_bar(stat = 'identity') +

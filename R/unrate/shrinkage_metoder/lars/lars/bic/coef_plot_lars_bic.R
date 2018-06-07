@@ -4,11 +4,11 @@ source("shrinkage_metoder/lars/getmin.R")
 source("shrinkage_metoder/lars/lars/bic/insample.R")
 library(data.table)
 set.seed(1)
-
-coef_lars = coef(lars_fit, s = lars_bic$s, mode = "step")
+lars_bic$f_hat
+coef_lars = coef(lars_fit, s = lars_bic$f_hat, mode = "fraction")
 which(coef_lars != 0)
 
-coef = data.table("LARS" = coef_lars)
+coef = data.table("LARS (BIC)" = coef_lars)
 coef[, feature := colnames(x_train)]
 
 
@@ -38,4 +38,4 @@ lars = ggplot(to_plot, aes(x = feature, y = coefficient)) +
   theme(axis.text.y = element_text(hjust = 1, colour = colplot))
 
 
-grid.arrange(lasso, lars)
+grid.arrange(lars, lasso)

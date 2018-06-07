@@ -2,7 +2,7 @@
 I dette appendiks inkluderes \Rlang-koderne. 
 
 \section{Autoregressiv model} \label{sec:auto}
-Funktionen \texttt{opt.orden} anvendes til at bestemme ordenen $p$ af en autoregressive model.  
+Funktionen \texttt{opt.orden} anvendes til at bestemme orden $p$ af en autoregressiv model.  
 \rfile[firstline=10,lastline=28]{../R/unrate/autoregressive_model/insample.R}
 %
 Vi anvender funktionen \texttt{beta} til at estimere parametrene udfra OLS. 
@@ -22,30 +22,41 @@ Funktionen \texttt{estFactors} bruges til at estimerer faktorerne.
 Vi anvender \texttt{ForecastFaktort} til prædiktion
 \rfile[firstline=20,lastline=44]{../R/unrate/faktor_model/outsample.R}
 
-\section{Lasso og dens generaliseringer} \label{sec:lasso}
-Koderne i dette afsnit er kun for lasso modellen, men i det det er samme princip for de resterende modeller viser vi ikke disse. 
-
-Vi bruger, som nævnt \texttt{glmnet} og \texttt{cv.glmnet} til at estimerer $\widehat{\lambda}$ ud fra krydsvalidering. 
-\rfile[firstline=9,lastline=10]{../R/unrate/shrinkage_metoder/coordinate/lasso/krydsvalidering/insample.R}
-
-Vi anvender funktionen \texttt{BIC} til at estimerer $\widehat{\lambda}$ ud fra  BIC
-\rfile[firstline=2,lastline=32]{../R/unrate/shrinkage_metoder/coordinate/bic.R}
-
+\section{Coordinate descent} \label{sec:lasso}
+Koderne i dette afsnit er kun anvendt for lasso modellen, men det er samme princip for de resterende modeller, så derfor vises de ikke . 
+Vi anvender funktionen \texttt{glmnet} fra \Rlang-pakken  af samme navn til at løse følgende problem. 
+\begin{align}
+\argmin_{\tbeta \in \R^p} \cbr{ \frac{1}{2n} \Vert \y - \X \tbeta \Vert_2^2 + \lambda \sbr{\frac{1}{2}(1- \alpha) \Vert \tbeta \Vert_2^2 + \alpha \Vert \tbeta \Vert_1}}. \label{eq:4.2}
+\end{align}
+%
+Vi anvender  funktionen  \texttt{cv.glmnet} til at udfører 10-fold krydsvalidering. 
+\rfile[firstline=9,lastline=10]{../R/Rkoder/unrate/shrinkage_metoder/coordinate/lasso/krydsvalidering/insample.R}
+%
+Vi anvender funktionen \texttt{BIC}, som udvælger den optimale model udfra BIC. 
+\rfile[firstline=2,lastline=32]{../R/Rkoder/unrate/shrinkage_metoder/coordinate/bic.R}
+%
 Til prædiktion anvender vi funktionen \texttt{Forecast} 
-\rfile[firstline=1,lastline=19]{../R/unrate/shrinkage_metoder/coordinate/forecasts.R}
+\rfile[firstline=1,lastline=17]{../R/Rkoder/unrate/shrinkage_metoder/coordinate/forecasts.R}
 
 
-\subsubsection{Inferens} \label{subsubsec:inferens}
-Funktionen \texttt{fixedLassoInf} udregner \(p\)-værdier og konfidensintervaller for lasso estimatet for en fast værdi af tuning parameteren \(\lambda\).
-Funktionen anvender ``standard'' lasso problemet
+\subsubsection{TG test} \label{subsubsec:inferens}
+Vi anvender TG testen på lasso modellen for en fast værdi af tuning parameteren 
+Funktionen \texttt{fixedLassoInf} fra \Rlang-pakken \texttt{selectiveInference}  anvender ``standard'' lasso problemet
 \begin{align*}
-\frac{1}{2} \Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \tbeta \Vert_1.
+\argmin_{\tbeta \in \R^p} \cbr{\frac{1}{2} \Vert \y - \X \tbeta \Vert_2^2 + \lambda \Vert \tbeta \Vert_1}.
 \end{align*}
 Hvorimod \texttt{glmnet} multiplicerer først led med faktoren \(\frac{1}{n}\).
 Dette betyder, at efter vi har kørt \texttt{glmnet}, da skal vi sætte \texttt{beta = coef(obj, s=lambda/n)[-1]}, hvor \texttt{obj} er objektet, som er returneret af \texttt{glmnet} og \texttt{[-1]} fjerner skæringen som \texttt{glmnet} altid giver som første komponent, for at finde det beta der svarer til en lambda værdi.
 %
-\rfile[firstline=5,lastline=8]{../R/unrate/shrinkage_metoder/coordinate/lasso/krydsvalidering/TG/insample.R}
+\rfile[firstline=3,lastline=7]{../R/Rkoder/unrate/shrinkage_metoder/coordinate/lasso/krydsvalidering/TG/insample.R}
 %
+
+\section{LARS} \label{subsec:lars}
+Koderne i dette afsnit er kun for LARS modellen, men det er samme princip for lasso LARS. 
+Vi bruger \texttt{lars} og \texttt{cv.lars} fra pakken \texttt{lars} til at udfører 10-fold krydsvalidering. 
+\rfile[firstline=9,lastline=12]{../R/Rkoder/unrate/shrinkage_metoder/lars/lars/krydsvalidering/insample.R}
+Vi anvender funktionen \texttt{larsBIC} til at vælge den optimale model udfra BIC. 
+\rfile[firstline=1,lastline=25]{../R/Rkoder/unrate/shrinkage_metoder/lars/bic_lars.R}
 
 
 

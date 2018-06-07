@@ -172,7 +172,6 @@ Lad
 \begin{align*}
 \gamma_j = -\frac{\widehat{\beta}_j}{\widehat{d}_j}, \qquad \text{og} \qquad \tilde{\gamma} = \min_{\gamma_j > 0} \cbr{\gamma_j}.
 \end{align*}
-------
 %
 %Antag vi netop har fuldendt et LARS step, som har givet en ny aktiv mængde \(\A\) som i \eqref{eq:lars_2.9}, og at det tilhørende LARS estimat \(\widehat{\tmu}_\A\) svarer til en lasso løsning \(\widehat{\tmu}^\text{lasso} = \X \widehat{\tbeta}^\text{lasso}\).
 %Lad
@@ -206,22 +205,15 @@ Lad
 %Der gælder, at \(c_{\tilde{j}}\) ikke kan ændre fortegn indenfor ét LARS trin da \(\abs{c_{\tilde{j}} \del{\gamma}} = \widehat{C} - \gamma A_\A> 0\) af \eqref{eq:lars_2.16}. \\[2mm]
 %%
 %\textbf{Lasso modifikation} \\
-Hvis \(\tilde{\gamma} < \widehat{\gamma}\), stop det igangværende LARS step i \(\gamma = \tilde{\gamma}\) og fjern \(\tilde{j}\) fra udregningen af den næste ensvinklede retning.
+Hvis \(\tilde{\gamma} < \widehat{\gamma}\), stop det igangværende LARS trin i \(\gamma = \tilde{\gamma}\) og fjern \(\tilde{j}\) fra udregningen af den næste ensvinklede retning.
 Dvs
 \begin{align*}
 \widehat{\tmu}_{\A_+} = \widehat{\tmu}_\A + \tilde{\gamma} \mathbf{u}_\A \quad \text{og} \quad \A_+ = \A - \cbr{\tilde{j}},
 \end{align*}
 istedet for \eqref{eq:lars_2.12}.
 
-Da variable kan .......
-LARS algoritmen med lasso modifikationen tillader den aktive mængde \(\A\) at aftage.
-Antallet er steps i LARS algoritmen med lasso modifikationen er dermed større end \(p\).
-
-
-% af \(\lambda\) med knuder i \(\lambda_1 \geq \lambda_2 \geq \cdots \geq \lambda_r \geq 0\).
-%I \(\lambda = \infty\) har løsningen \(\widehat{\tbeta}^\text{lasso} \del{\infty}\) ingen aktive variable, dvs \(\A = \emptyset\). 
-%Vi aftager \(\lambda\) og da markerer hver knude \(\lambda_k\) tilføjelsen eller fjernelsen af en variabel i den nuværende aktive mængde.
-%Derfor er den aktive mængde og fortegnene af de aktive variable konstant mellem knuderne.
+En mere detaljeret gennemgang af LARS med lasso modifikation kan findes i \citep{efron}.
+Da variable kan fjernes og tilføjes til den aktive mængde, er antallet af trin i LARS algoritmen med lasso modifikationen større end \(p\).
 
 \begin{eks}
 Figur \ref{fig:diabetes_lars} illustrerer koefficientstierne for LARS algoritmen uden og med lasso modifikationen, som funktion af fraktion af \(\ell_1\)-norm for diabetes data.

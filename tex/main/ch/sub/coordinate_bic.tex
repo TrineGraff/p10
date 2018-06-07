@@ -9,7 +9,7 @@ Justeret R$^2$ er igen størst for lasso (BIC) og mindst for ridge regression (B
 \input{fig/tab/bic_lambda}
 
 Figur \ref{fig:coef_bic_coord} vises de 17 estimerede koefficienter for lasso (BIC), 2 estimerede koefficienter for adaptive lasso med OLS vægte (BIC) og 3 estimerede koefficienter for adaptive lasso med lasso vægte (BIC).
-Adaptive lasso med OLS vægte (BIC) vælger variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}, mens adaptive lasso med lasso vægte (BIC) yderligere vælger variablen \textcolor{blue3}{lag1}. 
+Adaptive lasso med OLS vægte (BIC) vælger variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}, mens adaptive lasso med lasso vægte (BIC) yderligere vælger variablen \textcolor{blue3}{lag 1}. 
 Igen har variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} de største estimerede koefficienter, mens de resterende estimerede koefficienter er meget tæt på nul. 
 Vi har valgt ikke at inkludere de estimerede koefficienter for ridge regression (BIC) og group lasso (BIC), da det samme gør sig gældende for disse.
 
@@ -23,9 +23,9 @@ Fælles for alle er, at der er autokorrelation i det første lag.
 I tabel \ref{tab:res_shrinkage_tab} afvises residualerne at være uafhængige og JB testens nulhypotese om normalitet afvises også for alle med undtagelse af group lasso (BIC).
 
 Figur \ref{fig:boxplot_lasso_coord_bic} viser bootstrap resultaterne for variablerne udvalgt af lasso (BIC).
-Variablene \textcolor{cadetblue2}{CPIMEDSL}, \textcolor{orange}{TB6MS}, \textcolor{blue3}{USTRADE} og \textcolor{blue3}{CLAIMSx} fravælges over 50\% af bootstrap realisationerne, mens variablerne \textcolor{blue3}{lag 1}, \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} ofte vælges.
-I forhold til størrelsen af de estimerede koefficienter for lasso (BIC) er bootstrap resultaterne ikke overraskende. 
-Som nævnt tidligere har adaptive lasso konsistent variabeludvælgelse og derfor laves der ikke bootstrap for adaptive lasso med OLS vægte (BIC) og adaptive lasso med lasso vægte (BIC). 
+Variablene \textcolor{cadetblue2}{CPIMEDSL}, \textcolor{orange}{TB6MS}, \textcolor{blue3}{USTRADE} og \textcolor{blue3}{CLAIMSx} fravælges over 50\% af bootstrap realisationerne, mens variablerne \textcolor{blue3}{lag 1}, \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} meget ofte vælges.
+Resultaterne er ikke overraskende i forhold til størrelsen af de estimerede koefficienter for lasso (BIC).
+Som nævnt tidligere har adaptive lasso konsistent variabeludvælgelse, og derfor laves der ikke bootstrap for adaptive lasso med OLS vægte (BIC) og adaptive lasso med lasso vægte (BIC). 
 
 \subsubsection{TG testen}
 Resultaterne for TG testen er givet i tabel \ref{tab:fixedLassoInf_bic}.

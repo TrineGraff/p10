@@ -15,12 +15,10 @@ Tabel \ref{tab:est_faktor} viser antallet af faktorer, værdien af informationsk
 Vi observerer, at IC$_1$ vælger den mindst komplekse model, da den vælger det færreste antal faktorer, mens IC$_3$ vælger det maksimale antal faktorer. \footnote{For \(k_\text{max} = 50\) vælger IC\(_3\) stadig det maksimale antal faktorer. Da \(k<k_\text{max}\) betragtes faktor modellen valgt udfra IC\(_3\) ikke.} 
 
 Figur \ref{fig:ic1_res} og \ref{fig:ic2_res} viser en analyse af de standardiserede residualer for faktor modellerne.
-Vi observerer ganske få signifikante autokorrelationer, og af QQ-plottet ses, at residualerne har tungere haler end normalfordelingen.
-%
+Af QQ-plottet ses, at residualerne har tungere haler end normalfordelingen, som bekræftes i tabel \ref{tab:test_faktor}, hvor JB testens nulhypotesen om normalitet afvises.
+LB testen i lag 10 kan ikke afvise, at residualerne er uafhængige.
+
 \input{fig/tab/tab_faktor}
-%
-Dette bekræftes i tabel \ref{tab:test_faktor}, hvor vi observerer lav skewness og excess kurtosis. 
-For JB testen afvises nulhypotesen om normalitet, mens LB testens nulhypotesen om uafhængighed ikke kan afvises. 
 
 Tabel \ref{tab:factor_mse_tab} viser MAE og MSE for faktor modellernes prædiktion.
 Heraf ses at faktor model (IC\(_2\)) har mindst MAE og MSE.

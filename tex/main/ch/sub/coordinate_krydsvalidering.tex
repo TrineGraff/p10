@@ -1,14 +1,14 @@
 \subsection{Krydsvalidering}
 Funktionerne \texttt{cv.glmnet} og \texttt{cv.gglasso} fra pakkerne \texttt{glmnet} og \texttt{gglasso} udfører 10-fold krydsvalidering.
-Figur \ref{fig:cv_plot} illustrerer den gennemsnitlige krydsvalideringsfejl samt øvre og nedre standardafvigelse for hver værdier af $\log \del{\lambda}$ for lasso og dens generaliseringer. 
+Figur \ref{fig:cv_plot} illustrerer den gennemsnitlige krydsvalideringsfejl samt øvre og nedre standardafvigelse for hver værdi af $\log \del{\lambda}$ for lasso og dens generaliseringer. 
 De to lodrette stiplede linjer indikerer \(\lambda_{\text{min}}\) og \(\lambda_\text{1sd}\), hvor \(\lambda_{\text{min}}\) er værdien af \(\lambda\), som giver den mindste gennemsnitlige krydsvalideringsfejl og \(\lambda_\text{1sd}\) er den største værdi af \(\lambda\), således at fejlen er indenfor en standardafvigelse af minimum. 
-For elastisk net finder vi, at $\alpha =1$ giver den mindste krydsvalideringsfejl, som svarer til lasso modellen, derfor betragter vi ikke elastik net i dette afsnit. 
+For elastisk net finder vi, at $\alpha =1$ giver den mindste krydsvalideringsfejl, som svarer til lasso modellen og derfor betragter vi ikke elastisk net i dette afsnit. 
 For adaptive lasso med OLS og lasso vægte finder vi, at $\gamma = 0.5$ giver den mindste krydsvalideringsfejl. 
 
 \imgfigh{cv_plot.pdf}{1}{10-fold krydsvalideringsfejl som funktion af $\log \del{\lambda}$ for lasso og den generaliseringer. 
 De stiplede linjer betegner \(\lambda_\text{min}\) og \(\lambda_\text{1sd}\).}{cv_plot}
 %
-For at give et bedre overblik giver tabel \ref{tab:cv_tab} værdierne af $\log \del{ \lambda_{\min}}$ og $\log \del{ \lambda_{1\text{sd}}}$, gennemsnitlig krydsvalideringsfejl, antallet af parametre, justeret R$^2$ og log-likelihood for lasso og dens generaliseringer.
+For at give et bedre overblik giver tabel \ref{tab:cv_tab} værdierne af $\log \del{ \lambda_{\min}}$ og $\log \del{ \lambda_{1\text{sd}}}$, den gennemsnitlige krydsvalideringsfejl, antallet af parametre, justeret R$^2$ og log-likelihood for lasso og dens generaliseringer.
 
 
 \input{fig/tab/cv_tab} 
@@ -19,7 +19,7 @@ For ridge regression vælges \(\lambda_{\min}\) som tuning parameter, da den har
 For group lasso vælges lidt overraskende alle parametre med \(\lambda_\text{min}\), mens antallet af parametre reduceres med 7 for $\lambda_{1\text{sd}}$. 
 Disse 7 variable tilhører alle gruppe 5.
 Vi lader $\lambda_{1\text{sd}}$ være den optimale tuning parameter for group lasso, da den har det færreste antal parametre.
-For adaptive lasso med OLS og lasso vægte vælges blot to variable for \(\lambda_{1\text{sd}}\), derfor lader vi $\lambda_{1\text{sd}}$ være tuning parameteren.  
+For adaptive lasso med OLS og lasso vægte vælges blot to variable for \(\lambda_{1\text{sd}}\), derfor lader vi $\lambda_{1\text{sd}}$ være tuning parameteren for disse.  
 Justeret R\(^2\) er størst lasso (CV) og mindst for ridge regression (CV).
 
 På figur \ref{fig:coef_kryds_coord} vises de 14 estimerede koefficienter for lasso (CV) og de 2 estimerede koefficienter for adaptive lasso med OLS vægte (CV) og adaptive lasso med lasso vægte (CV).
@@ -32,16 +32,16 @@ Igen ser vi, at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16
 Farverne indikerer hvilken gruppe, variabler tilhører, og y-aksen er variablerne udvalgt af lasso (CV). }{coef_kryds_coord}
 
 Figur \ref{fig:resid_lasso_coord_kryds}-\ref{fig:resid_adap_ols_coord_kryds} viser en analyse af de standardiserede residualer for lasso og dens generaliseringer. 
-Vi ser samme tendens for alle modeller. Histogrammet og QQ-plottet indikerer tungere haler end normalfordelingen og vi observerer autokorrelation i første lag.
+Vi ser samme tendens for alle modeller. Histogrammet og QQ-plottet indikerer tungere haler end normalfordelingen, og vi observerer autokorrelation i første lag.
 Dette bekræftes i tabel \ref{tab:res_shrinkage_tab}, som viser skewness, excess kurtosis, $p$-værdier for JB testen og LB testen for de standardiserede residualer.
 Vi ser, at alle modeller har negativ skewness og excess kurtosis forskellige fra nul. 
-Derudover afvises JB testens nulhypotesen om normalitet for alle modeller med undtagelse af group lasso (CV), som har en lille skewness og excess kurtosis.
+Derudover afvises JB testens nulhypotesen om normalitet for alle modeller med undtagelse af group lasso (CV).
 For LB testen afvises nulhypotesen om uafhængighed for alle modeller.
 
 Figur \ref{fig:boxplot_lasso_coord_kryds} viser bootstrap resultaterne for variablerne udvalgt af lasso (CV).
-Variablerne \textcolor{orange}{TB6MS}, \textcolor{blue3}{PAYEMS} og \textcolor{red3}{DPCERA3M086SBEA} fravælges over 50\% af bootstrap realisationerne, mens variablerne  \textcolor{blue3}{lag 1}, \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} ofte vælges.
-Generelt fravælges variablerne, som ikke tilhører gruppe 2.
-Resultaterne er ikke overraskende i forhold til størrelsen af de estimerede koefficienter for lasso (CV).
+Variablerne \textcolor{blue3}{lag 1}, \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} udvælges ofte, hvilket stemmer overens med, at disse variable har de største estimerede koefficienter.
+Omvendt fravælges variablerne \textcolor{orange}{TB6MS}, \textcolor{blue3}{PAYEMS} og \textcolor{red3}{DPCERA3M086SBEA} over 60\% af bootstrap realisationerne. 
+Generelt har variablerne, som ikke tilhører gruppe 2, en større sandsynlighed for at blive fravalg.
 Da adaptive lasso har konsistent variabeludvælgelse (se definition \ref{defn:orakel}), vil variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} altid vælges, og derfor laves der ikke bootstrap for adaptive lasso med OLS vægte (CV) og adaptive lasso med lasso vægte (CV) .
 
 \subsubsection{TG testen}
@@ -52,7 +52,7 @@ Nulhypotesen afvises for variablerne \textcolor{blue3}{CLF16OV}, \textcolor{blue
 
 Figur \ref{fig:resid_tg_kryds} viser en analyse af de standardiserede residualer for lasso$_{TG}$ (CV). 
 Igen observeres autokorrelation i første lag, mens QQ-plottet indikerer tungere haler end normalfordeling. 
-Dette bekræftes også i tabel \ref{tab:res_shrinkage_tab}.
+Dette bekræftes i tabel \ref{tab:res_shrinkage_tab}.
 
 \input{fig/tab/fixedLassoInf}
 %

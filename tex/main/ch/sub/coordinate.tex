@@ -7,7 +7,7 @@ Funktionen genererer også en følge med 100 værdier af $\lambda$, men anvender
 Her anvendes kvadratroden af gruppens størrelse som straffaktor, som anbefales af \citep{group_lasso}.
 Funktionen kræver, at variablerne er opdelt i grupper, hvortil vi betragter grupperne, som er forslået af Michael McCracken, som ses i appendiks \ref{app:app_data}. 
 
-For at finde den optimale model anvendes 10-fold krydsvalidering og BIC til at estimere tuning parameteren $\lambda$.
+For at finde den optimale model anvendes krydsvalidering og BIC til at estimere tuning parameteren $\lambda$.
 Bemærk at for elastisk net og adaptive lasso har vi to tuning parametre, som skal estimeres. 
 For elastik net betragtes tuning parmetrene $\alpha$ og $\lambda$.
 Vi vælger en følge af 10 værdier af \(\alpha\), hvor $\alpha \in \sbr{0,1}$.
@@ -15,15 +15,13 @@ For hvert \(\alpha\) finder \(\lambda_\alpha\) udfra krydsvalidering og BIC.
 Dette giver en følge af 10 værdier af \(\lambda_\alpha\), hvorfra vi finder den optimale \(\lambda \in \lambda_\alpha\).
 Tilsvarende for adaptive lasso, hvor vi betragter tuning parametrene $\gamma$ og $\lambda$.
 Her lader vi $\gamma$ være lig 0.5, 1 og 2, som er forslået af \citep{adaptive_lasso}, og følger samme procedure.
-For adaptive lasso betragtes OLS og lasso vægte, således at for adaptive lasso med lasso vægte anvender vi kun de forklarende variable, som lasso har valgt. 
+For adaptive lasso betragtes OLS og lasso vægte, og dermed vil adaptive lasso med lasso vægte kun betragte variablerne udvalgt af lasso.
 
 I kapitel \ref{ch:statistisk_inferens} introduceres TG testen, som udfører inferens i lasso modellen for en fast værdi af tuning parameteren.
 Vi lader $\boldsymbol{\eta} = s_k \del{\textbf{X}^+_{\mathcal{A}_k}}^T \mathbf{e}_k$, således at nulhypotesen svarer til, at teste om koefficienten af den sidst tilføjede variabel er lig 0.
 Hertil anvendes funktionen \texttt{fixedLassoInf} fra \Rlang-pakken \texttt{selectiveInference}, som udregner \(p\)-værdier og konfidensintervaller for lasso estimatet.
-
-%Funktionen tager som input tuning parameteren og regressionskoefficienterne returneret af \textttt{glmnet} og estimerer parametrene jævnfør \eqref{eq:tg_beta}, hvilket resulterer i en ny model.
 Funktionen kan kun anvendes for lasso modellen og ikke dens generaliseringer. 
-\Rlang-koden for dette er givet i \ref{subsubsec:inferens}.
+\Rlang-koden for dette afsnit er givet i \ref{subsubsec:inferens}.
 \input{main/ch/sub/coordinate_krydsvalidering}
 \input{main/ch/sub/coordinate_bic}
 

@@ -3,11 +3,9 @@ Forecast = function(y, x, alpha, idx, lambda){
   m = 4 #antallet af lags
 
   fc = foreach(i = 1:n, .combine = rbind) %do%{
-    #expanding window
     X.in = x[1:((idx - m) + i - 1), ] 
     Y.res = y[(m + 1):(idx + i - 1)]
     X.out = x[((idx - m) + i), ]
-    # Regression Model #
     fit = glmnet(X.in, Y.res, family = "gaussian", alpha = alpha, 
                  intercept = FALSE, standardize = FALSE)
     beta = as.vector(coef(fit, s = lambda)) %>% .[-1] 

@@ -1,10 +1,7 @@
-eta = larinf$vmat
-teta = t(eta)
+source("shrinkage_metoder/lars/lars/forecastLarsTG.R")
+source("shrinkage_metoder/lars/lars/krydsvalidering/TG/insample.R")
 
-mu = larinf$y
-tmu = t(mu)
-s = larinf$sign
+fc = ForecastLarsTG(y, x, idx = 552, getmin_lars$lambda.1se)
 
-round(s * ( eta %*% mu ), digits = 3)
-
-
+c = tidy(fc)
+write.csv(c, file = "lars_TG_kryds.csv") 

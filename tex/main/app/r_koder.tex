@@ -53,11 +53,16 @@ Dette betyder, at efter vi har kørt \texttt{glmnet}, da skal vi sætte \texttt{
 
 \section{LARS} \label{subsec:lars}
 Koderne i dette afsnit er kun for LARS modellen, men det er samme princip for lasso LARS. 
-Vi bruger \texttt{lars} og \texttt{cv.lars} fra pakken \texttt{lars} til at udfører 10-fold krydsvalidering. 
+Vi bruger \texttt{lars} fra  \Rlang-pakken af samme navn til at udfører least angle regression.  Vi anvender funktionen \texttt{cv.lars} til et 10-fold krydsvalidering. 
 \rfile[firstline=9,lastline=12]{../R/Rkoder/unrate/shrinkage_metoder/lars/lars/krydsvalidering/insample.R}
-Vi anvender funktionen \texttt{larsBIC} til at vælge den optimale model udfra BIC. 
+Vi anvender funktionen \texttt{larsBIC}, som ydvælger den optimale model udfra BIC. 
 \rfile[firstline=1,lastline=25]{../R/Rkoder/unrate/shrinkage_metoder/lars/bic_lars.R}
+Til prædiktion anvendes også \texttt{Forecast} funktionen.
 
+\subsubsection{TG test} \label{subsubsec:inferens}
+Vi anvender TG testen på LARS modellen, hvor vi anvender funktionen \texttt{larInf} og \texttt{lar}  fra  \Rlang-pakken \texttt{selectiveInference}. 
+Funktionen \texttt{larInf} bruger et \texttt{lar}-argument, som har samme output som  \texttt{lars}, men bare med nogle ekstra udregninger, som er nødvendige for polyede udvælgelsen. 
+\rfile[firstline=6,lastline=8]{../R/Rkoder/unrate/shrinkage_metoder/lars/lars/krydsvalidering/TG/insample.R}
 
 
 

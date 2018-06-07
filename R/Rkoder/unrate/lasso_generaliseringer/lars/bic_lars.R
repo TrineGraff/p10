@@ -41,14 +41,7 @@ lassoBIC <- function(y, x, fit) {
   f = f/max(f)
   f_hat = f[idx]
   beta_hat = fit$beta[idx,]
-  
-  #Adjusted r^2
-  SS.res = sum((y - x %*% beta_hat)^2)
-  SS.tot = sum((y - mean(y))^2)
   p = parm(beta_hat)
-  R.sqrd = 1 - (SS.res / SS.tot)
-  n = length(y)
-  adj.R.sqrt = 1 - (1 - R.sqrd) * ((n - 1) / (n - p - 1)) 
   res = y - x %*% beta_hat
   print(list("scale_res" = scale(res),
              "f_hat" = f_hat,

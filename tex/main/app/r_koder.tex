@@ -3,24 +3,24 @@ I dette appendiks inkluderes \Rlang -koderne.
 
 \section{Autoregressiv model} \label{sec:auto}
 Funktionen \texttt{opt.orden} anvendes til at bestemme ordenen $p$ af en autoregressiv model.  
-\rfile[firstline=10,lastline=28]{../R/unrate/autoregressive_model/insample.R}
+\rfile[firstline=10,lastline=28]{../R/Rkoder/unrate/autoregressive_model/insample.R}
 %
 Vi anvender funktionen \texttt{beta} til at estimere parametrene udfra OLS. 
-\rfile[firstline=35,lastline=74]{../R/unrate/autoregressive_model/insample.R}
+\rfile[firstline=35,lastline=74]{../R/Rkoder/unrate/autoregressive_model/insample.R}
 
 Funktionen \texttt{ForecastAR} anvendes til prædiktion.
-\rfile[firstline=5,lastline=20]{../R/unrate/autoregressive_model/outsample.R}
+\rfile[firstline=5,lastline=20]{../R/Rkoder/unrate/autoregressive_model/outsample.R}
 
 \section{Faktor modellen} \label{sec:faktor}
 Funktionen \texttt{estFactors} bruges til at estimerer faktorerne.
-\rfile[firstline=24,lastline=58]{../R/unrate/faktor_model/insample.R}
+\rfile[firstline=24,lastline=58]{../R/Rkoder/unrate/faktor_model/insample.R}
 %
 Funktionen \texttt{estFactors} anvendes til identificere faktorerne. 
 %
-\rfile[firstline=7,lastline=22]{../R/unrate/faktor_model/insample.R}
+\rfile[firstline=7,lastline=22]{../R/Rkoder/unrate/faktor_model/insample.R}
 %
 Funktionen \texttt{ForecastFaktor} anvendes til prædiktion.
-\rfile[firstline=20,lastline=44]{../R/unrate/faktor_model/outsample.R}
+\rfile[firstline=20,lastline=44]{../R/Rkoder/unrate/faktor_model/outsample.R}
 
 \section{Coordinate descent} \label{sec:apprkodercoordinate}
 \Rlang-koderne i dette afsnit er kun anvendt på lasso modellen, men princippet er det samme for de resterende modeller.  
@@ -30,13 +30,13 @@ Vi anvender funktionen \texttt{glmnet} fra \Rlang-pakken  af samme navn til at l
 \end{align*}
 %
 Vi anvender funktionen \texttt{cv.glmnet} til at udføre et 10-fold krydsvalidering, hvorudfra vi vælger den optimale model. 
-\rfile[firstline=9,lastline=10]{../R/Rkoder/unrate/shrinkage_metoder/coordinate/lasso/krydsvalidering/insample.R}
+\rfile[firstline=6,lastline=9]{../R/Rkoder/unrate/lasso_generaliseringer/coordinate/lasso/krydsvalidering/insample.R}
 %
 Funktionen \texttt{BIC} udvælger den optimale model udfra BIC. 
-\rfile[firstline=2,lastline=32]{../R/Rkoder/unrate/shrinkage_metoder/coordinate/bic.R}
+\rfile[firstline=2,lastline=32]{../R/Rkoder/unrate/lasso_generaliseringer/coordinate/bic.R}
 %
 Til prædiktion anvender vi funktionen \texttt{Forecast}.
-\rfile[firstline=1,lastline=17]{../R/Rkoder/unrate/shrinkage_metoder/coordinate/forecasts.R}
+\rfile[firstline=1,lastline=17]{../R/Rkoder/unrate/lasso_generaliseringer/coordinate/forecasts.R}
 
 
 \subsubsection{TG test} 
@@ -48,21 +48,22 @@ Funktionen \texttt{fixedLassoInf} fra \Rlang-pakken \texttt{selectiveInference} 
 Hvorimod \texttt{glmnet} multiplicerer første led med faktoren \(\frac{1}{n}\).
 Dette betyder, at efter vi har kørt \texttt{glmnet}, da skal vi sætte \texttt{beta = coef(obj, s=lambda/n)[-1]}, hvor \texttt{obj} er objektet, som er returneret af \texttt{glmnet} og \texttt{[-1]} fjerner skæringen, som \texttt{glmnet} altid giver som første komponent, for at finde det beta der svarer til en lambda værdi.
 %
-\rfile[firstline=3,lastline=7]{../R/Rkoder/unrate/shrinkage_metoder/coordinate/lasso/krydsvalidering/TG/insample.R}
+\rfile[firstline=3,lastline=7]{../R/Rkoder/unrate/lasso_generaliseringer/coordinate/lasso/krydsvalidering/TG/insample.R}
 %
 
 \section{LARS} \label{sec:apprkoderlars}
 \Rlang-koderne i dette afsnit er kun for LARS modellen, men princippet er det samme for lasso LARS.
 Vi bruger \texttt{lars} fra  \Rlang-pakken af samme navn til at udfører least angle regression, hvor funktionen \texttt{cv.lars} udfører 10-fold krydsvalidering, hvorudfra vi vælger den optimale model. 
-\rfile[firstline=9,lastline=12]{../R/Rkoder/unrate/shrinkage_metoder/lars/lars/krydsvalidering/insample.R}
+\rfile[firstline=7,lastline=10]{../R/Rkoder/unrate/lasso_generaliseringer/lars/lars/krydsvalidering/insample.R}
 Funktionen \texttt{larsBIC} vælger den optimale model udfra BIC. 
-\rfile[firstline=1,lastline=25]{../R/Rkoder/unrate/shrinkage_metoder/lars/bic_lars.R}
-Til prædiktion anvendes funktionen \texttt{Forecast} igen.
+\rfile[firstline=1,lastline=25]{../R/Rkoder/unrate/lasso_generaliseringer/lars/bic_lars.R}
+Til prædiktion anvendes funktionen \texttt{ForecastLARS}.
+\rfile[firstline=1,lastline=17]{../R/Rkoder/unrate/lasso_generaliseringer/lars/forecast.R}
 
 \subsubsection{TG test} \label{subsubsec:inferens}
 Vi anvender TG testen på LARS modellen, hvor funktionerne \texttt{larInf} og \texttt{lar} fra \Rlang-pakken \texttt{selectiveInference} anvendes. 
 Funktionen \texttt{larInf} skal bruge et \texttt{lar}-argument, som har samme output som \texttt{lars}, men har nogle ekstra udregninger, som er nødvendige for polyeder udvælgelsen. 
-\rfile[firstline=6,lastline=8]{../R/Rkoder/unrate/shrinkage_metoder/lars/lars/krydsvalidering/TG/insample.R}
+\rfile[firstline=5,lastline=8]{../R/Rkoder/unrate/lasso_generaliseringer/lars/lars/krydsvalidering/TG/insample.R}
 
 
 

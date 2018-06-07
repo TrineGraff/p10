@@ -6,3 +6,6 @@ fc_lars = lars_forecast(y,x, idx, s = getmin_lars$lambda.1se , type = "lar", mod
 mae(y_test - fc_lars)
 mse(y_test - fc_lars)
 
+
+c = tidy(fc_lars)
+write.csv(c, file = "fc_lars_kryds.csv") 

@@ -1,5 +1,5 @@
 \section{Autoregressiv model}
-Den autoregressive model af orden \(p\) estimeres med OLS, hvor ordenen bestemmes udfra BIC.
+Den autoregressive model af orden \(p\) estimeres med OLS, hvor ordenen bestemmes ud fra BIC.
 Vi lader $p = 1, \ldots, p_{\max}$, hvor \(p_\text{max}=12\), da vi mener, at arbejdsløshedsraten ikke vil påvirkes mere end et år tilbage.
 BIC vælger \(p=4\) og tabel \ref{tab:est_ar} giver estimeringsresultaterne for en \(\text{AR} \del{4}\). \footnote{For en ARMA(p,q) hvor $p_{\max} = 12$ og $q_{\max} = 12$, hvor parametrene estimeres med MLE, vælger BIC også en AR(4).}
 %
@@ -14,7 +14,7 @@ Figur \ref{fig:resid_ar} viser en analyse af de standardiserede residualer for \
 Histogrammet og QQ-plottet indikerer, at residualerne har tungere haler end normalfordelingen. 
 Derudover observeres få signifikante autokorrelationer.
 Dette bekræftes i tabel \ref{tab:test_ar}, som viser skewness, excess kurtosis og \(p\)-værdier for Jarque-Bera og Ljung-Box testen (se definition \ref{def:jbtest} og \ref{def:lbtest}) for de standardiserede residualer. 
-Vi ser, at skewness og kurtosis er positive, JB testen afviser nulhypotesen om normalitet og LB testen i lag 10 afviser nulhypotesen om uafhængighed.
+Vi ser, at skewness og kurtosis er positive, JB testen afviser nulhypotesen om normalitet og LB testen afviser, at de første 10 autokorrelationer er nul.
 
 Arbejdsløshedsraten prædikteres som nævnt one-step-ahead, hvor estimeringsvinduet udvides med én observeret observation per prædiktion.
 Figur \ref{fig:fc_ar} viser arbejdsløshedsraten og den prædikterede arbejdsløshedsrate. 

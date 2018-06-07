@@ -1,5 +1,5 @@
 \section{Coordinate descent}
-I dette afsnit vil vi finde den optimale model for lasso og dens generaliseringer udfra coordinate descent.
+I dette afsnit vil vi finde den optimale model for lasso og dens generaliseringer ud fra coordinate descent.
 For lasso, ridge regression, elastisk net og adaptive lasso anvendes funktionen \texttt{glmnet} fra \Rlang-pakken af samme navn.
 Funktionen genererer en følge med 100 værdier af $\lambda$ og fitter en model til hver af disse med maksimum likelihood estimation.
 For group lasso har vi anvendt funktionen \texttt{gglasso} fra \Rlang-pakken med samme navn. 
@@ -11,10 +11,10 @@ For at finde den optimale model anvendes krydsvalidering og BIC til at estimere 
 Bemærk at for elastisk net og adaptive lasso har vi to tuning parametre, som skal estimeres. 
 For elastik net betragtes tuning parmetrene $\alpha$ og $\lambda$.
 Vi vælger en følge af 10 værdier af \(\alpha\), hvor $\alpha \in \sbr{0,1}$.
-For hvert \(\alpha\) finder \(\lambda_\alpha\) udfra krydsvalidering og BIC.
+For hvert \(\alpha\) findes \(\lambda_\alpha\) ud fra krydsvalidering og BIC.
 Dette giver en følge af 10 værdier af \(\lambda_\alpha\), hvorfra vi finder den optimale \(\lambda \in \lambda_\alpha\).
 Tilsvarende for adaptive lasso, hvor vi betragter tuning parametrene $\gamma$ og $\lambda$.
-Her lader vi $\gamma$ være lig 0.5, 1 og 2, som er forslået af \citep{adaptive_lasso}, og følger samme procedure.
+Her lader vi $\gamma$ være lig 0.5, 1 og 2, som forslået af \citep{adaptive_lasso}, og følger samme procedure.
 For adaptive lasso betragtes OLS og lasso vægte, og dermed vil adaptive lasso med lasso vægte kun betragte variablerne udvalgt af lasso.
 
 I kapitel \ref{ch:statistisk_inferens} introduceres TG testen, som udfører inferens i lasso modellen for en fast værdi af tuning parameteren.

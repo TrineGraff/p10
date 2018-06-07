@@ -1,10 +1,8 @@
-mcs80_TR <- readRDS("mcs80.rds")
-mcs90_TR <- readRDS("mcs90.rds")
-mcs95_TR <- readRDS("mcs95.rds")
+mcs80_TR <- readRDS("mcs80_TR_LOUISE.rds")
+mcs90_TR <- readRDS("mcs90_TR_LOUISE.rds")
 
-mcs80_Tmax <- readRDS("mcs80_Tmax.rds")
-mcs90_Tmax <- readRDS("mcs90_Tmax.rds")
-mcs95_Tmax <- readRDS("mcs95_Tmax.rds")
+mcs80_Tmax <- readRDS("mcs80_Tmax_LOUISE.rds")
+mcs90_Tmax <- readRDS("mcs90_Tmax_LOUISE.rds")
 
 models <- c("AR(4)",
             "Faktor model (IC1)", "Faktor model (IC2)", "Faktor model (IC3)",
@@ -13,8 +11,10 @@ models <- c("AR(4)",
             "Group lasso (CV)", "Group lasso (BIC)",
             "Adaptive lasso m. OLS (CV)", "Adaptive lasso m. OLS (BIC)",
             "Adaptive lasso m. lasso (CV)", "Adaptive lasso m. lasso (BIC)",
+            "lasso_TG (CV)", "lasso_TG (BIC)",
             "LARS u. lasso modifikation (CV)", "LARS u. lasso modifikation (BIC)",
-            "LARS m. lasso modifikation (CV)", "LARS m. lasso modifikation (BIC)")
+            "LARS m. lasso modifikation (CV)", "LARS m. lasso modifikation (BIC)",
+            "LARS_TG (CV)", "LARS_TG (BIC)")
 
 
 

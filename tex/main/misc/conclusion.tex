@@ -1,18 +1,32 @@
 \chapter{Konklusion}
+Problemstillingen, som betragtes i dette speciale, er at udvælge variable og dermed forbedre prædiktionen af makroøkonomiske variable, givet et datasæt med et stort antal forklarende variable.
+Prædiktionen kan forbedres ved at mindske regressionskoefficienterne og sætte nogle lig 0.
+Vi betragter lasso, ridge regression, elastisk net, group lasso og adaptive lasso.
+%En optimal procedure bør besidde orakelegenskaberne, således at variabeludvælgelsen er konsistent.
+%Lasso proceduren opfylder ikke disse egenskaber, men en simpel udvidelse af lasso, hvor regressionskoefficienterne pålægges en individuel vægt, kaldet adaptive lasso, opfylder egenskaberne.
 
-Problematikken som betragtes i speciale et at præcisere prædiktionen af en makroøkonomisk variabel som afhænger af et størst antal forklarende variable.
+Vi anvender coordinate descent algoritmen til at løse lasso, ridge regression, elastisk net og adaptive lasso, og block coordinate algoritmen til at løse group lasso.
+Derudover betragtes LARS algoritmen til at løse LARS og lasso.
+For at finde den optimale model anvendes en 10-fold krydsvalidering og BIC.
+
+Desuden udføres inferens i lasso modellen.
 
 
-Faktor modellen er 
-Vi finder, at lasso
-
-
-
-Adaptive lasso som opfylder orakelegenskaberne.
+Algoritmerne returnerer omtrent samme resultat for lasso problemet.
+Out-of-sample finder vi, at adaptive lasso modellerne er bedst, efterfulgt af lasso modellerne.
+Som benchmark model betragtes en faktor modellen.
+Vi finder at en autoregressiv model af orden 4 er signifikant dårligere end benchmark modellen, mens alle lasso baseret modellerne er signifikant bedre end benchmark modellen.
 
 
 \paragraph{}
-Specialet kan udvides ved at betragte 
+Vi kunne også have løst elastisk net, group lasso og adaptive lasso med LARS algoritmen, og sammenlignet resultaterne herfor, med resultaterne returneret af coordinate descent.
+Vi har valgt at begrænse den empiriske del ved kun at prædiktere arbejdsløhedsraten one-step-ahead dvs en måned frem.
+Men eftersom vi prædikterer makroøkonomiske variable, ville en længere prædiktions periode være mere hensigtsmæssigt.
+Alternativt kunne vi have betragtet flere makroøkonomiske variable foruden arbejdsløshedsraten, for at opnå bedre resultater for group lasso og for at elastisk net ikke reduceres til lasso.
 
-Vi kunne også have løst elastisk net, group lasso og adaptive lasso med LARS algoritmen.
-Prædikteret flere period frem
+Specialet kan udvides ved at betragte vektor autoregressive modeller, således at vi også betragter laggede værdier af de forklarende variable og ikke blot af responsvariablen.
+%Derudover kan lasso estimaterne fortolkes som posterior mode estimater når regressions parametrene har uafhængige og identiske Laplace priors.
+%
+%Derudover kunne vi have betragtes Bayes lasso,
+%posterior fordeling og en prior fordeling
+Benchmark modellen kan eventuelt forbedres ved at betragte dynamiske faktor modeller, hvor lags af faktorerne også medtages.

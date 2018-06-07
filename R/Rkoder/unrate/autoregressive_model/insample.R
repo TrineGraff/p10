@@ -21,8 +21,6 @@ opt.orden = function(x, p.max){
   print(which.min(BIC.vektor))
 }
 
-opt.orden(ya_train, 12)
-
 beta = function(x, p, summary = F, fit = F) {
   y = x[(p + 1):length(x)]
   n.obs = length(y)
@@ -49,18 +47,10 @@ beta = function(x, p, summary = F, fit = F) {
     p.value = pnorm(- abs(beta.hat) / std.error) * 2
     
     BIC = log(sigma2.hat) + (p * log(n.obs) / n.obs)
-    SS.res = sum((y - x.lag %*% beta.hat)^2)
-    SS.tot = sum((y - mean(y))^2)
-    R.sqrd = 1 - (SS.res / SS.tot)
-    adj.R.sqrt = 1 - (1 - R.sqrd) * ((n.obs - 1) / (n.obs - p - 1))
-    ml.sigma = sqrt(sigma2.hat) * sqrt((n.obs - p) / n.obs)
-    fit = x.lag %*% beta.hat
-    loglike = sum(log(dnorm(y, mean = fit, sd = ml.sigma)))
-  
-    return(cbind.data.frame(round(beta.hat, digits = 4), std.error, t.value, p.value,
-                           sigma2.hat, BIC, R.sqrd, adj.R.sqrt, loglike))
+
+    return(cbind.data.frame(beta.hat = round(beta.hat, digits = 4), std.error, t.value, p.value,
+                           sigma2.hat, BIC))
 
   }
 }
 
-beta(y_train, 4, summary = T, fit = F)

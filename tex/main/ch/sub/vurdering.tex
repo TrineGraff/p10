@@ -8,13 +8,9 @@ Resultaterne af dette er givet i tabel \ref{tab:mae_mse_vurdering}.
 
 \input{fig/tab/mae_mse_vurdering}
 
-Adaptive lasso med lasso vægte (CV) har mindst MAE og MSE.
-
-, tæt efterfulgt af adaptive lasso med OLS vægte (CV), adaptive lasso med OLS vægte (BIC) og adaptive lasso med lasso vægte (BIC). 
+Adaptive lasso med lasso vægte (CV) har mindst MAE og MSE, tæt efterfulgt af de øvrige adaptive lasso modeller, lasso\(_{TG}\) modellerne og LARS\(_{TG}\) modellerne.
 Generelt kan vi se, at den indbyrdes forskel i MAE og MSE for lasso modellerne og dens generaliseringer er forholdsvis lille.
- 
-Vi ser, at kun AR(4) og faktor model (IC$_1$) er dårligere end benchmarkmodellen. 
-Ifølge begge tabsfunktioner præsterer  ......
+Ifølge begge tabsfunktioner prædikterer AR(4) dårligt efterfulgt af faktor model (IC\(_1\)), som begge performer dårligere end benchmark modellen.
 
 For at vurdere modellernes prædiktion i forhold til benchmark modellens fra måned til måned betragtes et rullende gennemsnitlig tabs ratio.
 Figur \ref{fig:rolling_mae} illustrerer et rullende gennemsnitlig absolut tabs ratio for hver model. 
@@ -23,12 +19,9 @@ Også faktor modellen valgt udfra IC$_1$ prædiktere dårligere end benchmark mo
 Derudover ser vi, at ridge regression modellerne prædikterer bedre end benchmark modellen, mens alle lasso baseret modeller klart har bedre prædiktion end de øvrige modeller.
 %
 \imgfigh{rolling_mae.pdf}{1}{Rullende gennemsnitlig absolut tabs ratio.}{rolling_mae}
-%
 
-Et rullende gennemsnitlig kvadreret tabs ratio viser samme konklusion og er dermed undladt.
-%
-\imgfigh{rolling_mse.pdf}{1}{Rullende gennemsnitlige kvadrerede fejl ratio.}{rolling_mse}
-%
+Et rullende gennemsnitlig kvadreret tabs ratio giver samme konklusion og er dermed undladt.
+
 
 \section{Diebold Mariano test}
 I tabel \ref{tab:dm_test} ses resultaterne fra Diebold-Mariano testen, hvor hver model testes imod benchmark modellen.
@@ -51,7 +44,9 @@ For teststørrelsen \(\text{T}_\text{max}\) elimineres foruden faktor model (IC\
 %
 
 \section{Oversigt over out-of-sample resultater}
-Ifølge MAE og MSE prædikterer adaptive lasso med lasso vægte (CV) bedst.
+Ifølge MAE og MSE prædikterer adaptive lasso med lasso vægte (CV) bedst, mens AR(4) prædikterer dårligst.
+For lasso og dens generaliseringer ses at ridge regression prædikterer dårligst
+
 
 Kun faktor model (IC\(_1\)) kan ikke afvises til at være signifikant fra benchmark modellen.
 For MCS proceduren elimineres faktor model (IC\(_1\)) i alle tilfælde.

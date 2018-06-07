@@ -1,4 +1,3 @@
-setwd("~/Desktop/Projekt/R/unrate")
 data_raw = read.csv("../data/transformed_data.csv") %>% as.data.frame()
 idx =  floor(0.80 * nrow(data_raw)) 
 data = data_raw[, -c(1, 2)]

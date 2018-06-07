@@ -1,7 +1,6 @@
 source("data_unrate.R")
 source("package.R")
 source("parm.R")
-source("shrinkage_metoder/res_plot.R")
 source("shrinkage_metoder/coordinate/bic.R")
 
 fit_lasso = glmnet(x_train, y_train, family = "gaussian", alpha = 1, 

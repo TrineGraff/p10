@@ -1,5 +1,6 @@
 source("package.R")
 source("data_unrate.R")
+
 getFactors <- function(X, r) {
   p = ncol(X) 
   XTX = crossprod(X)

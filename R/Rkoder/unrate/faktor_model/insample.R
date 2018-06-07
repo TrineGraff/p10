@@ -1,8 +1,6 @@
 source("data_unrate.R")
 source("package.R")
-source("shrinkage_metoder/res_plot.R")
 
-#xf er de forklarende matricer uden anvendelse af skalering
 getFactors <- function(X, k) {
   p = ncol(X) 
   XTX = crossprod(X)
@@ -85,5 +83,5 @@ fit = function(F.t, w.t, y_train) {
   scale_resid = scale(resid)
   
   return(list("beta.hat" = beta.hat, "fit" = fit, "scale_residuals" = scale_resid))
-  }
+}
 

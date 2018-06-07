@@ -2,7 +2,7 @@ source("data_unrate.R")
 source("package.R")
 
 # Forecast - AR -----------------------------------------------------------
-ForecastAR= function(data, p, idx = idx) {
+ForecastAR = function(data, p, idx = idx) {
   fc = c(NA)
   for(k in 0:length(data[-c(1:idx)]) - 1) {
     y = data[(p + 1):(length(data[1:idx]) + k)] 
@@ -17,5 +17,5 @@ ForecastAR= function(data, p, idx = idx) {
     fc[k+1] = data[(length(data[1:idx]) + k):(length(data[1:idx]) + k - p + 1)] %*% beta.hat
   }
   print(list("fc" = fc))
-  }
+}
 

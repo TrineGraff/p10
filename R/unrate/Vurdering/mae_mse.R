@@ -64,3 +64,5 @@ mse(diffs$adap_ols_kryds...2....y.test)
 mse(diffs$adap_ols_bic...2....y.test)
 mse(diffs$adap_lasso_kryds...2....y.test)
 mse(diffs$adap_lasso_bic...2....y.test)
+
+

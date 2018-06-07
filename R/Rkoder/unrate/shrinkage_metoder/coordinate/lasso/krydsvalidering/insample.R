@@ -1,13 +1,12 @@
 source("package.R")
-source("data_unrate.R")
 source("parm.R")
-source("shrinkage_metoder/res_plot.R")
-source("shrinkage_metoder/adj.r.2.R")
-
+source("data_unrate.R")
 set.seed(1)
 
-lasso_fit = glmnet(x_train, y_train, family = "gaussian", alpha = 1, intercept = FALSE, standardize=FALSE)
-lasso_cv = cv.glmnet(x_train, y_train,  family = "gaussian", alpha = 1, standardize=FALSE, intercept = FALSE,)
+lasso_fit = glmnet(x_train, y_train, family = "gaussian", alpha = 1, 
+                   intercept = FALSE, standardize=FALSE)
+lasso_cv = cv.glmnet(x_train, y_train,  family = "gaussian", alpha = 1, 
+                     intercept = FALSE, standardize=FALSE)
 
 data.frame(
   lambda = c("min", "1se"), 

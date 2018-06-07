@@ -7,10 +7,9 @@ Der udføres så en simpel lineær regression af \(\y\) på \(x_{j_1}\), hvoraf 
 Vi tager det størst mulige step i retningen af denne prædiktor indtil en anden prædiktor, som betegnes  \(x_{j_2}\), har samme korrelation med den nuværende residualvektor.
 Istedet for at fortsætte langs retningen af \(x_{j_1}\) fortsætter LARS i en retning, som er ensvinklet mellem de to prædiktorer, indtil en tredje variabel bliver den mest korreleret variabel.
 LARS algoritmen fortsætter da ensvinklet imellem \(x_{j_1}\), \(x_{j_2}\) og \(x_{j_3}\), indtil en fjerde variabel medtages, osv.
-
 LARS algoritmen finder estimaterne \(\widehat{\tmu} = \X \widehat{\tbeta}\) ved at tilføje én prædiktor til modellen i hvert trin, således at præcis \(k\) koefficienter er forskellige fra nul efter \(k\) trin.
 
-Figur \ref{fig:lars} illustrerer algoritmen, hvor $p = 2$ og $\X = \del{\textbf{x}_1 \  \textbf{x}_2}$.
+Figur \ref{fig:lars} illustrerer algoritmen, hvor $p = 2$ og $\X = \del{\textbf{x}_1 \ \textbf{x}_2}$.
 Lad \(\mathbf{c} \del{\widehat{\tmu}}\) betegne de nuværende korrelationer
 \begin{align}
 \widehat{\mathbf{c}} = \mathbf{c} \del{\widehat{\tmu}} = \X^T \del{\y - \widehat{\tmu}}, \label{eq:lars_1.6}
@@ -51,11 +50,11 @@ For \(p>2\), da vil stepstørrelsen \(\widehat{\gamma}_2\) være mindre, hvilket
 \begin{figure}[H]
 \centering
 \scalebox{0.8}{\input{fig/lars2.tikz}}
-\caption{I hvert step nærmer LARS estimatet \(\widehat{\tmu}_k\) sig det tilhørende OLS estimat \(\bar{\y}_k\), men vil aldrig nå det.
+\caption{I hvert trin nærmer LARS estimatet \(\widehat{\tmu}_k\) sig det tilhørende OLS estimat \(\bar{\y}_k\), men vil aldrig nå det.
  }\label{fig:lars2}
 \end{figure}
 %
------ FORKLARER
+Efterfølgende LARS trin, udover to prædiktorer, tages langs ensvinklet vektorer, som generaliserer vektoren \(\mathbf{u}_2\) i figur \ref{fig:lars}.
 Vi antager, at prædiktorerne \(\x_1, \ldots, \x_p\) er lineært uafhængige.
 Lad \(\A\) være er en delmængde af indekser \(\cbr{1,\ldots, p}\), og definer matricen
 \begin{align}
@@ -67,7 +66,7 @@ Lad
 \mathbf{N}_\A = \X_\A^T \X_\A \quad \text{og} \quad A_\A = \del{\mathbf{1}_\A^T \mathbf{N}_\A^{-1} \mathbf{1}_\A}^{-1/2}, \label{eq:lars_2.5}
 \end{align}
 hvor \(\mathbf{1}_\A\) er en vektor af 1-taller med en længde lig antallet af elementer i \(\A\).
-Da defineres en såkaldt ``ensvinklet'' vektor
+Da defineres en såkaldt ensvinklet vektor
 \begin{align}
 \mathbf{u}_\A = \X_\A \omega_\A, \quad \text{hvor } \omega_\A = A_\A \mathbf{N}_\A^{-1} \mathbf{1}_\A, \label{eq:lars_2.6}
 \end{align}
@@ -116,22 +115,22 @@ og hvor \(\min \cbr{\cdot , \cdot}_+\) indikerer, at minimum kun tages over de p
 \end{alg}
 %
 %Formlerne \eqref{eq:lars_2.12} og \eqref{eq:lars_2.13} har følgende fortolkning.
-Definer
-\begin{align}
-\tmu \del{\gamma} = \widehat{\tmu}_\A + \gamma \mathbf{u}_\A, \label{eq:lars_2.14}
-\end{align}
-for \(\gamma > 0\), således at den nuværende korrelation er givet ved
-\begin{align}
-c_j \del{\gamma} = \x_j^T \del{\y - \tmu \del{\gamma}} = \widehat{c}_j - \gamma a_j. \label{eq:lars_2.15}
-\end{align}
-For \(j \in \A\) giver \eqref{eq:lars_2.7} og \eqref{eq:lars_2.9} at
-\begin{align}
-\abs{c_j \del{\gamma}} = \widehat{C} - \gamma A_\A,\label{eq:lars_2.16}
-\end{align}
-som viser, at alle af de maksimale absolutte nuværende korrelationer falder ligeligt ?????
-For \(j \in \A^C\), viser \eqref{eq:lars_2.15} og \eqref{eq:lars_2.16} at \(c_j \del{\gamma}\) er lig den maksimale værdi i \(\gamma = \frac{\widehat{C} - \widehat{c}_j}{A_\A - a_j}\).
-Derfor er \(\widehat{\gamma}\) i \eqref{eq:lars_2.13} den mindst positive værdi af \(\gamma\), således at et nyt indeks \(\widehat{j}\) tilføjes til den aktive mængde.
-\(\widehat{j}\) er minimeringsindekset i \eqref{eq:lars_2.13} og den nye aktive mængde \(\A_+\) er \(\A \cup \cbr{\widehat{j}}\) og den nye maksimum absolut korrelation er \(\widehat{C}_+ = \widehat{C}- \widehat{\gamma} A_\A\).
+%Definer
+%\begin{align}
+%\tmu \del{\gamma} = \widehat{\tmu}_\A + \gamma \mathbf{u}_\A, \label{eq:lars_2.14}
+%\end{align}
+%for \(\gamma > 0\), således at den nuværende korrelation er givet ved
+%\begin{align}
+%c_j \del{\gamma} = \x_j^T \del{\y - \tmu \del{\gamma}} = \widehat{c}_j - \gamma a_j. \label{eq:lars_2.15}
+%\end{align}
+%For \(j \in \A\) giver \eqref{eq:lars_2.7} og \eqref{eq:lars_2.9} at
+%\begin{align}
+%\abs{c_j \del{\gamma}} = \widehat{C} - \gamma A_\A,\label{eq:lars_2.16}
+%\end{align}
+%som viser, at alle af de maksimale absolutte nuværende korrelationer falder ligeligt ?????
+%For \(j \in \A^C\), viser \eqref{eq:lars_2.15} og \eqref{eq:lars_2.16} at \(c_j \del{\gamma}\) er lig den maksimale værdi i \(\gamma = \frac{\widehat{C} - \widehat{c}_j}{A_\A - a_j}\).
+%Derfor er \(\widehat{\gamma}\) i \eqref{eq:lars_2.13} den mindst positive værdi af \(\gamma\), således at et nyt indeks \(\widehat{j}\) tilføjes til den aktive mængde.
+%\(\widehat{j}\) er minimeringsindekset i \eqref{eq:lars_2.13} og den nye aktive mængde \(\A_+\) er \(\A \cup \cbr{\widehat{j}}\) og den nye maksimum absolut korrelation er \(\widehat{C}_+ = \widehat{C}- \widehat{\gamma} A_\A\).
 
 \subsection{Lasso modifikation} \label{subsec:lasso_modifikation}
 I dette afsnit beskrives en simpel modifikation af LARS algoritmen, således at den giver lasso estimater.
@@ -153,39 +152,60 @@ Da kan det vises, at fortegnet af enhver ikke-nul koefficient \(\widehat{\beta}_
 %\end{align}
 %\end{lem}
 %
-Denne restriktion er ikke inkluderet i LARS algoritmen, men kan nemt modificeres hertil. 
-Antag vi netop har fuldendt et LARS step, som har givet en ny aktiv mængde \(\A\) som i \eqref{eq:lars_2.9}, og at det tilhørende LARS estimat \(\widehat{\tmu}_\A\) svarer til en lasso løsning \(\widehat{\tmu}^\text{lasso} = \X \widehat{\tbeta}^\text{lasso}\).
-Lad
-\begin{align*}
-\omega_\A = A_\A \mathbf{N}_\A^{-1} \mathbf{1}_\A,
-\end{align*}
-være en vektor med længde lig antallet af elementer i \(\A\) og definer en \(p \times 1\) vektor
+Denne restriktion er ikke inkluderet i LARS algoritmen, men kan nemt modificeres hertil:
+\textit{Når en ikke-nul koefficient ændrer fortegn eller bliver lig nul, da fjernes variablen fra den aktive mængde og vi beregner igen den nuværende ensvinklede retning \eqref{eq:lars_2.12}}.
+
+For at tage denne modifikation i betragtning, defineres en \(p \times 1\) vektor
 \begin{align*}
 \widehat{\mathbf{d}} = \begin{cases}
 s_j \omega_{\A_j}, &\text{hvis } j \in \A, \\
-0, & \text{ellers}.
+0, & \text{ellers},
 \end{cases}
 \end{align*}
-Hvis vi bevæger os i den positive \(\gamma\) retning langs LARS linjen \eqref{eq:lars_2.14}, ser vi, at
+hvor \(\omega_{\A_j}\) betegner elementet af vektoren \(\omega_{\A}\), som svarer til indeks \(j\).
+For \(j \in \A\) opdateres
 \begin{align*}
-\tmu \del{\gamma} = \X \tbeta \del{\gamma}, \quad \text{hvor } \beta_j \del{\gamma} = \widehat{\beta}_j + \gamma \widehat{d}_j
+\widehat{\beta}_j \del{\gamma} = \widehat{\beta}_j^\text{prev} + \gamma \widehat{d}_j,
 \end{align*}
-for \(j \in \A\).
-Derfor vil \(\beta_j \del{\gamma}\) ændre fortegn i
+hvor \(\widehat{\beta}_j^\text{prev}\) er lasso estimaterne fra det tidligere trin.
+Lad 
 \begin{align*}
-\gamma_j = -\frac{\widehat{\beta}_j}{\widehat{d}_j},
+\gamma_j = -\frac{\widehat{\beta}_j}{\widehat{d}_j}, \qquad \text{og} \qquad \tilde{\gamma} = \min_{\gamma_j > 0} \cbr{\gamma_j}.
 \end{align*}
-den første af sådan en ændring kommer i
-\begin{align*}
-\tilde{\gamma} = \min_{\gamma_j > 0} \cbr{\gamma_j},
-\end{align*}
-for prædiktor \(\x_{\tilde{j}}\).
-Hvis der ikke findes en \(\gamma_j > 0\), da er \(\tilde{\gamma}=\infty\) per definition.
-
-Hvis \(\tilde{\gamma} < \widehat{\gamma}\), da kan \(\beta_{\tilde{j}} \del{\gamma}\) ikke være lasso løsningen for \(\gamma > \tilde{\gamma}\), da restriktionen \eqref{eq:lars_3.1} ikke er opfyldt, eftersom \(\beta_{\tilde{j}} \del{\gamma}\) har ændret fortegn, mens \(c_{\tilde{j}}\) ikke har.
-Der gælder, at \(c_{\tilde{j}}\) ikke kan ændre fortegn indenfor ét LARS trin da \(\abs{c_{\tilde{j}} \del{\gamma}} = \widehat{C} - \gamma A_\A> 0\) af \eqref{eq:lars_2.16}. \\[2mm]
+------
 %
-\textbf{Lasso modifikation} \\
+%Antag vi netop har fuldendt et LARS step, som har givet en ny aktiv mængde \(\A\) som i \eqref{eq:lars_2.9}, og at det tilhørende LARS estimat \(\widehat{\tmu}_\A\) svarer til en lasso løsning \(\widehat{\tmu}^\text{lasso} = \X \widehat{\tbeta}^\text{lasso}\).
+%Lad
+%\begin{align*}
+%\omega_\A = A_\A \mathbf{N}_\A^{-1} \mathbf{1}_\A,
+%\end{align*}
+%være en vektor med længde lig antallet af elementer i \(\A\) og definer en \(p \times 1\) vektor
+%\begin{align*}
+%\widehat{\mathbf{d}} = \begin{cases}
+%s_j \omega_{\A_j}, &\text{hvis } j \in \A, \\
+%0, & \text{ellers}.
+%\end{cases}
+%\end{align*}
+%Hvis vi bevæger os i den positive \(\gamma\) retning langs LARS linjen \eqref{eq:lars_2.14}, ser vi, at
+%\begin{align*}
+%\tmu \del{\gamma} = \X \tbeta \del{\gamma}, \quad \text{hvor } \beta_j \del{\gamma} = \widehat{\beta}_j + \gamma \widehat{d}_j
+%\end{align*}
+%for \(j \in \A\).
+%Derfor vil \(\beta_j \del{\gamma}\) ændre fortegn i
+%\begin{align*}
+%\gamma_j = -\frac{\widehat{\beta}_j}{\widehat{d}_j},
+%\end{align*}
+%den første af sådan en ændring kommer i
+%\begin{align*}
+%\tilde{\gamma} = \min_{\gamma_j > 0} \cbr{\gamma_j},
+%\end{align*}
+%for prædiktor \(\x_{\tilde{j}}\).
+%Hvis der ikke findes en \(\gamma_j > 0\), da er \(\tilde{\gamma}=\infty\) per definition.
+%
+%Hvis \(\tilde{\gamma} < \widehat{\gamma}\), da kan \(\beta_{\tilde{j}} \del{\gamma}\) ikke være lasso løsningen for \(\gamma > \tilde{\gamma}\), da restriktionen \eqref{eq:lars_3.1} ikke er opfyldt, eftersom \(\beta_{\tilde{j}} \del{\gamma}\) har ændret fortegn, mens \(c_{\tilde{j}}\) ikke har.
+%Der gælder, at \(c_{\tilde{j}}\) ikke kan ændre fortegn indenfor ét LARS trin da \(\abs{c_{\tilde{j}} \del{\gamma}} = \widehat{C} - \gamma A_\A> 0\) af \eqref{eq:lars_2.16}. \\[2mm]
+%%
+%\textbf{Lasso modifikation} \\
 Hvis \(\tilde{\gamma} < \widehat{\gamma}\), stop det igangværende LARS step i \(\gamma = \tilde{\gamma}\) og fjern \(\tilde{j}\) fra udregningen af den næste ensvinklede retning.
 Dvs
 \begin{align*}

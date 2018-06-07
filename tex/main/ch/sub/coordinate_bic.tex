@@ -29,13 +29,12 @@ Som nævnt tidligere har adaptive lasso konsistent variabeludvælgelse, og derfo
 
 \subsubsection{TG testen}
 Resultaterne for TG testen er givet i tabel \ref{tab:fixedLassoInf_bic}.
-Heraf ser vi, at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} afviser nulhypotesen, og derfor er signifikante.
-For \textcolor{blue3}{USTRADE} observeres et $\infty$ i den øvre grænse i konfidensintervallet, hvilket skyldes, at konfidensintervallet er udregnet numerisk og bliver ustabil, når punktet $\boldsymbol\eta^T \mathbf{y}$ er for tæt på dets trunkerede interval, altså $\mathcal{V}^-$ og $\mathcal{V}^+$. 
+Heraf ser vi, at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} afviser nulhypotesen, og dermed er signifikante.
+For \textcolor{blue3}{USTRADE} er den øvre grænse i konfidensintervallet uendelig, hvilket skyldes, at konfidensintervallet er udregnet numerisk og bliver ustabil, når $\boldsymbol\eta^T \mathbf{y}$ er for tæt på det trunkerede interval \(\sbr{\mathcal{V}^+, \mathcal{V}^-}\). 
 Variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} har de største estimerede koefficienter og $Z$-score.
 
 
 \input{fig/tab/fixedlasso_bic}
 
-Figur \ref{fig:resid_tg_bic} viser en analyse af de standardiserede fejl for lasso$_{TG}$ (BIC). 
-Vi observerer, autokorrelation i de to første lags og igen indikerer QQ-plottet tungere haler end normalfordelingen. 
-Dette bekræftes også i tabel \ref{tab:res_shrinkage_tab}.
+Figur \ref{fig:resid_tg_bic} viser en analyse af de standardiserede residualer for lasso$_{TG}$ (BIC). 
+Af tabel \ref{tab:res_shrinkage_tab} afvises residualerne at være normalfordelte og uafhængige.

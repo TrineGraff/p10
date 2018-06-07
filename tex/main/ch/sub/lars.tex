@@ -5,7 +5,7 @@ Mens \texttt{glmnet} fitter en model for 100 værdier af \(\lambda\), fitter \te
 For LARS algoritmen tilføjes en variabel i hvert trin, mens variable kan tilføjes og fjernes i hvert trin for LARS algoritmen med lasso modifikationen.
 Da første trin svarer til, at alle koefficienter er lig 0, foretager LARS algoritmen 127 trin, mens LARS algoritmen med lasso modifikationen udfører 192 trin.
 
-For at finde den optimale model anvendes igen 10-fold krydsvalidering og BIC til at estimere tuning parameteren, som for LARS algoritmen er fraktion af \(\ell_1\) norm, der er givet ved \(f = \frac{\abs{\tbeta}}{\max \abs{\tbeta}}\), hvor \(f \in \sbr{0,1}\).
+For at finde den optimale model anvendes igen krydsvalidering og BIC til at estimere tuning parameteren, som for LARS algoritmen er fraktion af \(\ell_1\) norm, der er givet ved \(f = \frac{\abs{\tbeta}}{\max \abs{\tbeta}}\), hvor \(f \in \sbr{0,1}\).
 
 Vi betragter TG testen, som udfører inferens i LARS modellen.
 Vi lader $\boldsymbol{\eta} = s_k \del{\textbf{X}^+_{\mathcal{A}_k}}^T \mathbf{e}_k$, således at nulhypotesen svarer til, at teste om koefficienten af den sidst tilføjede variabel er lig 0.
@@ -19,17 +19,17 @@ Funktionen \texttt{cv.lars} fra \Rlang-pakken \texttt{lars} udfører 10-fold kry
 For LARS algoritmen betragtes en følge med 127 værdier af $f$, dvs at vi får en værdi af den gennemsnitlige krydsvalideringsfejl, når en variabel tilføjes.
 For LARS algoritmen med lasso modifikation betragtes en følge med 100 værdier af $f$, og dermed får vi ikke en gennemsnitlig krydsvalideringsfejl for hver gang en variable tilføjes eller fjernes.
 
-Figur \ref{fig:lars_kryds} illustrerer den gennemsnitlige krydsvalideringsfejl samt nedre og øvre standardafvigelse for hver værdier af $f$ for LARS og LARS algoritmen med lasso modifikation (lasso LARS).
+Figur \ref{fig:lars_kryds} illustrerer den gennemsnitlige krydsvalideringsfejl samt nedre og øvre standardafvigelse for hver værdier af $f$ for LARS og lasso LARS.
 Hvis $f = 0$ er der ingen variabler tilføjet og hvis $f=1$ er alle variabler tilføjet. 
 De to lodrette stiplede linjer indikerer \(f_{\text{min}}\) og \(f_\text{1sd}\), hvor \(f_{\text{min}}\) er værdien af \(f\), som giver den mindste gennemsnitlige krydsvalideringsfejl og \(f_\text{1sd}\) er den mindste værdi af \(f\), således at fejlen er indenfor en standardafvigelse af minimum. 
 
 \imgfigh{lars_kryds.pdf}{1}{10-fold krydsvalideringsfejl som funktion af fraktion af \(\ell_1\)-norm LARS og lasso LARS. 
 De stiplede linjer indikerer \(f_\text{min}\) og \(f_\text{1sd}\).}{lars_kryds}
 
-Tabel \ref{tab:lars_lasso_tab} giver fraktion af \(\ell_1\)-normen, gennemsnitlig krydsvalideringsfejl, antallet af parametre, justeret R$^2$ og log-likelihood for LARS og lasso LARS.
-For begge metoder afviger krydsvalideringsfejlen først på 5. decimal, og derfor vælger vi modellerne med det færreste antal parametre. 
-For lasso LARS (CV) udfører algoritmen 22 trin, hvor variablerne  \textcolor{chartreuse4}{CUMFNS}, \textcolor{blue3}{MANEMP} og \textcolor{orange}{GS1} tilføjes og fjernes igen. 
-Variablen \textcolor{orange}{TB6MS} bliver tilføjet, fjernet og tilføjet igen.  
+Tabel \ref{tab:lars_lasso_tab} giver fraktion af \(\ell_1\)-normen, den gennemsnitlige krydsvalideringsfejl, antallet af parametre, justeret R$^2$ og log-likelihood for LARS og lasso LARS.
+Da krydsvalideringsfejlen først afviger på 5. decimal for begge modeller, vælger vi modellerne med det færreste antal parametre. 
+For lasso LARS (CV) udfører algoritmen 22 trin, hvor variablerne  \textcolor{chartreuse4}{CUMFNS}, \textcolor{blue3}{MANEMP} og \textcolor{orange}{GS1} tilføjes og fjernes igen og 
+variablen \textcolor{orange}{TB6MS} bliver tilføjet, fjernet og så tilføjet igen.  
 
 %
 \input{fig/tab/lars_lasso_tab}
@@ -38,16 +38,16 @@ På figur \ref{fig:coef_lars_kryds} vises de 19 estimerede koefficienter for LAR
 De største estimerede koefficienter er givet for variablerne \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV}, efterfulgt af \textcolor{blue3}{UEMPLT5} \textcolor{blue3}{UEMP5TO14} og \textcolor{blue3}{UEMP15OV}, mens de resterende estimerede koefficienter er meget tæt på nul.
 
 
-\imgfigh{coef_lars_kryds.pdf}{1}{Estimerede koefficienter for LARS algoritmen uden og med lasso modifikationen (CV).
+\imgfigh{coef_lars_kryds.pdf}{1}{Estimerede koefficienter for LARS (CV) og lasso LARS (CV).
 Farverne indikerer hvilken gruppe, variablerne tilhører.}{coef_lars_kryds}
 
 Figur \ref{fig:lars_kryds_res} og \ref{fig:lars_lasso_kryds_res} viser en analyse af de standardiserede residualer.
-Igen ses at fordelingen af de standardiserede residualer har tungere haler end normalfordelingen og autokorrelation i det første lag. 
+Igen ses, at fordelingen af de standardiserede residualer har tungere haler end normalfordelingen og autokorrelation i det første lag. 
 Tabel \ref{tab:lars_kryds_res_tab} understøtter dette, hvor vi afviser normalitet og uafhængighed i lag 10. 
 
 Figur \ref{fig:boxplot_lars_kryds} og \ref{fig:boxplot_lars_lasso_kryds} viser bootstrap resultaterne for variablerne udvalgt af LARS (CV) og lasso LARS (CV). 
 For begge modeller ser vi, at variablerne med de størst estimerede koefficienter i figur \ref{fig:coef_lars_kryds} også er dem, som vælges oftest under bootstrap. 
-For LARS (CV) ses, at variablerne \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} vælges for alle 1000 bootstrap realisationer, men variablerne \textcolor{orange}{GS1}, \textcolor{blue3}{CLAIMx}, \textcolor{chartreuse4}{CUMFNS}, \textcolor{chartreuse4}{INDPRO} og \textcolor{red3}{DPCERA3M086SBEA} fravælges over 60\%.
+For LARS (CV) ses, at variablerne \textcolor{blue3}{UEMPL15OV}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{CE16OV} og \textcolor{blue3}{CLF16OV} vælges for alle 1000 bootstrap realisationer, men koeffcienterne for variablerne \textcolor{orange}{GS1}, \textcolor{blue3}{CLAIMx}, \textcolor{chartreuse4}{CUMFNS}, \textcolor{chartreuse4}{INDPRO} og \textcolor{red3}{DPCERA3M086SBEA} estimeres til at være lig 0 i 60\% af tilfældene.
 For lasso LARS (CV) ser vi, at variablerne \textcolor{blue3}{USGOOD} og \textcolor{blue3}{PAYMENS} fravælges over 75\% af bootstrap realisationerne, mens variablerne \textcolor{blue3}{CE16OV}, \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{lag1} ofte vælges. 
 
 \subsubsection{Kovarians testen}
@@ -60,7 +60,7 @@ For de resterende prædiktorer kan nulhypotesen ikke afvises.
 \subsubsection{TG testen}
 Resultaterne af TG testen for LARS (CV) er givet i tabel \ref{tab:larInf_kryds}.
 Variablen  \textcolor{orange}{GS5} afviser som den eneste nulhypotesen, hvilket betyder, at kun denne prædiktor er signifikant.
-Vi ser, at $\boldsymbol{\eta}^T \textbf{y}$ er meget tæt på dets trunkerede interval, hvilket resulterer i, at de fleste grænser af konfidensintervallerne er uendelig. 
+Vi ser, at $\boldsymbol{\eta}^T \textbf{y}$ er meget tæt på det trunkerede interval \(\sbr{\mathcal{V}^+, \mathcal{V}^-}\), hvilket resulterer i, at de fleste grænser af konfidensintervallerne er uendelige. 
 
 \input{fig/tab/larInf}
 

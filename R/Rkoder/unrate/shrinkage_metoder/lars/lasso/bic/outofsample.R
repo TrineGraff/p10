@@ -7,3 +7,5 @@ fc_lasso = lars_forecast(y,x, idx, s = lasso_bic$f_hat,
 mae(y_test - fc_lasso)
 mse(y_test - fc_lasso)
 
+c = tidy(fc_lasso)
+write.csv(c, file = "fc_lars_lasso_bic.csv") 

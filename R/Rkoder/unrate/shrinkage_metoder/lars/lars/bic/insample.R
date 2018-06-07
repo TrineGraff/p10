@@ -10,4 +10,3 @@ lars_bic = larsBIC(y_train, x_train,lars_fit )
 coef_1 = coef(lars_fit, s = lars_bic$f_hat, mode = "fraction")
 idx_hat_1 = which(coef_1 != 0)
 coef_1[idx_hat_1]
-

@@ -37,7 +37,6 @@ skewness(res)
 kurtosis(res)
 jarque.bera.test(res)
 Box.test(res, lag = 10, "Ljung-Box")
-Box.test(res^2, lag = 10, "Ljung-Box")
 
 # Adj. R ------------------------------------------------------------------
 coef_min = coef(lasso_fit, s = lasso_cv$lambda.min)

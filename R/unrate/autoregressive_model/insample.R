@@ -1,10 +1,6 @@
+source("package.R")
 source("data_unrate.R")
-library(ggplot2)
-library(gridExtra)
-library(grid)
-library(e1071)
-library(tseries)
-library(stats)
+
 ## Vi anvender ols til at fitte med
 ## Bestemmer orden i x.lag. Lader p_max = 12, og anvender træningsdata
 opt.orden = function(x, p.max){

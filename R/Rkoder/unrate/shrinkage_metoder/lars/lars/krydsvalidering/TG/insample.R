@@ -6,3 +6,4 @@ source("shrinkage_metoder/lars/lars/krydsvalidering/insample.R")
 lar_fit = lar(x_train, y_train, normalize = FALSE, intercept = FALSE)
 larinf = larInf(lar_fit, alpha = 0.1, type = "all", k = 19, verbose = TRUE)
 
+

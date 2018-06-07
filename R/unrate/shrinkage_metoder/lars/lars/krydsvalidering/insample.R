@@ -3,7 +3,6 @@ source("package.R")
 source("parm.R")
 source("shrinkage_metoder/res_plot.R")
 source("shrinkage_metoder/lars/getmin.R")
-source("shrinkage_metoder/adj.r.2.R")
 set.seed(1)
 
 lars_cv = cv.lars(x_train, y_train, type = "lar", intercept = FALSE, 

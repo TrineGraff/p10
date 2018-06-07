@@ -1,7 +1,6 @@
-source("data_unrate.R")
 source("package.R")
+source("data_unrate.R")
 
-# Forecast - AR -----------------------------------------------------------
 ForecastAR = function(data, p, idx = idx) {
   fc = c(NA)
   for(k in 0:length(data[-c(1:idx)]) - 1) {

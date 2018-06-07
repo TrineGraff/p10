@@ -1,6 +1,7 @@
-source("data_unrate.R")
 source("package.R")
+source("data_unrate.R")
 
+#Bruges xf data
 getFactors <- function(X, k) {
   p = ncol(X) 
   XTX = crossprod(X)
@@ -18,7 +19,7 @@ getFactors <- function(X, k) {
   return(list.out)
 }
 
-estFactors <- function(X.df, ic = 1, trace = FALSE) {
+estFactors <- function(X, ic = 1, trace = FALSE) {
   X = as.matrix(X.df)
   n.obs = nrow(X)
   p = ncol(X)
@@ -27,16 +28,16 @@ estFactors <- function(X.df, ic = 1, trace = FALSE) {
   ics = rep(NA, k.max)
   
   for (k in 1:k.max) {
-    est.k <- getFactors(X, k)
-    F.k <- est.k$factors
-    L.k <- est.k$loading
+    est.k = getFactors(X, k)
+    F.k = est.k$factors
+    L.k = est.k$loading
     
     if(ic == 1) {
-      penalty <- k * (p + n.obs) / (p * n.obs) * log((p * n.obs) / p + n.obs)
+      penalty = k * (p + n.obs) / (p * n.obs) * log((p * n.obs) / p + n.obs)
     } else if (ic == 2) {
-      penalty <- k * (p + n.obs) / (p * n.obs) * log(min(p, n.obs))
+      penalty = k * (p + n.obs) / (p * n.obs) * log(min(p, n.obs))
     } else if (ic == 3) {
-      penalty <- k * log(min(p, n.obs)) / min(p, n.obs)
+      penalty = k * log(min(p, n.obs)) / min(p, n.obs)
     } else {
       stop("Invalid information criterion argument")
     }
@@ -55,19 +56,11 @@ estFactors <- function(X.df, ic = 1, trace = FALSE) {
 }
 
 
-# Fittede residualer ------------------------------------------------------
 m = 4 #valgt fra en AR
-
-#Laver omega_t
 df.y.lags = foreach(i = 1:m, .combine = cbind) %do%{
   lag(yf_train, i) 
 }
 colnames(df.y.lags) = c("lag1", "lag2", "lag3", "lag4")
-
-#Faktorerne for de forskelle IC
-factors.IC.1 = estFactors(xf_train, ic = 1, trace = T) #6 faktorer
-factors.IC.2 = estFactors(xf_train, ic = 2, trace = T) #11 faktorer
-factors.IC.3 = estFactors(xf_train, ic = 3, trace = T) #20 faktorer
 
 fit = function(F.t, w.t, y_train) {
   m = dim(w.t)[2] # antal lags

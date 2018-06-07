@@ -249,7 +249,7 @@ Givet en model fitting metode \(\delta\), lad \(\widehat{\y} = \delta \del{\y}\)
 \begin{align}
 \text{df}\del{\widehat{\y}} := \frac{1}{\sigma^2} \sum_{i=1}^n \text{Cov}\del{\widehat{y}_i, y_i}. \label{eq:df_lasso}
 \end{align}
-Antallet af frihedsgrader svarer derfor til, hvor meget indflydelse hver responsvariabel har på sin prædiktion.
+Antallet af frihedsgrader svarer derfor til, hvor stor indflydelse hver responsvariabel har på sin prædiktion.
 Desto bedre modellen tilpasser data, desto større antal frihedsgrader.
 Det kan vises, at for lasso med en fast strafparameter \(\lambda\) er antallet af ikke-nul koefficienter \(k_\lambda\) et unbiased estimat af antallet af frihedsgrader \citep{df_lasso}.
 %

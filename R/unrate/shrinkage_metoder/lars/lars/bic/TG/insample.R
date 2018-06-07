@@ -38,8 +38,8 @@ Box.test(res, lag = 10, "Ljung-Box")
 
 # Z-score -----------------------------------------------------------------
 
-coef0 = t(larinf$vmat %*% y_train) * (larinf$sign)
-coef0/sd
-zscore = fixed_lasso_kryds$coef0 /fixed_lasso_kryds$sd
+#coef0 = t(larinf$vmat %*% y_train) * (larinf$sign)
+#coef0/sd
+#zscore = fixed_lasso_kryds$coef0 /fixed_lasso_kryds$sd
 
 

@@ -1,38 +1,38 @@
 \chapter{R koder} \label{app:r_koder}
-I dette appendiks inkluderes \Rlang-koderne. 
+I dette appendiks inkluderes \Rlang -koderne. 
 
 \section{Autoregressiv model} \label{sec:auto}
-Funktionen \texttt{opt.orden} anvendes til at bestemme orden $p$ af en autoregressiv model.  
+Funktionen \texttt{opt.orden} anvendes til at bestemme ordenen $p$ af en autoregressiv model.  
 \rfile[firstline=10,lastline=28]{../R/unrate/autoregressive_model/insample.R}
 %
 Vi anvender funktionen \texttt{beta} til at estimere parametrene udfra OLS. 
 \rfile[firstline=35,lastline=74]{../R/unrate/autoregressive_model/insample.R}
 
-\texttt{ForecastAR} bruges til prædiktion
+Funktionen \texttt{ForecastAR} bruges til prædiktion
 \rfile[firstline=5,lastline=20]{../R/unrate/autoregressive_model/outsample.R}
 
 \section{Faktor modellen} \label{sec:faktor}
 Funktionen \texttt{estFactors} bruges til at estimerer faktorerne.
 \rfile[firstline=24,lastline=58]{../R/unrate/faktor_model/insample.R}
-
-\texttt{estFactors} anvendes til identificere faktorerne. 
+%
+Funktionen \texttt{estFactors} anvendes til identificere faktorerne. 
 %
 \rfile[firstline=7,lastline=22]{../R/unrate/faktor_model/insample.R}
 %
-Vi anvender \texttt{ForecastFaktort} til prædiktion
+Vi anvender \texttt{ForecastFaktor} til prædiktion
 \rfile[firstline=20,lastline=44]{../R/unrate/faktor_model/outsample.R}
 
 \section{Coordinate descent} \label{sec:lasso}
-Koderne i dette afsnit er kun anvendt for lasso modellen, men det er samme princip for de resterende modeller, så derfor vises de ikke . 
+\Rlang-koderne i dette afsnit er kun anvendt på lasso modellen, men er af samme princip for de resterende modeller.  
 Vi anvender funktionen \texttt{glmnet} fra \Rlang-pakken  af samme navn til at løse følgende problem. 
 \begin{align}
 \argmin_{\tbeta \in \R^p} \cbr{ \frac{1}{2n} \Vert \y - \X \tbeta \Vert_2^2 + \lambda \sbr{\frac{1}{2}(1- \alpha) \Vert \tbeta \Vert_2^2 + \alpha \Vert \tbeta \Vert_1}}. \label{eq:4.2}
 \end{align}
 %
-Vi anvender  funktionen  \texttt{cv.glmnet} til at udfører 10-fold krydsvalidering. 
+Vi anvender funktionen \texttt{cv.glmnet} til at udfører et 10-fold krydsvalidering. 
 \rfile[firstline=9,lastline=10]{../R/Rkoder/unrate/shrinkage_metoder/coordinate/lasso/krydsvalidering/insample.R}
 %
-Vi anvender funktionen \texttt{BIC}, som udvælger den optimale model udfra BIC. 
+Funktionen \texttt{BIC} udvælger den optimale model udfra BIC. 
 \rfile[firstline=2,lastline=32]{../R/Rkoder/unrate/shrinkage_metoder/coordinate/bic.R}
 %
 Til prædiktion anvender vi funktionen \texttt{Forecast} 
@@ -52,12 +52,17 @@ Dette betyder, at efter vi har kørt \texttt{glmnet}, da skal vi sætte \texttt{
 %
 
 \section{LARS} \label{subsec:lars}
-Koderne i dette afsnit er kun for LARS modellen, men det er samme princip for lasso LARS. 
-Vi bruger \texttt{lars} og \texttt{cv.lars} fra pakken \texttt{lars} til at udfører 10-fold krydsvalidering. 
+\Rlang-koderne i dette afsnit er kun for LARS modellen, men er af samme princip for lasso LARS.
+Vi bruger \texttt{lars} fra  \Rlang-pakken af samme navn til at udfører least angle regression, hvor funktionen \texttt{cv.lars} anvendes til et 10-fold krydsvalidering. 
 \rfile[firstline=9,lastline=12]{../R/Rkoder/unrate/shrinkage_metoder/lars/lars/krydsvalidering/insample.R}
-Vi anvender funktionen \texttt{larsBIC} til at vælge den optimale model udfra BIC. 
+Funktionen \texttt{larsBIC} vælger den optimale model udfra BIC. 
 \rfile[firstline=1,lastline=25]{../R/Rkoder/unrate/shrinkage_metoder/lars/bic_lars.R}
+Til prædiktion anvendes også \texttt{Forecast} funktionen.
 
+\subsubsection{TG test} \label{subsubsec:inferens}
+Vi anvender TG testen på LARS modellen, hvor funktionerne \texttt{larInf} og \texttt{lar}  fra  \Rlang-pakken \texttt{selectiveInference} anvendes. 
+Funktionen \texttt{larInf} skal bruge et \texttt{lar}-argument, som har samme output som  \texttt{lars}, men bare med nogle ekstra udregninger, som er nødvendige for polyede udvælgelsen. 
+\rfile[firstline=6,lastline=8]{../R/Rkoder/unrate/shrinkage_metoder/lars/lars/krydsvalidering/TG/insample.R}
 
 
 

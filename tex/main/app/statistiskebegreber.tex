@@ -79,7 +79,7 @@ Under \(\hyp_0\) følger teststørrelsen \(\text{JB}\) en \(\chi_{\del{2}}^2\)-f
 For et signifikant niveau \(\alpha\), afvises hypotesen hvis \(\text{JB} > \chi_{1-\alpha,2}^2\), hvor \(\chi_{1-\alpha,2}^2\) er en \(1 - \alpha\) kvantil af \(\chi^2\)-fordelingen med \(2\) frihedsgrader.
 %
 \begin{defn}[Ljung-Box test] \label{def:lbtest}
-Betragt \(\hyp_0 :\) data er uafhængig fordelt imod \(\hyp_1 :\) data er ikke uafhængig fordelt.
+Betragt \(\hyp_0 :\) de første \(h\) autokorrelationer er nul imod \(\hyp_1 :\) de første \(h\) autokorrelationer er forskellig fra nul.
 Teststørrelse for Ljung-Box testen er givet ved
 \begin{align*}
 \text{LB} = n \del{n +2} \sum_{k=1}^h \frac{\widehat{\rho}_k^2}{n-k},

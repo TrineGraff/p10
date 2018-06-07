@@ -1,6 +1,6 @@
 \section{Oversigt over in-sample resultater} 
 For at få et bedre overblik over de valgte variable for de 18 modeller af lasso og dens generaliseringer betragtes tabel \ref{tab:topvariable}.
-Tabellen viser de 9 hyppigst valgte variable samt beskrivelse. 
+Tabellen viser de 9 hyppigst valgte variable samt beskrivelsen af dem. 
 Heraf observeres, at variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV} bliver valgt af alle modeller.
 Variablerne \textcolor{chartreuse4}{IPDMAT}, \textcolor{blue3}{UEMPLT5}, \textcolor{blue3}{UEMP5TO14}, \textcolor{blue3}{UEMP15OV}, \textcolor{orange}{TB6MS} og \textcolor{orange}{GS5} vælges af alle undtagen adaptive lasso modellerne, mens \textcolor{blue3}{lag 1} også vælges af adaptive lasso med lasso vægte (BIC).
 
@@ -11,10 +11,11 @@ Krydsvalidering tager ikke højde for en models kompleksitet, men idet vi vælge
 Dette kan skyldes, at vi ikke umiddelbart observerer en forskel i justeret \(R^2\) ved at anvende krydsvalidering fremfor BIC for coordinate descent algoritmen.
 Dog ses en lille forbedring for LARS algoritmen, hvis vi betragter BIC fremfor krydsvalidering.
 
-For lasso problemet udvælger krydsvalidering henholdsvis 13 og 14 variable, mens BIC vælger 17 variable, og dermed er antallet af variable ikke specielt afhængig af, hvilken optimeringsalgoritme der anvendes.
+Mht lasso problemet, så udvælger krydsvalidering henholdsvis 13 og 14 variable, mens BIC vælger 17 variable, og dermed er antallet af variable ikke specielt afhængig af, hvilken optimeringsalgoritme der anvendes.
 %På trods af forskellige optimeringsalgoritmer vælger krydvalidering henholdsvis 13 og 14 variable, mens BIC vælger 17 variable for lasso problemet.
-Optimeringsalgoritmerne giver også omtrent samme justeret \(R^2\) for lasso problemet.
+Optimeringsalgoritmerne giver også omtrent samme justerede \(R^2\) for lasso problemet.
 
+Derudover ses, at de 18 modeller alle har klart bedre in-sample resultater end benchmark modellen. 
 
 På figur \ref{fig:cf_interval} vises det betingede 95\% konfidensinterval for lasso\(_{TG}\) (CV) og lasso\(_{TG}\) (BIC), som er givet i tabel \ref{tab:fixedLassoInf} og \ref{tab:fixedLassoInf_bic}, samt 95\% konfidensinterval for OLS estimatorerne for de udvalgte variable af lasso modellerne. 
 For lasso\(_{TG}\) (CV) observeres, at konfidensintervallerne er approksimativt ens for høje estimerede koefficienter, dvs for variablerne \textcolor{blue3}{CLF16OV} og \textcolor{blue3}{CE16OV}, mens  konfidensintervallet for lasso\(_{TG}\) (CV) er større end OLS konfidensintervallet for lave estimerede koefficienter.
@@ -24,9 +25,6 @@ Konfidensintervallet for de estimerede koefficienter af lasso\(_{TG}\) (BIC) er 
 
 For LARS\(_{TG}\) (CV) og LARS\(_{TG}\) (BIC) observeres, at grænserne i  konfidensintervallerne ofte er uendelige, og derfor betragter vi ikke disse.
 
-
-
-%Derudover er alle 14 modeller klart bedre i in-sample resultater i forhold til benchmarkmodellen. Det kunne godt tyde på, at vores benchmark model ikke vil præsterer særligt godt out-of-sample. 
 
 
 

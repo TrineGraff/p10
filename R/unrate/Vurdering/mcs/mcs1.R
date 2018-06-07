@@ -52,13 +52,13 @@ loss <- list(
 )
 
 ?MCSprocedure
-
+set.seed(1)
 res <- setNames(vector("list", length(loss)), names(loss))
 for (ln in names(loss)) {
-  MCS <- MCSprocedure(Loss = diffs, alpha = 0.1, B = 5000, statistic = 'TR')
+  MCS <- MCSprocedure(Loss = diffs, alpha = 0.2, B = 5000, statistic = 'Tmax')
   res[[ln]] <- MCS
 }
 
-saveRDS(res, file = "mcs90_TR_LOUISE.rds")
+saveRDS(res, file = "mcs80_Tmax_LOUISE.rds")
 
 ?MCSprocedure

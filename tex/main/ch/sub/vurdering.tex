@@ -36,9 +36,8 @@ Herefter vil vi teste alle modeller imod hinanden, hvortil vi betragter model co
 Proceduren udføres for \(\alpha = 0.1\) og \(\alpha = 0.2\), teststørrelserne \(\text{T}_\text{R}\) og \(\text{T}_\text{max}\) og 5000 bootstrapped samples.
 I tabel \ref{tab:mcs_tab} er modellerne i 80\% og 90\% MCS angivet for \(\text{T}_\text{R}\) og \(\text{T}_\text{max}\).
 Vi har testet for absolutte fejl og kvadrerede fejl, hvilket gav samme resultat.
-For alle teste elimineres faktor model (IC\(_1\)) fra MCS.
-For teststørrelsen \(\text{T}_\text{R}\) elimineres yderligere ridge regression (CV) og ridge regression (BIC) for både \(\alpha = 0.1\) og \(\alpha = 0.2\).
-For teststørrelsen \(\text{T}_\text{max}\) elimineres foruden faktor model (IC\(_1\)) også lasso LARS (CV) for \(\alpha = 0.2\), men kun faktor model (IC\(_1\)) for \(\alpha = 0.1\).
+For teststørrelsen \(\text{T}_\text{R}\) elimineres faktor model (IC\(_1\)), ridge regression (CV), ridge regression (BIC), lasso\(_{TG}\) (CV), LARS\(_{TG}\) (CV) og LARS\(_{TG}\) (BIC) for både \(\alpha = 0.1\) og \(\alpha = 0.2\).
+For teststørrelsen \(\text{T}_\text{max}\) elimineres kun faktor model (IC\(_1\)) for \(\alpha = 0.2\) og ingen modeller for \(\alpha = 0.1\).
 %
 \input{fig/tab/mcs_tab}
 %

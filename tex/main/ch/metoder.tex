@@ -60,16 +60,16 @@ Estimatet for \(k\)-fold krydsvalidering er da givet ved
 \end{align}
 Oftest er $k=5$ eller $k = 10$. 
 Figur \ref{fig:cv_teori} illustrerer en 5-fold krydsvalidering. 
-%
-\begin{figure}
+
+\begin{figure}[H]
 \center
 \scalebox{0.6}{\input{fig/img/cv.tikz}}
 \caption{5-fold krydsvalidering. I dette tilfælde fittes modellen i første, anden, fjerde og femte gruppe af data og udregner prædiktionsfejlen af den fittede model for tredje gruppe.} \label{fig:cv_teori}
 \end{figure} 
-%
+
 Et $k$-fold krydsvalidering har en lav varians, da \eqref{eq:cv_k} tager det gennemsnitlige output af $k$ fittede modeller, som har en lav korrelation, siden vi har et relativt lille overlap mellem træningsmængderne i hver model. 
 Bias kunne være et problem i forhold til hvordan vi vælger vores træningsmængde. Hvis vi ikke har nok observationer i træningsmængden vil $k$-fold krydsvalidering have høj bias. Derfor er der også en bias-variance trade-off med valget af $k$. 
-
+\newpage
 \subsubsection{BIC}
 Tuning parameteren kan også vælges ud fra Bayes informationskriteriet.
 Vi betragter dens skalerede version.

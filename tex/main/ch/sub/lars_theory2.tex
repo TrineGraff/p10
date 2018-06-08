@@ -220,14 +220,14 @@ Da variable kan fjernes og tilføjes til den aktive mængde, er antallet af trin
 
 \begin{eks}
 Figur \ref{fig:diabetes_lars} illustrerer koefficientstierne for LARS algoritmen uden og med lasso modifikationen, som funktion af fraktionen af \(\ell_1\)-normen for diabetes data.
+\imgfigh{diabetes_lars.pdf}{0.9}{Koefficientstierne for LARS algoritmen uden og med lasso modifikationen som funktion af fraktionen af \(\ell_1\)-normen for diabetes data.}{diabetes_lars}
+
 Hvis \(\frac{\abs{\tbeta}}{\max \abs{\tbeta}} = 0\), da er ingen variable tilføjet til den aktive mængde og hvis \(\frac{\abs{\tbeta}}{\max \abs{\tbeta}} = 1\) er alle variable inkluderet.
 Af figuren kan vi aflæse rækkefølgen, hvori variablerne medtages i modellen.
 For LARS algoritmen uden lasso modifikationen udføres 10 trin, mens LARS algoritmen med lasso modifikationen udfører 12 trin.
 De 2 ekstra trin som LARS algoritmen med lasso modifikationen udfører, kommer af, at variablen \texttt{hdl} fjernes og tilføjes igen i henholdsvis trin 11 og 12.
 Heraf ses det også, at stien er kontinuert og stykvis lineær.
 Den aktive mængde og fortegnene af de aktive variable er konstant mellem trinene.
-
-\imgfigh{diabetes_lars.pdf}{0.9}{Koefficientstierne for LARS algoritmen uden og med lasso modifikationen som funktion af fraktionen af \(\ell_1\)-normen for diabetes data.}{diabetes_lars}
 \end{eks}
 
 %Coordinate descent kan være hurtigere end LARS algoritmen særligt for store problemer.

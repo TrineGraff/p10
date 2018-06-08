@@ -17,7 +17,7 @@ For lasso ses en reducering i antallet af parametre for $\lambda_{1\text{sd}}$ i
 Ridge regression mindsker blot koefficienterne, og derfor vælges alle parametre. 
 For ridge regression vælges \(\lambda_{\min}\) som tuning parameter, da den har mindst krydsvalideringsfejl.
 For group lasso vælges lidt overraskende alle parametre med \(\lambda_\text{min}\), mens antallet af parametre reduceres med 7 for $\lambda_{1\text{sd}}$. 
-Disse 7 variable tilhører alle gruppe 5.
+Disse 7 variable tilhører alle gruppe 5. \\
 Vi lader $\lambda_{1\text{sd}}$ være den optimale tuning parameter for group lasso, da den har det færreste antal parametre.
 For adaptive lasso med OLS og lasso vægte vælges blot to variable for \(\lambda_{1\text{sd}}\), derfor lader vi $\lambda_{1\text{sd}}$ være tuning parameteren for disse.  
 Justeret R\(^2\) er størst for lasso (CV) og mindst for ridge regression (CV).

@@ -13,7 +13,7 @@ Hertil anvendes funktionen \texttt{larInf} fra \Rlang-pakken \texttt{selectiveIn
 Derudover anvendes kovarians testen, som udfører inferens i lasso LARS modellen.
 Hertil anvender vi funktionen \texttt{covTest} fra \Rlang-pakken af samme navn. 
 \Rlang-koderne for dette afsnit er givet i \ref{sec:apprkoderlars}.
-
+\newpage
 \subsection{Krydsvalidering}
 Funktionen \texttt{cv.lars} fra \Rlang-pakken \texttt{lars} udfører 10-fold krydsvalidering.
 For LARS algoritmen betragtes en følge med 127 værdier af $f$, dvs at vi får en værdi af den gennemsnitlige krydsvalideringsfejl, når en variabel tilføjes.
@@ -54,7 +54,7 @@ For lasso LARS (CV) ser vi, at variablerne \textcolor{blue3}{USGOOD} og \textcol
 Tabel \ref{tab:covTest} viser teststørrelsen samt $p$-værdier af kovarians testen for de 13 variable, der bliver udvalgt af lasso LARS (CV). 
 For 7 ud af 10 prædiktorer som tilhører gruppe 2 med undtagelse af \textcolor{blue3}{PAYEMS}, \textcolor{blue3}{lag 1} og \textcolor{blue3}{USCONS} afvises nulhypotesen, hvilket betyder, at disse prædiktorer er signifikante.
 For de resterende prædiktorer kan nulhypotesen ikke afvises.
-
+\newpage
 \input{fig/tab/covTest}
 
 \subsubsection{TG testen}

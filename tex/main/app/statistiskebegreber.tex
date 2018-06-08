@@ -36,12 +36,13 @@ Uligheden sikrer, at en konveks funktion ikke kan have et lokalt minimum, som ik
 %
 \begin{defn}[General position] \label{defn:general_position}
 Søjlerne i en \(n \times p\) matrix \(\X\) siges at være i general position, hvis der ikke findes et  \(k\)-dimensionel underrum \(L \subset \R^n\), hvor \(k < \min \cbr{n,p}\), som indeholder mere end \(k+1\) elementer af mængden \(\cbr{\pm \x_1, \ldots, \pm \x_p}\) med undtagelse af par af antipodal punkter.
-Sagt med andre ord: det affine spænd af enhver \(k+1\) punkter \(s_1 \x_{i_1}, \ldots, s_{k+1} \x_{i_{k+1}}\) ikke indeholder ethvert element af mængden \(\cbr{\pm \x_i : \ i \neq i_1, \ldots, i_{k+1}}\) for ethvert fortegn \(s_1, \ldots, s_{k+1} \in \cbr{-1,1}\).
+Sagt med andre ord: det affine spænd af \(k+1\) punkter \(s_1 \x_{i_1}, \ldots, s_{k+1} \x_{i_{k+1}}\) indeholder ikke ethvert element af mængden \(\cbr{\pm \x_i : \ i \neq i_1, \ldots, i_{k+1}}\) for ethvert fortegn \(s_1, \ldots, s_{k+1} \in \cbr{-1,1}\).
 \end{defn}
 %
-Antagelsen om at søjlerne i \(\X\) er i general position er svag, langt svagere end antagelsen om at \(\text{rang} \del{\X} = p\).
+Antagelsen om at søjlerne i \(\X\) er i general position er svag.
+Langt svagere end antagelsen om at \(\text{rang} \del{\X} = p\).
 Hvis indgangene af \(\X\) er fra en kontinuert sandsynlighedsfordeling på \(\R^{np}\), da er søjlerne i \(\X\) i general position næsten sikkert uanset størrelsen af \(n\) og \(p\) \citep{lasso_unique}. 
-At kolonnerne af model matrix er i generel position, sikrer lasso løsningen er entydig \citep{lasso_unique}.
+At søjler i \(\X\) er i generel position, sikrer at lasso løsningen er entydig \citep{lasso_unique}.
 %
 \begin{defn}[Rod-n-konsistent estimator] \label{def:rodn}
 En estimator \(\widehat{\tbeta}\) for \(\tbeta\) er rod-n-konsistent hvis

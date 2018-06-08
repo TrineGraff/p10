@@ -29,7 +29,7 @@ som kan omskrives til et Lagrange problem
 \widehat{\tbeta}^\text{naivEN} =\argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \sbr{\frac{1}{2}(1- \alpha) \Vert \tbeta \Vert_2^2 + \alpha \Vert \tbeta \Vert_1}}. \label{eq:4.2}
 \end{align}
 Hvis $\alpha=0$, da reduceres det til den kvadrerede $\ell_2$-norm svarende til strafleddet for ridge regression, og hvis $\alpha=1$ reduceres strafleddet til $\ell_1$-normen svarende til strafleddet for lasso.
-Optimeringsproblemet  \eqref{eq:4.2} er streng konveks for \(\alpha \in [0,1)\), hvilket betyder, at der eksisterer en entydig løsning uafhængigt af korrelationsstrukturen af $\X$.
+Optimeringsproblemet  \eqref{eq:4.2} er streng konveks for \(\alpha \in [0,1)\), hvilket betyder, at der altid eksisterer en entydig løsning.
 For  \(\alpha=1\) er problemet konveks, men ikke streng konveks.
 Figur \ref{fig:elastisk} illustrerer betingelsesområderne for ridge regression, lasso og elastisk net.
 %
@@ -123,7 +123,7 @@ Hvis \(\X\) er ortogonal, da gælder, at
 \end{lem}
 %
 \begin{proof}
-Estimatoren for ridge regression i det ortogonale tilfælde \eqref{eq:orto_ridge} følger direkte udfra ridge regression estimatoren \eqref{eq:ridge_estimator}, da \(\X^T \X = \mathbf{I}_p\) og \(\widehat{\tbeta}^\text{OLS} = \X^T \y\).
+Estimatoren for ridge regression i det ortogonale tilfælde \eqref{eq:orto_ridge} følger direkte ud fra ridge regression estimatoren \eqref{eq:ridge_estimator}, da \(\X^T \X = \mathbf{I}_p\) og \(\widehat{\tbeta}^\text{OLS} = \X^T \y\).
 For at bevise lasso estimatoren i det ortogonale tilfælde \eqref{eq:orto_lasso}, omskrives lasso problemet \eqref{eq:2.5} til følgende
 \begin{align*}
 \widehat{\tbeta}^\text{lasso} &= \argmin_{\tbeta \in \R^p} \cbr{\del{\y - \X \tbeta}^T \del{\y - \X \tbeta} + \lambda_1 \Vert \tbeta \Vert_1} \\
@@ -132,18 +132,18 @@ For at bevise lasso estimatoren i det ortogonale tilfælde \eqref{eq:orto_lasso}
 \end{align*}
 Lad os blot betragte \(j\)'te indeks af lasso estimatoren
 \begin{align*}
-\widehat{\beta}_j^\text{lasso} = \argmin_{\beta_j} \cbr{ - 2 \beta_j \widehat{\beta}_j^\text{OLS} + \beta_j^2 + \lambda_1 \abs{ \beta_j }}.
+\widehat{\beta}_j^\text{lasso} = \argmin_{\beta_j} \cbr{ - 2 \beta_j \widehat{\beta}_j^\text{OLS} + \beta_j^2 + \lambda_1 \vert \beta_j \vert}.
 \end{align*}
 Vi differentierer
 \begin{align*}
-\frac{\partial}{\partial \beta_j} \del{- 2 \beta_j \widehat{\beta}_j^\text{OLS} + \beta_j^2 + \lambda_1 \abs{ \beta_j }}
+\frac{\partial}{\partial \beta_j} \del{- 2 \beta_j \widehat{\beta}_j^\text{OLS} + \beta_j^2 + \lambda_1 \vert \beta_j \vert}
 =-2\widehat{\beta}^\text{OLS} + 2\beta_j + \begin{cases}
 -\lambda_1 \quad &\beta_j < 0 \\
 [-\lambda_1, \lambda_1] & \beta_j = 0 \\
 \lambda_1 & \beta_j >0 
 \end{cases},
 \end{align*}
-dette sættes lig \(0\) og isolerer for \(\beta_j\)
+som sættes lig \(0\) og isolerer for \(\beta_j\)
 \begin{align*}
 \widehat{\beta}_j^\text{lasso} &= \widehat{\beta}_j^\text{OLS} - \frac{1}{2}\begin{cases}
 -\lambda_1 \quad &\beta_j < 0 \\
@@ -151,9 +151,9 @@ dette sættes lig \(0\) og isolerer for \(\beta_j\)
 \lambda_1 & \beta_j >0 
 \end{cases} \\
 &= \begin{cases}
-\widehat{\beta}_j^\text{OLS} + \frac{\lambda_1,}{2} \quad &\widehat{\beta}_j^\text{OLS} < - \frac{\lambda_1}{2} \\
-0, &\left\vert\widehat{\beta}_j^\text{OLS} \right\vert \leq \frac{\lambda_1}{2} \\
-\widehat{\beta}_j^\text{OLS} - \frac{\lambda_1}{2}, \quad &\widehat{\beta}_j^\text{OLS} > \frac{\lambda_1}{2}
+\widehat{\beta}_j^\text{OLS} + \frac{\lambda_1}{2} \quad &\widehat{\beta}_j^\text{OLS} < - \frac{\lambda_1}{2} \\
+0 & \vert\widehat{\beta}_j^\text{OLS} \vert \leq \frac{\lambda_1}{2} \\
+\widehat{\beta}_j^\text{OLS} - \frac{\lambda_1}{2} \quad &\widehat{\beta}_j^\text{OLS} > \frac{\lambda_1}{2}
 \end{cases}. 
 \end{align*}
 Hvoraf vi får, at \(\widehat{\beta}_j^\text{lasso} = S_{\frac{\lambda_1}{2}} \del{ \widehat{\beta}_j^\text{OLS}} \), som fuldfører beviset.
@@ -161,17 +161,18 @@ Estimatoren for naiv elastisk net i det ortogonale tilfælde \eqref{eq:orto_naiv
 \end{proof}
 %
 Figur \ref{fig:elastisk2} illustrerer en sammenligning af straffen for ridge regression, lasso og naiv elastisk net, når \(\X\) er ortogonal.
-Heraf ses det også at naiv elastisk net er en to-trins procedure, først mindskes koefficienterne udfra ridge regression, hvorefter lasso udfører variabeludvælgelse. 
+Heraf ses det også, at naiv elastisk net er en to-trins procedure.
+Først mindskes koefficienterne ud fra ridge regression, hvorefter lasso udfører variabeludvælgelse. 
 %har vi en ridge lignende shrinkage, som efterfølges af en lasso lignende thresholding.
 %
 \begin{figure}[H]
 \centering
 \scalebox{0.8}{\input{fig/elastisk_net2.tikz}}
-\caption{Straffen for ridge regression, lasso og naiv elastisk net hvis \(\X\) er ortogonal, for  parametrene \(\lambda_1=2\) og \(\lambda_2=1\).} \label{fig:elastisk2}
+\caption{Straffen for ridge regression, lasso og naiv elastisk net hvis \(\X\) er ortogonal for parametrene \(\lambda_1=2\) og \(\lambda_2=1\).} \label{fig:elastisk2}
 \end{figure}
-Hvis vi har en gruppe af højt korreleret variable, da vil lasso blot udvælge én variabel og den udvælges tilfældigt, som nævnt i punkt \ref{itm:2}.
+Hvis vi har en gruppe af højt korrelerede variable, da vil lasso blot udvælge én variabel og denne udvælges tilfældigt, som nævnt i punkt \ref{itm:2}.
 Men naiv elastisk net udvælger alle variable i denne gruppe, som vi nu vil vise. 
-En regressionsmetode udviser denne evne, hvis regressionskoeffcienterne af en gruppe af højt korreleret variable er approksimativt ens.
+En regressionsmetode udviser denne evne, hvis regressionskoeffcienterne er approksimativt ens for en gruppe af højt korrelerede variable.
 %
 \begin{lem} \label{lem:elastisk_net2}
 Lad os betragte
@@ -215,8 +216,8 @@ Dette bevis undlades, men vi referer til s. 318 i \citep{zou_hastie}.
 %MANGLER NOGET!
 %fra wiki: hvis der er en løsning \(\hat{\tbeta}\) hvor \(\hat{\beta}_j \hat{\beta}_k \geq 0\), da hvis \(s \in \sbr{0,1}\) erstatter \(\hat{\beta}_j\) med \(s (\hat{\beta}_j + \hat{\beta}_k)\) og \(\hat{\beta}_k\) med \( (1-s)(\hat{\beta}_j + \hat{\beta}_k)\), men de resterende \(\hat{\beta}_i\) fastholdes, giver en ny løsn, således at lasso objektfunktion har en række gyldige minimeringer, dvs ikke entydig!!   
 \end{proof}
-Hvis vi har identiske prædiktorer, da siger lemma \ref{lem:elastisk_net2}, at streng konveksitet sikrer at alle variable i en gruppe vælges.
-Elastisk net med \(\lambda_2 > 0\) er streng konveks, og har dermed denne egenskab, som ønsket.
+Hvis vi har identiske prædiktorer, da giver lemma \ref{lem:elastisk_net2}, at streng konveksitet sikrer, at alle variable i en gruppe vælges.
+Elastisk net med \(\lambda_2 > 0\) er streng konveks, og har dermed denne egenskab som ønsket.
 %
 \begin{thm} \label{thm:elastisk_net}
 Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), hvor responsvariablen er centreret og prædiktorerne er standardiseret.
@@ -272,17 +273,17 @@ D_{\lambda_1, \lambda_2} \del{i,j} &= \frac{1}{\Vert \y \Vert_1} \left\vert \fra
 \end{proof}
 %
 Mængden \(D_{\lambda_1, \lambda_2} \del{i,j}\) betegner differensen mellem koefficientstierne af prædiktor \(i\) og \(j\).
-Hvis \(\mathbf{x}_i\) og \(\mathbf{x}_j\) er højt korreleret, dvs \(\rho \approx 1\), giver sætning \ref{thm:elastisk_net}, at differensen mellem koefficientstierne af prædiktor \(i\) og \(j\) er næsten 0.
-Den øvre grænse i \eqref{eq:EN5} giver en kvantitativ beskrivelse af denne gruppe egenskab, som naiv elastisk net har.
+Hvis \(\mathbf{x}_i\) og \(\mathbf{x}_j\) er højt korrelerede, dvs \(\rho \approx 1\), giver sætning \ref{thm:elastisk_net}, at differensen mellem koefficientstierne af prædiktor \(i\) og \(j\) er næsten 0.
+Den øvre grænse i \eqref{eq:EN5} giver et kvantitativ mål for denne grupperings egenskab, som naiv elastisk net har.
 
 Empiriske resultater har vist, at naiv elastisk net ikke præsterer tilfredsstillende, medmindre den er tæt på enten ridge regression eller lasso.
 Derfor kaldes den \textit{naiv}.
 Som nævnt tidligere bestemmes en metodes prædiktionsevne gennem bias-variance tradeoff. 
 Naiv elastisk net er somsagt en to-trins procedure. 
-For ethvert fast \(\lambda_2\), mindskes koefficienterne først udfra ridge regression, hvorefter lasso udfører variabeludvælgelse.
+For ethvert fast \(\lambda_2\), mindskes koefficienterne først ud fra ridge regression, hvorefter lasso udfører variabeludvælgelse.
 %og derefter shrinkages langs lasso koefficient løsningsstien. 
-Derfor inkluderes en såkaldt ``dobbelt straf''.
-Dette reducerer ikke variansen meget og introducere unødvendig ekstra bias i forhold til ridge regression eller lasso.
+Derfor introduceres en såkaldt ``dobbelt straf''.
+Dette reducerer ikke variansen meget og giver unødvendig ekstra bias i forhold til ridge regression eller lasso.
 Derfor introduceres blot elastisk net, som korrigerer for denne dobbelt straf.
 
 I lemma \ref{lem:elastisk_net} fandt vi, at naiv elastisk net løser følgende 
@@ -297,9 +298,9 @@ Da \(\widehat{\tbeta}^\text{naivEN} = \frac{1}{\sqrt{1+\lambda_2}} \widehat{\tbe
 \begin{align*}
 \widehat{\tbeta}^\text{EN} = \del{1+\lambda_2} \widehat{\tbeta}^\text{naivEN}.
 \end{align*}
-Dermed er elastisk net koefficienterne faktisk reskaleret naiv elastisk net koefficienter.
-Denne transformation bevarer variabeludvælgelsen af naiv elastisk net og er den simpleste måde at annullere det ekstra tilføjede straf.
-Derfor er egenskaberne for naiv elastisk net, som er beskrevet i dette afsnit, stadig gældende for elastisk net.
+Dermed er elastisk net koefficienterne skaleret naiv elastisk net koefficienter.
+Denne transformation bevarer variabeludvælgelsen af naiv elastisk net og er den simpleste måde at annullere den ekstra tilføjede straf.
+Derfor er egenskaberne for naiv elastisk net, som er beskrevet i dette afsnit stadig gældende for elastisk net.
 %
 \begin{thm} \label{thm:elastisk_net2}
 Givet data \(\del{\y, \X}\) og parametrene \(\del{\lambda_1, \lambda_2}\), da er estimaterne for elastisk net givet ved
@@ -339,7 +340,7 @@ Lad \(\widehat{\boldsymbol{\Sigma}} = \X^T \X\) være den empiriske korrelations
 \frac{\X^T \X + \lambda_2 \mathbf{I}_p}{1 + \lambda_2} = (1-\gamma) \widehat{\boldsymbol{\Sigma}} + \gamma \mathbf{I}_p,
 \end{align*}
 hvor \(\gamma=\frac{\lambda_2}{1+\lambda_2}\) mindsker \(\widehat{\boldsymbol{\Sigma}}\) mod identitetsmatricen.
-Ligning \eqref{eq:EN6} og \eqref{eq:EN7} viser, at reskalere elastisk net er ækvivalent med at erstatte \(\widehat{\boldsymbol{\Sigma}}\) med dens shrunken version i lasso.
+Ligning \eqref{eq:EN6} og \eqref{eq:EN7} viser, at skalere elastisk net er ækvivalent med at erstatte \(\widehat{\boldsymbol{\Sigma}}\) med identitetsmatricen i lasso.
 
 %Somsagt er lasso et specialtilfælde af elastisk net med \(\lambda_2=0\). 
 %Et andet interessant specialtilfælde er når \(\lambda_2 \rightarrow \infty\).
@@ -359,7 +360,7 @@ Ligning \eqref{eq:EN6} og \eqref{eq:EN7} viser, at reskalere elastisk net er æk
 For coordinat descent algoritmen betragtes naiv elastisk net problemet på Lagrange form \eqref{eq:4.2}, mens LARS algoritmen betragter optimeringsproblemet \eqref{eq:naivEN}.
 %
 \subsubsection{Coordinat descent}
-For standardiseret prædiktorer og en centeret responsvariabel er coordinate descent opdateringen for $j$'te koefficient givet ved
+For standardiserede prædiktorer og en centeret responsvariabel er coordinate descent opdateringen for $j$'te koefficient givet ved
 \begin{align}
 \widehat{\beta}^\text{naivEN}_j \del{\lambda}= \frac{S_{\frac{\alpha \lambda}{2n}} \del{\tilde{\beta}_j}}{1 + \lambda (1-\alpha)}, \label{eq:4.4}
 \end{align}
@@ -367,7 +368,7 @@ hvor \(\tilde{\beta}_j = \frac{1}{n} \sum_{i=1}^n r_{i}^{(j)} x_{ij}\) og \(r_{i
 Vi gennemløber opdateringen \eqref{eq:4.4} indtil konvergens.
 
 \begin{eks}
-På figur \ref{fig:diabetes_lasso_EN} illustreres koefficientstierne for lasso og elastisk net \(\alpha = 0.2\) for diabetes data, hvor vi ser, at elastisk net udfører variabeludvælgelse og mindsker koefficienterne mere jævnt end lasso.
+På figur \ref{fig:diabetes_lasso_EN} illustreres koefficientstierne for lasso og elastisk net for \(\alpha = 0.2\) for diabetes data, hvor vi ser, at elastisk net udfører variabeludvælgelse og mindsker koefficienterne mere jævnt end lasso.
 \imgfigh{diabetes_lasso_EN.pdf}{0.9}{Koefficientstierne for lasso og elastisk net for \(\alpha = 0.2\) som funktion af $\log \del{\lambda}$ for diabetes data.}{diabetes_lasso_EN}
 
 \end{eks}

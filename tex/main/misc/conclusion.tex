@@ -1,33 +1,32 @@
 \chapter{Konklusion}
-Problemstillingen, som betragtes i dette speciale, er at udvælge variable og dermed forbedre prædiktionen af makroøkonomiske variable, givet et datasæt med et stort antal forklarende variable.
+Problemstillingen, som betragtes i dette speciale, er at udvælge variable og dermed forbedre prædiktionen af makroøkonomiske variable givet et datasæt med et stort antal forklarende variable.
 Prædiktionen kan forbedres ved at mindske regressionskoefficienterne og sætte nogle lig 0.
-Vi betragter lasso, ridge regression, elastisk net, group lasso og adaptive lasso.
-
 En optimal procedure bør besidde orakelegenskaberne, således at variabeludvælgelsen er konsistent.
-Lasso proceduren opfylder ikke disse egenskaber, men en simpel udvidelse af lasso, hvor regressionskoefficienterne pålægges en individuel vægt, kaldet adaptive lasso, opfylder egenskaberne.
+Lasso proceduren opfylder ikke disse egenskaber, men en simpel udvidelse af lasso, hvor regressionskoefficienterne pålægges en individuel vægt, kaldet adaptive lasso, opfylder disse.
 
 Som benchmark model betragtes en faktor model, som performer dårligt både i in-sample og out-of-sample.
-Modellen er valgt ud fra tre simple informationskriterier, uden vi yderligere er gået i dybden med analysen af faktorer.
-Benchmark modellen kan eventuelt forbedres ved at udvælge en delmængde af de forklarende variable inden faktorerne estimeres eller betragte dynamiske faktor modeller, hvor lags af faktorerne også medtages.
+Modellen er valgt ud fra tre simple informationskriterier, uden vi yderligere går i dybden med analysen af faktorerne.
+Benchmark modellen kan eventuelt forbedres ved at udvælge en delmængde af de forklarende variable inden faktorerne estimeres eller ved at betragte dynamiske faktor modeller, hvor lags af faktorerne også medtages.
 
 Vi anvender coordinate descent algoritmen til at løse lasso, ridge regression, elastisk net og adaptive lasso, og block coordinate algoritmen til at løse group lasso.
 Derudover betragtes LARS algoritmen til at løse LARS og lasso.
 For at finde den optimale model anvendes en 10-fold krydsvalidering og BIC.
-Resultaterne er tilnærmelsesvis ens, på trods af at vi anvender to forskellige metoder til at estimere tuning parameteren. 
+På trods af at vi anvender to forskellige metoder til at estimere tuning parameteren, får tilnærmelsesvis ens resultater.
+%Vi får tilnærmelsesvis ens resultater på trods af, at vi anvender to forskellige metoder til at estimere tuning parameteren.
+%Resultaterne er tilnærmelsesvis ens, på trods af at vi anvender to forskellige metoder til at estimere tuning parameteren. 
 Også optimeringsalgoritmerne returnerer omtrent samme resultat for lasso problemet.
 Vi finder, at lasso og dens generaliseringer performer betydeligt bedre end benchmark modellen.
 Adaptive lasso modellerne udvælger kun 2 eller 3 prædiktorer, men performer alligevel tilsvarende eller bedre end de øvrige lasso baserede modeller.
 
 Desuden udføres inferens i lasso modellen, hvortil vi betragter kovarians testen og TG testen.
 Disse anvendes til at teste om regressionskoefficienten af den sidst tilføjede variabel er signifikant.
-Som nævnt tidligere er teorien for inferens i lasso modellen udviklet i nyere tid, hvilket kan være årsagen til, at vi ikke kan finde andre artikler, der anvender teorien empirisk og dermed har vi ikke noget sammenligningsgrundlag.
-
-begrænset til kun at betragte lineære modeller
+Som nævnt tidligere er teorien for inferens i lasso modellen udviklet i nyere tid, hvilket kan være årsagen til, at vi ikke kan finde andre artikler, der anvender teorien empirisk, og dermed har vi ikke noget sammenligningsgrundlag.
 
 \paragraph{}
-Vi har valgt at begrænse den empiriske del ved kun at prædiktere arbejdsløhedsraten one-step-ahead dvs en måned frem.
+Vi har valgt at begrænse den empiriske del ved kun at prædiktere arbejdsløshedsraten one-step-ahead dvs en måned frem.
 Men eftersom vi prædikterer makroøkonomiske variable, ville en længere prædiktions periode være mere hensigtsmæssigt.
 Alternativt kunne vi have betragtet andre typer makroøkonomiske variable som f.eks. valutakurser eller aktieindekser.
 
-Som nævnt i den teoretiske del kan LARS algoritmen modificeres til at løse elastisk net, group lasso og adaptive lasso, hvor vi så kunne sammenligne resultaterne herfor, med resultaterne returneret af coordinate descent.
+Som nævnt i den teoretiske del kan LARS algoritmen modificeres til at løse elastisk net, group lasso og adaptive lasso.
+Hermed kunne vi udvide sammenligningen mellem coordinate descent og LARS algoritmen.
 Alternativt kunne vi have inkluderet vektor autoregressive modeller, således at vi også betragter laggede værdier af de forklarende variable og ikke blot af responsvariablen.

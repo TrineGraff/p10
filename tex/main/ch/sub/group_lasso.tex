@@ -1,9 +1,9 @@
 \section{Group lasso}
 \citep{group_lasso} introducerede en generalisering af standard lasso kaldet group lasso, som tillader, at forudbestemte grupper af prædiktorer vælges eller fravælges, således at alle prædiktorer i en specifik gruppe er enten inkluderet eller ikke inkluderet.
-Afsnittet er skrevet udfra kapitel 4 i \citep{hastie} samt \citep{group_lasso}.
+Afsnittet er skrevet ud fra kapitel 4 i \citep{hastie} samt \citep{group_lasso}.
 %I mange regressions problemer har prædiktorerne en naturlig grupperet struktur, og da foretrækkes det at alle koefficienter indenfor en gruppe er ikke-nul (eller nul) samtidig.
 
-Betragt en lineær regressionsmodel med $J$ grupper af prædiktorer, og lad $\mathbf{z}_j$ og \(\ttheta_j\) være \(p_j \times 1\) vektorer som repræsenterer prædiktorerne i gruppe $j$ for $j=1, \ldots, J$ og deres koefficienter \footnote{For at undgå forvirring lader vi \(\mathbf{z}_j\) og \(\ttheta_j\) betegne variablerne i gruppe \(j\) og deres koefficienter, istedet for \(\X_j\) og \(\beta_j\) som vi anvender for skalarer}.
+Betragt en lineær regressionsmodel med $J$ grupper af prædiktorer, og lad $\mathbf{z}_j$ og \(\ttheta_j\) være \(p_j \times 1\) vektorer som repræsenterer prædiktorerne i gruppe $j$ for $j=1, \ldots, J$ og deres koefficienter. \footnote{For at undgå forvirring lader vi \(\mathbf{z}_j\) og \(\ttheta_j\) betegne variablerne i gruppe \(j\) og deres koefficienter, istedet for \(\X_j\) og \(\beta_j\) som vi anvender for skalarer}
 %Formålet er da, at prædiktere responsvariablen $y$ baseret på prædiktorerne $\mathbf{z}_1,\ldots, \mathbf{z}_J$ \footnote{For at undgå forvirring lader vi \(\mathbf{z}_j\) og \(\ttheta_j\) betegne variablerne i gruppe \(j\) og deres koefficienter, istedet for \(\X_j\) og \(\beta_j\) som vi anvender for skalarer}.
 %En lineær model for regressions funktionen $\E{Y \vert Z}$ er givet ved \(\theta_0 + \sum_{j=1}^J Z_j^T \theta_j\), hvor $\theta_j \in \R^{p_j}$ repræsenterer en gruppe af $p_j$ regressions koefficienter. 
 
@@ -50,7 +50,7 @@ For dette problem er nul subgradient ligningerne givet ved
 \begin{align*}
 - \mathbf{Z}_{j}^T \del{\y - \sum_{\ell=1}^J \mathbf{Z}_\ell \widehat{\ttheta}^\text{group lasso}_\ell} + \lambda \widehat{\ts}_j = 0, \quad j=1,\ldots, J,
 \end{align*} 
-hvor $\widehat{\ts}_j $ er et element af subdifferentialet af normen $\Vert \cdot \Vert_2$ evalueret i $\widehat{\ttheta}_j^\text{group lasso}$.
+hvor $\widehat{\ts}_j $ er et element af subdifferentialet af normen $\Vert \cdot \Vert_2$ evalueret i $\widehat{\ttheta}_j^\text{group lasso}$. \\
 Når $\widehat{\ttheta}^\text{group lasso}_j \neq 0$, har vi, at $\widehat{\ts}_j = \frac{\widehat{\ttheta}^\text{group lasso}_j}{\Vert \widehat{\ttheta}^\text{group lasso}_j \Vert_2}$, og når $\widehat{\ttheta}^\text{group lasso}_j=0$, har vi, at $\widehat{\ts}_j$ er enhver vektor, hvor $\Vert \widehat{\ts}_j \Vert_2 \leq 1$.
 Block coordinate descent kan anvendes til at løse disse nul subgradient ligningerne, hvor vi løser for $\widehat{\ttheta}^\text{group lasso}_j$, mens alle block vektorer $\cbr{\widehat{\ttheta}^\text{group lasso}_k, k \neq j}$ fastholdes.
 %En metode til at løse disse nul subgradient ligningerne er ved at fastholde alle block vektorer $\cbr{\widehat{\ttheta}_k, k \neq j}$, og da løse for $\widehat{\ttheta}_j$.
@@ -61,7 +61,7 @@ Lad $\cbr{\widehat{\ttheta}^\text{group lasso}_k, k \neq j}$ være fastholdt, da
 \begin{align*}
 - \mathbf{Z}_{j}^T \del{\mathbf{r}_j - \mathbf{Z}_j \widehat{\ttheta}^\text{group lasso}_j} + \lambda \widehat{\ts}_j = 0,
 \end{align*}
-hvor $\mathbf{r}_j = \y - \sum_{k \neq j} \mathbf{Z}_k \widehat{\ttheta}_k $ er j'te partial residual.
+hvor $\mathbf{r}_j = \y - \sum_{k \neq j} \mathbf{Z}_k \widehat{\ttheta}_k $ er det j'te partielle residual.
 Fra betingelserne opfyldt af subgradienten $\widehat{\ts}_j$, må vi have, at $\widehat{\ttheta}^\text{group lasso}_j =\mathbf{0}$ hvis $\Vert \mathbf{Z}_j^T \mathbf{r}_j \Vert_2 \leq \lambda$, og ellers er
 \begin{align}
 \widehat{\ttheta}_j^\text{group lasso} = \del{\mathbf{Z}_j^T \mathbf{Z}_j + \frac{\lambda}{\Vert \widehat{\ttheta}^\text{group lasso}_j \Vert_2} \mathbf{I}_{p_j}}^{-1} \mathbf{Z}_j^T \mathbf{r}_j. \label{eq:4.14}

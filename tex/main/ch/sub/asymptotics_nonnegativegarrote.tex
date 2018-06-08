@@ -1,17 +1,17 @@
 \section{Nonnegative garrote} \label{sec:asymptotics_nonnegative}
-Nonnegative garrote, som blev præsenteret i afsnit \ref{sec:nonnegativegarrote}, finder en mængde af ikke-negative faktorer udfra
+Nonnegative garrote, som blev præsenteret i afsnit \ref{sec:nonnegativegarrote}, finder en mængde af ikke-negative faktorer ud fra
 \begin{align}
 \widehat{\mathbf{c}} = \argmin_{\mathbf{c} \in \R^p} \cbr{\Vert \y - \sum_{j=1}^p \x_j \widehat{\beta}_j^\text{OLS} c_j \Vert_2^2 + \lambda_n \sum_{j=1}^p c_j}, \ \text{u.h.t. at } c_j \geq 0 \text{ for alle} j. \label{eq:nongarotte_om}
 \end{align}
 Estimaterne for nonnegative garrote er da givet ved \(\widehat{\beta}_j^\text{NG} = \widehat{c}_j \widehat{\beta}_j^\text{OLS}\).
 Nonnegative garrote er tæt relateret til et specialtilfælde af adaptive lasso.
-Antag \(\gamma=1\) og vælg \(\widehat{\mathbf{w}}=\frac{1}{\abs{ \widehat{\tbeta}^{\text{OLS}} }}\), da løser adaptive lasso følgende optimeringsproblem
+Antag \(\gamma=1\) og vælg \(\widehat{\mathbf{w}}=\frac{1}{ \vert \widehat{\tbeta}^{\text{OLS}} \vert }\), da løser adaptive lasso følgende optimeringsproblem
 \begin{align}
-\widehat{\tbeta}^\text{AL} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \frac{\abs{ \beta_j }}{\abs{ \widehat{\beta}_j^\text{OLS}}}} \label{eq:AL8}
+\widehat{\tbeta}^\text{AL} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \frac{\vert \beta_j \vert }{\vert \widehat{\beta}_j^\text{OLS} \vert }} \label{eq:AL8}
 \end{align}
 Da \(\widehat{c}_j = \frac{\widehat{\beta}_j^\text{NG}}{\widehat{\beta}_j^\text{OLS}}\), kan \eqref{eq:nongarotte_om} omskrives til
 \begin{align*}
-\widehat{\tbeta}^\text{NG} =\argmin_{\tbeta \in \mathbb{R}^p}  \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p  \frac{\abs{ \beta_j}}{\abs{\widehat{\beta}_j^\text{OLS}}}}, \ \text{u.h.t. at } \beta_j \widehat{\beta}_j^\text{OLS} \geq 0 \text{ for alle } j.
+\widehat{\tbeta}^\text{NG} =\argmin_{\tbeta \in \mathbb{R}^p}  \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p  \frac{\vert \beta_j \vert}{\vert \widehat{\beta}_j^\text{OLS} \vert }}, \ \text{u.h.t. at } \beta_j \widehat{\beta}_j^\text{OLS} \geq 0 \text{ for alle } j.
 \end{align*}
 Dermed kan nonnegative garrote betragtes som adaptive lasso, hvor \(\gamma=1\) og med en ekstra fortegnsbetingelse.
 %

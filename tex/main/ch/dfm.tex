@@ -1,8 +1,8 @@
-\chapter{Faktor model} \label{ch:dfm}
+\chapter{Faktor modellen} \label{ch:dfm}
 \textit{I dette kapitel gives en kort introduktion af faktor modellen, da den betrages som benchmark model. Kapitlet er hovedsagligt baseret på \citep{stock_watson_2002a} og kapitel 9 i \citep{faktorbook}.} \\[4mm]
 %
-Det essentielle formål med faktor analyse er at beskrive kovariansen mellem et stort antal variable udfra få underliggende faktorer.
-Faktor modellen er motiveret af følgende argument: antag variablerne kan opdeles i grupper udfra deres korrelation, således at variable i en gruppe har høj parvis korrelation, mens variablerne har relativ lav korrelation med variabler i andre grupper.
+Det essentielle formål med faktor analyse er at beskrive kovariansen mellem et stort antal variable ud fra få underliggende faktorer.
+Faktor modellen er motiveret af følgende argument: antag variablerne kan opdeles i grupper ud fra deres korrelation, således at variable i en gruppe har høj parvis korrelation, mens variablerne har relativ lav korrelation med variabler i andre grupper.
 Da vil hver gruppe af variable repræsentere én underliggende faktor.
 Nedenfor introduceres den generelle definition af faktor modellen.
 %
@@ -12,7 +12,7 @@ Faktor modellen er givet ved
 \begin{align}
 \X_t = \tLambda \tF_t + \te_t, \label{eq:factor_model}
 \end{align}
-hvor \(\tF_t\) er en stokastisk \(r \times 1\) vektor af uobserveret faktorer, \(\tLambda\) er en \(p \times r\) matrix med faktor loadings og \(\te_t\) er en \(p \times 1\) vektor af fejlled.
+hvor \(\tF_t\) er en stokastisk \(r \times 1\) vektor af uobserverede faktorer, \(\tLambda\) er en \(p \times r\) matrix med faktor loadings og \(\te_t\) er en \(p \times 1\) vektor af fejlled.
 Det antages, at
 \begin{align*}
 \text{cov} \sbr{\te_t, \tF_t} &= \mathbf{0}, \\
@@ -103,7 +103,7 @@ Lad \(\tR\) være en \(r \times r\) ortonormal matrix, således at \(\tR \tR^T =
 \X_t = \tLambda \tR \tR^T \tF_t + \te_t = \tLambda^* \tF_t^* + \te_t,
 \end{align*}
 hvor \(\tLambda^*=\tLambda \tR\) og \(\tF_t^*=\tR^T \tF_t\). 
-Da \(\E{\tF_t^*} = \tR^T \E{\tF_t} = \mathbf{0}\) og \(\text{cov} \sbr{\tF^*_t} = \tR^T \text{cov} \sbr{\tF_t} \tR = \tR^T \tR = \mathbf{I}_r\) kan loadings \(\tLambda\) ikke adskilles fra loadings \(\tLambda^*\) udfra \(\X_t\).
+Da \(\E{\tF_t^*} = \tR^T \E{\tF_t} = \mathbf{0}\) og \(\text{cov} \sbr{\tF^*_t} = \tR^T \text{cov} \sbr{\tF_t} \tR = \tR^T \tR = \mathbf{I}_r\) kan loadings \(\tLambda\) ikke adskilles fra loadings \(\tLambda^*\) ud fra \(\X_t\).
 Faktorerne \(\tF_t\) og \(\tF^*_t\) har samme statistiske egenskaber, og genererer begge kovariansmatricen \(\boldsymbol{\Sigma}_{\X \X}\), som er givet ved
 \begin{align*}
 \boldsymbol{\Sigma}_{\X \X} = \tLambda \tR \tR^T \tLambda^T + \boldsymbol{\Psi} = \tLambda^* \tLambda^{*^T} + \boldsymbol{\Psi}.
@@ -239,7 +239,7 @@ Beviset undlades, men vi refererer til (R16) s. 1176 i \citep{stock_watson_2002a
 %hvor uligheden følger af at \(\widehat{\lambda}_j \in \Gamma\) hvor \(\Gamma = \cbr{\gamma \given p^{-1} \gamma^T \gamma = 1}\) og \(\gamma\) er en \(p \times 1\) vektor, og grænsen kommer af (R3) s. 1175 i \citep{stock_watson_2002a}.
 %\end{proof}
 %
-Næste sætning viser, at prædiktionen, som konstrueres udfra de estimerede faktorer og estimerede parametre, er asymptotisk efficient.
+Næste sætning viser, at prædiktionen, som konstrueres ud fra de estimerede faktorer og estimerede parametre, er asymptotisk efficient.
 Yderligere vises, at estimatorerne for regressionskoefficienterne er konsistente.
 
 Resultatet antager, at prædiktionsligningen \eqref{eq:factor_model_forecast} er estimeret med det sande antal faktorer givet, dvs \(k=r\).

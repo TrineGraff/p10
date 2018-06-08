@@ -27,7 +27,7 @@ Heraf ses det, at OLS estimatoren er rod-\(n\)-konsistent.
 \section{Lasso}
 Lad os betragte lasso estimatoren
 \begin{align*}
-\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \abs{ \beta_j }},
+\widehat{\tbeta}^\text{lasso} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \sum_{j=1}^p \x_j \beta_j \Vert_2^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert},
 \end{align*}
 hvor \(\lambda_n\) varierer med \(n\).
 Lad \(\A_n^\text{lasso} = \cbr{j : \widehat{\beta}_j^\text{lasso} \neq 0}\) betegne den aktive mængde for lasso estimatoren.
@@ -35,7 +35,7 @@ Lad \(\A_n^\text{lasso} = \cbr{j : \widehat{\beta}_j^\text{lasso} \neq 0}\) bete
 \begin{lem}\label{lem:lasso_consistency1}
 Hvis $\frac{\lambda_n}{n} \rightarrow \lambda_0 \geq 0$, da vil
 \begin{align*}
-\widehat{\tbeta}^\text{lasso} \overset{p}{\rightarrow} \argmin_{\tbeta \in \R^p} \cbr{ \del{\mathbf{u} - \tbeta^*}^T \mathbf{C} \del{\mathbf{u} - \tbeta^*} + \lambda_0 \sum_{j=1}^p \abs{ u_j }}.
+\widehat{\tbeta}^\text{lasso} \overset{p}{\rightarrow} \argmin_{\tbeta \in \R^p} \cbr{ \del{\mathbf{u} - \tbeta^*}^T \mathbf{C} \del{\mathbf{u} - \tbeta^*} + \lambda_0 \sum_{j=1}^p \vert u_j \vert}.
 \end{align*}
 \end{lem}
 \begin{proof}
@@ -50,7 +50,7 @@ Sætning \ref{thm:asymp_lasso} indikerer, at \(\lambda_n = O \del{\sqrt{n}}\) kr
 \begin{thm}[Asymptotisk fordeling af lasso estimatoren] \label{thm:asymp_lasso}
 Hvis $\frac{\lambda_n}{\sqrt{n}} \rightarrow \lambda_0 \geq 0$, da er den asymptotiske fordeling af \(\widehat{\tbeta}^\text{lasso}\) givet ved
 \begin{align*}
-\sqrt{n} \del{\widehat{\tbeta}^\text{lasso} - \tbeta^*} \overset{d}{\rightarrow} \argmin_{\tbeta \in \R^p} \cbr{ -2 \mathbf{u}^T \mathbf{W} + \mathbf{u}^T \mathbf{C} \mathbf{u} + \lambda_0 \sum_{j=1}^p \sbr{u_j \text{sign} \del{\beta^*_j} \mathbb{1} \del{\beta_j^* \neq 0} + \abs{u_j} \mathbb{1} \del{\beta_j^* = 0}}},
+\sqrt{n} \del{\widehat{\tbeta}^\text{lasso} - \tbeta^*} \overset{d}{\rightarrow} \argmin_{\tbeta \in \R^p} \cbr{ -2 \mathbf{u}^T \mathbf{W} + \mathbf{u}^T \mathbf{C} \mathbf{u} + \lambda_0 \sum_{j=1}^p \sbr{u_j \text{sign} \del{\beta^*_j} \mathbb{1} \del{\beta_j^* \neq 0} + \vert u_j \vert \mathbb{1} \del{\beta_j^* = 0}}},
 \end{align*}
 hvor \(\mathbf{W} \sim N\del{\mathbf{0}, \sigma^2 \mathbf{C}}\).
 \end{thm}

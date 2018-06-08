@@ -81,7 +81,7 @@ Først dekomponeres \(\y=P_{\boldsymbol{\eta}} \y + P_{\boldsymbol{\eta}^\perp} 
 Vi kan betragte \(\y\) som en afvigelse fra \(P_{\boldsymbol{\eta}^\perp} \y\) af størrelsen \(\boldsymbol{\eta}^T \y\) langs linjen bestemt af \(\boldsymbol{\eta}\).
 Størrelserne \(\mathcal{V}^-\) og \(\mathcal{V}^+\) bestemmer, hvor langt vi kan afvige på hver side af \(P_{\boldsymbol{\eta}^\perp} \y\), inden \(\y\) forlader polyederet, hvoraf vi får uligheden \(\mathcal{V}^- \leq \boldsymbol{\eta}^T \y \leq \mathcal{V}^+\).
 Nogle flader af polyederet kan være perfekt justeret med \(\boldsymbol{\eta}\), dvs deres normalvektorer kan være ortogonale med \(\boldsymbol{\eta}\).
-Dette kan tjekkes udfra \(\mathcal{V}^0\) ved at \(\y\) ligger på den rigtige side af disse flader.  
+Dette kan tjekkes ud fra \(\mathcal{V}^0\) ved at \(\y\) ligger på den rigtige side af disse flader.  
 %
 \begin{figure}[H]
 \centering
@@ -186,9 +186,9 @@ Konstruktionen af konfidensintervallet i \eqref{eq:post_20}, \eqref{eq:post_21} 
 %Efter dette beskrives formene af de eksakte betinget tests og intervaller, som er givet i lemma \ref{lem:polyhedral}-\ref{lem:lem4} for LARS og lasso.
 %APPENDIKS
 
-\subsection{TG test}
+\subsection{TG testen}
 Vi antager, at kolonnerne af \(\X\) er i general position, således at løsningsstierne for LARS og lasso er entydige \citep{lasso_unique}. 
-Givet antallet af steps \(k\), da kan vi let udregne betingede \(p\)-værdier og konfidensintervaller, efter vi har konstrueret matricen \(\boldsymbol{\Gamma}\) for henholdsvis LARS eller lasso.
+Givet antallet af trin \(k\), da kan vi let udregne betingede \(p\)-værdier og konfidensintervaller, efter vi har konstrueret matricen \(\boldsymbol{\Gamma}\) for henholdsvis LARS eller lasso.
 Lad os teste nulhypotesen \(\hyp_0: \ \teta^T \tmu = 0\), hvor \(\teta\) er arbitrær.
 
 Som specificeret i lemma \ref{lem:polyhedral} udregnes størrelserne

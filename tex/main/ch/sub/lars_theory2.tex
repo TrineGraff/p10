@@ -54,7 +54,7 @@ For \(p>2\), da vil stepstørrelsen \(\widehat{\gamma}_2\) være mindre, hvilket
  }\label{fig:lars2}
 \end{figure}
 %
-Efterfølgende LARS trin, udover to prædiktorer, tages langs ensvinklet vektorer, som generaliserer vektoren \(\mathbf{u}_2\) i figur \ref{fig:lars}.
+Efterfølgende LARS trin tages langs ensvinklede vektorer, som generaliserer vektoren \(\mathbf{u}_2\) i figur \ref{fig:lars}.
 Vi antager, at prædiktorerne \(\x_1, \ldots, \x_p\) er lineært uafhængige.
 Lad \(\A\) være er en delmængde af indekser \(\cbr{1,\ldots, p}\), og definer matricen
 \begin{align}
@@ -208,14 +208,14 @@ Lad
 %Der gælder, at \(c_{\tilde{j}}\) ikke kan ændre fortegn indenfor ét LARS trin da \(\abs{c_{\tilde{j}} \del{\gamma}} = \widehat{C} - \gamma A_\A> 0\) af \eqref{eq:lars_2.16}. \\[2mm]
 %%
 %\textbf{Lasso modifikation} \\
-Hvis \(\tilde{\gamma} < \widehat{\gamma}\), stop det igangværende LARS trin i \(\gamma = \tilde{\gamma}\) og fjern \(\tilde{j}\) fra udregningen af den næste ensvinklede retning.
+Hvis \(\tilde{\gamma} < \widehat{\gamma}\), stoppes det igangværende LARS trin i \(\gamma = \tilde{\gamma}\) og fjern \(\tilde{j}\) fra udregningen af den næste ensvinklede retning.
 Dvs
 \begin{align*}
 \widehat{\tmu}_{\A_+} = \widehat{\tmu}_\A + \tilde{\gamma} \mathbf{u}_\A \quad \text{og} \quad \A_+ = \A - \cbr{\tilde{j}},
 \end{align*}
 istedet for \eqref{eq:lars_2.12}.
 
-En mere detaljeret gennemgang af LARS med lasso modifikationen kan findes i \citep{efron}.
+En mere detaljeret gennemgang af LARS algoritmen med lasso modifikationen kan findes i \citep{efron}.
 Da variable kan fjernes og tilføjes til den aktive mængde, er antallet af trin i LARS algoritmen med lasso modifikationen større end \(p\).
 
 \begin{eks}
@@ -224,8 +224,8 @@ Hvis \(\frac{\abs{\tbeta}}{\max \abs{\tbeta}} = 0\), da er ingen variable tilfø
 Af figuren kan vi aflæse rækkefølgen, hvori variablerne medtages i modellen.
 For LARS algoritmen uden lasso modifikationen udføres 10 trin, mens LARS algoritmen med lasso modifikationen udfører 12 trin.
 De 2 ekstra trin som LARS algoritmen med lasso modifikationen udfører, kommer af, at variablen \texttt{hdl} fjernes og tilføjes igen i henholdsvis trin 11 og 12.
-Heraf ses det også at stien er kontinuert og stykvis lineær.
-Den mængde og fortegnene af de aktive variable er konstant mellem trinene.
+Heraf ses det også, at stien er kontinuert og stykvis lineær.
+Den aktive mængde og fortegnene af de aktive variable er konstant mellem trinene.
 
 \imgfigh{diabetes_lars.pdf}{0.9}{Koefficientstierne for LARS algoritmen uden og med lasso modifikationen som funktion af fraktionen af \(\ell_1\)-normen for diabetes data.}{diabetes_lars}
 \end{eks}

@@ -9,7 +9,7 @@ Funktionen kræver, at variablerne er opdelt i grupper, hvortil vi betragter gru
 
 For at finde den optimale model anvendes krydsvalidering og BIC til at estimere tuning parameteren $\lambda$.
 Bemærk at for elastisk net og adaptive lasso har vi to tuning parametre, som skal estimeres. 
-For elastik net betragtes tuning parmetrene $\alpha$ og $\lambda$.
+For elastisk net betragtes tuning parmetrene $\alpha$ og $\lambda$.
 Vi vælger en følge af 10 værdier af \(\alpha\), hvor $\alpha \in \sbr{0,1}$.
 For hvert \(\alpha\) findes \(\lambda_\alpha\) ud fra krydsvalidering og BIC.
 Dette giver en følge af 10 værdier af \(\lambda_\alpha\), hvorfra vi finder den optimale \(\lambda \in \lambda_\alpha\).

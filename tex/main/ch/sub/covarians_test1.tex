@@ -1,4 +1,4 @@
-\section{Kovarians test} \label{subsec:kovarians_test}
+\section{Kovarians testen} \label{subsec:kovarians_test}
 I dette afsnit introduceres en test, der kan tildele \(p\)-værdier til prædiktorerne, som er udvalgt af lasso.
 Testen er baseret på LARS algoritmen og blev introduceret i \citep{lockhart}.
 
@@ -17,7 +17,7 @@ Denne løsning er eksplicit givet ved
 \tilde{\tbeta}^\text{lasso}_{\A_{k-1}} \del{\lambda_{k+1}} = \argmin_{\tbeta_{\A_{k-1}} \in \R^{\vert \A_{k-1} \vert}} \cbr{ \left\Vert \y - \X_{\A_{k-1}} \tbeta_{\A_{k-1}} \right\Vert_2^2 + \lambda_{k+1} \left\Vert \tbeta_{\A_{k-1}} \right\Vert_1},
 \end{align*}
 hvor \(\X_{\A_{k-1}}\) er en matrix, der består af de søjler i \(\X\), som svarer til prædiktorerne i \(\A_{k-1}\).
-Lad \(\widehat{\tbeta}^\text{lasso} \del{\lambda_{k+1}}\) betegne løsningen i \(\lambda_{k+1}\) udfra prædiktorerne i \(\A_{k-1} \cup \cbr{j}\).
+Lad \(\widehat{\tbeta}^\text{lasso} \del{\lambda_{k+1}}\) betegne løsningen i \(\lambda_{k+1}\) ud fra prædiktorerne i \(\A_{k-1} \cup \cbr{j}\).
 Da kan vi definere teststørrelsen af kovarians testen
 \begin{align}
 T_k^\text{cov} = \frac{1}{\sigma^2} \del{ \left\langle \y, \X \widehat{\tbeta}^\text{lasso} \del{\lambda_{k+1}} \right\rangle - \left\langle  \y, \X_{\A_{k-1}} \tilde{\tbeta}^\text{lasso}_{\mathcal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}. \label{eq:6.5}
@@ -67,7 +67,7 @@ For de resterende prædiktorer kan nulhypotesen ikke afvises.
 
 Kovarians testen er det naturlige analog til resultaterne for frihedsgrader for lasso og LARS.
 Som nævnt tidligere har lasso med \(k\) ikke-nul koefficienter \(k\) frihedsgrader, mens LARS anvender en frihedsgrad for hvert step.
-Kovarians testen har middelværdi lig en, som er antallet af frihedsgrader per step.
+Kovarians testen har middelværdi lig en, som er antallet af frihedsgrader per trin.
 Hermed kan man sige at Exp\(\del{1}\) fordelingen svarer til \(\chi_1^2\) fordelingen for adaptive procedurer.
 
 %Kovarians testen har nogle begrænsninger.

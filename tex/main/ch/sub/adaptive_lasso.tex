@@ -3,16 +3,16 @@ Adaptive lasso blev introduceret i \citep{adaptive_lasso} og er endnu en udvidel
 Ideen bag adaptive lasso er at tildele prædiktorernes koefficienter individuelle straffe, istedet for at alle koefficienter straffes ligeligt, som er tilfældet for standard lasso.
 Den vægtede lasso er givet ved
 \begin{align*}
-\argmin_{\tbeta \in \R^p} \cbr{\Vert \y - \X \tbeta \Vert_2^2 + \lambda \sum_{j=1}^p w_j \abs{ \beta_j}},
+\argmin_{\tbeta \in \R^p} \cbr{\Vert \y - \X \tbeta \Vert_2^2 + \lambda \sum_{j=1}^p w_j \vert \beta_j \vert},
 \end{align*}
 hvor \(\mathbf{w}\) er en kendt \(p \times 1\) vektor og \(w_j \geq 0\).
 
 Adaptive lasso er blot en vægtet lasso, hvor vægtene \(\mathbf{w}\) er bestemt, således at metoden opfylder orakelegenskaberne, som vi vil bevise i afsnit \ref{subsec:konsistentAL}.
 \begin{defn}[Adaptive lasso]
 Antag \(\tilde{\tbeta}\) er rod-n konsistent til \(\tbeta^*\) (se definition \ref{def:rodn}).
-Vælg \(\gamma>0\) og definer \(\widehat{\mathbf{w}} = \frac{1}{\abs{ \tilde{\tbeta} }^\gamma}\), da er adaptive lasso estimaterne givet ved
+Vælg \(\gamma>0\) og definer \(\widehat{\mathbf{w}} = \frac{1}{\vert \tilde{\tbeta} \vert^\gamma}\), da er adaptive lasso estimaterne givet ved
 \begin{align}
-\widehat{\tbeta}^\text{AL} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{ \abs{ \beta_j }}{\abs{ \tilde{\beta}_j }^\gamma}}. \label{eq:4.76}
+\widehat{\tbeta}^\text{AL} = \argmin_{\tbeta \in \R^p} \cbr{ \Vert \y - \X \tbeta \Vert_2^2 + \lambda \sum_{j=1}^p \frac{ \vert \beta_j \vert}{\vert \tilde{\beta}_j \vert }^\gamma}. \label{eq:4.76}
 \end{align}
 \end{defn}
 %Af sætning --- Der gælder, at \(\widehat{\tbeta}^\text{OLS}\) og \(\widehat{\tbeta}^\text{lasso}\) er rod-n konsistent.
@@ -21,11 +21,11 @@ Vælg \(\gamma>0\) og definer \(\widehat{\mathbf{w}} = \frac{1}{\abs{ \tilde{\tb
 Givet \(\tilde{\tbeta}\) er optimeringsproblemet \eqref{eq:4.76} konveks, og kan dermed løses med coordinate descent og LARS algoritmen.
 \subsubsection{Coordinate descent}
 Opdateringerne for adaptive lasso i coordinate descent algoritmen er blot en simpel udvidelse af opdateringerne for standard lasso i afsnit \ref{subsec:udregning_lasso}.
-For standardiseret prædiktorer og en centeret responsvariabel er coordinate descent opdateringen for $j$'te koefficient givet ved
+For standardiserede prædiktorer og en centeret responsvariabel er coordinate descent opdateringen for $j$'te koefficient givet ved
 \begin{align}
 \widehat{\beta}^\text{AL}_j \del{\lambda}= S_{\frac{\widehat{\mathbf{w}} \lambda}{2n}} \del{\tilde{\beta}_j}, \label{eq:AL_coordinate_update}
 \end{align}
-hvor \(\tilde{\beta}_j = \frac{1}{n} \sum_{i=1}^n r_{i}^{(j)} x_{ij}\) og \(r_{i}^{(j)} = y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{AL}_k \del{\lambda}\) er de partialle residualer.
+hvor \(\tilde{\beta}_j = \frac{1}{n} \sum_{i=1}^n r_{i}^{(j)} x_{ij}\) og \(r_{i}^{(j)} = y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{AL}_k \del{\lambda}\) er de partielle residualer.
 Vi gennemløber opdateringen \eqref{eq:AL_coordinate_update} indtil konvergens.
 
 \begin{eks}
@@ -35,7 +35,7 @@ På figur \ref{fig:diabetes_lasso_adaptivelasso} illustreres koefficientstierne 
 \end{eks}
 
 \subsubsection{LARS}
-Adaptive lasso problemet kan løses med LARS algoritmen, udfra følgende simple trin
+Adaptive lasso problemet kan løses med LARS algoritmen ud fra følgende simple trin
 \begin{enumerate}
 \item Definér \(\mathbf{x}_j^{*} = \frac{\mathbf{x}_j}{\widehat{w}_j}\) for \(j=1, \ldots, p\)
 \item Løs lasso problemet for alle \(\lambda_n\): \(\widehat{\tbeta}^{*} = \argmin_{\tbeta \in \R^p} \left\Vert \y - \sum_{j=1}^p \mathbf{x}_j^{*} \beta_j \right\Vert^2 + \lambda_n \sum_{j=1}^p \vert \beta_j \vert\)

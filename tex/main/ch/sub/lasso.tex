@@ -25,7 +25,7 @@ Dette gør ingen forskel i \eqref{eq:2.3} og svarer blot til en simpel reparamet
 %Dette gør ingen forskel i \eqref{eq:2.3} og svarer blot til en simpel reparametrisering af \(\lambda\) i \eqref{eq:2.5}.
 %Dette gør værdierne for \(\lambda\) sammenlignelige for stikprøver af forskellige størrelse, som er brugbart i krydsvalidering.
 
-\textit{Ridge regression} estimatoren findes udfra 
+\textit{Ridge regression} estimatoren findes ud fra 
 \begin{align} 
 \widehat{\tbeta}^\text{ridge} = \argmin_{\tbeta \in \R^p} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{u.h.t. at } \sum_{j=1}^p \beta_j^2 \leq t, \label{eq:2.7} 
 \end{align} 
@@ -129,7 +129,7 @@ Når \(p>2\) da vil betingelsesområdet for lasso være et polyeder med mange hj
 %
 \subsection{Udregning af lasso} \label{subsec:udregning_lasso}
 Strafleddet for lasso problemet er ikke differentiabel, og derfor findes der ikke en explicit løsning til optimeringsproblemet.
-Men da lasso problemet er konveks, kan vi finde en numerisk løsning blandt andet udfra en simpel procedure kaldet \textit{coordinate descent}, som vi vil beskrive nærmere i kapitel \ref{ch:optimeringsmetoder}.
+Men da lasso problemet er konveks, kan vi finde en numerisk løsning blandt andet ud fra en simpel procedure kaldet \textit{coordinate descent}, som vi vil beskrive nærmere i kapitel \ref{ch:optimeringsmetoder}.
 
 Nedenfor vil vi argumentere for at lasso problemet er konveks.
 Lad objektfunktionen af lagrange problemet for lasso \eqref{eq:2.5} være opskrevet som \(f \del{\tbeta} = g \del{\tbeta} + h \del{\tbeta}\),
@@ -190,7 +190,7 @@ Da kan vi omskrive \eqref{eq:2.10} til
 \begin{figure}[H]
 \centering
 \scalebox{0.8}{\input{fig/soft_thresholding_fct.tikz}}
-\caption[optional short text]{Soft thresholding funktionen $S_\lambda\del{x}=\text{sign}\del{x} \del{\vert x \vert - \lambda}_+$.} \label{fig:soft_thresholding_fct}
+\caption{Soft thresholding funktionen $S_\lambda\del{x}=\text{sign}\del{x} \del{\vert x \vert - \lambda}_+$.} \label{fig:soft_thresholding_fct}
 \end{figure}
 %
 \subsubsection{Flere prædiktorer: cyclic coordinate descent}
@@ -228,7 +228,7 @@ Algoritmen kaldet \textit{least angle regression} (LARS) er en homotopy metode, 
 En mere teoretisk gennemgang af coordinate descent og LARS algoritmen er givet i kapitel \ref{ch:optimeringsmetoder}.
 %
 \section{Frihedsgrader}
-Antag vi har \(p\) prædiktorer, og fitter en lineær regressionsmodel udfra \(k\) af disse prædiktorer, hvor \(k <p\).
+Antag vi har \(p\) prædiktorer, og fitter en lineær regressionsmodel ud fra \(k\) af disse prædiktorer, hvor \(k <p\).
 Hvis disse \(k\) prædiktorer vælges uafhængigt af responsvariablen, da kan man sige, at fitting proceduren anvender \(k\) frihedsgrader.
 Dette svarer løst sagt til, at teststørrelsen, for at teste nulhypotesen om at alle \(k\) koefficienter er 0, har en \(\chi^2\) fordeling med \(k\) frihedsgrader.
 

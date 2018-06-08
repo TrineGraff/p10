@@ -53,7 +53,7 @@ Definer en følge af værdier \(\lambda_0 > \lambda_1 > \ldots > \lambda_L\), hv
 hvor \(\widehat{\beta}^\text{lasso}_k \del{\lambda}\) er det nuværende estimat for \(\beta_k\) for et given \(\lambda\), hvor \(k \neq j\).
 \item Udregn de partielle residualer: \(r_{i}^{(j)} = y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{lasso}_k \del{\lambda}\) for alle \(i\)
 \item Udregn koefficienten af en simpel lineær regression af den partielle residual på \(j\)'te prædiktor: \(\tilde{\beta}_j = \frac{1}{n} \sum_{i=1}^n r_{i}^{(j)} x_{ij}\) 
-\item Opdater det nuværende estimat \(\widehat{\beta}^\text{lasso}_j\) udfra soft-thresholding operatoren
+\item Opdater det nuværende estimat \(\widehat{\beta}^\text{lasso}_j\) ud fra soft-thresholding operatoren
 \begin{align}
 \widehat{\beta}^\text{lasso}_j \del{\lambda}= S_{\frac{\lambda}{2n}} \del{\tilde{\beta}_j}. \label{eq:update_coordinate}
 \end{align}
@@ -68,4 +68,4 @@ Strategien er at vælge en minimum værdi \(\lambda_L = \epsilon \lambda_0\) og 
 Typiske værdier er \(\epsilon = 0.001\) og \(K =100\).
 
 Den beskrevne coordinate descent algoritme er implementeret i \Rlang-pakken \texttt{glmnet}.
-Koefficientstierne i figur \ref{fig:diabetes_koef} er fundet udfra denne algoritme.
+Koefficientstierne i figur \ref{fig:diabetes_koef} er fundet ud fra denne algoritme.

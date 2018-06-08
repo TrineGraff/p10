@@ -12,7 +12,7 @@ For faktor modellen skal vi bestemme antallet af faktorer, mens vi for lasso og 
 \subsection{Valg af antal faktorer} \label{sec:faktorer}
 %Antallet af faktorer kan bestemmes udfra informationskriterier, som betragter et tradeoff mellem at inkludere en ekstra faktor, dvs en ekstra parameter i modellen, mod omkostningen af at øge variabiliteten, som kommer af at estimere en ekstra parameter.
 %AIC kan anvendes til at udvælge antallet af faktorer, men \citep{Bai_Ng} beviset, at dette ikke giver et konsistent estimat.
-Antallet af faktorer kan bestemmes udfra nogle informationskriterier foreslået af \citep{Bai_Ng}, som er givet ved
+Antallet af faktorer kan bestemmes ud fra nogle informationskriterier foreslået af \citep{Bai_Ng}, som er givet ved
 \begin{align}
 \text{IC}_1 \del{k} &= \ln V \del{k, \widehat{\tF}} + k \frac{p + T}{p T} \ln \del{\frac{p T}{p + T}}, \label{eq:ic1} \\
 \text{IC}_2 \del{k} &= \ln V \del{k, \widehat{\tF}} + k \frac{p + T}{p T} \ln \del{ \min \cbr{p, T}}, \label{eq:ic2} \\
@@ -51,7 +51,7 @@ Krydsvalidering finder modellen med mindst prædiktionsfejl, mens BIC vælger de
 %\subsubsection{k-fold krydsvalidering}
 En k-fold krydsvalidering opdeler tilfældigt observationerne i \(k\) grupper, som er tilnærmelsesvis af samme størrelse.
 Én af disse grupper anvendes som valideringsmængde, og de resterende \(k-1\) grupper betragtes som træningsmængde.
-En regressionsmodel fittes på træningsmængden, hvorfra den gennemsnitlige kvadrerede fejl findes udfra valideringsmængden, hvilket giver \(\text{MSE}_1\).
+En regressionsmodel fittes på træningsmængden, hvorfra den gennemsnitlige kvadrerede fejl findes ud fra valideringsmængden, hvilket giver \(\text{MSE}_1\).
 Denne procedure gentages \(k\) gange, således at hver gruppe betragtes som valideringsmængde.
 Dette resulterer i \(k\) estimater af prædiktionsfejlen $\text{MSE}_1, \text{MSE}_2, \dots , \text{MSE}_k$.
 Estimatet for \(k\)-fold krydsvalidering er da givet ved
@@ -71,7 +71,7 @@ Et $k$-fold krydsvalidering har en lav varians, da \eqref{eq:cv_k} tager det gen
 Bias kunne være et problem i forhold til hvordan vi vælger vores træningsmængde. Hvis vi ikke har nok observationer i træningsmængden vil $k$-fold krydsvalidering have høj bias. Derfor er der også en bias-variance trade-off med valget af $k$. 
 
 \subsubsection{BIC}
-Tuning parameteren kan også vælges udfra Bayes informationskriteriet.
+Tuning parameteren kan også vælges ud fra Bayes informationskriteriet.
 Vi betragter dens skalerede version.
 %
 \begin{defn}[Bayes informationskriteriet (BIC)] \label{def:bic}
@@ -105,7 +105,7 @@ hvor $T$ er antallet af observationer i testmængden, $y_{t}$ er observationen t
 MAE og MSE kan betragtes som tabsfunktioner, da de måler en afvigelse fra de observerede værdier.
 Tabsfunktionerne vil være lig 0 for en perfekt prædiktion, og ellers vil de have en positiv værdi, derfor foretrækkes modeller med lav MAE eller MSE.
 
-Udfra tabsfunktionerne kan vi betragte en gennemsnitlig tabs ratio mellem en given model og benchmark modellen, som er givet ved
+Ud fra tabsfunktionerne kan vi betragte en gennemsnitlig tabs ratio mellem en given model og benchmark modellen, som er givet ved
 \begin{align}
 R^{\text{MAE}} = \frac{\text{MAE}^{\text{Alternativ}}}{\text{MAE}^{\text{Benchmark}}} \qquad R^{\text{\text{MSE}}} = \frac{\text{MSE}^{\text{Alternativ}}}{\text{MSE}^{\text{Benchmark}}}. \label{eq:gennemsnitligtabsratio}
 \end{align} 

@@ -1,0 +1,53 @@
+\section{Benchmark modellen}
+\begin{frame}{Benchmark modellen}{Den autoregressive model}
+\begin{itemize}
+\item estimeres med OLS
+\item ordenen bestemmes ud fra BIC
+\end{itemize}
+\begin{table}[h]
+\center
+\begin{tabular}{ll}
+\toprule
+$\widehat{\phi}_1$ &$ -0.0162 $ \\
+$\widehat{\phi}_2$ & $0.1992^{***}$  \\
+$\widehat{\phi}_3$ &$0.1873^{***}$  \\
+$\widehat{\phi}_4$ &$0.1686^{***} $ \\ \midrule
+BIC & -3.5651 \\
+ R$^2_{\text{adj}}$ & 12.31\% \\
+LogLik &  211.8617\\ \bottomrule
+ \end{tabular}
+\caption{Estimationsresultater for en \(\text{AR} \del{4}\), BIC, justeret R$^2$ og log-likehood. Det opløftede symbol betegner signifikans ved henholdsvis $^{***}$0.1\%, $^{**}$1\%, $^{*}$5\% og $^{\dagger}$10\%.} \label{tab:est_ar}
+\end{table}
+\end{frame}
+
+\begin{frame}{Benchmark modellen}{Faktor modellen}
+\begin{itemize}
+\item Lad \(k = 1, \ldots, k_\text{max}\), hvor \(k_\text{max} = 20\)
+\item ordenen bestemmes ud fra BIC
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Benchmark modellen}{Faktor modellen}
+\begin{table}[h]
+\center
+\begin{tabular}{lccccc}
+\toprule
+\multicolumn{5}{c}{Faktor model (IC$_1$)} \\ \midrule
+& Værdi &  IC$_1$ &  R$^2_{\text{adj}}$ & LogLik  \\
+$k$ & 6 &  $-0.3519$ &  15.79\% &  224.3621  \\ \bottomrule \toprule
+\multicolumn{5}{c}{Faktor model (IC$_2$)} \\ \midrule
+ & Værdi &  IC$_2$ &  R$^2_{\text{adj}}$ & LogLik \\
+ $k$ &11 & $-0.5314$ &  16.85\% &  230.3414 \\\bottomrule \toprule
+\multicolumn{5}{c}{Faktor model (IC$_3$)} \\ \midrule
+& Værdi &  IC$_3$ &  R$^2_{\text{adj}}$ & LogLik\\
+$k$ & 20 & $-0.6931$ & 17.87\% & 238.3753 \\  \bottomrule
+ \end{tabular}
+ \caption{Antal faktorer, værdien af informationskriteriet, justeret \(R^2\) samt log-likehood for faktormodellerne valgt ud fra IC$_1$, IC$_2$ og IC$_3$, som betegnes faktor model (IC\(_1\)), faktor model (IC\(_2\)) og faktor model (IC\(_3\)).} \label{tab:est_faktor}
+\end{table}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../beamer"
+%%% End:

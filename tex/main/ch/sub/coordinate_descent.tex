@@ -48,7 +48,7 @@ Definer en følge af værdier \(\lambda_0 > \lambda_1 > \ldots > \lambda_L\), hv
 \begin{itemize}
 \item Opskriv lasso problemet \eqref{eq:2.5}
 \begin{align*}
-\sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{lasso}_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert
+\sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{lasso}_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert,
 \end{align*}
 hvor \(\widehat{\beta}^\text{lasso}_k \del{\lambda}\) er det nuværende estimat for \(\beta_k\) for et given \(\lambda\), hvor \(k \neq j\).
 \item Udregn de partielle residualer: \(r_{i}^{(j)} = y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}^\text{lasso}_k \del{\lambda}\) for alle \(i\)

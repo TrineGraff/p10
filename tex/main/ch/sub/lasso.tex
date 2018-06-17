@@ -200,10 +200,10 @@ Vi gennemløber prædiktorerne, hvor koefficient \(\beta_j\) opdateres i det \(j
 
 Opskriv objektfunktionen i \eqref{eq:2.5} som
 \begin{align*}
-\sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \beta_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert
+\sum_{i=1}^n \del{y_i - \sum_{k \neq j} x_{ik} \beta_k - x_{ij} \beta_j}^2 + \lambda \sum_{j = 1}^p \vert \beta_j \vert.
 \end{align*}
 Definer den partielle residual $r_i^{(j)}=y_i - \sum_{k \neq j} x_{ik} \widehat{\beta}_k$, som trækker fittet fra responsvariablen med undtagelse af \(j\)'te prædiktor.
-Den j'te koefficient opdateret ved
+Den $j$'te koefficient opdateret ved
 \begin{align}
 \widehat{\beta}_j = S_{\frac{\lambda}{2n}} \del{\frac{1}{n} \left\langle \mathbf{x}_j, \mathbf{r}^{(j)} \right\rangle}. \label{eq:2.14}
 \end{align}

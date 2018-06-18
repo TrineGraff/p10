@@ -10,12 +10,9 @@
 
 %///// STYLE /////
 \usepackage{booktabs}
-\usepackage{tabu}
 \usepackage{graphicx}
 \usepackage{epstopdf}
 \usepackage{morefloats}
-
-\usepackage{ulem}
 
 
 %///// MATH/////
@@ -29,6 +26,16 @@
 \usepackage{calrsfs}
 \DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
 
+\definecolor{chartreuse4}{RGB}{69, 139, 0}
+\definecolor{blue3}{RGB}{0, 0, 205}
+\definecolor{purple}{RGB}{160, 32, 240}
+\definecolor{red3}{RGB}{205, 0, 0}
+\definecolor{deeppink}{RGB}{255, 20, 147}
+\definecolor{orange}{RGB}{255, 165, 0}
+\definecolor{cadetblue2}{RGB}{142, 229, 238}
+\definecolor{goldenrod4}{RGB}{139, 105, 20}
+
+
 
 %%% SETS %%%
 \newcommand{\R}{\mathbb{R}}  % real numbers
@@ -38,26 +45,49 @@
 \newcommand{\F}{\pazocal{F}}  % filtration set
  
 
-%%% OPERATORS %%%
-\DeclareMathOperator{\e}{e}
-\DeclareMathOperator{\diag}{diag}
-\DeclareMathOperator*{\argmin}{\arg\,\min}
-\DeclareMathOperator*{\argmax}{\arg\,\max}
-\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
-\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
-\DeclarePairedDelimiter\inner{\langle}{\rangle}
-
-\newcommand{\of}[2][-1]{\!\del[#1]{#2}}
-\newcommand{\1}{\mathbbm{1}}  % Indicator function (operator style)
-\newcommand{\ind}[1]{\1\!\sbr{#1}}  % indicator function (function style)
-\newcommand{\E}[2][]{\mathbb{E}_{#1}\!\sbr{#2}}  % expected value with optional measure
+%%% STOCHASTICS %%%
+\newcommand{\1}{\mathbbm{1}}  % indicator function
+\newcommand{\PM}{\mathbb{P}}  % probability measure
+\newcommand{\E}[2][]{\mathbb{E}^{#1}\!\sbr{#2}}  % expected value with optional measure
 \newcommand{\Var}[1]{\mathrm{Var}\!\sbr{#1}}  % variance
 \newcommand{\Cov}[2]{\mathrm{Cov}\!\del{#1, #2}}  % covariance
 \newcommand{\Cor}[2]{\mathrm{Cor}\!\del{#1, #2}}  % correlation
-\newcommand{\est}[1]{\widehat{#1}}  % hat for estimates
 \newcommand{\given}{\,\big\vert\,}  % taller vertical bar
-\newcommand{\widesim}[2][1.5]{\mathrel{\overset{#2}{\scalebox{#1}[1]{$\sim$}}}}
-\newcommand{\med}{\mathrm{med}}
+
+
+\newcommand{\est}[1]{\widehat{#1}}  % hat for estimates
+\newcommand{\convD}{\overset{\pazocal{D}}{\longrightarrow}}  % converges in distribution
+\newcommand{\convP}{\overset{\PM}{\longrightarrow}}  % converges in probability
+
+
+%%% VECTORS & MATRICES %%%
+\renewcommand{\vec}[1]{\bm{#1}}
+\newcommand{\vu}{\vec{u}}
+\newcommand{\vv}{\vec{v}}
+\newcommand{\vw}{\vec{w}}
+\newcommand{\vx}{\vec{x}}
+\newcommand{\vX}{\vec{X}}
+\newcommand{\vy}{\vec{y}}
+\newcommand{\vY}{\vec{Y}}
+\newcommand{\vz}{\vec{z}}
+\newcommand{\vZ}{\vec{Z}}
+\newcommand{\vi}{\vec{i}}
+\newcommand{\vj}{\vec{j}}
+\newcommand{\vf}{\vec{f}}
+\newcommand{\ve}{\vec{e}}
+\newcommand{\valpha}{\vec{\alpha}}
+\newcommand{\vbeta}{\vec{\beta}}
+\newcommand{\vmu}{\vec{\mu}}
+\newcommand{\veps}{\vec{\epsilon}}
+\newcommand{\vtheta}{\vec{\theta}}
+\newcommand{\vphi}{\vec{\phi}}
+\newcommand{\mVar}{\vec{\Sigma}}
+\newcommand{\vnull}{\vec{0}}
+
+\newcommand{\MLE}{\est{\vtheta}}
+
+\newcommand{\vF}{\vec{F}}
+
 
 %%% FINANCE %%%
 \newcommand{\claim}{\pazocal{X}}
@@ -65,35 +95,29 @@
 \newcommand{\Put}{\pazocal{P}}
 \newcommand{\Capl}{\mathbf{Capl}}
 \renewcommand{\Cap}{\mathbf{Cap}}
-\renewcommand{\mathcal}{\pazocal}
 
 
 %%% MISC %%%
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}  % floor function
+\newcommand{\ceil}[1]{\lceil #1 \rceil}  % ceiling function
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}  % inner product
+\newcommand{\tr}[1]{ \mathrm{Trace}\!\sbr{#1} } % trace
 \newcommand{\en}[1]{\mbox{\,\sc{e}-}#1}
-\newcommand{\ep}[1]{\mbox{\,\sc{e}}#1}
-\newcommand{\RV}{\ensuremath{\mathrm{RV}}}
-\newcommand{\CV}{\ensuremath{\mathrm{CV}}}
-\newcommand{\JV}{\ensuremath{\mathrm{JV}}}
-\newcommand{\IV}{\ensuremath{\mathrm{IV}}}
-\newcommand{\QV}{\ensuremath{\mathrm{QV}}}
-\newcommand{\BV}{\ensuremath{\mathrm{BV}}}
-\newcommand{\TQ}{\ensuremath{\mathrm{TQ}}}
-\newcommand{\CTBPV}{\ensuremath{\mathrm{CTBPV}}}
-\newcommand{\CTTPV}{\ensuremath{\mathrm{CTTPV}}}
-\newcommand{\MedRV}{\ensuremath{\mathrm{MedRV}}}
-\newcommand{\MinRV}{\ensuremath{\mathrm{MinRV}}}
-\newcommand{\MedRQ}{\ensuremath{\mathrm{MedRQ}}}
-\newcommand{\MinRQ}{\ensuremath{\mathrm{MinRQ}}}
-\newcommand{\MAE}{\ensuremath{\mathrm{MAE}}}
-\newcommand{\RMSE}{\ensuremath{\mathrm{RMSE}}}
-\newcommand{\mcs}{\pazocal{M}}
-\newcommand{\hyp}{\pazocal{H}}
+\newcommand{\ep}[1]{\mbox{\,\sc{e}}#1}	
+\newcommand{\AIC}{\mathrm{AIC}}
+\newcommand{\nc}{\mathrm{nc}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\of}[1]{\!\del{#1}}
 
-% Redefine epsilon and phi
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+
+% Redefine epsilon
 \let\temp\epsilon
 \let\epsilon\varepsilon
 \let\varepsilon\temp
 
-\let\temp\phi
-\let\phi\varphi
-\let\varphi\temp
+
+\usepackage{tikz}
+	\usetikzlibrary{positioning}

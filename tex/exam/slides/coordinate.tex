@@ -1,0 +1,69 @@
+\section{Coordinate descent}
+\begin{frame}{Coordinate descent}
+\begin{itemize}
+\item Coordinate descent
+\begin{itemize}
+\item Koordinat $k$ er valgt i iteration $t$, så er opdatering givet ved
+\begin{align*}
+\beta_k^{t+1} = \underset{\beta_k}{\arg\min} f\del{\beta_1^t,\dots, \beta_{k-1}^t, \beta_k, \beta_{k+1}^t, \dots, \beta_p^t }
+\end{align*}
+\end{itemize}
+\item Krydsvalidering
+\begin{itemize}
+\item $CV_k = \frac{1}{k} \sum_{i=1}^k MSE_i$
+\end{itemize}
+\item BIC
+\begin{itemize}
+\item $BIC = \log \widehat{\sigma^2_p} + \frac{p \log T}{T} $
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\subsection{Krydsvalidering}
+\begin{frame}{Krydsvalidering}
+\begin{itemize}
+\item Elastik net (CV), $\alpha = 1$
+\item Adaptive lasso med OLS vægte (CV), $\gamma = 0.5$
+\item Adaptive lasso med lasso vægte (CV), $\gamma = 0.5$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Krydsvalidering}
+\include{slides/cv_tab}
+\end{frame}
+
+\begin{frame}{Krydsvalidering}
+\begin{figure}[!htb]
+        \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/boxplot_lasso_kryds.pdf}
+%     \caption{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\tbeta}^{\text{lasso}} \del{\lambda_{\text{1sd}}} $. Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}
+\end{figure}
+  %         
+\end{frame}
+
+\begin{frame}{Krydsvalidering}
+\include{slides/tg_lasso_kryds}
+\end{frame}
+
+\subsection{BIC}
+\begin{frame}{BIC}
+\begin{itemize}
+\item Elastik net (BIC), $\alpha = 1$
+\item Adaptive lasso med OLS vægte (BIC), $\gamma = 2$
+\item Adaptive lasso med lasso vægte (BIC), $\gamma = 0.5$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{BIC}
+\include{slides/bic_lambda}
+\end{frame}
+
+\begin{frame}{BIC}
+\begin{figure}[!htb]
+        \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/boxplot_lasso_coord_bic.pdf}
+\end{figure}
+  %          \caption{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\tbeta}^{\text{lasso}} \del{\lambda_{\text{1sd}}} $. Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}
+\end{frame}
+
+\begin{frame}{BIC}
+\include{slides/fixedlasso_bic}
+\end{frame}

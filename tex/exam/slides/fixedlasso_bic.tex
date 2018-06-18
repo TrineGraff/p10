@@ -1,0 +1,30 @@
+\begin{table}[h] 
+\centering 
+\scalebox{0.6}{
+\begin{tabular}{lcccccc}
+\toprule
+Prædiktor& Koefficient & $Z$-score  & $p$-værdi & Konfidensinterval &  $\sbr{\pazocal{V}^-,\pazocal{V}^+}$  \\
+\midrule
+\textcolor{red3}{DPCERA3M086SBEA}  & $-0.002$  &$-0.960 $  & 0.093  &$\sbr{-0.071,  0.003}$ &  $ \sbr{0.001,0.002}$ \\
+\textcolor{chartreuse4}{IPDMAT} & $-0.002 $& $-0.680$ & 0.159  & $\sbr{-0.032 ,  0.005}$&   $\sbr{-0.001,0.002}$\\
+\textcolor{blue3}{CLF16OV}&0.241  &36.686  & 0 &$\sbr{0.235 , 0.350}$& $\sbr{0.200,0.242}$\\
+\textcolor{blue3}{CE160V} &$- 0.264$ & $-37.339$    & 0  &$\sbr{-0.455 , -0.260}$&$ \sbr{0.142,0.264}$\\
+\textcolor{blue3}{UEMPLT5} & 0.000 &  0.027  &0.777   &$\sbr{-0.029  ,0.005 }$ &  $\sbr{-0.001,0.013}$ \\
+\textcolor{blue3}{UEMP5TO14}&$- 0.001$  &$ -0.266$  &  0.599  &$\sbr{-0.007 ,  0.014}$  &$\sbr{ -0.001,               0.004}$\\
+\textcolor{blue3}{UEMP15OV} & 0.004  & 1.299  &0.249   &$\sbr{-0.005 , 0.008}$  & $\sbr{0.001 , 0.010}$\\
+\textcolor{blue3}{CLAIMSx} & 0.001 &  0.387 &  0.689   &$\sbr{-0.030  , 0.011 }$  &$\sbr{0.000 ,0.002}$\\
+\textcolor{blue3}{USCONS}    &$- 0.001  $&  $-0.591  $ & 0.100  &   $\sbr{ -0.088  ,   0.004 }$&  $\sbr{0.000              , 0.001}$ \\
+\textcolor{blue3}{USTRADE}  &  0.000  & $-0.118$ &   0.988     & $\left[0.007  ,  \infty \right) $  &$\sbr{0.000,0.006}$\\
+\textcolor{red3}{AMDMNOx} &$- 0.002$ &  $-0.813 $ & 0.641  & $\sbr{-0.008,0.020}$ &   $\sbr{0.001 , 0.004}$ \\
+\textcolor{orange}{TB6MS}&$- 0.001$  &$-0.415$  & 0.677   &$\sbr{ -0.008  ,  0.023  }$& $\sbr{0.000              , 0.005}$\\
+\textcolor{orange}{GS5}& $-0.003$ &$ -1.207$    &0.144    &$\sbr{-0.032  , 0.005}$ &$\sbr{0.001,0.004}$\\
+\textcolor{orange}{EXUSUKx} &  0.003  & 1.449   &0.303   &$\sbr{ -0.007   , 0.012}$ & $\sbr{0.002             , 0.004}$\\
+\textcolor{cadetblue2}{CPIMEDSL} &  0.002 &  0.855  & 0.865&  $\sbr{  -0.054 ,   0.003}$ &  $\sbr{0.001              , 0.009}$\\
+\textcolor{blue3}{lag 1}   & $- 0.010$& $ -4.362$  &0.499  &  $\sbr{-0.011 , 0.033}$&  $\sbr{0.009           ,    0.021 }$\\
+\textcolor{blue3}{lag 4}  &0.002 &   1.106  &0.311    & $\sbr{ -0.014,   0.028 }$  & $\sbr{0.001              , 0.003}$\\
+\bottomrule
+\end{tabular}  
+}
+\caption{
+Koefficienter, \(Z\)-scores, \(p\)-værdier, konfidensintervaller og trunkeret intervaller for lasso\(_{TG}\) (BIC). Den estimeres standard afvigelse er \(0.043\), og resultaterne er for \(\lambda_{TG} = \lambda_\text{BIC} \cdot 548 \approx 1.0432\) med \(\alpha = 0.1\)} \label{tab:fixedLassoInf_bic}
+\end{table} 

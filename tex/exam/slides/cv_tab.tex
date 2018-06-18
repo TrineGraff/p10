@@ -1,0 +1,33 @@
+\begin{table}[ht]
+\center
+\scalebox{0.7}{
+\begin{tabular}{lccccc | lcccccc}
+\toprule
+   \multicolumn{6}{c}{Lasso (CV)} &  \multicolumn{6}{c}{Ridge regression (CV)}  \\ \midrule
+ & \(\log \del{\lambda}\) & MSE & $p$ & R$^2_{\text{adj}}$ & LogLik && \(\log \del{\lambda}\) & MSE & $p$ & R$^2_{\text{adj}}$ & LogLik\\
+ %lasso (min)
+ $\lambda_{\min}$ &$-6.6361$& 0.0019 & 28 & 94.52\% & 983.956 &  
+%ridge(min)
+ $ \boldsymbol{\lambda_{\min}}$ &  $\mathbf{-4.3800}$ &   $\mathbf{0.0045} $&  $\mathbf{126}$ & $ \mathbf{ 93.96\% }$ & $\mathbf{1014.633}$ \\ 
+ %lasso (1sd)
+ $\boldsymbol{\lambda}_{\textbf{1sd}}$ & $\mathbf{-5.7057}$ & $\mathbf{0.0020} $ & $\mathbf{14}$ &$ \boldsymbol{94.46\%}$ & $\textbf{973.765}$ 
+%ridge (1sd) 
+& $\lambda_{ \text{1sd}}$& $-4.1939$ & 0.0047 & 126 & 93.96 \% &   1014.633 \\ \bottomrule \toprule
+\multicolumn{6}{c}{Group lasso (CV) }  &  \multicolumn{6}{c}{Adap. lasso m. OLS vægte (CV) }  \\ \midrule
+& \(\log \del{\lambda}\) & MSE &$ p $ &R$^2_{\text{adj}}$& LogLik && \(\log \del{\lambda}\) & MSE & $p$ & R$^2_{\text{adj}}$ & LogLik  \\
+%group min
+$\lambda_{\min}$& $-8.2644$ & 0.0022  & 126 & 93.96\% & 1014.633 & 
+%adap lasso (min)
+$\lambda_{\min}$  & $-5.1333$ &$0.0018$ & $5$ & $94.44 \%$ & 968.274 \\
+%%group 1sd
+  $\boldsymbol{\lambda}_{\textbf{1sd}}$  & $\mathbf{-7.6365}$ &$ \mathbf{0.0023}$ & $\mathbf{119}$ &$ \textbf{94.03}\%$ & \textbf{1013.333} & 
+  %adap lasso 1sd  
+  $\boldsymbol{\lambda}_{\textbf{1sd}}$ & $\mathbf{-3.4586}$ & $\mathbf{0.0019}$ & $\mathbf{2}$ &$\mathbf{ 94.28}$\% & $\mathbf{959.0402}$ \\  \bottomrule 
+  \toprule
+  \multicolumn{6}{c}{Adap. lasso m. lasso vægte (CV) }  \\ \cmidrule{1-6}
+& $\log \del{\lambda}$ & MSE & $p$ & R$^2_{\text{adj}}$ & LogLik\\
+$\lambda_{\min}$   &  $-6.3897$ & $ 0.0017 $& $ 6$ &   $94.48\%$& 970.5874   \\
+ $\boldsymbol{\lambda}_{\textbf{1sd}}$   & $\mathbf{-3.5057}$ & $\mathbf{0.0018}$ & $\mathbf{2 }$& $\mathbf{94.28\% }$  & $\mathbf{959.0402 }$\\ \cmidrule{1-6}
+ \end{tabular}}
+\caption{Logaritmen af $\lambda_{\min}$ og $\lambda_{1\text{sd}}$, gennemsnitlig krydsvalideringsfejl, som er målt i MSE, antallet af parametre, justeret R$^2$ og log-likelihood for lasso og dens generaliseringer. De valgte tuning parametre er markeret med tykt.} \label{tab:cv_tab}
+\end{table}

@@ -50,10 +50,11 @@ Naiv elastisk net løser optimeringsproblemet
 \end{frame}
 
 \begin{frame}{Generaliseringer af lasso estimatoren}{Group lasso}
-Lad \(\mathbf{z}_j\) og \(\boldsymbol{\theta}_j\) være \(p_j \times 1\) vektorer som repræsenterer prædiktorerne og deres koefficienter i gruppe \(j\) for \(j = 1, \ldots, J\).
+Antag prædiktorerne er opdelt i \(J\) grupper, hvor \(p_j\) er antallet i gruppe \(j\). \\
+%Lad \(\mathbf{z}_j\) og \(\boldsymbol{\theta}_j\) være \(p_j \times 1\) vektorer som repræsenterer prædiktorerne og deres koefficienter i gruppe \(j\) for \(j = 1, \ldots, J\).
 Group lasso løser følgende optimeringsproblem
 \begin{align*}
-\widehat{\boldsymbol{\theta}}_j^{\text{group lasso}} = \argmin_{\boldsymbol{\theta}_j \in \R^{p_j}} \cbr{\frac{1}{2} \sum_{i=1}^n \del{y_i - \sum_{j=1}^J z_{ij}^T \boldsymbol{\theta}_j}^2 + \lambda \sqrt{p_j} \sum_{j=1}^J \Vert \boldsymbol{\theta}_j \Vert_2}.
+\widehat{\boldsymbol{\theta}}_j^{\text{group lasso}} = \argmin_{\boldsymbol{\theta}_j \in \R^{p_j}} \cbr{\frac{1}{2} \Vert \mathbf{y} - \sum_{j=1}^J \mathbf{Z}_j \boldsymbol{\theta}_j \Vert_2^2 + \lambda \sum_{j=1}^J \sqrt{p_j} \Vert \boldsymbol{\theta}_j \Vert_2}.
 \end{align*}
 \begin{itemize}
 \item Alle indgange i $\widehat{\boldsymbol{\theta}}_j^\text{group lasso}$ vil være lig nul eller ikke-nul afhængig af \(\lambda\).
@@ -62,12 +63,12 @@ Group lasso løser følgende optimeringsproblem
 \end{frame}
 %
 \begin{frame}{Generaliseringer af lasso estimatoren}{Adaptive lasso}
-Antag \(\boldsymbol{\tilde{\beta}}\) er rod-n konsistent til \(\boldsymbol{\beta}^*\). Vælg \(\gamma >0\), da er adaptive lasso estimaterne givet ved
+Antag \(\widetilde{\boldsymbol{\beta}}\) er rod-n konsistent til \(\boldsymbol{\beta}^*\). Vælg \(\gamma >0\), da er adaptive lasso estimaterne givet ved
 \begin{align*}
-\widehat{\boldsymbol{\beta}}^\text{AL} = \argmin_{\boldsymbol{\beta} \in \R^p} \cbr{ \Vert \mathbf{y} - \mathbf{X} \boldsymbol{\beta} \Vert_2^2 + \lambda \sum_{j=1}^p \frac{ \vert \beta_j \vert}{\vert \tilde{\beta}_j \vert^\gamma}}.
+\widehat{\boldsymbol{\beta}}^\text{AL} = \argmin_{\boldsymbol{\beta} \in \R^p} \cbr{ \Vert \mathbf{y} - \mathbf{X} \boldsymbol{\beta} \Vert_2^2 + \lambda \sum_{j=1}^p \frac{ \vert \beta_j \vert}{\vert \widetilde{ \beta}_j \vert^\gamma}}.
 \end{align*}
 \begin{itemize}
-\item Antag $\frac{\lambda_n}{\sqrt{n}} \rightarrow 0$ og $\lambda_n n^\frac{\gamma-1}{2} \rightarrow \infty$, da opfylder adaptive lasso orakelegenskaberne:
+\item Antag $\frac{\lambda_n}{\sqrt{n}} \rightarrow 0$ og $\lambda_n n^\frac{\gamma - 1}{2} \rightarrow \infty$, da opfylder adaptive lasso orakelegenskaberne:
 \begin{itemize}
 \item Konsistent variabeludvælgelsen: $\lim_{n \rightarrow \infty} \mathbb{P}(\pazocal{A}_n^\text{AL}=\pazocal{A})=1$.
 \item Asymptotisk normalitet: $\sqrt{n}\left( \widehat{\boldsymbol{\beta}}_\pazocal{A}^{\text{AL}}-\boldsymbol{\beta}_\pazocal{A}^* \right) \overset{d}{\rightarrow} N(\textbf{0},\sigma^2 \boldsymbol{C}_{11}^{-1}).$

@@ -4,31 +4,53 @@
 \item Datasæt fra FRED
 \begin{itemize}
 \item 128 variable
-\item 1. januar 1959 - 1. november 2017 svarende til 707 observationer
-Opdeling i 8 grupper:
+\item 1. januar 1959 - 1. november 2017 (707 observationer)
+\item Opdelt i 8 grupper:
+\begin{columns}
+\begin{column}{0.38\textwidth}
+    \begin{enumerate}
+	\item Output og indkomst
+	\item Arbejdsmarked
+	\item Bolig
+	\item Forbrug, ordrer og varebeholdninger
+\end{enumerate}
+\end{column}
+\begin{column}{0.38\textwidth} 
+    \begin{enumerate}
+    \setcounter{enumi}{4}
+	\item Penge og kredit
+	\item Renter og valutakurser
+	\item Priser
+	\item Aktiemarked
+\end{enumerate}
+\end{column}
+\end{columns}
 \end{itemize}
+
 \item Transformerede datasæt
 \begin{itemize}
 \item 123 variable
 \item 1. januar 1960 - 1. juli 2017 svarende til 691 variable
+\begin{itemize}
+\item Træningsmængde: 1. januar 1960 - 1. december 2005 (552 observationer)
+\item Testmængde: 1. januar 2006 - 1. juli 2017 (139 observationer)
 \end{itemize}
-\item Træningsmængde: 1. januar 1960 - 1. december 2005 (552 obs)
-\item Testmængde: 1. januar 2006 - 1. juli 2017 (139 obs)
+\item centre responsvariablen og standardiser prædiktorerne
+\end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Data}{Arbejdsløshedsraten}
-\begin{itemize}
-\item repræsenterer den procentvise ledighed af arbejdsstyrken
-\item sæsonjusteret og inkluderet i gruppe arbejdsløshedsmarked
+%\item Arbejdsløshedsraten betragtes som responsvariabel
+%\begin{itemize}
+%\item repræsenterer den procentvise ledighed af arbejdsstyrken
+%\end{itemize}
 %
 \begin{figure}
  \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/unemployment.pdf}
- \caption{The correlation for the two transformations of RV for EPEX}
+ \caption{Den øverste figur viser arbejdsløshedsraten og den nederste figur illustrerer 1. differensen af arbejdsløshedsraten fra 1. januar 1960 til 1. juli 2017.}
  \end{figure}
 %
-\item centre responsvariablen og standardiser prædiktorerne
-\end{itemize}
 \end{frame}
 
 %%% Local Variables:

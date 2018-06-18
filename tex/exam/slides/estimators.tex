@@ -1,0 +1,81 @@
+\section{Lasso og dens generaliseringer}
+\begin{frame}{Lasso estimatoren}
+\textit{The Least Absolute Shrinkage Selection Operator} (lasso) løser optimeringsproblemet
+\begin{align*}
+\widehat{\boldsymbol{\beta}}^\text{lasso} = \argmin_{\boldsymbol{\beta} \in \R^p} \cbr{\sum_{i=1}^n \del{y_i - \sum_{j=1}^p x_{ij} \beta_j}^2}, \ \text{u.h.t. at } \sum_{j=1}^p \vert \beta_j \vert \leq t,
+\end{align*} 
+som kan omskrives til et lagrange problem
+\begin{align*}
+\widehat{\boldsymbol{\beta}}^\text{lasso} = \argmin_{\boldsymbol{\beta} \in \R^p} \cbr{ \Vert \mathbf{y} - \mathbf{X} \boldsymbol{\beta} \Vert_2^2 + \lambda \Vert \boldsymbol{\beta} \Vert_1}.
+\end{align*}
+Ridge regression estimatoren findes ud fra
+\begin{align*}
+\widehat{\boldsymbol{\beta}}^\text{ridge} &= \argmin_{\boldsymbol{\beta} \in \R^p} \cbr{ \Vert \mathbf{y} - \mathbf{X} \boldsymbol{\beta} \Vert_2^2 + \lambda \Vert \boldsymbol{\beta} \Vert_2^2} \\
+&= \del{\mathbf{X}^T \mathbf{X} + \lambda \mathbf{I}_p}^{-1} \mathbf{X}^T \mathbf{y}.
+\end{align*} 
+\end{frame}
+
+\begin{frame}{Lasso estimatoren}
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.4\linewidth}
+\scalebox{0.6}{\input{slides/Lasso.tikz}}
+\end{minipage}
+\hspace{0.2cm}
+\begin{minipage}{0.4\linewidth}
+\scalebox{0.6}{\input{slides/Ridge.tikz}}
+\end{minipage}
+\caption{Estimations illustration for lasso (venstre) og ridge regression (højre). 
+De blå arealer er betingelsesområderne $\vert \beta_1 \vert+\vert \beta_2 \vert \leq t$ og $\beta_1^2+\beta_2^2 \leq t^2$, mens de røde ellipser er konturkurver for SSR. Konturkurverne har centrum i OLS estimatoren, $\widehat{\boldsymbol{\beta}}^\text{OLS}$.}
+\end{figure}
+\end{frame}
+
+
+
+\begin{frame}{Generaliseringer af lasso estimatoren}{Naiv elastisk net}
+Selvom lasso har vist succes i mange tilfælde, har den også nogle begrænsninger:
+\begin{itemize}
+\item Hvis \(p>n\), da udvælger lasso højst \(n\) variable
+\item Hvis der eksisterer en gruppe af variable med høj parvis korrelation, da vil lasso blot udvælge én variabel fra denne gruppe og denne variabel udvælges tilfældigt
+\end{itemize}
+
+Naiv elastisk net løser optimeringsproblemet
+\begin{align*}
+\widehat{\boldsymbol{\beta}}^\text{naivEN} =\argmin_{\boldsymbol{\beta} \in \R^p} \cbr{ \Vert \mathbf{y} - \mathbf{X} \boldsymbol{\beta} \Vert_2^2 + \lambda \sbr{\frac{1}{2}(1- \alpha) \Vert \boldsymbol{\beta} \Vert_2^2 + \alpha \Vert \boldsymbol{\beta} \Vert_1}}. 
+\end{align*}
+\begin{itemize}
+\item Hvis $\alpha=0$, da reduceres det til den kvadrerede $\ell_2$-norm svarende til strafleddet for ridge regression
+\item Hvis $\alpha=1$ reduceres strafleddet til $\ell_1$-normen svarende til strafleddet for lasso.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Generaliseringer af lasso estimatoren}{Group lasso}
+Lad \(\mathbf{z}_j\) og \(\boldsymbol{\theta}_j\) være \(p_j \times 1\) vektorer som repræsenterer prædiktorerne og deres koefficienter i gruppe \(j\) for \(j = 1, \ldots, J\).
+Group lasso løser følgende optimeringsproblem
+\begin{align*}
+\widehat{\boldsymbol{\theta}}_j^{\text{group lasso}} = \argmin_{\boldsymbol{\theta}_j \in \R^{p_j}} \cbr{\frac{1}{2} \sum_{i=1}^n \del{y_i - \sum_{j=1}^J z_{ij}^T \boldsymbol{\theta}_j}^2 + \lambda \sqrt{p_j} \sum_{j=1}^J \Vert \boldsymbol{\theta}_j \Vert_2}.
+\end{align*}
+\begin{itemize}
+\item Alle indgange i $\widehat{\boldsymbol{\theta}}_j^\text{group lasso}$ vil være lig nul eller ikke-nul afhængig af \(\lambda\).
+\item Når $p_j=1$, da har vi, at $\Vert \boldsymbol{\theta}_j \Vert_2 = \vert \boldsymbol{\theta}_j \vert$, således at alle grupper består af én prædiktor, dermed reduceres optimeringsproblemet til standard lasso.
+\end{itemize}
+\end{frame}
+%
+\begin{frame}{Generaliseringer af lasso estimatoren}{Adaptive lasso}
+Antag \(\tilde{\boldsymbol{\beta}}\) er rod-n konsistent til \(\boldsymbol{\beta}^*\). Vælg \(\gamma >0\), da er adaptive lasso estimaterne givet ved
+\begin{align*}
+\widehat{\boldsymbol{\beta}}^\text{AL} = \argmin_{\boldsymbol{\beta} \in \R^p} \cbr{ \Vert \mathbf{y} - \mathbf{X} \boldsymbol{\beta} \Vert_2^2 + \lambda \sum_{j=1}^p \frac{ \vert \beta_j \vert}{\vert \tilde{\beta}_j \vert^\gamma}}.
+\end{align*}
+\begin{itemize}
+\item Antag $\frac{\lambda_n}{\sqrt{n}} \rightarrow 0$ og $\lambda_n n^\frac{\gamma-1}{2} \rightarrow \infty$, da opfylder adaptive lasso orakelegenskaberne:
+\begin{itemize}
+\item Konsistent variabeludvælgelsen: $\lim_{n \rightarrow \infty} \mathbb{P}(\mathcal{A}_n^\text{AL}=\mathcal{A})=1$.
+\item Asymptotisk normalitet: $\sqrt{n}\left( \widehat{\boldsymbol{\beta}}_\mathcal{A}^{\text{AL}}-\boldsymbol{\beta}_\mathcal{A}^* \right) \overset{d}{\rightarrow} N(\textbf{0},\sigma^2 \boldsymbol{C}_{11}^{-1}).$
+\end{itemize} 
+\end{itemize} 
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../beamer"
+%%% End:

@@ -1,5 +1,14 @@
 % For beamer
 
+\usepackage{xcolor}
+
+\newcommand{\legendbox}[1]{%
+  \textcolor{#1}{\rule{\fontcharht\font`X}{\fontcharht\font`X}}%
+}
+\newcommand{\cbox}[1]{\fcolorbox{black}{#1}{\null}}
+\usepackage{pdflscape}
+\usepackage{graphicx}
+
 %///// BASIS /////
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}

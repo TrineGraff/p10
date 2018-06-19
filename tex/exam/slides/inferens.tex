@@ -1,41 +1,39 @@
-\section{Statistisk infernes}
-
-
-
-
-
+\section{Statistisk inferens}
 \subsection{Kovarians testen}
-\begin{frame}{Kovarians testen}
+\begin{frame}{Statistisk inferens}{Kovarians testen}
 \begin{itemize}
-\item Anvendes for lasso løst med LARS
+\item Anvendes for lasso løst med LARS algoritmen
 \item Vi betragter 
 \begin{align*}
-\vy = \vX \boldsymbol \beta + \epsilon, \epsilon \sim N\del{0, \sigma^2 \textbf{I}_n},
+\vy = \vX \boldsymbol \beta + \boldsymbol \epsilon, \boldsymbol \epsilon \sim N\del{0, \sigma^2 \textbf{I}_n},
 \end{align*}
 hvor $\vy$ er en $n \times 1$ vektor med responsvariablen, $\vX$ er en $n \times p$ matrix med prædiktorer og $\boldsymbol \beta$ er $p \times 1$ vektor.
 \item Vi antager, at $\vX$ er i general position
+\begin{itemize}
+\item Løsningen til lasso problemet bliver entydigt
+\end{itemize}
 %\item Giver $p$-værdier til prædiktorerne når de indgår i den aktive mængde, som noteres $\pazocal{A}$
 \item Vi ønsker, at teste om prædiktoren $j$, som tilføjes i $\pazocal{A}_k$ i trin $k$, er signifikant
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Kovarians testen}
+\begin{frame}{Statistisk inferens}{Kovarians testen}
 \begin{itemize}
 \item Teststørrelsen:
  \begin{align*}
-T_k^{\text{cov}} = \frac{1}{\sigma^2}\del{ \left\langle \textbf{y}, \textbf{X} \widehat{\boldsymbol{\beta}}^\text{lasso} \del{\lambda_{k+1}} \right\rangle -  \left\langle  \textbf{y}, \textbf{X}_{\pazocal{A}_{k-1}} \boldsymbol{\tilde{\beta}}^\text{lasso}_{\pazocal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}
+T_k^{\text{cov}} = \frac{1}{\sigma^2}\del{ \left\langle \textbf{y}, \textbf{X} \widehat{\boldsymbol{\beta}}^\text{lasso} \del{\lambda_{k+1}} \right\rangle -  \left\langle  \textbf{y}, \textbf{X}_{\pazocal{A}_{k-1}} \widetilde{\boldsymbol{{\beta}}}^\text{lasso}_{\pazocal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}
 \end{align*}
 \item Lad $\pazocal{A}_{k-1}$ være den aktive mængde i trin $k-1$ inden den $j$'te prædiktorer tilføjes
-\item  Lad $\boldsymbol{\tilde{\beta}}^{\text{lasso}}_{\pazocal{A}_{k-1}} \del{\lambda_{k+1}}$ være løsningen i $\lambda_{k+1}$ ved at kun anvende prædiktorerne i $\pazocal{A}_{k-1}$, dvs 
+\item  Lad $\widetilde{\boldsymbol{{\beta}}}^{\text{lasso}}_{\pazocal{A}_{k-1}} \del{\lambda_{k+1}}$ være løsningen i $\lambda_{k+1}$ ved at kun anvende prædiktorerne i $\pazocal{A}_{k-1}$, dvs 
 \begin{align*}
-\boldsymbol{\tilde{\beta}}^{\text{lasso}}_{\pazocal{A}_{k-1}} \del{\lambda_{k+1}} = 
+\widetilde{\boldsymbol{{\beta}}}^{\text{lasso}}_{\pazocal{A}_{k-1}} \del{\lambda_{k+1}} = 
 \underset{\boldsymbol{\beta}_{\pazocal{A}_{k-1}} \in \mathbb{R}^{\abs{\pazocal{A}_{k-1}}} }{\arg\min} \cbr{\left\Vert \vy - \vX_{\pazocal{A}_{k-1}} \boldsymbol\beta_{\pazocal{A}_{k-1}} \right\Vert^2_2 + \lambda_{k+1} \left\Vert \boldsymbol\beta_{\pazocal{A}_{k-1}}  \right\Vert_1}
 \end{align*}
-\item  Lad $\boldsymbol{\widehat{\beta}} \del{\lambda_{k+1}}$ betegne løsningen i $\lambda_{k+1}$ ud fra prædiktorerne i   $\pazocal{A}_{k-1} \cup \cbr{j}$
+\item  Lad $\boldsymbol{\widehat{\beta}}^{\text{lasso}} \del{\lambda_{k+1}}$ betegne løsningen i $\lambda_{k+1}$ ud fra prædiktorerne i   $\pazocal{A}_{k-1} \cup \cbr{j}$
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Kovarians testen}
+\begin{frame}{Statistisk inferens}{Kovarians testen}
 \begin{itemize}
 \item Under $\pazocal{H}_0 : \pazocal{A}_{k-1} \supseteq \text{supp} \del{\boldsymbol\beta^*} $, har teststørrelsen en asymptotisk standard eksponentiel fordeling 
 \begin{align*}
@@ -46,29 +44,29 @@ T_k^{\text{cov}} \overset{d}{\rightarrow} Exp(1)
 \item Teststørrelsen
 \begin{align*}
 F_k & = \frac{T_k}{\widehat\sigma^2 /\sigma^2} \\
-& = \frac{1}{\widehat\sigma^2}\del{ \left\langle \textbf{y}, \textbf{X} \widehat{\boldsymbol{\beta}}^\text{lasso} \del{\lambda_{k+1}} \right\rangle -  \left\langle  \textbf{y}, \textbf{X}_{\pazocal{A}_{k-1}} \boldsymbol{\tilde{\beta}}^\text{lasso}_{\pazocal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle} \overset{d}{\rightarrow} F_{2,n-p},
+& = \frac{1}{\widehat\sigma^2}\del{ \left\langle \textbf{y}, \textbf{X} \widehat{\boldsymbol{\beta}}^\text{lasso} \del{\lambda_{k+1}} \right\rangle -  \left\langle  \textbf{y}, \textbf{X}_{\pazocal{A}_{k-1}}\widetilde{ \boldsymbol{{\beta}}}^\text{lasso}_{\pazocal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle} \overset{d}{\rightarrow} F_{2,n-p},
 \end{align*}
-hvor $\widehat{\sigma}^2 = \left\Vert \vy - \vX \boldsymbol{\widehat{\beta}}^\text{OLS} \right\Vert^2_2  / \del{n-p}$.
+hvor $\widehat{\sigma}^2 = \left\Vert \vy - \vX \boldsymbol{\widehat{\beta}}^\text{OLS} \right\Vert^2_2  / \del{n-p}$
 \end{itemize}
 \end{itemize}
 \end{frame}
 
 \subsection{TG testen}
-\begin{frame}{Polyede lemmaet}
+\begin{frame}{Statistisk inferens}{Polyede lemma}
 \begin{itemize}
-\item Variableudvælgelse af LARS og lasso kan karakteriseres som et polyede
+\item Variableudvælgelse af LARS og lasso med en fast værdi af $\lambda$ kan karakteriseres som et polyede
 \item Giver $p$-værdier og konfidensintervaller efter et polyede variableudvælgelse
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Polyeder lemma}
+\begin{frame}{Statistisk inferens}{Polyeder lemma}
 \begin{itemize}
-\item Vi betragter en statisk model på formen
+\item Vi antager at 
 \begin{align*}
 \vy = \vmu + \veps, 
 \end{align*}
 hvor $\vy \sim N\del{\boldsymbol\mu, \boldsymbol\Sigma}$, $\boldsymbol \mu$ er en ukendt $n \times 1$ vektor, og $\boldsymbol\Sigma$ er en kendt $n \times n$ matrix. 
-\item Betragt polyedet
+\item Betragt polyeder
 \begin{align*}
 \pazocal{P} = \cbr{\vy: \boldsymbol \Gamma \vy \geq \vu},
 \end{align*} 
@@ -76,15 +74,15 @@ hvor $\boldsymbol \Gamma $ er en $m \times n$ matrix, $\vu$ er en fast $m \times
 \item Vi ønsker, at lave inferens om $\boldsymbol \eta^T \vmu$ givet $\vy \in \pazocal{P}$ , hvor $\boldsymbol \eta$ er en givet $n \times 1$ vektor
 \begin{itemize}
 \item $\pazocal{H}_0: \boldsymbol \eta^T \boldsymbol \mu = 0$, givet $\vy \in \pazocal{P}$
-\end{itemize} 
-\item Vi udleder en teststørrelse med egenskaben
+\item Ved et specifikt valg af $\boldsymbol \eta$ får vi at 
 \begin{align*}
-T\del{ \vy, \pazocal{P}, \boldsymbol \eta} \overset{\mathbb{P}_0}{\sim} Unif \del{0,1}.
+\boldsymbol \eta^T \vmu = \beta_k
 \end{align*}
+\end{itemize} 
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Polyeder lemma}
+\begin{frame}{Statistisk inferens}{Polyeder lemma}
 \begin{block}{Polyeder lemma}
 For ethvert $\boldsymbol \Sigma$ og $\boldsymbol \eta$, hvor $\boldsymbol \eta^T \boldsymbol  \Sigma \boldsymbol \eta \neq 0$, gælder der at
 \begin{align*}
@@ -101,7 +99,7 @@ Yderligere er $\boldsymbol \eta^T \vy$ og $\del{\pazocal{V}^- \del{\vy} , \pazoc
 \end{block}
 \end{frame}
 
-\begin{frame}{Polyeder lemma}
+\begin{frame}{Statistisk inferens}{Polyeder lemma}
 \begin{columns}[c]
 \column{1.5in}
 \begin{itemize}
@@ -120,47 +118,55 @@ Yderligere er $\boldsymbol \eta^T \vy$ og $\del{\pazocal{V}^- \del{\vy} , \pazoc
 % \end{columns}
 \end{frame}
 
+\begin{frame}{Statistisk inferens}{Polyeder lemma}
+\begin{itemize}
+\item Af polyede lemmaet kan fordeling af enhver lineær funktion $\boldsymbol \eta^T \vy$ givet $\boldsymbol \Gamma \vy \geq u$ skrives som en følgende betinget fordeling
+\begin{align*}
+\boldsymbol \eta^T \vy \given \pazocal{V}^- \del{\vy} \leq \boldsymbol \eta^T \vy \leq \pazocal{V}^+ \del{\vy}.
+\end{align*}
+Da $\boldsymbol \eta^T \vy $ er normalfordeling, er overstående trunkeret normalfordelt. 
+\end{itemize}
+\end{frame}
 
-\begin{frame}{Polyeder lemma}
+\begin{frame}{Statistisk inferens}{Polyeder lemma}
+\begin{block}{Lemma}
 Lad \(\Phi \del{x}\) betegne fordelingsfunktionen af en standard normalfordeling, da er fordelingsfunktionen af en trunkeret normalfordelt stokastisk variabel med middelværdi \(\mu\) og varians \(\sigma^2\) indenfor intervallet \(\sbr{a,b}\) givet ved
 \begin{align*}
 F_{\mu, \sigma^2}^{\sbr{a,b}} \del{x} = \frac{\Phi\del{\frac{x-\mu}{\sigma}} - \Phi\del{\frac{a-\mu}{\sigma}}}{\Phi\del{\frac{b-\mu}{\sigma}} - \Phi\del{\frac{a-\mu}{\sigma}}}.
 \end{align*}
-Hvis \(\boldsymbol{\eta}^T \boldsymbol{\Sigma} \boldsymbol{\eta} \neq 0\), da er \(F_{\boldsymbol{\eta}^T \vmu, \boldsymbol{\eta}^T \boldsymbol{\Sigma} \boldsymbol{\eta}}^{\sbr{\pazocal{V}^-,\pazocal{V}^+}} \del{\boldsymbol{\eta}^T \vy} \) givet \(\boldsymbol{\Gamma} \vy \geq \mathbf{u}\) en standard uniform fordeling, dvs
+Hvis \(\boldsymbol{\eta}^T \boldsymbol{\Sigma} \boldsymbol{\eta} \neq 0\), da er 
 \begin{align*}
-\mathbb{P} \del{F_{\boldsymbol{\eta}^T \vmu, \boldsymbol{\eta}^T \boldsymbol{\Sigma} \boldsymbol{\eta}}^{\sbr{\pazocal{V}^-,\pazocal{V}^+}} \del{\boldsymbol{\eta}^T \vy} \leq \alpha \given \boldsymbol{\Gamma} \vy \geq \mathbf{u}} = \alpha, 
+F_{\boldsymbol{\eta}^T \vmu, \boldsymbol{\eta}^T \boldsymbol{\Sigma} \boldsymbol{\eta}}^{\sbr{\pazocal{V}^-,\pazocal{V}^+}} \del{\boldsymbol{\eta}^T \vy} \given  \boldsymbol{\Gamma} \vy \geq \mathbf{u} \sim Unif(0,1)
 \end{align*}
-for ethvert \(0 \leq \alpha \leq 1\)
+\end{block}
 \end{frame}
 
-\begin{frame}{Polyeder lemma}
+\begin{frame}{Statistisk inferens}{Polyeder lemma}
 \begin{itemize}
-\item Af polyede lemmaet kan fordeling af enhver lineær funktion $\boldsymbol \eta^T \vy$ givet $\boldsymbol \Gamma \vy \geq u$ skrives som en følgende betinget fordeling
-\begin{align*}
-\boldsymbol \eta^T \vy \given \pazocal{V}^- \del{\vy} \leq \boldsymbol \eta^T \vy \leq \pazocal{V}^+ \del{\vy}, 
-\end{align*}
-da $\boldsymbol \eta^T \vy $ er normalfordeling er overstående trunkeret normalfordelt. 
-\item For enhver lineær funktion $\boldsymbol \eta^T \vy $ kan vi udregne $p$-værdier for nulhyptesen at $\pazocal{H}_0:\boldsymbol \eta^T \vy   = 0$ og tilhørende betingede konfidensintervaller
-\item Vi antager $\vX$ er i general position
+\item Overstående lemma anvendes til at lave betinget inferens af enhver lineær funktion $\boldsymbol \eta^T \vy $ . Vi kan udregne $p$-værdier for nulhypotesen  $\pazocal{H}_0:\boldsymbol \eta^T \vmu  = 0$ og tilhørende betingede konfidensintervaller
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Polyeder lemma}{TG testen}
+\begin{frame}{Statistisk inferens}{TG testen}
 \begin{block}{TG testen}
 \begin{itemize}
-\item Vi har, at $\boldsymbol \eta^T \vy \sim N\del{\boldsymbol \eta^T \vmu , \sigma^2 \Vert \boldsymbol \eta \Vert^2_2}$ i intervallet $[\pazocal{V}^-, \pazocal{V}^+ ]$
-\item  Vi har vil teste
+%\item Vi har, at $\boldsymbol \eta^T \vy \sim N\del{\boldsymbol \eta^T \vmu , \sigma^2 \Vert \boldsymbol \eta \Vert^2_2}$ i intervallet $[\pazocal{V}^-, \pazocal{V}^+ ]$
+\item Antager at $\vX$ er i general position
+\item Vi laver inferens om $ \boldsymbol \eta^T \vmu \given \boldsymbol \Gamma \vy \geq 0 $
 \begin{align*}
  \pazocal{H}_0 : \boldsymbol \eta^T \vmu = 0 \quad \text{imod} \quad  \pazocal{H}_1 : \boldsymbol \eta^T \vmu  \neq 0
 \end{align*}
 \item Teststørrelsen er givet ved
 \begin{align*}
-T_k^{TG} = 2 \min \cbr{T_k^{tg}, 1 - T_k^{tg} }  \rightarrow Unif(0,1),
+T_k^{TG} = 2 \min \cbr{T_k^{tg}, 1 - T_k^{tg} } 
 \end{align*}
-hvor 
+og er standard uniform fordelt, hvor 
 \begin{align*}
-T_k^{tg} = 1 - F_{0, \sigma^2 \Vert \boldsymbol \eta \Vert^2_2}^{[\pazocal{V}^-, \pazocal{V}^+ ]} \del{\boldsymbol \eta^T \vy}
+T_k^{tg} & = 1 - F_{0, \sigma^2 \Vert \boldsymbol \eta \Vert^2_2}^{[\pazocal{V}^-, \pazocal{V}^+ ]} \del{\boldsymbol \eta^T \vy} \\
+%\pazocal{V}^- \del{\vy} & = \underset{j:\del{\boldsymbol \Gamma \boldsymbol \eta}_j >0}{\max} - \del{\boldsymbol \Gamma \vy}_j \cdot \frac{\Vert \boldsymbol \eta \Vert^2_2}{\del{\boldsymbol \Gamma \boldsymbol \eta}_j} + \boldsymbol \eta^T \vy \\
+%\pazocal{V}^+ \del{\vy} & =  \underset{j:\del{\boldsymbol \Gamma \boldsymbol \eta}_j <0}{\max} - \del{\boldsymbol \Gamma \vy}_j \cdot \frac{\Vert \boldsymbol \eta \Vert^2_2}{\del{\boldsymbol \Gamma \boldsymbol \eta}_j} + \boldsymbol \eta^T \vy  
 \end{align*}
+
 \end{itemize}
 \end{block}
 \end{frame}

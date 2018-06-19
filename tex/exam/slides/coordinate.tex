@@ -1,69 +1,168 @@
+\section{Lasso og dens generaliseringer}
+\begin{frame}{Lasso og dens generaliseringer}
+\begin{itemize}
+\item Datasættet med 4 laggede værdier
+\begin{itemize}
+\item 126 variabler
+\item Træningsmængde: 1. maj 1960 - 1. december 2005 (548 observationer)
+\item Testmængde: 1. januar 2006 - 1. juli 2017 (139 observationer)
+\end{itemize}
+\item Lasso problemet og dens generaliseringer kan løses med coordinate descent algoritmen og LARS algoritmen
+\begin{itemize}
+\item Valg af tuning parameter
+\begin{itemize}
+\item Krydsvalidering
+\item BIC
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
 \section{Coordinate descent}
 \begin{frame}{Coordinate descent}
 \begin{itemize}
 \item Coordinate descent
 \begin{itemize}
-\item Koordinat $k$ er valgt i iteration $t$, så er opdatering givet ved
+\item Algoritmen opdaterer fra $\boldsymbol \beta_t$ til  $\boldsymbol \beta_{t+1}$ ved at vælge en koefficient, som opdateres, og da udføres en univariat minimering. 
+Koefficienten $k$ opdateres i iteration $t$, da er opdatering givet ved
 \begin{align*}
-\beta_k^{t+1} = \underset{\beta_k}{\arg\min} f\del{\beta_1^t,\dots, \beta_{k-1}^t, \beta_k, \beta_{k+1}^t, \dots, \beta_p^t }
+\beta_k^{t+1} = \underset{\beta_k}{\arg\min} f\del{\beta_1^t,\dots, \beta_{k-1}^t, \beta_k, \beta_{k+1}^t, \dots, \beta_p^t },
 \end{align*}
-\end{itemize}
-\item Krydsvalidering
+hvor 	$\beta_j^{t+1} = \beta^t_j$ for $j \neq k$
 \begin{itemize}
-\item $CV_k = \frac{1}{k} \sum_{i=1}^k MSE_i$
+\item Lasso, ridge regression, elastik net og adaptive lasso
 \end{itemize}
-\item BIC
+\item Dette kan generaliseres til block coordinate descent, hvor prædiktorerne er opdelt i ikke-overlappende blocks, og da udføres en minimering over en enkelt block for hvert koordinat
 \begin{itemize}
-\item $BIC = \log \widehat{\sigma^2_p} + \frac{p \log T}{T} $
+\item Group lasso
+\end{itemize}
 \end{itemize}
 \end{itemize}
 \end{frame}
 
 \subsection{Krydsvalidering}
-\begin{frame}{Krydsvalidering}
+\begin{frame}{Coordinate descent}{Krydsvalidering}
 \begin{itemize}
-\item Elastik net (CV), $\alpha = 1$
-\item Adaptive lasso med OLS vægte (CV), $\gamma = 0.5$
-\item Adaptive lasso med lasso vægte (CV), $\gamma = 0.5$
+\item Fitter en model for hver $\lambda$
+\begin{itemize}
+\item $\lambda_{\min}$: mindste gennemsnitlige krydsvalideringsfejl
+\item $\lambda_{1\text{sd}}$: største værdi af $\lambda$, således at fejlen stadig er inden for en standard afvigelse af minimum 
+\end{itemize}
+\item Elastisk net og adaptive lasso har to tuning parametre
+\begin{itemize}
+\item Elastisk net: $\alpha \in [0,1]$ 
+\begin{itemize}
+\item Elastisk net (CV): $\alpha = 1$
+\end{itemize}
+\item Adaptive lasso: $\gamma \in \cbr{0.5, 1, 2}$
+\begin{itemize}
+\item Adaptive lasso med OLS vægte (CV): $\gamma = 0.5$
+\item Adaptive lasso med lasso vægte (CV): $\gamma = 0.5$
+\end{itemize}
+\end{itemize}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Krydsvalidering}
+\begin{frame}{Coordinate descent}{Krydsvalidering}
 \include{slides/cv_tab}
 \end{frame}
 
-\begin{frame}{Krydsvalidering}
+
+\begin{frame}{Coordinate descent}{Krydsvalidering}
+\begin{itemize}
+\item Group lasso (CV)
+\begin{itemize}
+\item Ikke valgte variable tilhører alle gruppe 5 (penge og kredit)
+\end{itemize}
+\item Adaptive lasso med OLS vægte (CV) og adaptive lasso med lasso vægte (CV)
+\begin{itemize}
+\item Vælger variablerne \textcolor{blue3}{CLF16OV}: Civilarbejdsstyrke,   \textcolor{blue3}{CE16OV}: Civilbeskæftigelse   
+\item Konsistent i variableudvælgelse
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Coordinate descent}{Krydsvalidering}
+\begin{itemize}
+\item 1000 bootstrap relisationer af $\widehat{\vbeta} \del{\lambda_{1\text{sd}}}$
+\end{itemize}
 \begin{figure}[!htb]
-        \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/boxplot_lasso_kryds.pdf}
-%     \caption{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\tbeta}^{\text{lasso}} \del{\lambda_{\text{1sd}}} $. Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}
+        \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/boxplot_lasso_coord_kryds.pdf}
+% \caption{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\beta}^{\text{lasso}} \del{\lambda_{\text{1sd}}} $. Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}
 \end{figure}
   %         
 \end{frame}
 
-\begin{frame}{Krydsvalidering}
+\begin{frame}{Coordinate descent}{Krydsvalidering}
+\begin{itemize}
+\item Polyede variableudvælgelse 
+\end{itemize}
 \include{slides/tg_lasso_kryds}
 \end{frame}
 
 \subsection{BIC}
-\begin{frame}{BIC}
+\begin{frame}{Coordinate descent}{BIC}
 \begin{itemize}
-\item Elastik net (BIC), $\alpha = 1$
-\item Adaptive lasso med OLS vægte (BIC), $\gamma = 2$
-\item Adaptive lasso med lasso vægte (BIC), $\gamma = 0.5$
+\item Fitter en værdi for hver $\lambda$
+\begin{itemize}
+\item $\lambda_{\text{BIC}}$: mindste BIC
+\end{itemize}
+\item Elastik net og adaptive lasso har to tuning parametre 
+\begin{itemize}
+\item Elastisk net: $\alpha \in [0,1]$ 
+\begin{itemize}
+\item Elastisk net (BIC): $\alpha = 1$
+\end{itemize}
+\item Adaptive lasso: $\gamma \in \cbr{0.5, 1, 2}$
+\begin{itemize}
+\item Adaptive lasso med OLS vægte (BIC): $\gamma = 2$
+\item Adaptive lasso med lasso vægte (BIC): $\gamma = 0.5$
+\end{itemize}
+\end{itemize}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{BIC}
+
+\begin{frame}{Coordinate descent}{BIC}
 \include{slides/bic_lambda}
 \end{frame}
 
-\begin{frame}{BIC}
+
+\begin{frame}{Coordinate descent}{BIC}
+\begin{itemize}
+\item Group lasso (CV)
+\begin{itemize}
+\item Ikke valgte variable 
+\begin{itemize}
+\item 11 / 14 variable fra penge og kredit
+\item 12 /20 variable fra priser
+\item 3/30 variable fra arbejdsmarked
+\end{itemize} 
+\end{itemize}
+\item Adaptive lasso med OLS vægte (CV)
+\begin{itemize}
+\item Vælger variablerne \textcolor{blue3}{CLF16OV}: Civilarbejdsstyrke,   \textcolor{blue3}{CE16OV}: Civilbeskæftigelse   
+\item Konsistent i variableudvælgelse
+\end{itemize}
+\item Adaptive lasso med lasso vægte (CV)
+\begin{itemize}
+\item Vælger variablerne \textcolor{blue3}{CLF16OV}: Civilarbejdsstyrke,   \textcolor{blue3}{CE16OV}: Civilbeskæftigelse og \textcolor{blue3}{lag1}:Tidligere værdi af arbejdsløshedsrate
+\item Konsistent i variableudvælgelse
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Coordinate descent}{BIC}
 \begin{figure}[!htb]
         \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/boxplot_lasso_coord_bic.pdf}
 \end{figure}
   %          \caption{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\tbeta}^{\text{lasso}} \del{\lambda_{\text{1sd}}} $. Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}
 \end{frame}
 
-\begin{frame}{BIC}
+\begin{frame}{Coordinate descent}{BIC}
+\begin{itemize}
+\item Polyede variableudvælgelse 
+\end{itemize}
 \include{slides/fixedlasso_bic}
 \end{frame}

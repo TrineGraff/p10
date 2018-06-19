@@ -48,16 +48,16 @@ hvor 	$\beta_j^{t+1} = \beta^t_j$ for $j \neq k$
 \item $\lambda_{\min}$: mindste gennemsnitlige krydsvalideringsfejl
 \item $\lambda_{1\text{sd}}$: største værdi af $\lambda$, således at fejlen stadig er inden for en standard afvigelse af minimum 
 \end{itemize}
-\item Elastisk net og adaptive lasso har to tuning parameter
+\item Elastisk net og adaptive lasso har to tuning parametre
 \begin{itemize}
 \item Elastisk net: $\alpha \in [0,1]$ 
 \begin{itemize}
-\item Elastisk net (CV), $\alpha = 1$
+\item Elastisk net (CV): $\alpha = 1$
 \end{itemize}
 \item Adaptive lasso: $\gamma \in \cbr{0.5, 1, 2}$
 \begin{itemize}
-\item Adaptive lasso med OLS vægte (CV), $\gamma = 0.5$
-\item Adaptive lasso med lasso vægte (CV), $\gamma = 0.5$
+\item Adaptive lasso med OLS vægte (CV): $\gamma = 0.5$
+\item Adaptive lasso med lasso vægte (CV): $\gamma = 0.5$
 \end{itemize}
 \end{itemize}
 \end{itemize}
@@ -70,14 +70,13 @@ hvor 	$\beta_j^{t+1} = \beta^t_j$ for $j \neq k$
 
 \begin{frame}{Coordinate descent}{Krydsvalidering}
 \begin{itemize}
-\item Ridge regression
 \item Group lasso (CV)
 \begin{itemize}
 \item Ikke valgte variable tilhører alle gruppe 5 (penge og kredit)
 \end{itemize}
 \item Adaptive lasso med OLS vægte (CV) og adaptive lasso med lasso vægte (CV)
 \begin{itemize}
-\item Vælger variablerne: \textcolor{blue3}{CLF16OV}: Civilarbejdsstyrke,   \textcolor{blue3}{CE16OV}: Civilbeskæftigelse   
+\item Vælger variablerne \textcolor{blue3}{CLF16OV}: Civilarbejdsstyrke,   \textcolor{blue3}{CE16OV}: Civilbeskæftigelse   
 \item Konsistent i variableudvælgelse
 \end{itemize}
 \end{itemize}
@@ -89,7 +88,7 @@ hvor 	$\beta_j^{t+1} = \beta^t_j$ for $j \neq k$
 \item 1000 bootstrap relisationer af $\widehat{\vbeta} \del{\lambda_{1\text{sd}}}$
 \end{itemize}
 \begin{figure}[!htb]
-        \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/boxplot_lasso_kryds.pdf}
+        \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/boxplot_lasso_coord_kryds.pdf}
 % \caption{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\beta}^{\text{lasso}} \del{\lambda_{\text{1sd}}} $. Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis lig nul.}
 \end{figure}
   %         
@@ -105,14 +104,53 @@ hvor 	$\beta_j^{t+1} = \beta^t_j$ for $j \neq k$
 \subsection{BIC}
 \begin{frame}{Coordinate descent}{BIC}
 \begin{itemize}
-\item Elastik net (BIC), $\alpha = 1$
-\item Adaptive lasso med OLS vægte (BIC), $\gamma = 2$
-\item Adaptive lasso med lasso vægte (BIC), $\gamma = 0.5$
+\item Fitter en værdi for hver $\lambda$
+\begin{itemize}
+\item $\lambda_{\text{BIC}}$: mindste BIC
+\end{itemize}
+\item Elastik net og adaptive lasso har to tuning parametre 
+\begin{itemize}
+\item Elastisk net: $\alpha \in [0,1]$ 
+\begin{itemize}
+\item Elastisk net (BIC): $\alpha = 1$
+\end{itemize}
+\item Adaptive lasso: $\gamma \in \cbr{0.5, 1, 2}$
+\begin{itemize}
+\item Adaptive lasso med OLS vægte (BIC): $\gamma = 2$
+\item Adaptive lasso med lasso vægte (BIC): $\gamma = 0.5$
+\end{itemize}
+\end{itemize}
 \end{itemize}
 \end{frame}
 
+
 \begin{frame}{Coordinate descent}{BIC}
 \include{slides/bic_lambda}
+\end{frame}
+
+
+\begin{frame}{Coordinate descent}{BIC}
+\begin{itemize}
+\item Group lasso (CV)
+\begin{itemize}
+\item Ikke valgte variable 
+\begin{itemize}
+\item 11 / 14 variable fra penge og kredit
+\item 12 /20 variable fra priser
+\item 3/30 variable fra arbejdsmarked
+\end{itemize} 
+\end{itemize}
+\item Adaptive lasso med OLS vægte (CV)
+\begin{itemize}
+\item Vælger variablerne \textcolor{blue3}{CLF16OV}: Civilarbejdsstyrke,   \textcolor{blue3}{CE16OV}: Civilbeskæftigelse   
+\item Konsistent i variableudvælgelse
+\end{itemize}
+\item Adaptive lasso med lasso vægte (CV)
+\begin{itemize}
+\item Vælger variablerne \textcolor{blue3}{CLF16OV}: Civilarbejdsstyrke,   \textcolor{blue3}{CE16OV}: Civilbeskæftigelse og \textcolor{blue3}{lag1}:Tidligere værdi af arbejdsløshedsrate
+\item Konsistent i variableudvælgelse
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Coordinate descent}{BIC}
@@ -123,5 +161,8 @@ hvor 	$\beta_j^{t+1} = \beta^t_j$ for $j \neq k$
 \end{frame}
 
 \begin{frame}{Coordinate descent}{BIC}
+\begin{itemize}
+\item Polyede variableudvælgelse 
+\end{itemize}
 \include{slides/fixedlasso_bic}
 \end{frame}

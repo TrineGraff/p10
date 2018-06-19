@@ -1,6 +1,7 @@
 \begin{frame}{Oversigt over in-sample resultater}
 \begin{table}[ht] 
 \centering 
+\scalebox{0.7}{
 \begin{tabular}{lll}
 \toprule 
 Inkluderingsrate & Variable & Beskrivelse \\ \midrule
@@ -14,9 +15,13 @@ Inkluderingsrate & Variable & Beskrivelse \\ \midrule
 77.78\% & \textcolor{orange}{TB6MS} & 6-måneders statsskat  \\
 77.78\% & \textcolor{orange}{GS5} & 5-årig statsobligationsrente \\
 \bottomrule
-\end{tabular}  
+\end{tabular}}
 \caption{Inkluderingsraten af de 9 hyppigst valgte variable for de ialt 18 modeller samt beskrivelse af variablerne.}
 \end{table} 
+\begin{itemize}
+\item \(R_\text{adj}^2\) er mindst for ridge regression modellerne og størst for lasso modellerne med undtagelse af lasso LARS (CV)
+\item For lasso problemet vælger lasso (CV) 14 variable, lasso LARS (CV) 13 variable mens lasso (BIC) og lasso LARS (BIC) vælger 17 variable, dvs antallet af variable er ikke specielt påvirket af hvilken optimeringsalgoritme som anvendes. 
+\end{itemize}
 \end{frame}
 
 

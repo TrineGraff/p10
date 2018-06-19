@@ -6,8 +6,9 @@
 \end{align*} 
 som kan omskrives til et lagrange problem
 \begin{align*}
-\widehat{\boldsymbol{\beta}}^\text{lasso} = \argmin_{\boldsymbol{\beta} \in \R^p} \cbr{ \Vert \mathbf{y} - \mathbf{X} \boldsymbol{\beta} \Vert_2^2 + \lambda \Vert \boldsymbol{\beta} \Vert_1}.
+\widehat{\boldsymbol{\beta}}^\text{lasso} = \argmin_{\boldsymbol{\beta} \in \R^p} \cbr{ \Vert \mathbf{y} - \mathbf{X} \boldsymbol{\beta} \Vert_2^2 + \lambda \Vert \boldsymbol{\beta} \Vert_1},
 \end{align*}
+hvor \(\lambda \geq 0\).
 Ridge regression estimatoren findes ud fra
 \begin{align*}
 \widehat{\boldsymbol{\beta}}^\text{ridge} &= \argmin_{\boldsymbol{\beta} \in \R^p} \cbr{ \Vert \mathbf{y} - \mathbf{X} \boldsymbol{\beta} \Vert_2^2 + \lambda \Vert \boldsymbol{\beta} \Vert_2^2} \\
@@ -64,19 +65,24 @@ Group lasso løser følgende optimeringsproblem
 \end{frame}
 %
 \begin{frame}{Generaliseringer af lasso estimatoren}{Adaptive lasso}
+Ideen bag adaptive lasso er at tildele koefficienterne individuelle straffe, istedet for at alle koefficienter straffes ligeligt.
+
 Antag \(\widetilde{\boldsymbol{\beta}}\) er rod-n konsistent til \(\boldsymbol{\beta}^*\). Vælg \(\gamma >0\), da er adaptive lasso estimaterne givet ved
 \begin{align*}
 \widehat{\boldsymbol{\beta}}^\text{AL} = \argmin_{\boldsymbol{\beta} \in \R^p} \cbr{ \Vert \mathbf{y} - \mathbf{X} \boldsymbol{\beta} \Vert_2^2 + \lambda \sum_{j=1}^p \frac{ \vert \beta_j \vert}{\vert \widetilde{ \beta}_j \vert^\gamma}}.
 \end{align*}
 \begin{itemize}
-\item Lad $\pazocal{A}_n^\text{AL} = \cbr{j: \widehat{\beta}_j^\text{AL} \neq 0}$ betegne den aktive mængde for adaptive lasso estimatoren.
-\end{itemize} 
-Sætning \\
-Antag $\frac{\lambda_n}{\sqrt{n}} \rightarrow 0$ og $\lambda_n n^\frac{\gamma - 1}{2} \rightarrow \infty$, da opfylder adaptive lasso orakelegenskaberne:
-\begin{itemize}
-\item Konsistent variabeludvælgelsen: $\lim_{n \rightarrow \infty} \mathbb{P}(\pazocal{A}_n^\text{AL}=\pazocal{A})=1$.
-\item Asymptotisk normalitet: $\sqrt{n}\left( \widehat{\boldsymbol{\beta}}_\pazocal{A}^{\text{AL}}-\boldsymbol{\beta}_\pazocal{A}^* \right) \overset{d}{\rightarrow} N(\textbf{0},\sigma^2 \boldsymbol{C}_{11}^{-1}).$
-\end{itemize} 
+\item opfylder orakelegenskaberne, hvilket betyder, at variabeludvælgelsen er konsistent.
+\end{itemize}
+%\begin{itemize}
+%\item Lad $\pazocal{A}_n^\text{AL} = \cbr{j: \widehat{\beta}_j^\text{AL} \neq 0}$ betegne den aktive mængde for adaptive lasso estimatoren.
+%\end{itemize} 
+%Sætning \\
+%Antag $\frac{\lambda_n}{\sqrt{n}} \rightarrow 0$ og $\lambda_n n^\frac{\gamma - 1}{2} \rightarrow \infty$, da opfylder adaptive lasso orakelegenskaberne:
+%\begin{itemize}
+%\item Konsistent variabeludvælgelsen: $\lim_{n \rightarrow \infty} \mathbb{P}(\pazocal{A}_n^\text{AL}=\pazocal{A})=1$.
+%\item Asymptotisk normalitet: $\sqrt{n}\left( \widehat{\boldsymbol{\beta}}_\pazocal{A}^{\text{AL}}-\boldsymbol{\beta}_\pazocal{A}^* \right) \overset{d}{\rightarrow} N(\textbf{0},\sigma^2 \boldsymbol{C}_{11}^{-1}).$
+%\end{itemize} 
 \end{frame}
 
 %%% Local Variables:

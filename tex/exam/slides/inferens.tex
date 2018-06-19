@@ -1,15 +1,30 @@
 \section{Statistisk infernes}
+
+
+
+
+
 \subsection{Kovarians testen}
 \begin{frame}{Kovarians testen}
 \begin{itemize}
-\item Anvendes på LARS algoritmen med lasso modifikation
-\item Giver $p$-værdier til prædiktorerne når de indgår i den aktive mængde, som noteres $\pazocal{A}$
+\item Anvendes for lasso løst med LARS
+\item Vi betragter 
+\begin{align*}
+\vy = \vX \boldsymbol \beta + \epsilon, \epsilon \sim N\del{0, \sigma^2 \textbf{I}_n},
+\end{align*}
+hvor $\vy$ er en $n \times 1$ vektor med responsvariablen, $\vX$ er en $n \times p$ matrix med prædiktorer og $\boldsymbol \beta$ er $p \times 1$ vektor.
+\item Vi antager, at $\vX$ er i general position
+%\item Giver $p$-værdier til prædiktorerne når de indgår i den aktive mængde, som noteres $\pazocal{A}$
 \item Vi ønsker, at teste om prædiktoren $j$, som tilføjes i $\pazocal{A}_k$ i trin $k$, er signifikant
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Kovarians testen}
 \begin{itemize}
+\item Teststørrelsen:
+ \begin{align*}
+T_k^{\text{cov}} = \frac{1}{\sigma^2}\del{ \left\langle \textbf{y}, \textbf{X} \widehat{\boldsymbol{\beta}}^\text{lasso} \del{\lambda_{k+1}} \right\rangle -  \left\langle  \textbf{y}, \textbf{X}_{\pazocal{A}_{k-1}} \boldsymbol{\tilde{\beta}}^\text{lasso}_{\pazocal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}
+\end{align*}
 \item Lad $\pazocal{A}_{k-1}$ være den aktive mængde i trin $k-1$ inden den $j$'te prædiktorer tilføjes
 \item  Lad $\boldsymbol{\tilde{\beta}}^{\text{lasso}}_{\pazocal{A}_{k-1}} \del{\lambda_{k+1}}$ være løsningen i $\lambda_{k+1}$ ved at kun anvende prædiktorerne i $\pazocal{A}_{k-1}$, dvs 
 \begin{align*}
@@ -17,10 +32,6 @@
 \underset{\boldsymbol{\beta}_{\pazocal{A}_{k-1}} \in \mathbb{R}^{\abs{\pazocal{A}_{k-1}}} }{\arg\min} \cbr{\left\Vert \vy - \vX_{\pazocal{A}_{k-1}} \boldsymbol\beta_{\pazocal{A}_{k-1}} \right\Vert^2_2 + \lambda_{k+1} \left\Vert \boldsymbol\beta_{\pazocal{A}_{k-1}}  \right\Vert_1}
 \end{align*}
 \item  Lad $\boldsymbol{\widehat{\beta}} \del{\lambda_{k+1}}$ betegne løsningen i $\lambda_{k+1}$ ud fra prædiktorerne i   $\pazocal{A}_{k-1} \cup \cbr{j}$
-\item Teststørrelsen:
- \begin{align*}
-T_k^{\text{cov}} = \frac{1}{\sigma^2}\del{ \left\langle \textbf{y}, \textbf{X} \widehat{\boldsymbol{\beta}}^\text{lasso} \del{\lambda_{k+1}} \right\rangle -  \left\langle  \textbf{y}, \textbf{X}_{\pazocal{A}_{k-1}} \boldsymbol{\tilde{\beta}}^\text{lasso}_{\pazocal{A}_{k-1}} \del{\lambda_{k+1}} \right\rangle}
-\end{align*}
 \end{itemize}
 \end{frame}
 
@@ -54,7 +65,7 @@ hvor $\widehat{\sigma}^2 = \left\Vert \vy - \vX \boldsymbol{\widehat{\beta}}^\te
 \begin{itemize}
 \item Vi betragter en statisk model på formen
 \begin{align*}
-\vy = \vmu + \veps, \ \veps \sim N \del{\textbf{0}, \sigma^2 \textbf{I}_n}
+\vy = \vmu + \veps, 
 \end{align*}
 hvor $\vy \sim N\del{\boldsymbol\mu, \boldsymbol\Sigma}$, $\boldsymbol \mu$ er en ukendt $n \times 1$ vektor, og $\boldsymbol\Sigma$ er en kendt $n \times n$ matrix. 
 \item Betragt polyedet
@@ -74,7 +85,7 @@ T\del{ \vy, \pazocal{P}, \boldsymbol \eta} \overset{\mathbb{P}_0}{\sim} Unif \de
 \end{frame}
 
 \begin{frame}{Polyeder lemma}
-\begin{block}{Polyede lemma}
+\begin{block}{Polyeder lemma}
 For ethvert $\boldsymbol \Sigma$ og $\boldsymbol \eta$, hvor $\boldsymbol \eta^T \boldsymbol  \Sigma \boldsymbol \eta \neq 0$, gælder der at
 \begin{align*}
 \boldsymbol \Gamma \vy \geq \textbf{u} \Leftrightarrow \pazocal{V}^- \del{\vy} \leq \boldsymbol \eta^T \vy \leq  \pazocal{V}^+\del{\vy}, \quad  \pazocal{V}^0 \del{\vy} \leq 0,
@@ -86,7 +97,7 @@ hvor
 \pazocal{V}^0 \del{\vy}  &=  \underset{j: \rho_j = 0}{\max} u_j -  \del{ \boldsymbol \Gamma \vy}_j
 ,\end{align*}
 hvor $\boldsymbol \rho = \frac{\boldsymbol \Gamma \boldsymbol \Sigma \boldsymbol \eta}{\boldsymbol \eta^T \boldsymbol \Sigma \boldsymbol \eta}$. 
-Yderligere er $\boldsymbol \eta^T$ og $\del{\pazocal{V}^- \del{\vy} , \pazocal{V}^+ \del{\vy} \pazocal{V}^0 \del{\vy}  }$ uafhængige.
+Yderligere er $\boldsymbol \eta^T \vy$ og $\del{\pazocal{V}^- \del{\vy} , \pazocal{V}^+ \del{\vy} \pazocal{V}^0 \del{\vy}  }$ uafhængige.
 \end{block}
 \end{frame}
 
@@ -96,7 +107,7 @@ Yderligere er $\boldsymbol \eta^T$ og $\del{\pazocal{V}^- \del{\vy} , \pazocal{V
 \begin{itemize}
 \item Illustrationen er for $p = 2$, og $\boldsymbol \Sigma = \textbf{I}_n$
 \item $\vy = P_{\eta} \vy + P_{\boldsymbol{\eta}^\perp} \vy$
-\item$ P_{\eta} \vy = \boldsymbol \eta \boldsymbol \eta^T $ er projektionen af $\vy$ på $\boldsymbol \eta$
+\item$ P_{\eta} \vy = \frac{\boldsymbol \eta \boldsymbol \eta^T\vy}{\Vert \boldsymbol \eta \Vert^2_2}  $ er projektionen af $\vy$ på $\boldsymbol \eta$
 \end{itemize}
 
 \column{2.2in}
@@ -130,6 +141,27 @@ for ethvert \(0 \leq \alpha \leq 1\)
 \end{align*}
 da $\boldsymbol \eta^T \vy $ er normalfordeling er overstående trunkeret normalfordelt. 
 \item For enhver lineær funktion $\boldsymbol \eta^T \vy $ kan vi udregne $p$-værdier for nulhyptesen at $\pazocal{H}_0:\boldsymbol \eta^T \vy   = 0$ og tilhørende betingede konfidensintervaller
+\item Vi antager $\vX$ er i general position
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Polyeder lemma}{TG testen}
+\begin{block}{TG testen}
+\begin{itemize}
+\item Vi har, at $\boldsymbol \eta^T \vy \sim N\del{\boldsymbol \eta^T \vmu , \sigma^2 \Vert \boldsymbol \eta \Vert^2_2}$ i intervallet $[\pazocal{V}^-, \pazocal{V}^+ ]$
+\item  Vi har vil teste
+\begin{align*}
+ \pazocal{H}_0 : \boldsymbol \eta^T \vmu = 0 \quad \text{imod} \quad  \pazocal{H}_1 : \boldsymbol \eta^T \vmu  \neq 0
+\end{align*}
+\item Teststørrelsen er givet ved
+\begin{align*}
+T_k^{TG} = 2 \min \cbr{T_k^{tg}, 1 - T_k^{tg} }  \rightarrow Unif(0,1),
+\end{align*}
+hvor 
+\begin{align*}
+T_k^{tg} = 1 - F_{0, \sigma^2 \Vert \boldsymbol \eta \Vert^2_2}^{[\pazocal{V}^-, \pazocal{V}^+ ]} \del{\boldsymbol \eta^T \vy}
+\end{align*}
+\end{itemize}
+\end{block}
 \end{frame}
 

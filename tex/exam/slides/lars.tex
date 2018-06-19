@@ -50,10 +50,32 @@ variablen \textcolor{orange}{TB6MS} bliver tilføjet, fjernet og så tilføjet i
 \end{itemize}
 \end{frame}
 
+%\begin{frame}{LARS}{Krydsvalidering}
+%\begin{figure}
+%\includegraphics[width=1\linewidth, height=0.7\textheight]{slides/coef_lars_kryds.pdf}
+%\caption{Estimerede koefficienter for LARS (CV) og lasso LARS (CV).}
+%\end{figure}
+%\begin{itemize}
+%\item afviser normalitet samt at de første 10 autokorrelationer er nul
+%\end{itemize}
+%\end{frame}
+
 \begin{frame}{LARS}{Krydsvalidering}
 \begin{figure}
-\includegraphics[width=1\linewidth, height=0.7\textheight]{slides/coef_lars_kryds.pdf}
-\caption{Estimerede koefficienter for LARS (CV) og lasso LARS (CV).}
+\includegraphics[width=1\linewidth, height=0.7\textheight]{slides/boxplot_lars_kryds.pdf}
+\caption{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{LARS}} \del{f_\text{1sd}} $.
+Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}
+\end{figure}
+\begin{itemize}
+\item afviser normalitet samt at de første 10 autokorrelationer er nul
+\end{itemize}
+\end{frame}
+
+\begin{frame}{LARS}{Krydsvalidering}
+\begin{figure}
+\includegraphics[width=1\linewidth, height=0.7\textheight]{slides/boxplot_lasso_kryds.pdf}
+\caption{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{lasso}} \del{f_\text{1sd}} $.
+Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}
 \end{figure}
 \begin{itemize}
 \item afviser normalitet samt at de første 10 autokorrelationer er nul
@@ -147,10 +169,33 @@ $f_\text{BIC}$ & 0.2623 & $-6.0925$ & 20 &94.43\% & 975.2909  &$f_\text{BIC}$ & 
 \end{itemize}
 \end{frame}
 
+%\begin{frame}{LARS}{BIC}
+%\begin{figure}
+% \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/coef_plot_lars_bic.pdf}
+% \caption{Estimerede koefficienter for LARS (BIC) og lasso LARS (BIC).}
+% \end{figure}
+% \begin{itemize}
+%\item afviser normalitet samt at de første 10 autokorrelationer er nul
+%\end{itemize}
+%\end{frame}
+
 \begin{frame}{LARS}{BIC}
 \begin{figure}
- \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/coef_plot_lars_bic.pdf}
- \caption{Estimerede koefficienter for LARS (BIC) og lasso LARS (BIC).}
+ \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/boxplot_lars_bic.pdf}
+ \caption{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{LARS}} \del{f_\text{BIC}} $.
+Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul.}
+ \end{figure}
+ \begin{itemize}
+\item afviser normalitet samt at de første 10 autokorrelationer er nul
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{LARS}{BIC}
+\begin{figure}
+ \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/boxplot_lars_lasso_bic.pdf}
+ \caption{Til venstre vises et boxplot af 1000 bootstrap realisationer af $\widehat{\boldsymbol{\beta}}^{\text{lasso}} \del{f_\text{BIC}} $.
+Plottet til højre illustrerer andelen af bootstrap realisationer, hvor parameter estimaterne er præcis nul. }
  \end{figure}
  \begin{itemize}
 \item afviser normalitet samt at de første 10 autokorrelationer er nul

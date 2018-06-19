@@ -1,4 +1,4 @@
-\section{Lasso modellen og dens generaliseringer}
+\section{LARS}
 \begin{frame}{LARS}
 \begin{itemize}
 \item Fitter en model for hvert trin
@@ -14,6 +14,7 @@
 \end{itemize}
 \end{frame}
 
+\subsection{Krydsvalidering}
 %%%%%%%% Krydsvalidering %%%%%%%%%
 
 \begin{frame}{LARS}{Krydsvalidering}
@@ -119,7 +120,7 @@ Vi viser kun \(p\)-værdier for prædiktorer som medtages og bliver i modellen, 
 \begin{tabular}{lccccccc}
 %\multicolumn{9}{l}{LARS algoritmen} \\
 \toprule
-Prædiktor& Koefficient & Z-score &\(p\)-værdi & Konfidensinterval &   $\sbr{\mathcal{V}^-,\mathcal{V}^+}$   \\
+Prædiktor& Koefficient & Z-score &\(p\)-værdi & Konfidensinterval &   $\sbr{\pazocal{V}^-,\pazocal{V}^+}$   \\
 \midrule
 \textcolor{blue3}{HWIURATIO}& 0.002  & 0.694   & 0.160    &  $\del{-\infty   ,  \infty}$   &$\sbr{0.002,0.002} $    \\
  \textcolor{blue3}{UEMP15OV} &    0.004&   1.606 & 0.923 &     $ \left( -\infty  ,  0.032\right] $     &$\sbr{0.004, 0.005}$   \\
@@ -151,7 +152,7 @@ Prædiktor& Koefficient & Z-score &\(p\)-værdi & Konfidensinterval &   $\sbr{\m
 \end{frame}
 
 %%%%%%%% BIC %%%%%%%%%
-
+\subsection{BIC}
 \begin{frame}{LARS}{BIC}
 \begin{table}
 \center
@@ -242,7 +243,7 @@ Vi viser kun \(p\)-værdier for prædiktorer som medtages og bliver i modellen, 
 \begin{tabular}{lcccccc}
 %\multicolumn{9}{l}{LARS algoritmen} \\ 
 \toprule
-Prædiktor&  Koefficient & Z-score  & \(p\)-værdi & Konfidensinterval& $\sbr{\mathcal{V}^-,\mathcal{V}^+}$   \\ \midrule
+Prædiktor&  Koefficient & Z-score  & \(p\)-værdi & Konfidensinterval& $\sbr{\pazocal{V}^-,\pazocal{V}^+}$   \\ \midrule
 \textcolor{blue3}{HWIURATIO} &0.002  & 0.720   &0.161    &   $\del{-\infty   ,  \infty }$ &  $\sbr{0.002,0.002}$    \\
  \textcolor{blue3}{UEMP15OV} & 0.004  & 1.596  4 &  0.920 &     $\left( -\infty  ,      0.034 \right] $& $\sbr{0.004 ,0.005}$  \\
 \textcolor{blue3}{UEMPLT5}  & 0.001 &  0.148   & 0.065  & $\left[-0.018    ,    \infty  \right)$   &$\sbr{0.000,0.001}$    \\

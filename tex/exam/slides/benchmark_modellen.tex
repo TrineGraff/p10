@@ -18,7 +18,7 @@ LogLik &  211.8617\\ \bottomrule
 \caption{Estimationsresultater for en \(\text{AR} \del{4}\), BIC, justeret R$^2$ og log-likehood. Det opløftede symbol betegner signifikans ved henholdsvis $^{***}$0.1\%, $^{**}$1\%, $^{*}$5\% og $^{\dagger}$10\%.} \label{tab:est_ar}
 \end{table}
 \begin{itemize}
-\item afviser normalitet samt at de første 10 autokorrelationer er ukorrelerede
+\item afviser normalitet samt at de første 10 autokorrelationer er nul
 \item MAE på 0.1312 og MSE på 0.0272
 \end{itemize}
 \end{frame}
@@ -43,17 +43,16 @@ LogLik &  211.8617\\ \bottomrule
 \begin{frame}{Benchmark modellen}{Faktor modellen}
 \begin{itemize}
 \item Antallet af faktorer bestemmes ud fra følgende informationskriterier, hvor \(k = 1, \ldots, 20\):
-\begin{small}
-\begin{align*}
-\text{IC}_1 \del{k} &= \ln V \del{k, \widehat{\mathbf{F}}} + k \frac{p + T}{p T} \ln \del{\frac{p T}{p + T}}, \\
-\text{IC}_2 \del{k} &= \ln V \del{k, \widehat{\mathbf{F}}} + k \frac{p + T}{p T} \ln \del{ \min \cbr{p, T}}, \\
-\text{IC}_3 \del{k} &= \ln V \del{k, \widehat{\mathbf{F}}} + k \frac{\ln \del{\min \cbr{p, T}}}{\min \cbr{p, T}}
-\end{align*}
-\end{small}
-
-\item parametrene estimeres med OLS ...
+\begin{itemize}
+\item $\text{IC}_1 \del{k} = \ln V \del{k, \widehat{\mathbf{F}}} + k \frac{p + T}{p T} \ln \del{\frac{p T}{p + T}}$,
+\item $\text{IC}_2 \del{k} = \ln V \del{k, \widehat{\mathbf{F}}} + k \frac{p + T}{p T} \ln \del{ \min \cbr{p, T}}$,
+\item $\text{IC}_3 \del{k} = \ln V \del{k, \widehat{\mathbf{F}}} + k \frac{\ln \del{\min \cbr{p, T}}}{\min \cbr{p, T}}$,
 \end{itemize}
-
+hvor \(V \del{k, \widehat{\mathbf{F}}} = \del{p T}^{-1} \sum_{j=1}^p \sum_{t=1}^{T} \del{x_{jt} -\boldsymbol{\lambda}_j \widehat{\mathbf{F}}_t}^2\).
+\item Lad \(\widehat{\textbf{Z}} = \del{\widehat{{\textbf{F}}}^T \ \boldsymbol{\omega}^T}^T\) være en \(\del{k+m} \times T\) matrix, hvor \(\widehat{{\textbf{F}}}\) er en \(T \times k\) matrix af estimerede faktorer og \(\boldsymbol{\omega}\) er en \(T \times m\) matrix af laggede værdier af arbejdsløshedsraten.
+Lad \(m = 4\), da fjernes de første 4 rækker i \(\widehat{\textbf{Z}}\).
+\item Parametrene $\widehat{\boldsymbol{\beta}} = \del{ \widehat{\boldsymbol{\beta}}^T_{\textbf{F}} \ \widehat{\boldsymbol{\beta}}^T_{\boldsymbol{\omega}}}^T$ estimeres med OLS.
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Benchmark modellen}{Faktor modellen}
@@ -79,20 +78,24 @@ $k$ & 20 & $-0.6931$ & 17.87\% & 238.3753 \\  \bottomrule
 \end{frame}
 
 \begin{frame}{Benchmark modellen}{Faktor modellen}
+\begin{itemize}
+\item Faktor model (IC$_1$): afviser normalitet, men kan ikke afvise at de første 10 autokorrelationer er nul
+\item Faktor model (IC$_2$): kan ikke afvise normalitet samt at de første 10 autokorrelationer er nul
+\end{itemize}
+
 \begin{table}
 \center
 \begin{tabular}{lccccccc} \toprule
 & Faktor model (IC$_1$) & & Faktor model (IC$_2$)  \\ \midrule
-Skewness & 0.0444 & & $-0.0418$     \\
-Kurtosis & 0.5768 & & 0.4612 \\
-JB-test & 0.0172 & & 0.0712 \\ 
-LB$_{10}$-test & 0.729  && 0.4637  \\ 
-\\
+%Skewness & 0.0444 & & $-0.0418$     \\
+%Kurtosis & 0.5768 & & 0.4612 \\
+%JB-test & 0.0172 & & 0.0712 \\ 
+%LB$_{10}$-test & 0.729  && 0.4637  \\ 
+%\\
 MAE & 0.1190 & & 0.1111 \\ 
 MSE &  0.0221  & & 0.0187 \\ \bottomrule
 \end{tabular}
-\caption{Skewness, excess kurtosis, $p$-værdier for Jarque-Bera og Ljung-Box testen for de standardiserede residualer fra faktor modellerne valgt ud fra IC$_1$ og IC$_2$. 
-Vi lader LB$_{10}$ betegne Ljung-Box testen med lag = 10. } \label{tab:test_faktor}
+\caption{MAE og MSE for faktor modellerne valgt ud fra IC$_1$ og IC$_2$. }
 \end{table}
 \end{frame}
 

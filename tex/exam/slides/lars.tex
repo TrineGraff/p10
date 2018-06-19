@@ -1,6 +1,17 @@
 \section{Lasso modellen og dens generaliseringer}
 \begin{frame}{LARS}
-Fraktion af \(\ell_1\)-norm ...
+\begin{itemize}
+\item Fitter en model for hvert trin
+\begin{itemize}
+\item LARS algoritmen foretager 127 trin 
+\item LARS algoritmen med lasso modifikationen udfører 192 trin 
+\end{itemize}
+\item Igen anvendes krydsvalidering og BIC til at estimere tuning parameteren, som for LARS algoritmen er fraktionen af \(\ell_1\)-normen \(f = \frac{\vert \boldsymbol{\beta} \vert}{\max \vert \boldsymbol{\beta} \vert}\), hvor \(f \in \sbr{0,1}\).
+\begin{itemize}
+\item \(f = 0\): ingen variabler tilføjet til den aktive mængde
+\item \(f = 1\): alle variable inkluderet
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 %%%%%%%% Krydsvalidering %%%%%%%%%
@@ -34,17 +45,19 @@ $\boldsymbol{f}_{\textbf{1sd}}$ & $\textbf{0.2542} $ & \textbf{0.0019} & \textbf
 \caption{Værdien af $f_{\min}$ og $f_{1\text{sd}}$, gennemsnitlig krydsvalideringsfejl, som er målt i MSE, antallet af parametre, justeret R$^2$ og log-likelihood for LARS og lasso LARS. De valgte tuning parametre er markeret med tykt.} \label{tab:lars_lasso_tab}
 \end{table}
 \begin{itemize}
-\item 22 trin udføres for lasso LARS (CV), hvor variablerne ...
+\item 22 trin udføres for lasso LARS (CV), hvor variablerne \textcolor{chartreuse4}{CUMFNS}, \textcolor{blue3}{MANEMP} og \textcolor{orange}{GS1} tilføjes og fjernes igen og 
+variablen \textcolor{orange}{TB6MS} bliver tilføjet, fjernet og så tilføjet igen.  
 \end{itemize}
 \end{frame}
 
 \begin{frame}{LARS}{Krydsvalidering}
-Estimerede koefficienter
 \begin{figure}
 \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/coef_lars_kryds.pdf}
-\caption{Estimerede koefficienter for LARS (CV) og lasso LARS (CV).
-Farverne indikerer hvilken gruppe, variablerne tilhører.}
+\caption{Estimerede koefficienter for LARS (CV) og lasso LARS (CV).}
 \end{figure}
+\begin{itemize}
+\item afviser normalitet samt at de første 10 autokorrelationer er nul
+\end{itemize}
 \end{frame}
 
 \begin{frame}{LARS}{Krydsvalidering}
@@ -110,6 +123,9 @@ Prædiktor& Koefficient & Z-score &\(p\)-værdi & Konfidensinterval &   $\sbr{\m
 }
 \caption{Koefficienter, \(Z\)-scores, \(p\)-værdier, konfidensintervaller og trunkeret intervaller for LARS$_{TG}$ (CV). Den estimeres standard afvigelse er \(0.043\), og resultaterne er for \(f_{1 \text{sd}} = 0.2542\) med \(\alpha = 0.1\).} \label{tab:larInf_kryds}
 \end{table} 
+\begin{itemize}
+\item afviser normalitet samt at de første 10 autokorrelationer er nul
+\end{itemize}
 \end{frame}
 
 %%%%%%%% BIC %%%%%%%%%
@@ -127,15 +143,18 @@ $f_\text{BIC}$ & 0.2623 & $-6.0925$ & 20 &94.43\% & 975.2909  &$f_\text{BIC}$ & 
 \caption{Værdien af $f_\text{BIC}$, antallet af parametre, BIC, justeret R$^2$  og log-likelihood for LARS og lasso LARS.} \label{tab:bic_lars}
 \end{table}
 \begin{itemize}
-\item 32 trin udføres for lasso LARS (BIC) ..
+\item 32 trin udføres for lasso LARS (BIC), hvor variablerne \textcolor{chartreuse4}{CUMFNS}, \textcolor{blue3}{MANEMP}, \textcolor{orange}{GS1}, \textcolor{blue3}{HWIURATIO}, \textcolor{blue3}{PAYMENS} og \textcolor{blue3}{USGOOD} tilføjes og fjernes igen og variablen \textcolor{orange}{TB6MS} bliver tilføjet, fjernet og så tilføjet igen. 
 \end{itemize}
 \end{frame}
 
 \begin{frame}{LARS}{BIC}
 \begin{figure}
  \includegraphics[width=1\linewidth, height=0.7\textheight]{slides/coef_plot_lars_bic.pdf}
- \caption{Estimerede koefficienter for LARS (BIC) og lasso LARS (BIC). Farverne indikerer hvilken gruppe, variablerne tilhører.}
+ \caption{Estimerede koefficienter for LARS (BIC) og lasso LARS (BIC).}
  \end{figure}
+ \begin{itemize}
+\item afviser normalitet samt at de første 10 autokorrelationer er nul
+\end{itemize}
 \end{frame}
 
 \begin{frame}{LARS}{BIC}
@@ -203,6 +222,9 @@ Prædiktor&  Koefficient & Z-score  & \(p\)-værdi & Konfidensinterval& $\sbr{\m
 }
 \caption{Koefficienter, \(Z\)-scores, \(p\)-værdier, konfidensintervaller og trunkeret intervaller for LARS$_{TG}$ (BIC). Den estimeres standard afvigelse er \(0.043\), og resultaterne er for \(\widehat{f}_{\text{BIC}} = 0.2623 \) med \(\alpha = 0.1\).} \label{tab:larInf_bic}
 \end{table} 
+ \begin{itemize}
+\item afviser normalitet samt at de første 10 autokorrelationer er nul
+\end{itemize}
 \end{frame}
 
 

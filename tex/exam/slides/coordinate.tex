@@ -19,26 +19,26 @@
 \end{frame}
 
 \section{Coordinate descent}
-\begin{frame}{Coordinate descent}
-\begin{itemize}
-\item Coordinate descent
-\begin{itemize}
-\item Algoritmen opdaterer fra $\boldsymbol \beta_t$ til  $\boldsymbol \beta_{t+1}$ ved at vælge en koefficient, som opdateres, og da udføres en univariat minimering. 
-Koefficienten $k$ opdateres i iteration $t$, da er opdatering givet ved
-\begin{align*}
-\beta_k^{t+1} = \underset{\beta_k}{\arg\min} f\del{\beta_1^t,\dots, \beta_{k-1}^t, \beta_k, \beta_{k+1}^t, \dots, \beta_p^t },
-\end{align*}
-hvor 	$\beta_j^{t+1} = \beta^t_j$ for $j \neq k$
-\begin{itemize}
-\item Lasso, ridge regression, elastik net og adaptive lasso
-\end{itemize}
-\item Dette kan generaliseres til block coordinate descent, hvor prædiktorerne er opdelt i ikke-overlappende blocks, og da udføres en minimering over en enkelt block for hvert koordinat
-\begin{itemize}
-\item Group lasso
-\end{itemize}
-\end{itemize}
-\end{itemize}
-\end{frame}
+%\begin{frame}{Coordinate descent}
+%\begin{itemize}
+%\item Coordinate descent
+%\begin{itemize}
+%\item Algoritmen opdaterer fra $\boldsymbol \beta_t$ til  $\boldsymbol \beta_{t+1}$ ved at vælge en koefficient, som opdateres, og da udføres en univariat minimering. 
+%Koefficienten $k$ opdateres i iteration $t$, da er opdatering givet ved
+%\begin{align*}
+%\beta_k^{t+1} = \underset{\beta_k}{\arg\min} f\del{\beta_1^t,\dots, \beta_{k-1}^t, \beta_k, \beta_{k+1}^t, \dots, \beta_p^t },
+%\end{align*}
+%hvor 	$\beta_j^{t+1} = \beta^t_j$ for $j \neq k$
+%\begin{itemize}
+%\item Lasso, ridge regression, elastik net og adaptive lasso
+%\end{itemize}
+%\item Dette kan generaliseres til block coordinate descent, hvor prædiktorerne er opdelt i ikke-overlappende blocks, og da udføres en minimering over en enkelt block for hvert koordinat
+%\begin{itemize}
+%\item Group lasso
+%\end{itemize}
+%\end{itemize}
+%\end{itemize}
+%\end{frame}
 
 \subsection{Krydsvalidering}
 \begin{frame}{Coordinate descent}{Krydsvalidering}
@@ -104,7 +104,7 @@ hvor 	$\beta_j^{t+1} = \beta^t_j$ for $j \neq k$
 \subsection{BIC}
 \begin{frame}{Coordinate descent}{BIC}
 \begin{itemize}
-\item Fitter en værdi for hver $\lambda$
+\item Fitter en model for hver $\lambda$
 \begin{itemize}
 \item $\lambda_{\text{BIC}}$: mindste BIC
 \end{itemize}

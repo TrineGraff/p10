@@ -1,7 +1,34 @@
-\begin{frame}{Oversigt over in-sample resultater}
+%\begin{frame}{Oversigt over in-sample resultater}
+%\begin{table}[ht] 
+%\centering 
+%\scalebox{0.7}{
+%\begin{tabular}{lll}
+%\toprule 
+%Inkluderingsrate & Variable & Beskrivelse \\ \midrule
+%100\% &\textcolor{blue3}{CLF16OV} & Civilarbejdsstyrke \\
+%100\% &\textcolor{blue3}{CE16OV} & Civilbeskæftigelse \\
+%83.33\% & \textcolor{blue3}{lag 1} & Den tidligere værdi af arbejdsløshedsraten \\
+%77.78\% & \textcolor{chartreuse4}{IPDMAT} & Holdbart materiale  \\
+%77.78\% & \textcolor{blue3}{UEMPLT5} & Civile arbejdsløse - mindre end 5 uger \\
+%77.78\% & \textcolor{blue3}{UEMP5TO14}& Civile arbejdsløse i 5 - 14 uger \\
+%77.78\% & \textcolor{blue3}{UEMP15OV} &  Civile arbejdsløse i 15 - 26 uger  \\
+%77.78\% & \textcolor{orange}{TB6MS} & 6-måneders statsskat  \\
+%77.78\% & \textcolor{orange}{GS5} & 5-årig statsobligationsrente \\
+%\bottomrule
+%\end{tabular}}
+%\caption{Inkluderingsraten af de 9 hyppigst valgte variable for de ialt 18 modeller samt beskrivelse af variablerne.}
+%\end{table} 
+%\begin{itemize}
+%\item \(R_\text{adj}^2\) er mindst for ridge regression modellerne og størst for lasso modellerne med undtagelse af lasso LARS (CV)
+%\item For lasso problemet vælger lasso (CV) 14 variable, lasso LARS (CV) 13 variable mens lasso (BIC) og lasso LARS (BIC) vælger 17 variable, dvs antallet af variable er ikke specielt påvirket af hvilken optimeringsalgoritme som anvendes. 
+%\end{itemize}
+%\end{frame}
+
+
+\begin{frame}{Opsummering}
 \begin{table}[ht] 
 \centering 
-\scalebox{0.7}{
+\scalebox{0.6}{
 \begin{tabular}{lll}
 \toprule 
 Inkluderingsrate & Variable & Beskrivelse \\ \midrule
@@ -19,8 +46,15 @@ Inkluderingsrate & Variable & Beskrivelse \\ \midrule
 \caption{Inkluderingsraten af de 9 hyppigst valgte variable for de ialt 18 modeller samt beskrivelse af variablerne.}
 \end{table} 
 \begin{itemize}
-\item \(R_\text{adj}^2\) er mindst for ridge regression modellerne og størst for lasso modellerne med undtagelse af lasso LARS (CV)
-\item For lasso problemet vælger lasso (CV) 14 variable, lasso LARS (CV) 13 variable mens lasso (BIC) og lasso LARS (BIC) vælger 17 variable, dvs antallet af variable er ikke specielt påvirket af hvilken optimeringsalgoritme som anvendes. 
+\item Forbedring af benchmark model
+\begin{itemize}
+\item dynamisk faktor model
+\item udvælge en delmængde af de forklarende variable inden faktorerne estimeres
+\end{itemize}
+\item Tilnærmelsesvis ens resultater når tuning parameteren estimeres med 10-fold krydsvalidering og BIC
+\item For lasso problemet giver optimeringsalgoritmerne omtrend samme resultat
+%\item \(R_\text{adj}^2\) er mindst for ridge regression modellerne og størst for lasso modellerne med undtagelse af lasso LARS (CV)
+%\item For lasso problemet vælger lasso (CV) 14 variable, lasso LARS (CV) 13 variable mens lasso (BIC) og lasso LARS (BIC) vælger 17 variable, dvs antallet af variable er ikke specielt påvirket af hvilken optimeringsalgoritme som anvendes. 
 \end{itemize}
 \end{frame}
 
